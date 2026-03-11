@@ -132,34 +132,71 @@
         /* Sales Letter Body */
         .sales-letter {
             padding: 4rem 0;
-            font-size: 1.25rem;
+            font-size: 1.125rem;
+            line-height: 1.9;
         }
 
         .sales-letter p {
-            margin-bottom: 2rem;
+            margin-bottom: 1.75rem;
         }
 
-        .sales-letter p b:first-child {
-            display: block;
+        .sales-letter h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-top: 4rem;
+            margin-bottom: 1.25rem;
+            color: var(--black);
+        }
+
+        .sales-letter h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
-            font-size: 1.35rem;
+        }
+
+        /* Bullet lists */
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+        }
+
+        .bullet-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.4rem 0;
+            line-height: 1.7;
+        }
+
+        .bullet-list li::before {
+            content: '';
+            display: block;
+            flex-shrink: 0;
+            width: 8px;
+            height: 8px;
+            background: var(--peach);
+            border-radius: 50%;
+            margin-top: 0.58em;
         }
 
         /* PhasesSection */
         .phases {
-            padding: 2rem 0;
+            padding: 1.5rem 0 2rem;
         }
 
         .phase-item {
-            margin-bottom: 2.5rem;
-            padding-left: 2rem;
-            border-left: 2px solid var(--peach);
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--peach);
         }
 
         .phase-title {
             font-weight: 700;
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.35rem;
+            font-size: 1.05rem;
         }
 
         /* Call-out Box */
@@ -169,13 +206,117 @@
             padding: 3rem;
             border-radius: 2rem;
             margin: 4rem 0;
-            text-align: center;
+        }
+
+        .callout-box > p:first-child {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.01em;
         }
 
         .callout-box p {
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .callout-box p:last-child { margin-bottom: 0; }
+
+        /* Investment Card */
+        .investment-card {
+            background: var(--black);
+            color: white;
+            border-radius: 2rem;
+            padding: 3rem;
+            margin: 2rem auto;
+            max-width: 680px;
+            text-align: center;
+        }
+
+        .investment-card .compare-text {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .investment-card .price-badge {
+            display: inline-block;
+            background: var(--peach);
+            color: var(--black);
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            padding: 0.6rem 2rem;
+            border-radius: 5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .investment-card .price-label {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .investment-card .no-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .investment-card .no-list li {
+            font-size: 0.95rem;
+            opacity: 0.75;
+        }
+
+        .investment-card .lifetime-note {
+            font-size: 0.95rem;
+            opacity: 0.75;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Guarantee block */
+        .guarantee-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            background: var(--stone-100);
+            border-radius: 1.5rem;
+            padding: 2rem 2.5rem;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .guarantee-block .shield {
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            background: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--peach);
             font-size: 1.5rem;
-            font-weight: 500;
+        }
+
+        .guarantee-block h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .guarantee-block p {
             margin: 0;
+            font-size: 0.975rem;
+            color: var(--muted);
+            line-height: 1.7;
         }
 
         /* Offer Stack */
@@ -311,7 +452,7 @@
             <strong>It is a capacity problem.</strong><br>
             And until that capacity is rebuilt in a structured way, the pain often keeps returning.</p>
 
-            <h2 style="margin-top: 3rem;">A Different Way to Recover</h2>
+            <h2>A Different Way to Recover</h2>
             <p>Most people with chronic foot pain have never been given a real progression.<br>
             They have been given pieces.</p>
             <p>A stretch here.<br>
@@ -326,25 +467,28 @@
             You begin asking, <em>“How do I rebuild the kind of foot that can carry me through everyday life again?”</em></p>
             <p>That is the difference.</p>
 
-            <h2 style="margin-top: 3rem;">What The Foot Capacity System Is</h2>
+            <h2>What The Foot Capacity System Is</h2>
             <p>The Foot Capacity System is a structured, video-guided program designed to help you rebuild foot strength, restore movement, and break the cycle of recurring plantar fasciitis and chronic foot pain from home.</p>
-            <p>This is not a random collection of stretches.<br>
-            It is not a generic rehab bundle pulled from the internet.<br>
-            And it is not another passive approach built around temporary relief.</p>
+            <ul class="bullet-list">
+                <li>This is not a random collection of stretches.</li>
+                <li>It is not a generic rehab bundle pulled from the internet.</li>
+                <li>It is not another passive approach built around temporary relief.</li>
+            </ul>
             <p>It is a clear progression that teaches you how to understand your symptoms, manage load intelligently, rebuild strength step-by-step, and regain confidence in your feet again.</p>
             <p>Everything is delivered through simple guided videos that walk you through the process from home, on your schedule, without repeated clinic visits, long waiting lists, or conflicting advice.</p>
 
-            <h2 style="margin-top: 3rem;">Who This Is For</h2>
-            <p>This is for the person who has been stuck in the same cycle for too long.<br>
-            The person whose first steps out of bed are painful.<br>
-            The person who dreads long walks because they know what comes after.<br>
-            The person who used to run, hike, train, or stay active without thinking twice about their feet.<br>
-            The person who is tired of hearing “just rest it” or “stretch more” when that clearly has not solved the problem.</p>
-            <p>It is for active adults who want a lasting solution.<br>
-            It is for people with chronic plantar fasciitis, recurring heel pain, arch pain, foot weakness, and movement patterns that keep feeding irritation.<br>
-            <strong>And it is for people who do not want to build their life around pain anymore.</strong></p>
+            <h2>Who This Is For</h2>
+            <p>This is for the person who has been stuck in the same cycle for too long.</p>
+            <ul class="bullet-list">
+                <li>The person whose first steps out of bed are painful.</li>
+                <li>The person who dreads long walks because they know what comes after.</li>
+                <li>The person who used to run, hike, train, or stay active without thinking twice about their feet.</li>
+                <li>The person who is tired of hearing &ldquo;just rest it&rdquo; or &ldquo;stretch more&rdquo; when that clearly has not solved the problem.</li>
+            </ul>
+            <p>It is for active adults who want a lasting solution &mdash; people with chronic plantar fasciitis, recurring heel pain, arch pain, foot weakness, and movement patterns that keep feeding irritation.</p>
+            <p><strong>And it is for people who do not want to build their life around pain anymore.</strong></p>
 
-            <h2 style="margin-top: 3rem;">How The System Works</h2>
+            <h2>How The System Works</h2>
             <p>Inside The Foot Capacity System, you move through five progressive phases.</p>
             
             <div class="phases">
@@ -372,13 +516,13 @@
             
             <p>This is not random. Each phase builds on the previous one. The goal is to help your foot adapt the way the body actually adapts, progressively and intelligently.</p>
 
-            <h2 style="margin-top: 3rem;">What You Receive Inside The Program</h2>
+            <h2>What You Receive Inside The Program</h2>
             <p>Inside the system, you get guided video instruction from Dr. Jonathan, clear progressions, and practical tools that help you stay on track.</p>
             <p>You also receive the support materials that make the process easier to follow in real life.</p>
-            <ul style="list-style-type: none; padding-left: 0; margin-bottom: 2rem;">
-                <li style="margin-bottom: 1rem;">✅ <strong>The Foot Recovery Tracking Toolkit</strong> helps you measure progress and see improvement in pain, strength, and activity tolerance over time.</li>
-                <li style="margin-bottom: 1rem;">✅ <strong>The Flare Recovery Playbook</strong> gives you a clear plan for what to do if symptoms spike, so you are never left wondering whether to push, back off, or panic.</li>
-                <li style="margin-bottom: 1rem;">✅ <strong>The Movement Re-Patterning Toolkit</strong> helps you identify and improve walking mechanics that may be contributing to repeated irritation.</li>
+            <ul class="bullet-list">
+                <li><strong>The Foot Recovery Tracking Toolkit</strong> helps you measure progress and see improvement in pain, strength, and activity tolerance over time.</li>
+                <li><strong>The Flare Recovery Playbook</strong> gives you a clear plan for what to do if symptoms spike, so you are never left wondering whether to push, back off, or panic.</li>
+                <li><strong>The Movement Re-Patterning Toolkit</strong> helps you identify and improve walking mechanics that may be contributing to repeated irritation.</li>
             </ul>
             <p>Together, these tools help turn recovery from something vague and frustrating into something structured, measurable, and doable.</p>
 
@@ -396,59 +540,56 @@
                 </div>
             </div>
 
-            <h2 style="margin-top: 3rem;">What This Can Change</h2>
-            <p>The goal here is not just “less pain.”<br>
-            The goal is that your life starts to open back up.</p>
-            <p>You wake up and those first steps are not a battle.<br>
-            You walk without bracing for what your heel might feel like later.<br>
-            You stand longer without constantly thinking about your foot.<br>
-            You move through the day with more trust in your body and less fear that everything will flare up again.</p>
-            <p>That is what strength and capacity actually give you.<br>
-            Not just symptom control.<br>
-            <strong>Freedom.</strong></p>
+            <h2>What This Can Change</h2>
+            <p>The goal here is not just &ldquo;less pain.&rdquo; The goal is that your life starts to open back up.</p>
+            <ul class="bullet-list">
+                <li>You wake up and those first steps are not a battle.</li>
+                <li>You walk without bracing for what your heel might feel like later.</li>
+                <li>You stand longer without constantly thinking about your foot.</li>
+                <li>You move through the day with more trust in your body and less fear that everything will flare up again.</li>
+            </ul>
+            <p>That is what strength and capacity actually give you. Not just symptom control. <strong>Freedom.</strong></p>
 
-            <h2 style="margin-top: 3rem;">A Program With a Bigger Purpose</h2>
+            <h2>A Program With a Bigger Purpose</h2>
             <p>One of the reasons this system matters so much to Dr. Jonathan is because access to physical therapy is not equal.</p>
-            <p>Some people wait weeks or months just to get into a clinic.<br>
-            Others cannot afford repeated visits, even when they know they need help.<br>
-            And many people who could benefit from the right guidance never receive it consistently enough to make real progress.</p>
-            <p>This program helps change that.</p>
-            <p>By creating a system people can follow from home, more people can get access to structured, biomechanics-driven rehabilitation without being limited by geography, clinic availability, scheduling, or repeated appointment costs.</p>
-            <p>A portion of the proceeds from The Foot Capacity System also goes toward helping expand access to care and support the long term vision of building a clinic that serves underserved communities who might not otherwise receive physical therapy at all.</p>
-            <p>So when someone joins this program, they are not only investing in their own recovery.<br>
-            They are helping extend care to people who need it most.</p>
+            <ul class="bullet-list">
+                <li>Some people wait weeks or months just to get into a clinic.</li>
+                <li>Others cannot afford repeated visits, even when they know they need help.</li>
+                <li>Many people who could benefit from the right guidance never receive it consistently enough to make real progress.</li>
+            </ul>
+            <p>This program helps change that. By creating a system people can follow from home, more people can get access to structured, biomechanics-driven rehabilitation without being limited by geography, clinic availability, scheduling, or repeated appointment costs.</p>
+            <p>A portion of the proceeds also goes toward expanding access to care and the long-term vision of building a clinic that serves underserved communities who might not otherwise receive physical therapy at all.</p>
+            <p>So when someone joins this program, they are not only investing in their own recovery. <strong>They are helping extend care to people who need it most.</strong></p>
 
-            <h2 style="margin-top: 3rem; text-align: center;">The Investment</h2>
-            <div style="background: var(--white); border: 2px solid var(--peach); border-radius: 1rem; padding: 2.5rem; text-align: center; max-width: 600px; margin: 2rem auto;">
-                <p>Traditional physical therapy often means repeated appointments, repeated scheduling, repeated travel, and repeated bills.<br>
-                One visit alone can easily cost $150 to $250 or more.<br>
-                And many treatment plans involve multiple sessions.</p>
-                
-                <p style="font-weight: 600; font-size: 1.25rem; color: var(--peach); margin: 2rem 0;">The Foot Capacity System gives you structured, doctor-led guidance from home for a one-time investment of $247.</p>
-                
-                <ul style="list-style-type: none; padding: 0; margin-bottom: 2rem;">
-                    <li>❌ No recurring clinic bills.</li>
-                    <li>❌ No monthly fee.</li>
-                    <li>❌ No paying again every time you need support.</li>
+            <h2 style="text-align: center;">The Investment</h2>
+
+            <div class="investment-card">
+                <p class="compare-text">Traditional physical therapy means repeated appointments, repeated bills, and repeated travel.<br>A single visit can easily cost $150&ndash;$250. Most plans require many more.</p>
+
+                <div class="price-badge">$247</div>
+                <span class="price-label">One-time investment &mdash; no monthly fees, ever</span>
+
+                <ul class="no-list">
+                    <li>✓&nbsp; No recurring clinic bills</li>
+                    <li>✓&nbsp; No subscription or monthly fee</li>
+                    <li>✓&nbsp; No paying again every time you need support</li>
                 </ul>
-                <p>Once you are inside, you keep the system for life. And as future programs are added for knees, shoulders, back, and other areas of the body, they will be included automatically at no additional cost.</p>
-                
-                <div style="margin-top: 2rem;">
-                    <a href="#" class="btn-action">Get Instant Access to The Foot Capacity System</a>
+
+                <p class="lifetime-note">Once you are inside, you keep the system for life. Future programs &mdash; knees, shoulders, back &mdash; included automatically at no extra cost.</p>
+
+                <a href="#" class="btn-action">Get Instant Access to The Foot Capacity System</a>
+            </div>
+
+            <div class="guarantee-block">
+                <div class="shield">🛡</div>
+                <div>
+                    <h3>30-Day Progress Guarantee</h3>
+                    <p>Follow the system and give it an honest effort. If you do not see measurable progress in your strength or symptoms within the first 30 days, you get a full refund. The point is not to add risk to your life &mdash; the point is to remove it.</p>
                 </div>
             </div>
 
-            <div style="background: var(--stone-100); padding: 2rem; border-radius: 1rem; margin-top: 3rem; text-align: center;">
-                <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">30-Day Progress Guarantee</h3>
-                <p>This program is built around a real clinical process, not vague promises.<br>
-                If you follow the system and give it an honest effort, and you do not see measurable progress in your strength or symptoms within the first 30 days, you get a full refund.</p>
-                <p>Simple.<br>
-                The point is not to add risk to your life.<br>
-                <strong>The point is to remove it.</strong></p>
-            </div>
-
             <section style="margin-top: 5rem;">
-                <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">Frequently Asked Questions</h2>
+                <h2 style="text-align: center; margin-bottom: 3rem;">Frequently Asked Questions</h2>
                 
                 <div style="margin-bottom: 2rem;">
                     <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Is this just another set of exercises I can find online?</h3>
