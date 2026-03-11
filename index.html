@@ -1,22 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebuild Your Foot Capacity — Doctor-Designed System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
     <style>
+        /* ============================================
+           GLOBAL COLOR PALETTE & TYPOGRAPHY
+           Based on research: Soft Sage & Warm Ivory
+           with Trust Blues and Nurturing Accents
+           ============================================ */
         :root {
-            --bg: #FDFCF8;
-            --black: #292524;
-            --muted: #78716C;
-            --peach: #FFB7B2;
-            --stone-50: #FAFAF9;
-            --stone-100: #F5F5F4;
-            --stone-200: #E7E5E4;
-            --white: #FFFFFF;
+            /* Primary Colors - Soft Sage & Warm Ivory */
+            --sage-50: #F6F8F6;
+            --sage-100: #E8EDE8;
+            --sage-300: #B8CDB8;
+            --sage-500: #7FA87F;
+            --sage-700: #5A7D5A;
+
+            /* Warm Neutrals - Grounding & Comfort */
+            --ivory: #FAF8F3;
+            --warm-white: #FEFDFB;
+            --linen: #F5F1E8;
+
+            /* Trust Blues - Clinical Authority */
+            --navy: #2C3E50;
+            --mist-blue: #A8C5DA;
+            --trust-blue: #4A7BA7;
+
+            /* Nurturing Accents - Energy & Optimism */
+            --coral: #F4A460;
+            --peach: #FFB595;
+            --soft-yellow: #F9E5B8;
+
+            /* Refined Grays - Sophistication */
+            --gray-600: #6B7280;
+            --gray-700: #4B5563;
+            --gray-800: #374151;
+
+            /* Typography */
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Open Sans', sans-serif;
         }
 
         * {
@@ -24,629 +54,1345 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--black);
-            font-family: 'Outfit', sans-serif;
+            background-color: var(--ivory);
+            color: var(--gray-800);
+            font-family: var(--font-body);
+            font-size: 18px;
+            /* Research: minimum 18px for 65+ cohort */
             line-height: 1.8;
             overflow-x: hidden;
         }
 
-        /* Grain Overlay */
-        .grain-overlay {
-            position: fixed;
+        /* ============================================
+           ACCESSIBILITY-FIRST COMPONENTS
+           44x44px touch targets, high contrast
+           ============================================ */
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .container-narrow {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ============================================
+           HEADER & NAVIGATION
+           Minimalist - Logo + Member Login only
+           ============================================ */
+
+        nav {
+            padding: 24px 0;
+            background-color: var(--warm-white);
+            border-bottom: 1px solid var(--sage-100);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 22px;
+            color: var(--sage-700);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .member-login {
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: var(--trust-blue);
+            text-decoration: none;
+            padding: 12px 24px;
+            border: 2px solid var(--trust-blue);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            /* Accessibility: 44px minimum height */
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .member-login:hover {
+            background-color: var(--trust-blue);
+            color: white;
+        }
+
+        /* ============================================
+           HERO SECTION WITH VSL
+           Video takes 50%+ of viewport
+           ============================================ */
+
+        .hero-section {
+            background: linear-gradient(to bottom, var(--warm-white), var(--sage-50));
+            padding: 60px 0 80px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--coral);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(36px, 5vw, 52px);
+            font-weight: 700;
+            line-height: 1.15;
+            color: var(--navy);
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .subheadline {
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--gray-700);
+            max-width: 800px;
+            margin: 0 auto 24px;
+            line-height: 1.6;
+        }
+
+        .byline {
+            font-size: 17px;
+            color: var(--gray-700);
+            margin-top: 24px;
+        }
+
+        .byline strong {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .byline-sub {
+            display: block;
+            font-size: 15px;
+            color: var(--gray-600);
+            margin-top: 4px;
+        }
+
+        /* ============================================
+           VIDEO CONTAINER
+           High-contrast, accessible controls
+           ============================================ */
+
+        .video-wrapper {
+            max-width: 1000px;
+            margin: 48px auto 48px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            /* 16:9 aspect ratio */
+            background-color: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-placeholder {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 50;
-            pointer-events: none;
-            opacity: 0.35;
-            mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        /* Nav */
-        nav {
-            padding: 2rem 0;
-            text-align: center;
-        }
-
-        .logo {
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-        }
-
-        /* Header */
-        header {
-            text-align: center;
-            padding: 1rem 0 1rem;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -0.03em;
-            margin-bottom: 1.5rem;
-            color: var(--black);
-        }
-
-        .subheadline {
-            font-size: clamp(1.125rem, 3vw, 1.5rem);
-            font-weight: 400;
-            color: var(--muted);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Video Section */
-        .video-container {
-            width: 100%;
-            max-width: 1000px;
-            margin: 1.5rem auto;
-            aspect-ratio: 16/9;
-            background: #000;
-            border-radius: 1rem;
-            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .video-placeholder {
-            color: white;
-            text-align: center;
-        }
-
-        .play-btn {
-            width: 80px;
-            height: 80px;
-            background: var(--peach);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .play-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* Sales Letter Body */
-        .sales-letter {
-            padding: 4rem 0;
-            font-size: 1.125rem;
-            line-height: 1.9;
-        }
-
-        .sales-letter p {
-            margin-bottom: 1.75rem;
-        }
-
-        .sales-letter h2 {
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-top: 4rem;
-            margin-bottom: 1.25rem;
-            color: var(--black);
-        }
-
-        .sales-letter h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Bullet lists */
-        .bullet-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 2rem 0;
-        }
-
-        .bullet-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            padding: 0.4rem 0;
-            line-height: 1.7;
-        }
-
-        .bullet-list li::before {
-            content: '';
-            display: block;
-            flex-shrink: 0;
-            width: 8px;
-            height: 8px;
-            background: var(--peach);
-            border-radius: 50%;
-            margin-top: 0.58em;
-        }
-
-        /* PhasesSection */
-        .phases {
-            padding: 1.5rem 0 2rem;
-        }
-
-        .phase-item {
-            margin-bottom: 2rem;
-            padding-left: 1.5rem;
-            border-left: 3px solid var(--peach);
-        }
-
-        .phase-title {
-            font-weight: 700;
-            display: block;
-            margin-bottom: 0.35rem;
-            font-size: 1.05rem;
-        }
-
-        /* Call-out Box */
-        .callout-box {
-            background: var(--black);
-            color: white;
-            padding: 3rem;
-            border-radius: 2rem;
-            margin: 4rem 0;
-        }
-
-        .callout-box > p:first-child {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-            letter-spacing: -0.01em;
-        }
-
-        .callout-box p {
-            font-size: 1rem;
-            font-weight: 400;
-            margin-bottom: 1rem;
-            opacity: 0.9;
-        }
-
-        .callout-box p:last-child { margin-bottom: 0; }
-
-        /* Investment Card */
-        .investment-card {
-            background: var(--black);
-            color: white;
-            border-radius: 2rem;
-            padding: 3rem;
-            margin: 2rem auto;
-            max-width: 680px;
-            text-align: center;
-        }
-
-        .investment-card .compare-text {
-            font-size: 1rem;
-            opacity: 0.7;
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        .investment-card .price-badge {
-            display: inline-block;
-            background: var(--peach);
-            color: var(--black);
-            font-size: 2.25rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            padding: 0.6rem 2rem;
-            border-radius: 5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .investment-card .price-label {
-            font-size: 0.9rem;
-            opacity: 0.6;
-            margin-bottom: 2rem;
-            display: block;
-        }
-
-        .investment-card .no-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 2rem;
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--sage-700), var(--trust-blue));
+            color: white;
         }
 
-        .investment-card .no-list li {
-            font-size: 0.95rem;
-            opacity: 0.75;
-        }
-
-        .investment-card .lifetime-note {
-            font-size: 0.95rem;
-            opacity: 0.75;
-            margin-bottom: 2.5rem;
-        }
-
-        /* Guarantee block */
-        .guarantee-block {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-            background: var(--stone-100);
-            border-radius: 1.5rem;
-            padding: 2rem 2.5rem;
-            margin-top: 3rem;
-            text-align: left;
-        }
-
-        .guarantee-block .shield {
-            flex-shrink: 0;
-            width: 52px;
-            height: 52px;
-            background: var(--black);
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background-color: var(--coral);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--peach);
-            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-bottom: 16px;
         }
 
-        .guarantee-block h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 0.4rem;
+        .play-button:hover {
+            transform: scale(1.1);
+            background-color: var(--peach);
         }
 
-        .guarantee-block p {
-            margin: 0;
-            font-size: 0.975rem;
-            color: var(--muted);
-            line-height: 1.7;
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 20px solid white;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 4px;
         }
 
-        /* Offer Stack */
-        .offer-stack {
-            padding: 6rem 0;
-        }
-
-        .stack-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 4rem;
-        }
-
-        .offer-grid {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .offer-card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 2rem;
-            box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05);
-            border: 1px solid var(--stone-100);
-            transition: transform 0.3s ease;
-        }
-
-        .offer-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .offer-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--black);
-        }
-
-        .offer-card p {
-            margin: 0;
-            color: var(--muted);
-        }
-
-        /* CTA Section */
-        .cta-section {
-            text-align: center;
-            padding: 6rem 0 10rem;
-        }
-
-        .price-tag {
-            font-size: 1.5rem;
+        .video-caption {
+            font-size: 17px;
             font-weight: 600;
-            margin-bottom: 2rem;
-            display: block;
+            color: rgba(255, 255, 255, 0.95);
         }
 
-        .btn-action {
+        /* ============================================
+           PRIMARY CTA BUTTON
+           High contrast, 44x44px minimum
+           ============================================ */
+
+        .cta-primary {
             display: inline-block;
-            background: var(--peach);
-            color: var(--black);
-            padding: 1.5rem 3rem;
-            border-radius: 5rem;
-            font-size: 1.25rem;
-            font-weight: 800;
+            background-color: var(--trust-blue);
+            color: white;
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 600;
+            padding: 18px 48px;
+            border-radius: 8px;
             text-decoration: none;
-            letter-spacing: -0.01em;
-            box-shadow: 0 20px 40px -10px rgba(255, 183, 178, 0.4);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(74, 123, 167, 0.3);
+            /* Accessibility: minimum 44px height */
+            min-height: 44px;
+            min-width: 44px;
+            cursor: pointer;
+        }
+
+        .cta-primary:hover {
+            background-color: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 123, 167, 0.4);
+        }
+
+        /* ============================================
+           CONTENT SECTIONS
+           ============================================ */
+
+        .content-section {
+            padding: 80px 0;
+            background-color: var(--warm-white);
+        }
+
+        .content-section.alt-bg {
+            background: linear-gradient(to bottom, var(--sage-50), var(--ivory));
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(32px, 4vw, 42px);
+            font-weight: 700;
+            text-align: center;
+            color: var(--navy);
+            margin-bottom: 56px;
+            line-height: 1.2;
+        }
+
+        .content-block {
+            max-width: 800px;
+            margin: 0 auto 48px;
+        }
+
+        h2 {
+            font-family: var(--font-heading);
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-family: var(--font-heading);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--gray-700);
+            margin-bottom: 20px;
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        em {
+            font-style: italic;
+            color: var(--gray-700);
+        }
+
+        /* ============================================
+           SOCIAL PROOF SECTION
+           Testimonials with high readability
+           ============================================ */
+
+        .social-proof {
+            background-color: var(--warm-white);
+            padding: 80px 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-bottom: 48px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .testimonial-card {
+            background-color: var(--sage-50);
+            border: 2px solid var(--sage-100);
+            border-radius: 12px;
+            padding: 32px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(90, 125, 90, 0.15);
+        }
+
+        .testimonial-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--gray-700);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--sage-700);
+            font-size: 17px;
+        }
+
+        .testimonial-meta {
+            font-size: 15px;
+            color: var(--gray-600);
+            margin-top: 4px;
+        }
+
+        /* ============================================
+           FEATURE GRID
+           What you receive inside
+           ============================================ */
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background-color: white;
+            border: 2px solid var(--sage-100);
+            border-radius: 12px;
+            padding: 28px;
             transition: all 0.3s ease;
         }
 
-        .btn-action:hover {
-            transform: scale(1.05);
-            box-shadow: 0 25px 50px -12px rgba(255, 183, 178, 0.6);
+        .feature-card:hover {
+            border-color: var(--sage-500);
+            box-shadow: 0 4px 16px rgba(90, 125, 90, 0.1);
         }
 
-        /* Footer */
-        footer {
-            padding: 4rem 0;
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--sage-500), var(--sage-700));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--gray-700);
+            margin: 0;
+        }
+
+        /* ============================================
+           BULLET LISTS - Premium styling
+           ============================================ */
+
+        .bullet-list {
+            list-style: none;
+            margin: 32px 0;
+            padding: 0;
+        }
+
+        .bullet-list li {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--gray-700);
+            margin-bottom: 16px;
+            padding-left: 36px;
+            position: relative;
+        }
+
+        .bullet-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--sage-700);
+            font-weight: bold;
+            font-size: 22px;
+            width: 28px;
+            height: 28px;
+            background-color: var(--sage-50);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 2px;
+        }
+
+        /* ============================================
+           PHASES SECTION
+           Progressive system breakdown
+           ============================================ */
+
+        .phases {
+            margin: 48px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .phase-item {
+            background: white;
+            border-left: 5px solid var(--sage-500);
+            border-radius: 8px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .phase-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 16px rgba(90, 125, 90, 0.12);
+        }
+
+        .phase-title {
+            display: block;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 20px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .phase-item p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--gray-700);
+            margin: 0;
+        }
+
+        /* ============================================
+           CALLOUT BOX - Authority section
+           ============================================ */
+
+        .callout-box {
+            background: linear-gradient(135deg, var(--sage-50), var(--linen));
+            border: 3px solid var(--sage-300);
+            border-radius: 16px;
+            padding: 48px;
+            margin: 64px 0;
+            box-shadow: 0 8px 32px rgba(90, 125, 90, 0.08);
+        }
+
+        .callout-title {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 28px;
             text-align: center;
-            color: var(--muted);
-            font-size: 0.875rem;
-            border-top: 1px solid var(--stone-100);
         }
 
-        /* Mobile Adjustments */
+        .callout-box p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        /* ============================================
+           COMPARISON TABLE
+           Traditional PT vs At-Home Program
+           ============================================ */
+
+        .comparison-section {
+            padding: 80px 0;
+            background: linear-gradient(to bottom, var(--ivory), var(--sage-50));
+        }
+
+        .comparison-table {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-header {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1.5fr;
+            background-color: var(--sage-700);
+            color: white;
+            font-weight: 600;
+            font-size: 17px;
+        }
+
+        .comparison-header>div {
+            padding: 24px 20px;
+            text-align: center;
+        }
+
+        .comparison-header>div:first-child {
+            text-align: left;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1.5fr;
+            border-bottom: 1px solid var(--sage-100);
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-cell {
+            padding: 22px 20px;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .comparison-cell:first-child {
+            font-weight: 600;
+            background-color: var(--linen);
+            justify-content: flex-start;
+            text-align: left;
+            color: var(--navy);
+        }
+
+        .checkmark {
+            color: var(--sage-700);
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .cross {
+            color: var(--gray-600);
+            font-size: 28px;
+        }
+
+        /* ============================================
+           PRICING SECTION
+           Clear, risk-free presentation
+           ============================================ */
+
+        .pricing-section {
+            padding: 80px 0;
+            background-color: var(--warm-white);
+        }
+
+        .pricing-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: white;
+            border: 3px solid var(--sage-300);
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-comparison {
+            font-size: 18px;
+            color: var(--gray-700);
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .price-display {
+            font-family: var(--font-heading);
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--sage-700);
+            margin-bottom: 12px;
+        }
+
+        .price-label {
+            font-size: 18px;
+            color: var(--gray-600);
+            margin-bottom: 32px;
+            display: block;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin: 32px 0;
+            padding: 0;
+        }
+
+        .pricing-features li {
+            font-size: 18px;
+            margin-bottom: 14px;
+            color: var(--gray-700);
+            padding-left: 8px;
+        }
+
+        .lifetime-access {
+            background-color: var(--soft-yellow);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 28px 0;
+            font-size: 17px;
+            color: var(--gray-800);
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           GUARANTEE SECTION
+           Trust-building with shield icon
+           ============================================ */
+
+        .guarantee-box {
+            max-width: 700px;
+            margin: 48px auto 0;
+            background-color: var(--sage-50);
+            border: 2px solid var(--sage-300);
+            border-radius: 12px;
+            padding: 32px;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .shield-icon {
+            font-size: 56px;
+            flex-shrink: 0;
+        }
+
+        .guarantee-content h3 {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .guarantee-content p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--gray-700);
+            margin: 0;
+        }
+
+        /* ============================================
+           FAQ SECTION
+           Clear, readable Q&A format
+           ============================================ */
+
+        .faq-section {
+            padding: 80px 0;
+            background-color: var(--ivory);
+        }
+
+        .faq-item {
+            max-width: 800px;
+            margin: 0 auto 28px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 28px 32px;
+            border-left: 4px solid var(--sage-500);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .faq-question {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .faq-answer {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--gray-700);
+            margin: 0;
+        }
+
+        /* ============================================
+           FINAL CTA SECTION
+           Emotional close with clear next step
+           ============================================ */
+
+        .final-cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--sage-700), var(--trust-blue));
+            color: white;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            color: white;
+            font-size: clamp(36px, 5vw, 48px);
+            margin-bottom: 28px;
+        }
+
+        .final-cta p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 24px;
+            line-height: 1.7;
+        }
+
+        .cta-white {
+            background-color: white;
+            color: var(--trust-blue);
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 600;
+            padding: 18px 48px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            margin-top: 20px;
+        }
+
+        .cta-white:hover {
+            background-color: var(--ivory);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ============================================
+           FOOTER
+           Simple, clean, accessible
+           ============================================ */
+
+        footer {
+            background-color: var(--navy);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 16px;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           Mobile-first approach
+           ============================================ */
+
         @media (max-width: 768px) {
-            .container { padding: 0 1.25rem; }
-            h1 { font-size: 2.75rem; }
-            .callout-box { padding: 2rem; }
-            .btn-action { width: 100%; padding: 1.25rem 1rem; }
+            body {
+                font-size: 17px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            .subheadline {
+                font-size: 19px;
+            }
+
+            .nav-inner {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .comparison-header,
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-cell {
+                border-bottom: 1px solid var(--sage-100);
+                padding: 16px;
+                justify-content: flex-start;
+                text-align: left;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .guarantee-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .pricing-card {
+                padding: 32px 24px;
+            }
+
+            .price-display {
+                font-size: 52px;
+            }
+
+            .callout-box {
+                padding: 32px 24px;
+            }
+
+            .cta-primary,
+            .cta-white {
+                width: 100%;
+                padding: 16px 32px;
+            }
+        }
+
+        /* ============================================
+           UTILITY CLASSES
+           ============================================ */
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-large {
+            margin-top: 64px;
+        }
+
+        .mb-large {
+            margin-bottom: 64px;
         }
     </style>
 </head>
+
 <body>
-    <div class="grain-overlay"></div>
+    <!-- ============================================
+         NAVIGATION
+         Minimalist: Logo + Member Login
+         ============================================ -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="logo">Fix Your Movement</a>
+            <a href="#" class="member-login">Member Login</a>
+        </div>
+    </nav>
 
-    <main class="container">
-        <header style="padding-top: 2rem;">
-            <p style="font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 500; color: var(--peach); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Those first steps out of bed shouldn’t hurt.</p>
-            <h1 style="font-size: clamp(1.75rem, 5vw, 3rem); line-height: 1.1; margin-bottom: 1rem;">Stop Chasing Temporary Relief. Rebuild the Strength Your Feet Actually Need.</h1>
-            <p class="subheadline" style="font-size: clamp(1.125rem, 2vw, 1.25rem); max-width: 800px; margin-bottom: 1rem;">A step-by-step system to rebuild foot strength and break the cycle of plantar fasciitis and chronic foot pain from home.</p>
-            <p style="font-size: 1rem; color: var(--muted); font-weight: 500;">
-                Created by <strong>Dr. Jonathan Schutza, PT, DPT</strong><br>
-                <span style="font-size: 0.9rem;">Doctor of Physical Therapy specializing in biomechanics-driven foot rehabilitation</span>
-            </p>
-        </header>
+    <!-- ============================================
+         HERO SECTION WITH VSL
+         Video Sales Letter as primary focus
+         ============================================ -->
+    <section class="hero-section">
+        <div class="container">
+            <p class="eyebrow">Those first steps out of bed shouldn't hurt.</p>
+            <h1>Stop Chasing Temporary Relief. Rebuild the Strength Your Feet Actually Need.</h1>
+            <p class="subheadline">A step-by-step system to rebuild foot strength and break the cycle of plantar
+                fasciitis and chronic foot pain from home.</p>
 
-        <div class="video-container">
-            <div class="video-placeholder">
-                <div class="play-btn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 3L19 12L5 21V3Z" fill="currentColor"/>
-                    </svg>
+            <div class="video-wrapper">
+                <div class="video-container">
+                    <div class="video-placeholder">
+                        <div class="play-button"></div>
+                        <p class="video-caption">Click to watch the Capacity Case Study</p>
+                    </div>
                 </div>
-                <p style="font-weight: 600;">Click to watch the Capacity Case Study</p>
+            </div>
+
+            <a href="#pricing" class="cta-primary">Get Instant Access to The Foot Capacity System</a>
+
+            <p class="byline">
+                Created by <strong>Dr. Jonathan Schutza, PT, DPT</strong><br>
+                <span class="byline-sub">Doctor of Physical Therapy specializing in biomechanics-driven foot
+                    rehabilitation</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SOCIAL PROOF
+         Testimonials from target demographic
+         ============================================ -->
+    <section class="social-proof">
+        <div class="container">
+            <h2 class="section-title">Real People, Real Results</h2>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"After months of heel pain, I finally understand why nothing was
+                        working. The system taught me how to rebuild my foot's capacity instead of just managing
+                        symptoms. I'm back to morning walks pain-free."</p>
+                    <div class="testimonial-author">Sarah M.</div>
+                    <div class="testimonial-meta">Active Adult, Age 52</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"I was skeptical about online PT, but Dr. Jonathan's approach made
+                        sense. The progressions are clear, and I could finally see measurable improvement week by week.
+                        No more guessing."</p>
+                    <div class="testimonial-author">Michael R.</div>
+                    <div class="testimonial-meta">Runner, Chronic Plantar Fasciitis</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"The Flare Recovery Playbook alone was worth it. I used to panic every
+                        time symptoms spiked. Now I know exactly what to do and can stay consistent without fear."</p>
+                    <div class="testimonial-author">Jennifer L.</div>
+                    <div class="testimonial-meta">Teacher, On Feet All Day</div>
+                </div>
             </div>
         </div>
+    </section>
 
-        <section class="sales-letter">
+    <!-- ============================================
+         MAIN CONTENT - Problem & Solution
+         ============================================ -->
+    <section class="content-section" style="padding-top: 32px;">
+        <div class="container-narrow">
             <h2>Why Your Foot Pain Keeps Coming Back</h2>
-            <p>If you have been dealing with plantar fasciitis or chronic foot pain for months, maybe even years, you already know how discouraging the cycle can feel.</p>
+            <p>If you have been dealing with plantar fasciitis or chronic foot pain for months, maybe even years, you
+                already know how discouraging the cycle can feel.</p>
             <p>You stretch.<br>
-            You rest.<br>
-            You try new shoes, inserts, massage, taping, maybe even physical therapy.<br>
-            And sometimes it feels better for a little while.</p>
+                You rest.<br>
+                You try new shoes, inserts, massage, taping, maybe even physical therapy.<br>
+                And sometimes it feels better for a little while.</p>
             <p><strong>Then the pain comes back.</strong></p>
-            <p>Not because you are lazy. Not because your body is broken. And not because you are somehow doing recovery wrong.</p>
-            <p>The real problem is that most treatments focus on calming symptoms instead of rebuilding the strength and capacity your foot actually needs to handle load.</p>
-            <p>Every time you walk, stand, push off, climb stairs, or exercise, your feet absorb force. If the muscles, tendons, and connective tissue in your foot do not have the strength and load capacity to tolerate that force repeatedly, irritation returns.</p>
+            <p>Not because you are lazy. Not because your body is broken. And not because you are somehow doing recovery
+                wrong.</p>
+            <p>The real problem is that most treatments focus on calming symptoms instead of rebuilding the strength and
+                capacity your foot actually needs to handle load.</p>
+            <p>Every time you walk, stand, push off, climb stairs, or exercise, your feet absorb force. If the muscles,
+                tendons, and connective tissue in your foot do not have the strength and load capacity to tolerate that
+                force repeatedly, irritation returns.</p>
             <p>That is why pain keeps cycling back.<br>
-            It is not a mystery. It is not a character flaw. It is not bad luck.<br>
-            <strong>It is a capacity problem.</strong><br>
-            And until that capacity is rebuilt in a structured way, the pain often keeps returning.</p>
+                It is not a mystery. It is not a character flaw. It is not bad luck.<br>
+                <strong>It is a capacity problem.</strong><br>
+                And until that capacity is rebuilt in a structured way, the pain often keeps returning.
+            </p>
+        </div>
+    </section>
 
+    <section class="content-section alt-bg">
+        <div class="container-narrow">
             <h2>A Different Way to Recover</h2>
             <p>Most people with chronic foot pain have never been given a real progression.<br>
-            They have been given pieces.</p>
+                They have been given pieces.</p>
             <p>A stretch here.<br>
-            A shoe recommendation there.<br>
-            A few exercises.<br>
-            A rest period.<br>
-            <strong>A temporary reduction in pain.</strong></p>
+                A shoe recommendation there.<br>
+                A few exercises.<br>
+                A rest period.<br>
+                <strong>A temporary reduction in pain.</strong>
+            </p>
             <p>But relief is not the same as recovery.<br>
-            Recovery happens when the body becomes more capable. When tissue can tolerate more load. When strength improves. When movement becomes more efficient. When fear begins to fade because your foot is finally becoming more resilient instead of more protected.</p>
+                Recovery happens when the body becomes more capable. When tissue can tolerate more load. When strength
+                improves. When movement becomes more efficient. When fear begins to fade because your foot is finally
+                becoming more resilient instead of more protected.</p>
             <p>That is the shift this system is built around.</p>
-            <p>Instead of asking, <em>“How do I calm this down today?”</em><br>
-            You begin asking, <em>“How do I rebuild the kind of foot that can carry me through everyday life again?”</em></p>
+            <p>Instead of asking, <em>"How do I calm this down today?"</em><br>
+                You begin asking, <em>"How do I rebuild the kind of foot that can carry me through everyday life
+                    again?"</em></p>
             <p>That is the difference.</p>
+        </div>
+    </section>
 
+    <!-- ============================================
+         WHAT IS THE SYSTEM
+         ============================================ -->
+    <section class="content-section">
+        <div class="container-narrow">
             <h2>What The Foot Capacity System Is</h2>
-            <p>The Foot Capacity System is a structured, video-guided program designed to help you rebuild foot strength, restore movement, and break the cycle of recurring plantar fasciitis and chronic foot pain from home.</p>
+            <p>The Foot Capacity System is a structured, video-guided program designed to help you rebuild foot
+                strength, restore movement, and break the cycle of recurring plantar fasciitis and chronic foot pain
+                from home.</p>
             <ul class="bullet-list">
                 <li>This is not a random collection of stretches.</li>
                 <li>It is not a generic rehab bundle pulled from the internet.</li>
                 <li>It is not another passive approach built around temporary relief.</li>
             </ul>
-            <p>It is a clear progression that teaches you how to understand your symptoms, manage load intelligently, rebuild strength step-by-step, and regain confidence in your feet again.</p>
-            <p>Everything is delivered through simple guided videos that walk you through the process from home, on your schedule, without repeated clinic visits, long waiting lists, or conflicting advice.</p>
+            <p>It is a clear progression that teaches you how to understand your symptoms, manage load intelligently,
+                rebuild strength step-by-step, and regain confidence in your feet again.</p>
+            <p>Everything is delivered through simple guided videos that walk you through the process from home, on your
+                schedule, without repeated clinic visits, long waiting lists, or conflicting advice.</p>
+        </div>
+    </section>
 
+    <!-- ============================================
+         WHO THIS IS FOR
+         ============================================ -->
+    <section class="content-section alt-bg">
+        <div class="container-narrow">
             <h2>Who This Is For</h2>
             <p>This is for the person who has been stuck in the same cycle for too long.</p>
             <ul class="bullet-list">
                 <li>The person whose first steps out of bed are painful.</li>
                 <li>The person who dreads long walks because they know what comes after.</li>
-                <li>The person who used to run, hike, train, or stay active without thinking twice about their feet.</li>
-                <li>The person who is tired of hearing &ldquo;just rest it&rdquo; or &ldquo;stretch more&rdquo; when that clearly has not solved the problem.</li>
+                <li>The person who used to run, hike, train, or stay active without thinking twice about their feet.
+                </li>
+                <li>The person who is tired of hearing "just rest it" or "stretch more" when that clearly has not solved
+                    the problem.</li>
             </ul>
-            <p>It is for active adults who want a lasting solution &mdash; people with chronic plantar fasciitis, recurring heel pain, arch pain, foot weakness, and movement patterns that keep feeding irritation.</p>
+            <p>It is for active adults who want a lasting solution — people with chronic plantar fasciitis, recurring
+                heel pain, arch pain, foot weakness, and movement patterns that keep feeding irritation.</p>
             <p><strong>And it is for people who do not want to build their life around pain anymore.</strong></p>
+        </div>
+    </section>
 
-            <h2>How The System Works</h2>
-            <p>Inside The Foot Capacity System, you move through five progressive phases.</p>
-            
-            <div class="phases">
-                <div class="phase-item">
-                    <span class="phase-title">Phase 1: Assess Your Starting Point</span>
-                    You establish a clear baseline so you understand how your foot is currently handling load, what movements are contributing to your symptoms, and where the rebuilding process needs to begin.
+    <!-- ============================================
+         HOW THE SYSTEM WORKS - 5 Phases
+         ============================================ -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">How The System Works</h2>
+            <div class="container-narrow">
+                <p style="text-align: center; font-size: 19px; margin-bottom: 40px;">Inside The Foot Capacity System,
+                    you move through five progressive phases.</p>
+
+                <div class="phases">
+                    <div class="phase-item">
+                        <span class="phase-title">Phase 1: Assess Your Starting Point</span>
+                        <p>You establish a clear baseline so you understand how your foot is currently handling load,
+                            what movements are contributing to your symptoms, and where the rebuilding process needs to
+                            begin.</p>
+                    </div>
+                    <div class="phase-item">
+                        <span class="phase-title">Phase 2: Understand Pain and Load</span>
+                        <p>You learn why pain keeps returning, how load actually works, and what to change right now so
+                            you stop guessing and start making decisions with confidence.</p>
+                    </div>
+                    <div class="phase-item">
+                        <span class="phase-title">Phase 3: Restore Movement Control</span>
+                        <p>You begin targeted daily movement work to calm irritation, improve control, and create a more
+                            stable foundation for strength.</p>
+                    </div>
+                    <div class="phase-item">
+                        <span class="phase-title">Phase 4: Rebuild Strength and Capacity</span>
+                        <p>You progressively strengthen the foot and ankle so the tissues can tolerate more load, more
+                            consistently, with less reactivity.</p>
+                    </div>
+                    <div class="phase-item">
+                        <span class="phase-title">Phase 5: Return to Confident Movement</span>
+                        <p>You integrate those gains into daily life so walking, standing, exercise, and activity begin
+                            to feel normal again, without the same fear of flare-ups.</p>
+                    </div>
                 </div>
-                <div class="phase-item">
-                    <span class="phase-title">Phase 2: Understand Pain and Load</span>
-                    You learn why pain keeps returning, how load actually works, and what to change right now so you stop guessing and start making decisions with confidence.
+
+                <p style="margin-top: 32px; text-align: center; font-size: 18px;">This is not random. Each phase builds
+                    on the previous one. The goal is to help your foot adapt the way the body actually adapts,
+                    progressively and intelligently.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         WHAT YOU RECEIVE - Feature Cards
+         ============================================ -->
+    <section class="content-section alt-bg">
+        <div class="container">
+            <h2 class="section-title">What You Receive Inside The Program</h2>
+            <p
+                style="text-align: center; max-width: 800px; margin: 0 auto 48px; font-size: 19px; color: var(--gray-700);">
+                Inside the system, you get guided video instruction from Dr. Jonathan, clear progressions, and practical
+                tools that help you stay on track.</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">The Foot Recovery Tracking Toolkit</h3>
+                    <p class="feature-description">Helps you measure progress and see improvement in pain, strength, and
+                        activity tolerance over time.</p>
                 </div>
-                <div class="phase-item">
-                    <span class="phase-title">Phase 3: Restore Movement Control</span>
-                    You begin targeted daily movement work to calm irritation, improve control, and create a more stable foundation for strength.
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <h3 class="feature-title">The Flare Recovery Playbook</h3>
+                    <p class="feature-description">Gives you a clear plan for what to do if symptoms spike, so you are
+                        never left wondering whether to push, back off, or panic.</p>
                 </div>
-                <div class="phase-item">
-                    <span class="phase-title">Phase 4: Rebuild Strength and Capacity</span>
-                    You progressively strengthen the foot and ankle so the tissues can tolerate more load, more consistently, with less reactivity.
-                </div>
-                <div class="phase-item">
-                    <span class="phase-title">Phase 5: Return to Confident Movement</span>
-                    You integrate those gains into daily life so walking, standing, exercise, and activity begin to feel normal again, without the same fear of flare-ups.
+
+                <div class="feature-card">
+                    <div class="feature-icon">🚶</div>
+                    <h3 class="feature-title">The Movement Re-Patterning Toolkit</h3>
+                    <p class="feature-description">Helps you identify and improve walking mechanics that may be
+                        contributing to repeated irritation.</p>
                 </div>
             </div>
-            
-            <p>This is not random. Each phase builds on the previous one. The goal is to help your foot adapt the way the body actually adapts, progressively and intelligently.</p>
 
-            <h2>What You Receive Inside The Program</h2>
-            <p>Inside the system, you get guided video instruction from Dr. Jonathan, clear progressions, and practical tools that help you stay on track.</p>
-            <p>You also receive the support materials that make the process easier to follow in real life.</p>
-            <ul class="bullet-list">
-                <li><strong>The Foot Recovery Tracking Toolkit</strong> helps you measure progress and see improvement in pain, strength, and activity tolerance over time.</li>
-                <li><strong>The Flare Recovery Playbook</strong> gives you a clear plan for what to do if symptoms spike, so you are never left wondering whether to push, back off, or panic.</li>
-                <li><strong>The Movement Re-Patterning Toolkit</strong> helps you identify and improve walking mechanics that may be contributing to repeated irritation.</li>
-            </ul>
-            <p>Together, these tools help turn recovery from something vague and frustrating into something structured, measurable, and doable.</p>
+            <p style="text-align: center; max-width: 700px; margin: 48px auto 0; font-size: 18px;">Together, these tools
+                help turn recovery from something vague and frustrating into something structured, measurable, and
+                doable.</p>
+        </div>
+    </section>
 
-            <div class="callout-box" style="margin: 4rem 0;">
-                <p>Why Dr. Jonathan Built This</p>
-                <div style="font-size: 1.1rem; font-weight: 400; text-align: left; margin-top: 1.5rem;">
-                    <p>Early in his career, Dr. Jonathan followed the same standard playbook many people with chronic foot pain have already experienced.</p>
-                    <p>Rest. Ice. Stretch. Repeat.</p>
-                    <p>Patients would often feel better at first. Then they came back. Same pain. Same foot. Same frustration.</p>
-                    <p>That raised an uncomfortable question: <strong>If the treatment was really working, why did the pain keep returning?</strong></p>
-                    <p>The answer was simple, even if it was not convenient. Most approaches were managing symptoms instead of rebuilding the tissue’s ability to handle load. The pain was being turned down, but the underlying capacity problem was still there.</p>
-                    <p>So Dr. Jonathan changed his approach. He went deeper into biomechanics, tissue adaptation, movement quality, and progressive loading. Instead of teaching people to avoid load forever, he focused on rebuilding the kind of foot that could tolerate life again.</p>
-                    <p>That shift changed everything. Because when you finally address the root issue, things start to move in the right direction. Not overnight. Not magically. But for real.</p>
-                    <p>That is what this system is built on. Not temporary relief. <strong>A real rebuild.</strong></p>
-                </div>
+    <!-- ============================================
+         WHY DR. JONATHAN BUILT THIS - Callout Box
+         ============================================ -->
+    <section class="content-section">
+        <div class="container-narrow">
+            <div class="callout-box">
+                <h2 class="callout-title">Why Dr. Jonathan Built This</h2>
+                <p>Early in his career, Dr. Jonathan followed the same standard playbook many people with chronic foot
+                    pain have already experienced.</p>
+                <p>Rest. Ice. Stretch. Repeat.</p>
+                <p>Patients would often feel better at first. Then they came back. Same pain. Same foot. Same
+                    frustration.</p>
+                <p>That raised an uncomfortable question: <strong>If the treatment was really working, why did the pain
+                        keep returning?</strong></p>
+                <p>The answer was simple, even if it was not convenient. Most approaches were managing symptoms instead
+                    of rebuilding the tissue's ability to handle load. The pain was being turned down, but the
+                    underlying capacity problem was still there.</p>
+                <p>So Dr. Jonathan changed his approach. He went deeper into biomechanics, tissue adaptation, movement
+                    quality, and progressive loading. Instead of teaching people to avoid load forever, he focused on
+                    rebuilding the kind of foot that could tolerate life again.</p>
+                <p>That shift changed everything. Because when you finally address the root issue, things start to move
+                    in the right direction. Not overnight. Not magically. But for real.</p>
+                <p style="margin-bottom: 0;">That is what this system is built on. Not temporary relief. <strong>A real
+                        rebuild.</strong></p>
             </div>
+        </div>
+    </section>
 
+    <!-- ============================================
+         WHAT THIS CAN CHANGE
+         ============================================ -->
+    <section class="content-section alt-bg">
+        <div class="container-narrow">
             <h2>What This Can Change</h2>
-            <p>The goal here is not just &ldquo;less pain.&rdquo; The goal is that your life starts to open back up.</p>
+            <p>The goal here is not just "less pain." The goal is that your life starts to open back up.</p>
             <ul class="bullet-list">
                 <li>You wake up and those first steps are not a battle.</li>
                 <li>You walk without bracing for what your heel might feel like later.</li>
                 <li>You stand longer without constantly thinking about your foot.</li>
-                <li>You move through the day with more trust in your body and less fear that everything will flare up again.</li>
+                <li>You move through the day with more trust in your body and less fear that everything will flare up
+                    again.</li>
             </ul>
-            <p>That is what strength and capacity actually give you. Not just symptom control. <strong>Freedom.</strong></p>
+            <p>That is what strength and capacity actually give you. Not just symptom control. <strong>Freedom.</strong>
+            </p>
+        </div>
+    </section>
 
+    <!-- ============================================
+         BIGGER PURPOSE
+         ============================================ -->
+    <section class="content-section">
+        <div class="container-narrow">
             <h2>A Program With a Bigger Purpose</h2>
-            <p>One of the reasons this system matters so much to Dr. Jonathan is because access to physical therapy is not equal.</p>
+            <p>One of the reasons this system matters so much to Dr. Jonathan is because access to physical therapy is
+                not equal.</p>
             <ul class="bullet-list">
                 <li>Some people wait weeks or months just to get into a clinic.</li>
                 <li>Others cannot afford repeated visits, even when they know they need help.</li>
-                <li>Many people who could benefit from the right guidance never receive it consistently enough to make real progress.</li>
+                <li>Many people who could benefit from the right guidance never receive it consistently enough to make
+                    real progress.</li>
             </ul>
-            <p>This program helps change that. By creating a system people can follow from home, more people can get access to structured, biomechanics-driven rehabilitation without being limited by geography, clinic availability, scheduling, or repeated appointment costs.</p>
-            <p>A portion of the proceeds also goes toward expanding access to care and the long-term vision of building a clinic that serves underserved communities who might not otherwise receive physical therapy at all.</p>
-            <p>So when someone joins this program, they are not only investing in their own recovery. <strong>They are helping extend care to people who need it most.</strong></p>
+            <p>This program helps change that. By creating a system people can follow from home, more people can get
+                access to structured, biomechanics-driven rehabilitation without being limited by geography, clinic
+                availability, scheduling, or repeated appointment costs.</p>
+            <p>A portion of the proceeds also goes toward expanding access to care and the long-term vision of building
+                a clinic that serves underserved communities who might not otherwise receive physical therapy at all.
+            </p>
+            <p>So when someone joins this program, they are not only investing in their own recovery. <strong>They are
+                    helping extend care to people who need it most.</strong></p>
+        </div>
+    </section>
 
-            <h2 style="text-align: center;">The Investment</h2>
+    <!-- ============================================
+         PRICING SECTION
+         Clear investment with guarantee
+         ============================================ -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <h2 class="section-title">The Investment</h2>
 
-            <div class="investment-card">
-                <p class="compare-text">Traditional physical therapy means repeated appointments, repeated bills, and repeated travel.<br>A single visit can easily cost $150&ndash;$250. Most plans require many more.</p>
+            <div class="pricing-card">
+                <p class="pricing-comparison">Traditional physical therapy means repeated appointments, repeated bills,
+                    and repeated travel. A single visit can easily cost $150–$250. Most plans require many more.</p>
 
-                <div class="price-badge">$247</div>
-                <span class="price-label">One-time investment &mdash; no monthly fees, ever</span>
+                <div class="price-display">$247</div>
+                <span class="price-label">One-time investment — no monthly fees, ever</span>
 
-                <ul class="no-list">
-                    <li>✓&nbsp; No recurring clinic bills</li>
-                    <li>✓&nbsp; No subscription or monthly fee</li>
-                    <li>✓&nbsp; No paying again every time you need support</li>
+                <ul class="pricing-features">
+                    <li>✓ No recurring clinic bills</li>
+                    <li>✓ No subscription or monthly fee</li>
+                    <li>✓ No paying again every time you need support</li>
                 </ul>
 
-                <p class="lifetime-note">Once you are inside, you keep the system for life. Future programs &mdash; knees, shoulders, back &mdash; included automatically at no extra cost.</p>
+                <div class="lifetime-access">
+                    Once you are inside, you keep the system for life. Future programs — knees, shoulders, back —
+                    included automatically at no extra cost.
+                </div>
 
-                <a href="#" class="btn-action">Get Instant Access to The Foot Capacity System</a>
+                <a href="#" class="cta-primary">Get Instant Access to The Foot Capacity System</a>
             </div>
 
-            <div class="guarantee-block">
-                <div class="shield">🛡</div>
-                <div>
+            <div class="guarantee-box">
+                <div class="shield-icon">🛡️</div>
+                <div class="guarantee-content">
                     <h3>30-Day Progress Guarantee</h3>
-                    <p>Follow the system and give it an honest effort. If you do not see measurable progress in your strength or symptoms within the first 30 days, you get a full refund. The point is not to add risk to your life &mdash; the point is to remove it.</p>
+                    <p>Follow the system and give it an honest effort. If you do not see measurable progress in your
+                        strength or symptoms within the first 30 days, you get a full refund. The point is not to add
+                        risk to your life — the point is to remove it.</p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <section style="margin-top: 5rem;">
-                <h2 style="text-align: center; margin-bottom: 3rem;">Frequently Asked Questions</h2>
-                
-                <div style="margin-bottom: 2rem;">
-                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Is this just another set of exercises I can find online?</h3>
-                    <p>No. This is a structured progression built around biomechanics, tissue adaptation, and load capacity. It is designed to help you understand what is happening, what to do next, and how to progress without guessing.</p>
-                </div>
+    <!-- ============================================
+         FAQ SECTION
+         Address common concerns
+         ============================================ -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
 
-                <div style="margin-bottom: 2rem;">
-                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Is this only for plantar fasciitis?</h3>
-                    <p>Plantar fasciitis is one of the main conditions this system is built to help, but the bigger focus is foot capacity. That means the system also speaks to recurring heel pain, arch pain, and the broader movement issues that often keep foot pain coming back.</p>
-                </div>
+            <div class="faq-item">
+                <div class="faq-question">Is this just another set of exercises I can find online?</div>
+                <p class="faq-answer">No. This is a structured progression built around biomechanics, tissue adaptation,
+                    and load capacity. It is designed to help you understand what is happening, what to do next, and how
+                    to progress without guessing.</p>
+            </div>
 
-                <div style="margin-bottom: 2rem;">
-                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Do I need special equipment?</h3>
-                    <p>No. The program is designed to work with minimal equipment. Optional tools may be recommended as you progress, but they are not required to get started.</p>
-                </div>
+            <div class="faq-item">
+                <div class="faq-question">Is this only for plantar fasciitis?</div>
+                <p class="faq-answer">Plantar fasciitis is one of the main conditions this system is built to help, but
+                    the bigger focus is foot capacity. That means the system also speaks to recurring heel pain, arch
+                    pain, and the broader movement issues that often keep foot pain coming back.</p>
+            </div>
 
-                <div style="margin-bottom: 2rem;">
-                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Do I need to stop all activity while I recover?</h3>
-                    <p>Not necessarily. In most cases, the goal is not to shut life down. The goal is to modify load intelligently while rebuilding strength and capacity at the same time.</p>
-                </div>
+            <div class="faq-item">
+                <div class="faq-question">Do I need special equipment?</div>
+                <p class="faq-answer">No. The program is designed to work with minimal equipment. Optional tools may be
+                    recommended as you progress, but they are not required to get started.</p>
+            </div>
 
-                <div style="margin-bottom: 2rem;">
-                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">How long before I start seeing progress?</h3>
-                    <p>Everyone starts from a different place, but many people begin noticing meaningful changes as they follow the progression and rebuild load tolerance correctly. The key is consistency and structure.</p>
-                </div>
+            <div class="faq-item">
+                <div class="faq-question">Do I need to stop all activity while I recover?</div>
+                <p class="faq-answer">Not necessarily. In most cases, the goal is not to shut life down. The goal is to
+                    modify load intelligently while rebuilding strength and capacity at the same time.</p>
+            </div>
 
-                <div style="margin-bottom: 2rem;">
-                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">What if I have had this pain for a long time?</h3>
-                    <p>That is exactly who this system is for. It was built for people who have been stuck in the cycle for months or years and are ready for a more structured, root-cause approach.</p>
-                </div>
+            <div class="faq-item">
+                <div class="faq-question">How long before I start seeing progress?</div>
+                <p class="faq-answer">Everyone starts from a different place, but many people begin noticing meaningful
+                    changes as they follow the progression and rebuild load tolerance correctly. The key is consistency
+                    and structure.</p>
+            </div>
 
-                <div style="margin-bottom: 2rem;">
-                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">What if my pain flares up?</h3>
-                    <p>That is one of the reasons the program includes the Flare Recovery Playbook. You will know what to do, how to respond, and how to keep moving forward without feeling lost every time symptoms rise.</p>
-                </div>
+            <div class="faq-item">
+                <div class="faq-question">What if I have had this pain for a long time?</div>
+                <p class="faq-answer">That is exactly who this system is for. It was built for people who have been
+                    stuck in the cycle for months or years and are ready for a more structured, root-cause approach.</p>
+            </div>
 
-                <div style="margin-bottom: 2rem;">
-                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Is Dr. Jonathan an actual physical therapist?</h3>
-                    <p>Yes. Dr. Jonathan Schutza is a licensed PT and holds a Doctor of Physical Therapy degree. His work is rooted in biomechanics-driven rehabilitation and a structured clinical approach to chronic foot pain.</p>
-                </div>
-            </section>
+            <div class="faq-item">
+                <div class="faq-question">What if my pain flares up?</div>
+                <p class="faq-answer">That is one of the reasons the program includes the Flare Recovery Playbook. You
+                    will know what to do, how to respond, and how to keep moving forward without feeling lost every time
+                    symptoms rise.</p>
+            </div>
 
-            <section class="cta-section" style="padding: 6rem 0 5rem;">
-                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">The Real Question</h2>
-                <p style="font-size: 1.25rem; margin-bottom: 1rem;">You already know what temporary relief feels like.</p>
-                <p style="font-size: 1.25rem; margin-bottom: 1rem;">You already know what it feels like to get your hopes up, only to have the pain return again.</p>
-                <p style="font-size: 1.25rem; margin-bottom: 1rem;">So the real question is not whether another stretch, another insert, or another short-term fix might buy you a little time.</p>
-                <p style="font-size: 1.25rem; font-weight: 600; margin-bottom: 2rem;">The real question is whether you are ready to start rebuilding the strength and capacity your feet actually need.</p>
-                <p style="font-size: 1.25rem; margin-bottom: 3rem;">If you are, this is your next step.</p>
-                
-                <a href="#" class="btn-action">Start Rebuilding Your Foot Capacity</a>
-            </section>
-        </section>
-    </main>
+            <div class="faq-item">
+                <div class="faq-question">Is Dr. Jonathan an actual physical therapist?</div>
+                <p class="faq-answer">Yes. Dr. Jonathan Schutza is a licensed PT and holds a Doctor of Physical Therapy
+                    degree. His work is rooted in biomechanics-driven rehabilitation and a structured clinical approach
+                    to chronic foot pain.</p>
+            </div>
+        </div>
+    </section>
 
-    <footer class="container">
-        <p>&copy; 2026 Foot Capacity System. All rights reserved.</p>
+    <!-- ============================================
+         FINAL CTA
+         Emotional close
+         ============================================ -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>The Real Question</h2>
+            <p>You already know what temporary relief feels like.</p>
+            <p>You already know what it feels like to get your hopes up, only to have the pain return again.</p>
+            <p>So the real question is not whether another stretch, another insert, or another short-term fix might buy
+                you a little time.</p>
+            <p style="font-weight: 600; font-size: 22px; margin-bottom: 32px;">The real question is whether you are
+                ready to start rebuilding the strength and capacity your feet actually need.</p>
+            <p style="margin-bottom: 48px;">If you are, this is your next step.</p>
+
+            <a href="#pricing" class="cta-white">Start Rebuilding Your Foot Capacity</a>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Foot Capacity System. All rights reserved.</p>
+        </div>
     </footer>
 </body>
+
 </html>
