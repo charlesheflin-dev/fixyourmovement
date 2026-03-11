@@ -4,20 +4,8 @@ const request = context.request
 const url = new URL(request.url)
 const ua = request.headers.get("user-agent") || ""
 
-const canonicalHost = "fixyourmovement.com"
-
 /*
-FORCE CANONICAL DOMAIN
-
-*/
-
-if (url.hostname !== canonicalHost && url.hostname !== "localhost") {
-url.hostname = canonicalHost
-return Response.redirect(url.toString(), 301)
-}
-
-/*
-REMOVE TRAILING SLASH (except root)
+REMOVE TRAILING SLASH
 
 */
 
@@ -27,7 +15,7 @@ return Response.redirect(url.toString(), 301)
 }
 
 /*
-BLOCK OBVIOUS BAD BOTS
+BLOCK OBVIOUS BAD SEO BOTS
 
 */
 
@@ -46,7 +34,7 @@ return new Response("Forbidden", { status: 403 })
 }
 
 /*
-LOG LLM CRAWLERS
+LOG AI CRAWLERS
 
 */
 
@@ -61,14 +49,9 @@ const aiBots = [
 
 for (const bot of aiBots) {
 if (ua.includes(bot)) {
-console.log("AI crawler detected:", bot, url.pathname)
+console.log("AI crawler detected:", bot, url.hostname, url.pathname)
 }
 }
-
-/*
-CONTINUE NORMAL REQUEST
-
-*/
 
 return context.next()
 
