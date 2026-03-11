@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebuild Your Foot Capacity — Doctor-Designed System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FDFCF8;
+            --black: #292524;
+            --muted: #78716C;
+            --peach: #FFB7B2;
+            --stone-50: #FAFAF9;
+            --stone-100: #F5F5F4;
+            --stone-200: #E7E5E4;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--black);
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Grain Overlay */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0.35;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Nav */
+        nav {
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 1rem 0 1rem;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            color: var(--black);
+        }
+
+        .subheadline {
+            font-size: clamp(1.125rem, 3vw, 1.5rem);
+            font-weight: 400;
+            color: var(--muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Video Section */
+        .video-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 1.5rem auto;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 1rem;
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-placeholder {
+            color: white;
+            text-align: center;
+        }
+
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            background: var(--peach);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Sales Letter Body */
+        .sales-letter {
+            padding: 4rem 0;
+            font-size: 1.25rem;
+        }
+
+        .sales-letter p {
+            margin-bottom: 2rem;
+        }
+
+        .sales-letter p b:first-child {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.35rem;
+        }
+
+        /* PhasesSection */
+        .phases {
+            padding: 2rem 0;
+        }
+
+        .phase-item {
+            margin-bottom: 2.5rem;
+            padding-left: 2rem;
+            border-left: 2px solid var(--peach);
+        }
+
+        .phase-title {
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Call-out Box */
+        .callout-box {
+            background: var(--black);
+            color: white;
+            padding: 3rem;
+            border-radius: 2rem;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .callout-box p {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Offer Stack */
+        .offer-stack {
+            padding: 6rem 0;
+        }
+
+        .stack-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 4rem;
+        }
+
+        .offer-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .offer-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05);
+            border: 1px solid var(--stone-100);
+            transition: transform 0.3s ease;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .offer-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--black);
+        }
+
+        .offer-card p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 0 10rem;
+        }
+
+        .price-tag {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background: var(--peach);
+            color: var(--black);
+            padding: 1.5rem 3rem;
+            border-radius: 5rem;
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            box-shadow: 0 20px 40px -10px rgba(255, 183, 178, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px -12px rgba(255, 183, 178, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--stone-100);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .container { padding: 0 1.25rem; }
+            h1 { font-size: 2.75rem; }
+            .callout-box { padding: 2rem; }
+            .btn-action { width: 100%; padding: 1.25rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain-overlay"></div>
+
+    <main class="container">
+        <header style="padding-top: 2rem;">
+            <h1>Rebuild Your <br>Foot Capacity</h1>
+            <p class="subheadline">Stop chasing temporary relief. A doctor-designed, strength-based system to end the cycle of recurring foot pain and restore your movement.</p>
+        </header>
+
+        <div class="video-container">
+            <div class="video-placeholder">
+                <div class="play-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 3L19 12L5 21V3Z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <p style="font-weight: 600;">Click to watch the Capacity Case Study</p>
+            </div>
+        </div>
+
+        <section class="sales-letter">
+            <p><b>You have been told your feet are fragile.</b> For years, the "standard" advice for foot and ankle pain has been a loop of stretching, rest, and orthotics. If those worked, you wouldn't be reading this.</p>
+
+            <p><b>Pain is not a sign that you are "broken"—it is a signal that your load exceeds your capacity.</b> Think of your foot like a bridge. If you try to drive a semi-truck over a bridge built for bicycles, it doesn’t matter how much you "stretch" the steel or "rest" the pavement. The structure will fail every time because it lacks the capacity to handle the weight.</p>
+
+            <p><b>Most treatments focus on the truck (the pain). We focus on the bridge (the tissue).</b> As a Doctor of Physical Therapy, I have seen thousands of patients stuck in the "Passive Relief Trap." They use ice, massage, and expensive inserts to mask the symptoms, but they never address the underlying structural weakness. The moment they return to running, hiking, or even walking the dog, the pain returns.</p>
+
+            <p><b>The Foot Capacity System is the architectural blueprint for a resilient foundation.</b> This is not a collection of "foot hacks" or viral stretches. This is a structured, video-based progression rooted in biomechanical load tolerance. We are going to move you through three distinct phases of adaptation:</p>
+
+            <div class="phases">
+                <div class="phase-item">
+                    <span class="phase-title">Phase 1: The Load Audit</span>
+                    Identifying why your current movement exceeds your tissue's "budget".
+                </div>
+                <div class="phase-item">
+                    <span class="phase-title">Phase 2: Structural Priming</span>
+                    Re-educating the small muscles of the foot to accept load without flaring up.
+                </div>
+                <div class="phase-item">
+                    <span class="phase-title">Phase 3: Capacity Building</span>
+                    Progressive strengthening that turns fragile tissue into a durable, high-performance foundation.
+                </div>
+            </div>
+
+            <div class="callout-box">
+                <p>This is for the person who is "done" with temporary fixes. If you are looking for a magic pill or a 30-second stretch, this is not for you. But if you want to rebuild your body so it can handle the life you want to lead, I will show you exactly how to build that capacity.</p>
+            </div>
+        </section>
+
+        <section class="offer-stack">
+            <h2 class="stack-title">The Capacity Portal</h2>
+            <div class="offer-grid">
+                <div class="offer-card">
+                    <h3>The Flagship Capacity Video Vault</h3>
+                    <p>Every phase of the rebuild, explained with clinical precision and zero fluff.</p>
+                </div>
+                <div class="offer-card">
+                    <h3>The Progressive Load Tracker</h3>
+                    <p>A structured schedule so you never have to guess "how much is too much."</p>
+                </div>
+                <div class="offer-card">
+                    <h3>The "Flare-Up" Protocol</h3>
+                    <p>A specific emergency routine for those days when life demands more than your current capacity.</p>
+                </div>
+                <div class="offer-card">
+                    <h3>Lifetime Access to the Digital Portal</h3>
+                    <p>Your biomechanical library, available on any device, anywhere.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <span class="price-tag">One-time Investment: $247</span>
+            <a href="#" class="btn-action">START REBUILDING MY CAPACITY</a>
+        </section>
+    </main>
+
+    <footer class="container">
+        <p>&copy; 2026 Foot Capacity System. All rights reserved.</p>
+    </footer>
+</body>
+</html>
