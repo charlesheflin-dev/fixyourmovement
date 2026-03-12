@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 96%;
+    --foreground: 200 35% 16%;
+
+    --card: 40 33% 98%;
+    --card-foreground: 200 35% 16%;
+
+    --popover: 40 33% 98%;
+    --popover-foreground: 200 35% 16%;
+
+    --primary: 200 35% 26%;
+    --primary-foreground: 40 33% 96%;
+
+    --secondary: 100 12% 56%;
+    --secondary-foreground: 40 33% 98%;
+
+    --muted: 40 20% 92%;
+    --muted-foreground: 200 15% 40%;
+
+    --accent: 18 68% 70%;
+    --accent-foreground: 200 35% 16%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 200 35% 26%;
+
+    --radius: 0.75rem;
+
+    --sage: 100 12% 56%;
+    --sage-light: 100 12% 92%;
+    --ivory: 40 33% 96%;
+    --ivory-warm: 40 40% 98%;
+    --navy: 200 35% 26%;
+    --navy-deep: 200 40% 18%;
+    --coral: 18 68% 70%;
+    --coral-warm: 18 60% 78%;
+    --coral-deep: 18 72% 58%;
+
+    --shadow-video: 0 25px 60px -12px hsl(200 35% 26% / 0.25);
+    --shadow-card: 0 10px 40px -10px hsl(200 35% 26% / 0.1);
+    --shadow-cta: 0 8px 30px -4px hsl(18 68% 70% / 0.5);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    font-size: 18px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold tracking-tight;
+    line-height: 1.2;
+  }
+}
+
+@layer components {
+  .cta-button {
+    @apply inline-flex items-center justify-center font-display font-semibold text-lg rounded-2xl transition-all duration-300;
+    min-height: 72px;
+    min-width: 280px;
+    padding: 20px 48px;
+    background: linear-gradient(135deg, hsl(var(--coral)), hsl(var(--coral-deep)));
+    color: hsl(var(--ivory-warm));
+    box-shadow: var(--shadow-cta);
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 36px -4px hsl(18 68% 70% / 0.6);
+  }
+
+  .cta-button:active {
+    transform: translateY(0);
+  }
+
+  .video-container {
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-video);
+    overflow: hidden;
+    background: hsl(var(--navy-deep));
+  }
+
+  .section-card {
+    background: hsl(var(--card));
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-card);
+    border: 1px solid hsl(var(--border));
+  }
+
+  .trust-badge {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-body font-medium;
+    background: hsl(var(--sage-light));
+    color: hsl(var(--navy));
+  }
+}
