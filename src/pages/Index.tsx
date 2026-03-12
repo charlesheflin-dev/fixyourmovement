@@ -24,6 +24,7 @@ const Index = () => {
         <HeroSection />
         <VisualSystemMap />
         <ProblemSection />
+        <TestimonialSection />
         <SolutionSection />
         <WhatItIsSection />
         <DoctorCredibility />

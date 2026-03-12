@@ -1,22 +1,50 @@
 import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    type CarouselApi,
+} from "@/components/ui/carousel";
 
-const testimonials = [
-    {
-        quote: "I had plantar fasciitis for over a year. I tried orthotics, stretching, and rest. This was the first time someone explained why the pain kept coming back. The progression finally made sense.",
-    },
-    {
-        quote: "I was afraid to walk long distances because my heel would flare up later. After following the system consistently, I started trusting my foot again.",
-    },
-    {
-        quote: "Instead of guessing what exercises to do, I finally had a clear plan.",
-    },
+// Import testimonial images
+import testimonial1 from "@/assets/testimonials/1.jpg";
+import testimonial2 from "@/assets/testimonials/2.jpg";
+import testimonial3 from "@/assets/testimonials/3.jpg";
+import testimonial4 from "@/assets/testimonials/4.jpg";
+import testimonial5 from "@/assets/testimonials/5.jpg";
+import testimonial6 from "@/assets/testimonials/6.jpg";
+import testimonial7 from "@/assets/testimonials/7.jpg";
+
+const testimonialImages = [
+    testimonial1,
+    testimonial2,
+    testimonial3,
+    testimonial4,
+    testimonial5,
+    testimonial6,
+    testimonial7,
 ];
 
 const TestimonialSection = () => {
+    const [api, setApi] = useState<CarouselApi>();
+    const [isHovered, setIsHovered] = useState(false);
+
+    useEffect(() => {
+        if (!api) return;
+
+        const interval = setInterval(() => {
+            if (!isHovered) {
+                api.scrollNext();
+            }
+        }, 3000); // Auto-scroll every 3 seconds
+
+        return () => clearInterval(interval);
+    }, [api, isHovered]);
+
     return (
         <section className="py-8 md:py-12 bg-sage-light/30">
-            <div className="container mx-auto px-6 max-w-4xl">
+            <div className="container mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -32,25 +60,43 @@ const TestimonialSection = () => {
                     </p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-3 gap-6">
-                    {testimonials.map((testimonial, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: i * 0.15 }}
-                            className="section-card p-6 md:p-8 relative"
-                        >
-                            <div className="absolute top-4 left-4 opacity-10">
-                                <Quote className="w-8 h-8 text-sage" />
-                            </div>
-                            <p className="text-foreground font-body text-lg leading-relaxed italic pt-4">
-                                "{testimonial.quote}"
-                            </p>
-                        </motion.div>
-                    ))}
-                </div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    className="max-w-6xl mx-auto"
+                >
+                    <Carousel
+                        setApi={setApi}
+                        opts={{
+                            align: "start",
+                            loop: true,
+                        }}
+                        className="w-full"
+                    >
+                        <CarouselContent className="-ml-2 md:-ml-4">
+                            {testimonialImages.map((image, index) => (
+                                <CarouselItem
+                                    key={index}
+                                    className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3"
+                                >
+                                    <div className="p-1">
+                                        <div className="section-card overflow-hidden">
+                                            <img
+                                                src={image}
+                                                alt={`Testimonial ${index + 1}`}
+                                                className="w-full h-auto object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                    </Carousel>
+                </motion.div>
             </div>
         </section>
     );
