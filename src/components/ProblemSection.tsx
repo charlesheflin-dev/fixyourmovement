@@ -9,12 +9,21 @@ const ProblemSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-10"
         >
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
             Why Your Foot Pain Keeps Coming Back
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="section-card p-8 md:p-10 mb-10"
+        >
+          <p className="text-lg text-muted-foreground font-body leading-relaxed">
             If you have been dealing with plantar fasciitis or chronic foot pain for months, maybe even years, you already know how discouraging the cycle can feel. You stretch. You rest. You try new shoes, inserts, massage, taping, maybe even physical therapy. And sometimes it feels better for a little while. Then the pain comes back.
           </p>
         </motion.div>
@@ -24,7 +33,7 @@ const ProblemSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="space-y-5 text-lg text-muted-foreground font-body leading-relaxed mt-10"
+          className="space-y-5 text-lg text-muted-foreground font-body leading-relaxed"
         >
           <p>
             Not because you are lazy. Not because your body is broken. And not because you are somehow doing recovery wrong.
