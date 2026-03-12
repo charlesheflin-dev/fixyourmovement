@@ -14,7 +14,7 @@ const Header = () => {
           href="#"
           className="text-muted-foreground hover:text-primary transition-colors font-body text-base"
         >
-          Member Login
+          Patient Portal
         </a>
       </div>
     </header>
