@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import VideoSection from "@/components/VideoSection";
 import VisualSystemMap from "@/components/VisualSystemMap";
 import ProblemSection from "@/components/ProblemSection";
 import SolutionSection from "@/components/SolutionSection";
@@ -23,7 +22,6 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
-        <VideoSection />
         <VisualSystemMap />
         <ProblemSection />
         <SolutionSection />

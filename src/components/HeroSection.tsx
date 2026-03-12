@@ -3,7 +3,7 @@ import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+    <section className="relative pt-28 pb-8 md:pt-36 md:pb-12 overflow-hidden">
       <div className="absolute inset-0">
         <img src={heroBg} alt="" className="w-full h-full object-cover" loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/70 to-background" />
@@ -31,21 +31,36 @@ const HeroSection = () => {
             Those First Steps Out of Bed Shouldn't Hurt
           </h1>
 
-          <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-coral-deep italic mb-6 leading-snug">
+          <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-coral-deep italic mb-4 leading-snug">
             Stop Chasing Temporary Relief. Rebuild the Strength Your Feet Actually Need.
           </h2>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-body leading-relaxed">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 font-body leading-relaxed">
             A structured system designed to rebuild foot strength, restore tissue capacity,
             and break the cycle of plantar fasciitis and chronic foot pain from home.
           </p>
 
-          <a href="#video" className="cta-button animate-pulse-glow text-xl">
-            Start Rebuilding Your Foot Capacity Today
-          </a>
-          <p className="mt-4 text-muted-foreground text-base">
-            One-time purchase. Lifetime access.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="video-container aspect-video max-w-3xl mx-auto"
+          >
+            <div className="w-full h-full flex items-center justify-center bg-navy-deep relative rounded-xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-navy/90 to-navy-deep flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-coral/90 flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-coral transition-colors hover:scale-105 transform duration-200">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" className="ml-1">
+                      <path d="M8 5V19L19 12L8 5Z" fill="hsl(40, 33%, 96%)" />
+                    </svg>
+                  </div>
+                  <p className="text-primary-foreground/80 font-body text-base md:text-lg">
+                    Watch the Video
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
