@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const FinalCTA = () => {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-16 md:py-24 bg-sage-light/50">
       <div className="container mx-auto px-6 max-w-3xl text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -11,20 +11,24 @@ const FinalCTA = () => {
           transition={{ duration: 0.7 }}
         >
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-6 leading-tight">
-            You just want to walk, move, and live your day without that constant reminder of pain
+            The Real Question
           </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-10 leading-relaxed">
-            Stop chasing temporary relief. Start rebuilding the strength and capacity your 
-            feet actually need. Follow the program from home, on your own schedule.
-          </p>
+          <div className="space-y-5 text-lg text-muted-foreground font-body leading-relaxed max-w-xl mx-auto mb-10">
+            <p>You already know what temporary relief feels like.</p>
+            <p>
+              You already know what it feels like to get your hopes up, only to have the pain return again.
+            </p>
+            <p>
+              So the real question is not whether another stretch, another insert, or another short-term fix might buy you a little time.
+            </p>
+            <p className="text-foreground font-medium text-xl">
+              The real question is whether you are ready to start rebuilding the strength and capacity your feet actually need.
+            </p>
+            <p>If you are, this is your next step.</p>
+          </div>
           <a href="#pricing" className="cta-button animate-pulse-glow text-xl">
-            Start Your Recovery Today
+            Start Rebuilding Your Foot Capacity
           </a>
-          <p className="mt-6 text-muted-foreground italic font-display text-lg">
-            "I look forward to helping you take the first step toward stronger, healthier movement."
-            <br />
-            <span className="not-italic font-body text-base">— Dr. Jonathan, DPT</span>
-          </p>
         </motion.div>
       </div>
     </section>

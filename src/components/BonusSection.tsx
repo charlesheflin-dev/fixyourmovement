@@ -5,17 +5,17 @@ const bonuses = [
   {
     icon: ClipboardList,
     title: "Foot Recovery Tracking Toolkit",
-    desc: "Measure pain changes, track progress, and stay motivated with pain logs, progress tracking sheets, and recovery dashboards.",
+    desc: "Helps you measure progress and see improvement in pain, strength, and activity tolerance over time.",
   },
   {
     icon: Shield,
     title: "Flare Recovery Playbook",
-    desc: "A clear step-by-step plan when symptoms spike. Quick action guides and flare management tools so you never feel stuck or panicked.",
+    desc: "Gives you a clear plan for what to do if symptoms spike, so you are never left wondering whether to push, back off, or panic.",
   },
   {
     icon: Footprints,
     title: "Movement Re-Patterning Toolkit",
-    desc: "Identify faulty walking mechanics and retrain your movement patterns at home with gait analysis tools and guided correction strategies.",
+    desc: "Helps you identify and improve walking mechanics that may be contributing to repeated irritation.",
   },
 ];
 
@@ -28,15 +28,18 @@ const BonusSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-6"
         >
-          <span className="trust-badge mb-4 inline-flex">Included Free</span>
+          <span className="trust-badge mb-4 inline-flex">Included With The Program</span>
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5 mt-4">
-            Three specialized toolkits to support your recovery
+            What You Receive Inside The Program
           </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Inside the system, you get guided video instruction from Dr. Jonathan, clear progressions, and practical tools that help you stay on track.
+          </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 mt-10">
           {bonuses.map((bonus, i) => (
             <motion.div
               key={i}
@@ -54,6 +57,16 @@ const BonusSection = () => {
             </motion.div>
           ))}
         </div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="text-center text-muted-foreground text-lg mt-10 italic"
+        >
+          Together, these tools help turn recovery from something vague and frustrating into something structured, measurable, and doable.
+        </motion.p>
       </div>
     </section>
   );

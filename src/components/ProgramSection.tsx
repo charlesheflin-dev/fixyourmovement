@@ -3,28 +3,28 @@ import { motion } from "framer-motion";
 const phases = [
   {
     num: "1",
-    title: "Baseline Assessment",
-    desc: "Establish your starting point and identify the movement patterns contributing to your symptoms.",
+    title: "Assess Your Starting Point",
+    desc: "You establish a clear baseline so you understand how your foot is currently handling load, what movements are contributing to your symptoms, and where the rebuilding process needs to begin.",
   },
   {
     num: "2",
-    title: "Pain Triggers and Load Management",
-    desc: "Understand what triggers your pain and learn simple ways to manage load day-to-day.",
+    title: "Understand Pain and Load",
+    desc: "You learn why pain keeps returning, how load actually works, and what to change right now so you stop guessing and start making decisions with confidence.",
   },
   {
     num: "3",
-    title: "Daily Movement Foundation",
-    desc: "Introduce targeted daily movement to calm irritation and improve control.",
+    title: "Restore Movement Control",
+    desc: "You begin targeted daily movement work to calm irritation, improve control, and create a more stable foundation for strength.",
   },
   {
     num: "4",
-    title: "Progressive Strength and Mobility",
-    desc: "Systematically rebuild strength and mobility through guided exercises.",
+    title: "Rebuild Strength and Capacity",
+    desc: "You progressively strengthen the foot and ankle so the tissues can tolerate more load, more consistently, with less reactivity.",
   },
   {
     num: "5",
-    title: "Long-Term Resilience",
-    desc: "Integrate your gains so your foot stays strong and resilient long term.",
+    title: "Return to Confident Movement",
+    desc: "You integrate those gains into daily life so walking, standing, exercise, and activity begin to feel normal again — without the same fear of flare-ups.",
   },
 ];
 
@@ -37,16 +37,12 @@ const ProgramSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-6"
         >
-          <span className="trust-badge mb-4 inline-flex">Structured 5-Phase System</span>
+          <span className="trust-badge mb-4 inline-flex">Inside The Foot Capacity System</span>
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5 mt-4">
-            A clear path from pain to strength
+            You move through five progressive phases
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            This isn't a collection of random exercises. Each phase builds on the last, 
-            so your foot adapts gradually and safely.
-          </p>
         </motion.div>
 
         <div className="space-y-6">
@@ -79,8 +75,8 @@ const ProgramSection = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="text-center mt-12"
         >
-          <p className="text-muted-foreground text-lg mb-2">
-            Follow at home · On your schedule · Simple video instruction
+          <p className="text-muted-foreground text-lg italic">
+            This is not random. Each phase builds on the previous one. The goal is to help your foot adapt the way the body actually adapts — progressively and intelligently.
           </p>
         </motion.div>
       </div>

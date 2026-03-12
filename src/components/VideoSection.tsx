@@ -12,11 +12,8 @@ const VideoSection = () => {
           className="text-center mb-10"
         >
           <h2 className="font-display text-2xl md:text-3xl text-primary mb-4">
-            Watch this short presentation from Dr. Jonathan
+            Rebuild the strength and capacity your feet need to move without pain again.
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Learn why most treatments only give temporary relief — and what actually works.
-          </p>
         </motion.div>
 
         <motion.div
@@ -26,7 +23,6 @@ const VideoSection = () => {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="video-container aspect-video"
         >
-          {/* Placeholder for VSL video embed */}
           <div className="w-full h-full flex items-center justify-center bg-navy-deep relative">
             <div className="absolute inset-0 bg-gradient-to-br from-navy/90 to-navy-deep flex items-center justify-center">
               <div className="text-center">
@@ -36,7 +32,7 @@ const VideoSection = () => {
                   </svg>
                 </div>
                 <p className="text-primary-foreground/80 font-body text-lg">
-                  14-minute presentation
+                  VSL Video
                 </p>
               </div>
             </div>
@@ -51,10 +47,10 @@ const VideoSection = () => {
           className="text-center mt-10"
         >
           <a href="#pricing" className="cta-button text-xl">
-            Get the Foot Capacity System — $247
+            Start Rebuilding Your Foot Capacity
           </a>
           <p className="mt-4 text-muted-foreground text-base">
-            One-time investment · Lifetime access · No recurring fees
+            One-time purchase · Lifetime access
           </p>
         </motion.div>
       </div>

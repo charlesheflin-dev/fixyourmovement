@@ -3,7 +3,7 @@ const Footer = () => {
     <footer className="py-10 border-t border-border">
       <div className="container mx-auto px-6 max-w-4xl text-center">
         <p className="text-muted-foreground font-body text-base">
-          © {new Date().getFullYear()} The Foot Capacity System by Dr. Jonathan, DPT. All rights reserved.
+          © {new Date().getFullYear()} The Foot Capacity System by Dr. Jonathan Schutza, PT, DPT. All rights reserved.
         </p>
         <div className="mt-4 flex items-center justify-center gap-6 text-sm text-muted-foreground">
           <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
