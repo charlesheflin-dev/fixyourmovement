@@ -18,14 +18,14 @@ const HeroSection = () => {
           <div className="mb-6">
             <span className="trust-badge">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-sage">
-                <path d="M8 1L10 5.5L15 6L11.5 9.5L12.5 14.5L8 12L3.5 14.5L4.5 9.5L1 6L6 5.5L8 1Z" fill="currentColor"/>
+                <path d="M8 1L10 5.5L15 6L11.5 9.5L12.5 14.5L8 12L3.5 14.5L4.5 9.5L1 6L6 5.5L8 1Z" fill="currentColor" />
               </svg>
               Created by Dr. Jonathan Schutza, PT, DPT
             </span>
           </div>
 
           <h1 className="font-display text-3xl md:text-5xl lg:text-[3.5rem] font-bold text-primary leading-tight mb-4">
-            Those first steps out of bed shouldn't hurt.
+            Those First Steps Out of Bed Shouldn't Hurt
           </h1>
 
           <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-coral-deep italic mb-8 leading-snug">
@@ -33,17 +33,20 @@ const HeroSection = () => {
           </h2>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 font-body leading-relaxed">
-            A step-by-step system to rebuild foot strength and break the cycle of plantar fasciitis 
-            and chronic foot pain — from home.
+            A structured system designed to rebuild foot strength, restore tissue capacity,
+            and break the cycle of plantar fasciitis and chronic foot pain from home.
           </p>
 
           <p className="text-base text-muted-foreground max-w-xl mx-auto mb-10 font-body">
-            Doctor of Physical Therapy specializing in biomechanics-driven foot rehabilitation
+            Doctor of Physical Therapy specializing in biomechanics-driven foot rehabilitation.
           </p>
 
           <a href="#video" className="cta-button animate-pulse-glow text-xl">
-            Watch the Free Presentation
+            Start Rebuilding Your Foot Capacity
           </a>
+          <p className="mt-4 text-muted-foreground text-base">
+            One-time purchase. Lifetime access.
+          </p>
         </motion.div>
       </div>
     </section>

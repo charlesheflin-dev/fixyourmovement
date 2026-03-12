@@ -9,35 +9,27 @@ import {
 const faqs = [
   {
     q: "Is this just another set of exercises I can find online?",
-    a: "No. This is a structured progression built around biomechanics, tissue adaptation, and load capacity. It is designed to help you understand what is happening, what to do next, and how to progress without guessing.",
+    a: "No. This is a structured rehabilitation progression built around biomechanics, tissue adaptation, and progressive load tolerance.",
   },
   {
     q: "Is this only for plantar fasciitis?",
-    a: "Plantar fasciitis is one of the main conditions this system is built to help, but the bigger focus is foot capacity. That means the system also speaks to recurring heel pain, arch pain, and the broader movement issues that often keep foot pain coming back.",
+    a: "Plantar fasciitis is one of the primary conditions addressed, but the system focuses on rebuilding foot capacity more broadly.",
   },
   {
     q: "Do I need special equipment?",
-    a: "No. The program is designed to work with minimal equipment. Optional tools may be recommended as you progress, but they are not required to get started.",
+    a: "No. Most exercises require minimal equipment.",
   },
   {
-    q: "Do I need to stop all activity while I recover?",
-    a: "Not necessarily. In most cases, the goal is not to shut life down. The goal is to modify load intelligently while rebuilding strength and capacity at the same time.",
+    q: "Do I need to stop activity completely?",
+    a: "Not usually. The goal is intelligent load modification while rebuilding strength.",
   },
   {
-    q: "How long before I start seeing progress?",
-    a: "Everyone starts from a different place, but many people begin noticing meaningful changes as they follow the progression and rebuild load tolerance correctly. The key is consistency and structure.",
-  },
-  {
-    q: "What if I have had this pain for a long time?",
-    a: "That is exactly who this system is for. It was built for people who have been stuck in the cycle for months or years and are ready for a more structured, root-cause approach.",
-  },
-  {
-    q: "What if my pain flares up?",
-    a: "That is one of the reasons the program includes the Flare Recovery Playbook. You will know what to do, how to respond, and how to keep moving forward without feeling lost every time symptoms rise.",
+    q: "How long before I see progress?",
+    a: "Many participants notice improvements as they consistently follow the progression and rebuild load tolerance.",
   },
   {
     q: "Is Dr. Jonathan an actual physical therapist?",
-    a: "Yes. Dr. Jonathan Schutza is a licensed PT and holds a Doctor of Physical Therapy degree. His work is rooted in biomechanics-driven rehabilitation and a structured clinical approach to chronic foot pain.",
+    a: "Yes. Dr. Jonathan Schutza is a licensed PT with a Doctor of Physical Therapy degree specializing in biomechanics-driven rehabilitation.",
   },
 ];
 

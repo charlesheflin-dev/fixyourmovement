@@ -15,7 +15,7 @@ const ProblemSection = () => {
             Why Your Foot Pain Keeps Coming Back
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-            If you have been dealing with plantar fasciitis or chronic foot pain for months — maybe even years — you already know how discouraging the cycle can feel.
+            If you have been dealing with plantar fasciitis or chronic foot pain for months, maybe even years, you already know how discouraging the cycle can feel. You stretch. You rest. You try new shoes, inserts, massage, taping, maybe even physical therapy. And sometimes it feels better for a little while. Then the pain comes back.
           </p>
         </motion.div>
 
@@ -23,24 +23,8 @@ const ProblemSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="section-card p-8 md:p-10 mb-8"
-        >
-          <div className="space-y-4 text-lg text-muted-foreground font-body leading-relaxed">
-            <p>You stretch.</p>
-            <p>You rest.</p>
-            <p>You try new shoes, inserts, massage, taping, maybe even physical therapy.</p>
-            <p>And sometimes it feels better — for a little while.</p>
-            <p className="text-foreground font-medium">Then the pain comes back.</p>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="space-y-5 text-lg text-muted-foreground font-body leading-relaxed"
+          className="space-y-5 text-lg text-muted-foreground font-body leading-relaxed mt-10"
         >
           <p>
             Not because you are lazy. Not because your body is broken. And not because you are somehow doing recovery wrong.
@@ -62,7 +46,7 @@ const ProblemSection = () => {
           className="section-card p-8 md:p-10 mt-10 text-center border-l-4 border-coral"
         >
           <p className="text-xl md:text-2xl font-display text-primary italic leading-relaxed">
-            It is not a mystery. It is not a character flaw. It is not bad luck.
+            It is not a mystery. It is not bad luck.
           </p>
           <p className="mt-4 text-xl md:text-2xl font-display text-coral-deep font-semibold">
             It is a capacity problem.

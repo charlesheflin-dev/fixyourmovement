@@ -2,11 +2,11 @@ import { motion } from "framer-motion";
 import { Check, Shield } from "lucide-react";
 
 const included = [
-  "Complete 5-phase structured program",
+  "Complete 3-phase structured program",
   "Guided video instruction from Dr. Jonathan",
-  "Foot Recovery Tracking Toolkit",
-  "Flare Recovery Playbook",
-  "Movement Re-Patterning Toolkit",
+  "The Foot Recovery Tracking Toolkit",
+  "The Flare Recovery Playbook",
+  "The Movement Re-Patterning Toolkit",
   "Lifetime access — no recurring fees",
   "Future programs added at no extra cost",
 ];
@@ -27,10 +27,10 @@ const PricingSection = () => {
           </h2>
           <div className="space-y-4 text-muted-foreground text-lg max-w-xl mx-auto font-body leading-relaxed">
             <p>
-              Traditional physical therapy often means repeated appointments, repeated scheduling, repeated travel, and repeated bills.
+              Traditional physical therapy often means repeated appointments, travel time, and repeated bills.
             </p>
             <p>
-              One visit alone can easily cost $150 to $250 or more. And many treatment plans involve multiple sessions.
+              One visit alone can cost $150 to $250 or more. And many treatment plans require multiple visits.
             </p>
           </div>
         </motion.div>
@@ -44,19 +44,21 @@ const PricingSection = () => {
         >
           <div className="text-center mb-8">
             <p className="text-muted-foreground text-lg mb-2 font-body">
-              Structured, doctor-led guidance from home
+              The Foot Capacity System gives you structured, doctor-guided rehabilitation from home for a one-time investment of
             </p>
-            <div className="flex items-baseline justify-center gap-2">
+            <div className="flex items-baseline justify-center gap-2 mt-4">
               <span className="font-display text-5xl md:text-6xl font-bold text-primary">$247</span>
-              <span className="text-muted-foreground text-lg">one-time</span>
             </div>
-            <div className="mt-4 space-y-1 text-muted-foreground font-body">
-              <p>No recurring clinic bills.</p>
-              <p>No monthly fee.</p>
+            <div className="mt-6 space-y-1 text-muted-foreground font-body">
+              <p>No recurring fees.</p>
+              <p>No clinic bills.</p>
               <p>No paying again every time you need support.</p>
             </div>
             <p className="text-sage font-medium mt-4 text-lg">
               Once you are inside, you keep the system for life.
+            </p>
+            <p className="text-muted-foreground mt-2 text-base">
+              Future programs added for knees, shoulders, back, and other areas of the body will be included automatically at no additional cost.
             </p>
           </div>
 
@@ -98,10 +100,11 @@ const PricingSection = () => {
           <div className="space-y-4 text-muted-foreground text-lg font-body leading-relaxed max-w-lg mx-auto">
             <p>This program is built around a real clinical process, not vague promises.</p>
             <p>
-              If you follow the system and give it an honest effort, and you do not see measurable progress in your strength or symptoms within the first 30 days, you get a full refund.
+              If you follow the system and give it an honest effort, and you do not see measurable improvement within the first 30 days, you can request a full refund.
             </p>
             <p className="text-foreground font-medium">Simple.</p>
-            <p>The point is not to add risk to your life.</p>
+            <p>The goal is not to add risk to your life.</p>
+            <p className="text-foreground font-medium text-xl mt-2">The goal is to remove it.</p>
           </div>
         </motion.div>
       </div>

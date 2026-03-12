@@ -23,8 +23,8 @@ const TransformationSection = () => {
           transition={{ duration: 0.5 }}
           className="space-y-5 text-lg text-muted-foreground font-body leading-relaxed"
         >
-          <p>The goal here is not just "less pain."</p>
-          <p className="text-foreground font-medium text-xl">The goal is that your life starts to open back up.</p>
+          <p>The goal here is not just less pain.</p>
+          <p className="text-foreground font-medium text-xl">The goal is that your life begins to open back up.</p>
           <p>
             You wake up and those first steps are not a battle. You walk without bracing for what your heel might feel like later. You stand longer without constantly thinking about your foot. You move through the day with more trust in your body and less fear that everything will flare up again.
           </p>

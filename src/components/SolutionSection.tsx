@@ -51,9 +51,7 @@ const SolutionSection = () => {
             Recovery happens when the body becomes more capable. When tissue can tolerate more load. When strength improves. When movement becomes more efficient. When fear begins to fade because your foot is finally becoming more resilient instead of more protected.
           </p>
 
-          <p>That is the shift this system is built around.</p>
-
-          <div className="section-card p-8 md:p-10 border-l-4 border-sage">
+          <div className="section-card p-8 md:p-10 border-l-4 border-sage mt-6">
             <p className="text-foreground font-body text-lg italic mb-4">
               Instead of asking, "How do I calm this down today?"
             </p>
@@ -61,6 +59,8 @@ const SolutionSection = () => {
               You begin asking, "How do I rebuild the kind of foot that can carry me through everyday life again?"
             </p>
           </div>
+
+          <p className="mt-6">That is the shift this system is built around.</p>
         </motion.div>
       </div>
     </section>

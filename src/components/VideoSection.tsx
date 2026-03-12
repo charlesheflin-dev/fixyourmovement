@@ -11,9 +11,7 @@ const VideoSection = () => {
           transition={{ duration: 0.7 }}
           className="text-center mb-10"
         >
-          <h2 className="font-display text-2xl md:text-3xl text-primary mb-4">
-            Rebuild the strength and capacity your feet need to move without pain again.
-          </h2>
+          <span className="trust-badge mb-4 inline-flex">Watch to Learn More</span>
         </motion.div>
 
         <motion.div
@@ -49,9 +47,6 @@ const VideoSection = () => {
           <a href="#pricing" className="cta-button text-xl">
             Start Rebuilding Your Foot Capacity
           </a>
-          <p className="mt-4 text-muted-foreground text-base">
-            One-time purchase · Lifetime access
-          </p>
         </motion.div>
       </div>
     </section>

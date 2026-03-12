@@ -3,28 +3,18 @@ import { motion } from "framer-motion";
 const phases = [
   {
     num: "1",
-    title: "Assess Your Starting Point",
-    desc: "You establish a clear baseline so you understand how your foot is currently handling load, what movements are contributing to your symptoms, and where the rebuilding process needs to begin.",
+    title: "Phase 1: Calm the Tissue & Restore Motion (Weeks 1–3)",
+    desc: "The first step is creating the right environment for recovery. In this phase you reduce symptom irritability, restore joint mobility in the foot and ankle, and begin gentle loading of the foot. Many people with plantar heel pain have mobility restrictions that alter how force moves through the foot. Restoring motion improves how the body distributes load during walking and activity.",
   },
   {
     num: "2",
-    title: "Understand Pain and Load",
-    desc: "You learn why pain keeps returning, how load actually works, and what to change right now so you stop guessing and start making decisions with confidence.",
+    title: "Phase 2: Rebuild Foot Capacity (Weeks 4–8)",
+    desc: "Once movement improves, the focus shifts to strength. This phase targets the muscles that support the arch and control loading through the foot. Training focuses on strengthening intrinsic foot stabilizers, flexor hallucis muscles, abductor hallucis, tibialis posterior, and the calf complex. As strength improves, the foot becomes more capable of tolerating everyday activity without recurring irritation.",
   },
   {
     num: "3",
-    title: "Restore Movement Control",
-    desc: "You begin targeted daily movement work to calm irritation, improve control, and create a more stable foundation for strength.",
-  },
-  {
-    num: "4",
-    title: "Rebuild Strength and Capacity",
-    desc: "You progressively strengthen the foot and ankle so the tissues can tolerate more load, more consistently, with less reactivity.",
-  },
-  {
-    num: "5",
-    title: "Return to Confident Movement",
-    desc: "You integrate those gains into daily life so walking, standing, exercise, and activity begin to feel normal again — without the same fear of flare-ups.",
+    title: "Phase 3: Restore Whole-Leg Resilience (Weeks 9–12)",
+    desc: "Foot pain rarely exists in isolation. Weakness or instability in the hips, knees, or lower leg can increase stress on plantar tissues. This final phase integrates the entire lower limb so the body functions as a coordinated system. Training includes single-leg strength patterns, dynamic balance work, progressive load tolerance, and walking and activity progression. By the end of this phase, your body is prepared for real-world demands again.",
   },
 ];
 
@@ -39,10 +29,12 @@ const ProgramSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-6"
         >
-          <span className="trust-badge mb-4 inline-flex">Inside The Foot Capacity System</span>
-          <h2 className="font-display text-2xl md:text-4xl text-primary mb-5 mt-4">
-            You move through five progressive phases
+          <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
+            How the System Works
           </h2>
+          <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
+            Inside The Foot Capacity System, you follow a structured 12-week rehabilitation progression designed to rebuild strength and restore load tolerance safely. Each phase builds on the previous one.
+          </p>
         </motion.div>
 
         <div className="space-y-6">
@@ -68,17 +60,7 @@ const ProgramSection = () => {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="text-center mt-12"
-        >
-          <p className="text-muted-foreground text-lg italic">
-            This is not random. Each phase builds on the previous one. The goal is to help your foot adapt the way the body actually adapts — progressively and intelligently.
-          </p>
-        </motion.div>
+
       </div>
     </section>
   );
