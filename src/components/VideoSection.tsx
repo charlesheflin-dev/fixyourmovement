@@ -5,20 +5,10 @@ const VideoSection = () => {
     <section id="video" className="py-8 md:py-12">
       <div className="container mx-auto px-6 max-w-4xl">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-10"
-        >
-          <span className="trust-badge mb-4 inline-flex">Watch to Learn More</span>
-        </motion.div>
-
-        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.7, delay: 0.2 }}
+          transition={{ duration: 0.7 }}
           className="video-container aspect-video"
         >
           <div className="w-full h-full flex items-center justify-center bg-navy-deep relative">
@@ -42,7 +32,7 @@ const VideoSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center mt-10"
+          className="text-center mt-4"
         >
           <a href="#pricing" className="cta-button text-xl">
             Start Rebuilding Your Foot Capacity Today
