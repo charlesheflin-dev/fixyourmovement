@@ -42,7 +42,7 @@ const HeroSection = () => {
           </p>
 
           <a href="#video" className="cta-button animate-pulse-glow text-xl">
-            Start Rebuilding Your Foot Capacity
+            Start Rebuilding Your Foot Capacity Today
           </a>
           <p className="mt-4 text-muted-foreground text-base">
             One-time purchase. Lifetime access.

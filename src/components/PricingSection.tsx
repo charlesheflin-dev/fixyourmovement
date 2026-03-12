@@ -74,8 +74,11 @@ const PricingSection = () => {
           </div>
 
           <div className="text-center">
+            <p className="text-foreground font-medium text-lg mb-6 max-w-lg mx-auto">
+              Plantar fasciitis develops when the load on your foot exceeds the tissue's capacity.
+            </p>
             <a href="#" className="cta-button animate-pulse-glow text-xl">
-              Get Instant Access to The Foot Capacity System
+              Get Instant Access to The Foot Capacity System Today
             </a>
             <p className="mt-4 text-muted-foreground text-base">
               Secure checkout · Instant access · No subscription

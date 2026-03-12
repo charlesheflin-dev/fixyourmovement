@@ -27,7 +27,7 @@ const FinalCTA = () => {
             <p>If you are, this is your next step.</p>
           </div>
           <a href="#pricing" className="cta-button animate-pulse-glow text-xl">
-            Start Rebuilding Your Foot Capacity
+            Start Rebuilding Your Foot Capacity Today
           </a>
         </motion.div>
       </div>

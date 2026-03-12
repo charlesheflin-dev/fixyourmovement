@@ -45,7 +45,7 @@ const VideoSection = () => {
           className="text-center mt-10"
         >
           <a href="#pricing" className="cta-button text-xl">
-            Start Rebuilding Your Foot Capacity
+            Start Rebuilding Your Foot Capacity Today
           </a>
         </motion.div>
       </div>
