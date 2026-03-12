@@ -13,7 +13,7 @@ const included = [
 
 const PricingSection = () => {
   return (
-    <section id="pricing" className="py-16 md:py-24 bg-primary/[0.03]">
+    <section id="pricing" className="py-8 md:py-12 bg-primary/[0.03]">
       <div className="container mx-auto px-6 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -3,7 +3,7 @@ import programImage from "@/assets/12-week-program.png";
 
 const VisualSystemMap = () => {
     return (
-        <section className="py-16 md:py-24 bg-sage-light/30">
+        <section className="py-8 md:py-12 bg-sage-light/30">
             <div className="container mx-auto px-6 max-w-4xl">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
