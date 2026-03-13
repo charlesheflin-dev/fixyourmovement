@@ -57,9 +57,6 @@ const PricingSection = () => {
             <p className="text-sage font-medium mt-4 text-lg">
               Once you are inside, you keep the system for life.
             </p>
-            <p className="text-muted-foreground mt-2 text-base">
-              Future programs added for knees, shoulders, back, and other areas of the body will be included automatically at no additional cost.
-            </p>
           </div>
 
           <div className="space-y-4 mb-10 max-w-md mx-auto">
