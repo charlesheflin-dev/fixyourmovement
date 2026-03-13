@@ -61,6 +61,26 @@ const HeroSection = () => {
               </div>
             </div>
           </motion.div>
+
+          {/* Checkout Button Below Video */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="mt-8"
+          >
+            <a
+              href="https://whop.com/checkout/plan_Kb2UZ3Iqj7Vn9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-button animate-pulse-glow text-xl"
+            >
+              Get Instant Access to The Foot Capacity System Today
+            </a>
+            <p className="mt-4 text-muted-foreground text-base">
+              Secure checkout · Instant access · No subscription
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -77,7 +77,12 @@ const PricingSection = () => {
             <p className="text-foreground font-medium text-lg mb-6 max-w-lg mx-auto">
               Plantar fasciitis develops when the load on your foot exceeds the tissue's capacity.
             </p>
-            <a href="#" className="cta-button animate-pulse-glow text-xl">
+            <a
+              href="https://whop.com/checkout/plan_Kb2UZ3Iqj7Vn9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-button animate-pulse-glow text-xl"
+            >
               Get Instant Access to The Foot Capacity System Today
             </a>
             <p className="mt-4 text-muted-foreground text-base">

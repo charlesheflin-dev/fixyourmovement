@@ -34,22 +34,19 @@ const DrJonathanSection = () => {
 
           <div className="section-card p-8 md:p-10 text-center border-l-4 border-coral mt-6 mb-6">
             <p className="text-xl md:text-2xl font-display text-primary italic leading-relaxed">
-              If the treatment was working, why did the pain keep returning?
+              Why were so many people going through the same cycle of temporary relief without actually rebuilding their foot's capacity?
             </p>
           </div>
 
-          <p>The answer became clear.</p>
           <p>
-            Most approaches were managing symptoms instead of rebuilding the tissue's ability to tolerate load.
+            Over time, Dr. Jonathan began refining a different approach focused on restoring strength and tissue capacity. Patients who had tried everything elsewhere often came to him after unsuccessful treatment and began seeing lasting improvement.
           </p>
-          <p>Pain was being turned down, but the underlying capacity problem was still there.</p>
-          <p>So Dr. Jonathan shifted his focus.</p>
           <p>
-            Instead of teaching people to avoid load, he began helping them rebuild the kind of foot that could tolerate life again.
+            When he started sharing this perspective publicly, the response was immediate. Many people said they had never heard their condition explained this way before.
           </p>
-          <p className="text-foreground font-medium">That shift changed everything.</p>
-          <p>Not overnight. Not magically. But for real.</p>
-          <p className="text-foreground font-medium">That philosophy became the foundation of The Foot Capacity System.</p>
+          <p className="text-foreground font-medium">
+            Fix Your Movement was built to bring this systems based, capacity building approach to people who do not have access to that level of care in their local area.
+          </p>
         </motion.div>
 
 
