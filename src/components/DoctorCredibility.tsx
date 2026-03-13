@@ -30,7 +30,7 @@ const DoctorCredibility = () => {
                             His approach focuses on rebuilding tissue capacity through structured movement, progressive loading, and strength development.
                         </p>
                         <p>
-                            Instead of relying on passive treatments or repeated clinic visits, he teaches patients how to restore strength and resilience so their bodies can handle real life again.
+                            Passive treatments can help reduce pain, but they are only the beginning. Real recovery happens when the body rebuilds strength and tissue capacity through structured movement and progressive loading. That is the focus of Dr. Schutza's approach.
                         </p>
                     </div>
                 </motion.div>

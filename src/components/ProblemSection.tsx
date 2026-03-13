@@ -39,10 +39,10 @@ const ProblemSection = () => {
             Not because you are lazy. Not because your body is broken. And not because you are somehow doing recovery wrong.
           </p>
           <p>
-            The real problem is that most treatments focus on calming symptoms instead of rebuilding the strength and capacity your foot actually needs to handle load.
+            The real problem is that most treatments ONLY focus on calming symptoms instead of rebuilding the strength and capacity your foot actually needs to handle load.
           </p>
           <p>
-            Every time you walk, stand, push off, climb stairs, or exercise, your feet absorb force. If the muscles, tendons, and connective tissue in your foot do not have the strength and load capacity to tolerate that force repeatedly, irritation returns.
+            Every time you walk, stand, push off, climb stairs, or exercise, your feet absorb force. If the muscles, tendons, and connective tissue in your foot do not have the load capacity to tolerate that force repeatedly, symptoms return.
           </p>
           <p>That is why pain keeps cycling back.</p>
         </motion.div>

@@ -9,12 +9,12 @@ const phases = [
   {
     num: "2",
     title: "Phase 2: Rebuild Foot Capacity (Weeks 4–8)",
-    desc: "Once movement improves, the focus shifts to strength. This phase targets the muscles that support the arch and control loading through the foot. Training focuses on strengthening intrinsic foot stabilizers, flexor hallucis muscles, abductor hallucis, tibialis posterior, and the calf complex. As strength improves, the foot becomes more capable of tolerating everyday activity without recurring irritation.",
+    desc: "Once movement improves, the focus shifts to strength. This phase targets the muscles that support the arch and control loading through the foot. Training focuses on strengthening intrinsic and extrinsic muscles of the foot as well as beginning to introduce strengthening of the entire leg. As strength improves, the foot becomes more capable of tolerating everyday activity without recurring irritation.",
   },
   {
     num: "3",
     title: "Phase 3: Restore Whole-Leg Resilience (Weeks 9–12)",
-    desc: "Foot pain rarely exists in isolation. Weakness or instability in the hips, knees, or lower leg can increase stress on plantar tissues. This final phase integrates the entire lower limb so the body functions as a coordinated system. Training includes single-leg strength patterns, dynamic balance work, progressive load tolerance, and walking and activity progression. By the end of this phase, your body is prepared for real-world demands again.",
+    desc: "Foot pain rarely exists in isolation. Poor control and decreased strength in the hips, knees, or lower leg can change how forces moves through the foot. This final phase integrates the entire lower limb so the body functions as a coordinated system. Training includes single-leg strength patterns, dynamic balance work, progressive load tolerance, and walking and activity progression. By the end of this phase, your body is prepared for real-world demands again.",
   },
 ];
 

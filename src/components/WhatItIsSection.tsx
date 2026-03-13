@@ -87,7 +87,7 @@ const WhatItIsSection = () => {
             <p>It is for active adults dealing with:</p>
             <ul className="list-disc pl-8 space-y-2 mt-2">
               <li>chronic plantar fasciitis</li>
-              <li>recurring heel pain</li>
+              <li>plantar heel spurs</li>
               <li>arch pain</li>
               <li>foot weakness</li>
               <li>movement patterns that keep feeding irritation</li>
