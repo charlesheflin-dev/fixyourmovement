@@ -37,7 +37,8 @@ const HeroSection = () => {
 
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 font-body leading-relaxed">
             A step-by-step rehabilitation progression designed to rebuild strength,<br />
-            restore load tolerance, and help your body handle everyday activity again.
+            restore load tolerance,<br />
+            and help your body handle everyday activity again.
           </p>
 
           <motion.div

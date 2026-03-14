@@ -30,7 +30,10 @@ const DoctorCredibility = () => {
                             His approach focuses on rebuilding tissue capacity through structured movement, progressive loading, and strength development.
                         </p>
                         <p>
-                            Passive treatments can help reduce pain, but they are only the beginning. Real recovery happens when the body rebuilds strength and tissue capacity through structured movement and progressive loading. That is the focus of Dr. Schutza's approach.
+                            Passive treatments can help reduce pain, but they are only the beginning. Real recovery happens when the body rebuilds strength and tissue capacity through structured movement and progressive loading.
+                        </p>
+                        <p>
+                            That is the focus of Dr. Schutza's approach.
                         </p>
                     </div>
                 </motion.div>

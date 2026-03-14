@@ -48,15 +48,18 @@ const SolutionSection = () => {
           </p>
 
           <p>
-            Recovery happens when the body becomes more capable. When tissue can tolerate more load. When strength improves. When movement becomes more efficient. When fear begins to fade because your foot is finally becoming more resilient instead of more protected.
+            Recovery happens when the body becomes more capable. When tissue can tolerate more load. When strength improves. When movement becomes more efficient.
+          </p>
+          <p>
+            When fear begins to fade because your foot is finally becoming more resilient instead of more protected.
           </p>
 
           <div className="section-card p-8 md:p-10 border-l-4 border-sage mt-6">
-            <p className="text-foreground font-body text-lg italic mb-4">
-              Instead of asking, "How do I calm this down today?"
+            <p className="text-foreground font-body text-lg mb-4">
+              Instead of asking... <em>"How do I calm this down today?"</em>
             </p>
             <p className="text-primary font-display text-xl font-semibold">
-              You begin asking, "How do I rebuild the kind of foot that can carry me through everyday life again?"
+              You start asking... <em>"How do I rebuild a foot that can handle everyday life again?"</em>
             </p>
           </div>
 

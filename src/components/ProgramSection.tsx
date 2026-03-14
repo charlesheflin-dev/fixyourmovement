@@ -33,7 +33,10 @@ const ProgramSection = () => {
             How the System Works
           </h2>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
-            Inside The Foot Capacity System, you follow a structured 12-week rehabilitation progression designed to rebuild strength and restore load tolerance safely. Each phase builds on the previous one.
+            Inside The Foot Capacity System, you follow a structured 12-week rehabilitation progression designed to rebuild strength and restore load tolerance safely.
+          </p>
+          <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed mt-4">
+            Each phase builds on the previous one.
           </p>
         </motion.div>
 

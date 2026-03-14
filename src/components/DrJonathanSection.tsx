@@ -12,7 +12,7 @@ const DrJonathanSection = () => {
           className="text-center mb-10"
         >
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
-            Why Dr. Jonathan Built This
+            Why Dr. Jonathan Built The Foot Capacity System
           </h2>
         </motion.div>
 
@@ -45,7 +45,7 @@ const DrJonathanSection = () => {
             When he started sharing this perspective publicly, the response was immediate. Many people said they had never heard their condition explained this way before.
           </p>
           <p className="text-foreground font-medium">
-            Fix Your Movement was built to bring this systems based, capacity building approach to people who do not have access to that level of care in their local area.
+            The Foot Capacity System was built to bring this systems based, capacity building approach to people who do not have access to that level of care in their local area.
           </p>
         </motion.div>
 

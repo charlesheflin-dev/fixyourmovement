@@ -34,7 +34,10 @@ const BonusSection = () => {
             What You Receive Inside the Program
           </h2>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
-            Inside the system, you receive guided video instruction from Dr. Jonathan along with tools designed to make the process easier to follow. You will also receive practical support resources including:
+            Inside the system, you receive guided video instruction from Dr. Jonathan along with tools designed to make the process easier to follow.
+          </p>
+          <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed mt-4">
+            You will also receive practical support resources including:
           </p>
         </motion.div>
 
@@ -64,7 +67,16 @@ const BonusSection = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="text-center text-muted-foreground text-lg mt-10 italic"
         >
-          Together these tools help turn recovery from something vague and frustrating into something structured and measurable.
+          Together these tools help turn recovery from something vague and frustrating
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="text-center text-muted-foreground text-lg mt-2 italic"
+        >
+          into something structured and measurable.
         </motion.p>
       </div>
     </section>

@@ -26,7 +26,10 @@ const TransformationSection = () => {
           <p>The goal here is not just less pain.</p>
           <p className="text-foreground font-medium text-xl">The goal is that your life begins to open back up.</p>
           <p>
-            You wake up and those first steps are not a battle. You walk without bracing for what your heel might feel like later. You stand longer without constantly thinking about your foot. You move through the day with more trust in your body and less fear that everything will flare up again.
+            You wake up and those first steps are not a battle. You walk without bracing for what your heel might feel like later. You stand longer without constantly thinking about your foot.
+          </p>
+          <p>
+            You move through the day with more trust in your body and less fear that everything will flare up again.
           </p>
           <p>That is what strength and capacity actually give you.</p>
           <p>Not just symptom control.</p>
