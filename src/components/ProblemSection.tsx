@@ -23,9 +23,11 @@ const ProblemSection = () => {
           transition={{ duration: 0.5 }}
           className="section-card p-8 md:p-10 mb-10"
         >
-          <p className="text-lg text-muted-foreground font-body leading-relaxed">
-            If you have been dealing with plantar fasciitis or chronic foot pain for months, maybe even years, you already know how discouraging the cycle can feel. You stretch. You rest. You try new shoes, inserts, massage, taping, maybe even physical therapy. And sometimes it feels better for a little while. Then the pain comes back.
-          </p>
+          <div className="text-lg text-muted-foreground font-body leading-relaxed space-y-4">
+            <p>If you have been dealing with plantar fasciitis or chronic foot pain for months, maybe even years, you already know how discouraging the cycle can feel.</p>
+            <p>You stretch. You rest. You try new shoes, inserts, massage, taping, maybe even physical therapy.</p>
+            <p>And sometimes it feels better for a little while. Then the pain comes back.</p>
+          </div>
         </motion.div>
 
         <motion.div
@@ -42,7 +44,10 @@ const ProblemSection = () => {
             The real problem is that most treatments ONLY focus on calming symptoms instead of rebuilding the strength and capacity your foot actually needs to handle load.
           </p>
           <p>
-            Every time you walk, stand, push off, climb stairs, or exercise, your feet absorb force. If the muscles, tendons, and connective tissue in your foot do not have the load capacity to tolerate that force repeatedly, symptoms return.
+            Every time you walk, stand, push off, climb stairs, or exercise, your feet absorb force.
+          </p>
+          <p>
+            If the muscles, tendons, and connective tissue in your foot do not have the load capacity to tolerate that force repeatedly, symptoms return.
           </p>
           <p>That is why pain keeps cycling back.</p>
         </motion.div>
@@ -61,7 +66,7 @@ const ProblemSection = () => {
             It is a capacity problem.
           </p>
           <p className="mt-4 text-muted-foreground font-body text-lg">
-            And until that capacity is rebuilt in a structured way, the pain often keeps returning.
+            And until that capacity is rebuilt in a structured way,<br />the pain often keeps returning.
           </p>
         </motion.div>
       </div>

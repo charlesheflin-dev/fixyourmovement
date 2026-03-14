@@ -32,11 +32,12 @@ const HeroSection = () => {
           </h1>
 
           <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-coral-deep italic mb-4 leading-snug">
-            Without Restoring Your Foot's Ability to Tolerate Load, Symptoms Return.
+            Without Restoring Your Foot's Ability to Tolerate Load,<br />Symptoms Return.
           </h2>
 
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 font-body leading-relaxed">
-            A progressive home system designed to rebuild foot capacity, restore resilience to daily load, and stop the cycle of chronic foot pain from repeating.
+            A step-by-step rehabilitation progression designed to rebuild strength,<br />
+            restore load tolerance, and help your body handle everyday activity again.
           </p>
 
           <motion.div
