@@ -28,16 +28,15 @@ const HeroSection = () => {
           </div>
 
           <h1 className="font-display text-3xl md:text-5xl lg:text-[3.5rem] font-bold text-primary leading-tight mb-4">
-            Those First Steps Out of Bed Shouldn't Hurt
+            The Missing Piece in Most Foot Pain Treatment Is Load Capacity
           </h1>
 
           <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-coral-deep italic mb-4 leading-snug">
-            Stop Chasing Temporary Relief. Rebuild the Strength Your Feet Actually Need.
+            Without Restoring Your Foot's Ability to Tolerate Load, Symptoms Return.
           </h2>
 
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 font-body leading-relaxed">
-            A structured system designed to rebuild foot strength, restore tissue capacity,
-            and break the cycle of plantar fasciitis and chronic foot pain from home.
+            A progressive home system designed to rebuild foot capacity, restore resilience to daily load, and stop the cycle of chronic foot pain from repeating.
           </p>
 
           <motion.div
