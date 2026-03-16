@@ -15,6 +15,8 @@ import testimonial4 from "@/assets/testimonials/4.jpg";
 import testimonial5 from "@/assets/testimonials/5.jpg";
 import testimonial6 from "@/assets/testimonials/6.jpg";
 import testimonial7 from "@/assets/testimonials/7.jpg";
+import testimonial8 from "@/assets/testimonials/8.jpg";
+import testimonial9 from "@/assets/testimonials/9.jpg";
 
 const testimonialImages = [
     testimonial1,
@@ -24,6 +26,8 @@ const testimonialImages = [
     testimonial5,
     testimonial6,
     testimonial7,
+    testimonial8,
+    testimonial9,
 ];
 
 const TestimonialSection = () => {
