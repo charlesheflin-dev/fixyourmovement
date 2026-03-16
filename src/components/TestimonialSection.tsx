@@ -69,37 +69,43 @@ const TestimonialSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
                     className="max-w-6xl mx-auto"
                 >
-                    <Carousel
-                        setApi={setApi}
-                        opts={{
-                            align: "start",
-                            loop: true,
-                        }}
+                    <div
                         className="w-full"
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                        onTouchStart={() => setIsHovered(true)}
+                        onTouchEnd={() => setIsHovered(false)}
                     >
-                        <CarouselContent className="-ml-2 md:-ml-4">
-                            {testimonialImages.map((image, index) => (
-                                <CarouselItem
-                                    key={index}
-                                    className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3"
-                                >
-                                    <div className="p-1">
-                                        <div className="section-card overflow-hidden">
-                                            <img
-                                                src={image}
-                                                alt={`Testimonial ${index + 1}`}
-                                                className="w-full h-auto object-cover"
-                                            />
+                        <Carousel
+                            setApi={setApi}
+                            opts={{
+                                align: "start",
+                                loop: true,
+                            }}
+                            className="w-full"
+                        >
+                            <CarouselContent className="-ml-2 md:-ml-4">
+                                {testimonialImages.map((image, index) => (
+                                    <CarouselItem
+                                        key={index}
+                                        className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3"
+                                    >
+                                        <div className="p-1">
+                                            <div className="section-card overflow-hidden">
+                                                <img
+                                                    src={image}
+                                                    alt={`Testimonial ${index + 1}`}
+                                                    className="w-full h-auto object-cover"
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                    </Carousel>
+                                    </CarouselItem>
+                                ))}
+                            </CarouselContent>
+                        </Carousel>
+                    </div>
                 </motion.div>
             </div>
         </section>
