@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Foot Recovery Toolkit — A Companion Guide</title>
+    <meta name="description"
+        content="A structured toolkit for tracking and accelerating foot recovery by Dr. Jonathan Schutza, PT, DPT.">
+    <meta name="author" content="Dr. Jonathan Schutza, PT, DPT">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* Color System matching the main site */
+            --navy: #2a4a5e;
+            --navy-deep: #1b3a4b;
+            --navy-light: #3d5f75;
+            --sage: #7a9a85;
+            --sage-light: #e3ebe5;
+            --coral: #e89b7a;
+            --coral-warm: #efab8e;
+            --coral-deep: #d97e5a;
+            --ivory: #f7f5f2;
+            --ivory-warm: #fdfcfa;
+            --text-dark: #1a3a4a;
+            --text-muted: #5a7a8a;
+            --border: #e8e4de;
+
+            /* Typography */
+            --font-display: 'Lora', Georgia, serif;
+            --font-body: 'Source Sans 3', system-ui, sans-serif;
+
+            /* Spacing */
+            --section-gap: 3rem;
+            --content-max: 720px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: var(--ivory);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Layout */
+        .ebook-container {
+            max-width: var(--content-max);
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .ebook-container {
+                padding: 1.5rem;
+            }
+
+            body {
+                font-size: 16px;
+            }
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--navy);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--coral);
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.35rem;
+            margin: 2rem 0 0.75rem;
+            color: var(--navy-deep);
+        }
+
+        h4 {
+            font-size: 1.15rem;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--navy);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Cover Page */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
+            color: var(--ivory);
+            padding: 3rem 2rem;
+            margin: -2rem -2rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--coral) 0%, transparent 70%);
+            opacity: 0.15;
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cover-image {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .cover-image {
+                max-width: 280px;
+            }
+        }
+
+        .cover h1 {
+            font-size: 3rem;
+            color: var(--ivory);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .cover .subtitle {
+            font-size: 1.25rem;
+            color: var(--coral-warm);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .cover .author {
+            font-size: 1rem;
+            color: var(--sage-light);
+            margin-top: 3rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .cover-decoration {
+            width: 80px;
+            height: 4px;
+            background: var(--coral);
+            margin: 2rem auto;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .cover h1 {
+                font-size: 2rem;
+            }
+
+            .cover .subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--ivory-warm);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin: 2rem 0 3rem;
+            border: 1px solid var(--border);
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            border-bottom: none;
+            font-size: 1.5rem;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .toc-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 8px;
+            height: 8px;
+            background: var(--coral);
+            border-radius: 50%;
+        }
+
+        .toc-list a {
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: var(--coral-deep);
+        }
+
+        .toc-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-left: 0.5rem;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: var(--section-gap);
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-header {
+            background: var(--navy);
+            color: var(--ivory);
+            padding: 2rem;
+            margin: 2rem -2rem 2rem;
+            border-radius: 0 1rem 1rem 0;
+        }
+
+        .section-header h2 {
+            color: var(--ivory);
+            border-bottom: none;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .section-number {
+            display: inline-block;
+            background: var(--coral);
+            color: var(--navy-deep);
+            width: 2.5rem;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: 700;
+            font-family: var(--font-display);
+            margin-right: 0.75rem;
+            font-size: 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--ivory-warm);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(42, 74, 94, 0.08);
+        }
+
+        .card-highlight {
+            background: var(--sage-light);
+            border-left: 4px solid var(--sage);
+        }
+
+        .card-coral {
+            background: linear-gradient(135deg, #fdf6f3 0%, #f9ebe5 100%);
+            border-left: 4px solid var(--coral);
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--navy-deep);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Lists */
+        ul,
+        ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        /* Special Lists */
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--sage);
+            font-weight: 700;
+        }
+
+        /* Tool Grid */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tool-item {
+            background: var(--ivory-warm);
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+        }
+
+        .tool-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.75rem;
+            height: 1.75rem;
+            background: var(--navy);
+            color: var(--ivory);
+            border-radius: 50%;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-name {
+            font-weight: 600;
+            color: var(--navy-deep);
+            margin-bottom: 0.25rem;
+        }
+
+        .tool-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Scenario Cards */
+        .scenario {
+            background: var(--ivory-warm);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .scenario-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--coral-deep);
+            margin-bottom: 0.75rem;
+        }
+
+        .scenario-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            color: var(--sage);
+            margin-bottom: 0.25rem;
+        }
+
+        /* Table Styling */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .data-table th {
+            background: var(--navy);
+            color: var(--ivory);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table tr:nth-child(even) {
+            background: var(--ivory-warm);
+        }
+
+        .data-table tr:hover {
+            background: var(--sage-light);
+        }
+
+        /* Traffic Lights */
+        .traffic-light {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .tl-green {
+            background: #e3f0e6;
+            color: #2d6a4f;
+        }
+
+        .tl-yellow {
+            background: #fef9e7;
+            color: #b7950b;
+        }
+
+        .tl-red {
+            background: #fdedec;
+            color: #c0392b;
+        }
+
+        .tl-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .tl-green .tl-dot {
+            background: #27ae60;
+        }
+
+        .tl-yellow .tl-dot {
+            background: #f1c40f;
+        }
+
+        .tl-red .tl-dot {
+            background: #e74c3c;
+        }
+
+        /* Pillar Cards */
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .pillar {
+            background: var(--ivory-warm);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--coral);
+        }
+
+        .pillar-num {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--coral);
+            margin-bottom: 0.5rem;
+        }
+
+        .pillar-title {
+            font-weight: 600;
+            color: var(--navy-deep);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Stage Ladder */
+        .stage-ladder {
+            margin: 1.5rem 0;
+        }
+
+        .stage {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .stage:last-child {
+            border-bottom: none;
+        }
+
+        .stage-num {
+            flex-shrink: 0;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+            color: var(--ivory);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .stage-content h4 {
+            margin-top: 0;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Golden Rules */
+        .golden-rules {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+            color: var(--ivory);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin: 2rem 0;
+        }
+
+        .golden-rules h3 {
+            color: var(--coral-warm);
+            margin-top: 0;
+        }
+
+        .golden-rules ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .golden-rules li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin: 0.75rem 0;
+        }
+
+        .golden-rules li::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            color: var(--coral);
+        }
+
+        /* Formula Box */
+        .formula {
+            background: var(--sage-light);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--navy-deep);
+        }
+
+        /* Quote */
+        blockquote {
+            border-left: 4px solid var(--coral);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                font-size: 11pt;
+                background: white;
+            }
+
+            .cover {
+                min-height: auto;
+                page-break-after: always;
+                margin: 0;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+
+            .section-header {
+                margin: 1rem 0;
+                page-break-after: avoid;
+            }
+
+            .card {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            a {
+                text-decoration: none;
+                color: var(--navy);
+            }
+
+            .toc {
+                page-break-after: always;
+            }
+        }
+
+        /* Footer */
+        .ebook-footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            background: var(--navy);
+            color: var(--ivory);
+            text-align: center;
+            border-radius: 1rem;
+        }
+
+        .ebook-footer p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .ebook-footer .brand {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--coral-warm);
+        }
+
+        /* Navigation hint */
+        .nav-hint {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Anchor styling */
+        a {
+            color: var(--coral-deep);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Emphasis */
+        strong {
+            color: var(--navy-deep);
+            font-weight: 600;
+        }
+
+        /* Page break utility */
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ebook-container">
+        <!-- Cover Page -->
+        <div class="cover">
+            <div class="cover-content">
+                <img src="images/Gemini_Generated_Image_d4896ud4896ud489.png"
+                    alt="The Foot Recovery Toolkit - Ebook Cover" class="cover-image">
+                <h1>The Foot Recovery Toolkit</h1>
+                <div class="cover-decoration"></div>
+                <p class="subtitle">A Companion Guide for Tracking, Testing, and Accelerating Your Progress</p>
+                <p class="author">By Dr. Jonathan Schutza, PT, DPT</p>
+            </div>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc" id="toc">
+            <h2>Table of Contents</h2>
+            <ul class="toc-list">
+                <li>
+                    <a href="#intro">How to Navigate This Book</a>
+                </li>
+                <li>
+                    <a href="#section1">01 — The Operating System</a>
+                    <span class="toc-desc">Quick-Start Guide & Diagnostic Translator</span>
+                </li>
+                <li>
+                    <a href="#section2">02 — Phase 1: Discovery & Documentation</a>
+                    <span class="toc-desc">The 7-Day Pain & Activity Log</span>
+                </li>
+                <li>
+                    <a href="#section3">03 — Phase 2: Strategy & Planning</a>
+                    <span class="toc-desc">3-Month Monitoring System & Load Distribution Blueprint</span>
+                </li>
+                <li>
+                    <a href="#section4">04 — Phase 3: Building the Foundation</a>
+                    <span class="toc-desc">Strength Log & Habit Stack Tracker</span>
+                </li>
+                <li>
+                    <a href="#section5">05 — The Clinical Validator</a>
+                    <span class="toc-desc">Pre/Post Relief Score Tracker</span>
+                </li>
+                <li>
+                    <a href="#section6">06 — Phase 4: Mastery & Elite Function</a>
+                    <span class="toc-desc">Impact Readiness Checklist & Plyometric Progression</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Navigation hint -->
+        <p class="nav-hint">Use the links above to jump to any section, or scroll to read from beginning to end.</p>
+
+        <!-- Introduction -->
+        <section class="section" id="intro">
+            <h2>How to Navigate This Book</h2>
+            <p>This toolkit is a non-linear resource. While the Quick-Start Guide and 7-Day Log are your starting point,
+                the Relief Score Tracker should be pulled out any time you buy new shoes or try a new stretch. Think of
+                the 3-Month Dashboard as your high-level GPS, while the Daily Habit Stack is the engine that keeps the
+                car moving.</p>
+
+            <div class="card card-highlight">
+                <div class="card-title">The Philosophy</div>
+                <p>Most people fail because they treat foot pain as a mystery. This toolkit treats it as a data problem.
+                    By using these six tools together, you move from guessing to engineering your own resilience.</p>
+            </div>
+        </section>
+
+        <!-- Section 1: The Operating System -->
+        <div class="section-header" id="section1">
+            <h2><span class="section-number">01</span>The Operating System</h2>
+        </div>
+
+        <section class="section">
+            <h3>Quick-Start Guide</h3>
+            <p>This page serves as the "Operating System" for your recovery. The toolkit is designed to function as a
+                continuous feedback loop. You are the scientist, and your feet are the laboratory.</p>
+
+            <h4>The 3-Step Success Loop</h4>
+            <div class="card card-coral">
+                <ol>
+                    <li><strong>LOG (The Input):</strong> Use the 7-Day Pain & Activity Log to capture what happened
+                        today.</li>
+                    <li><strong>ANALYZE (The Insight):</strong> Use the Diagnostic Translator (How to Read Your Foot
+                        Pain) to identify the "Pattern" and the "Targeted Action."</li>
+                    <li><strong>ADJUST (The Output):</strong> Apply that action to your Weekly Load Distribution
+                        Blueprint or Foot Strength Log to fix the issue before it becomes a flare-up.</li>
+                </ol>
+            </div>
+
+            <h4>Your Toolkit at a Glance</h4>
+            <div class="tool-grid">
+                <div class="tool-item">
+                    <div class="tool-number">1</div>
+                    <div class="tool-name">7-Day Pain Log</div>
+                    <div class="tool-desc">Identifies specific triggers and delayed responses. Use daily (Weeks 1–4).
+                    </div>
+                </div>
+                <div class="tool-item">
+                    <div class="tool-number">2</div>
+                    <div class="tool-name">3-Month Dashboard</div>
+                    <div class="tool-desc">Sets the 12-week roadmap and +10% loading rules. Use weekly (Sunday Review).
+                    </div>
+                </div>
+                <div class="tool-item">
+                    <div class="tool-number">3</div>
+                    <div class="tool-name">Load Blueprint</div>
+                    <div class="tool-desc">Schedules activity and mandates recovery windows. Use weekly (Planning
+                        Phase).</div>
+                </div>
+                <div class="tool-item">
+                    <div class="tool-number">4</div>
+                    <div class="tool-name">Strength Log</div>
+                    <div class="tool-desc">Tracks objective muscle gains and form quality. Use during every workout.
+                    </div>
+                </div>
+                <div class="tool-item">
+                    <div class="tool-number">5</div>
+                    <div class="tool-name">Relief Tracker</div>
+                    <div class="tool-desc">Validates if a new tape, shoe, or move actually works. Use when testing a new
+                        change.</div>
+                </div>
+                <div class="tool-item">
+                    <div class="tool-number">6</div>
+                    <div class="tool-name">Habit Stack Tracker</div>
+                    <div class="tool-desc">Anchors recovery moves into your existing routine. Use daily (Consistency
+                        Check).</div>
+                </div>
+            </div>
+
+            <h4>How to Start: Your First 7 Days</h4>
+            <p>Do not try to master every log at once. Focus on the foundation first.</p>
+            <ul>
+                <li><strong>Days 1 to 3:</strong> Simply use the 7-Day Pain & Activity Log. Do not change anything yet.
+                    Just observe the "Input" (your movement) and the "Output" (your pain).</li>
+                <li><strong>Day 4:</strong> Use the Diagnostic Translator to look for your "Signature." Are you an
+                    "Inflammatory Trap" or a "Morning Stiffness" case?</li>
+                <li><strong>Day 7:</strong> Use the 3-Month Dashboard to set your first "Baseline." If you can walk 15
+                    minutes with a pain score under 3 out of 10, that is your starting point.</li>
+            </ul>
+
+            <div class="golden-rules">
+                <h3>The Golden Rules of the Toolkit</h3>
+                <ul>
+                    <li><strong>Trust the Algorithm:</strong> If a log tells you to reduce load by 20%, do it. Pain is a
+                        signal, not an opponent to be defeated.</li>
+                    <li><strong>Consistency > Intensity:</strong> A 2-minute "Habit Stack" done every single day is 10x
+                        more effective than a 60-minute "recovery session" done once a week.</li>
+                    <li><strong>Form is the Guard:</strong> In the Strength Log, a "perfect" rep with zero weight is a
+                        win. A "heavy" rep with arch collapse is a loss.</li>
+                </ul>
+            </div>
+
+            <h3>The Diagnostic Translator</h3>
+            <h4>How to Use the Diagnostic Translator — How to Read Your Foot Pain</h4>
+            <p>To get the most out of this tool, follow this four-step protocol every time you review your weekly data:
+            </p>
+            <ol>
+                <li><strong>Identify the Pattern:</strong> Look at your 7-Day Activity Log. Do you see a recurring spike
+                    in pain at a specific time (e.g., right after waking up or 30 minutes after a walk)?</li>
+                <li><strong>Match the Signature:</strong> Find the row on this chart that mirrors your experience.</li>
+                <li><strong>Validate the "What it Means":</strong> Use the middle column to understand the physiological
+                    status of your tissue. This removes the "fear of the unknown" and replaces it with clinical context.
+                </li>
+                <li><strong>Execute the Targeted Action:</strong> This is the most critical step. Do not just observe
+                    the data; apply the specific mechanical adjustment listed in the right-hand column.</li>
+            </ol>
+
+            <h4>Decoding Your Scenarios</h4>
+
+            <div class="scenario">
+                <div class="scenario-title">Scenario 1: The Inflammatory Trap</div>
+                <div class="scenario-label">The Signal</div>
+                <p>You feel fine during the walk, but the "bill" arrives 30 minutes later.</p>
+                <div class="scenario-label">The Action</div>
+                <p>You are loading the tissue too frequently. Your body needs more time to clear the inflammatory
+                    response. Increase your recovery window by 50% before your next session.</p>
+            </div>
+
+            <div class="scenario">
+                <div class="scenario-title">Scenario 2: The Plantar Signature</div>
+                <div class="scenario-label">The Signal</div>
+                <p>That classic sharp heel pain that transitions into a dull, heavy ache.</p>
+                <div class="scenario-label">The Action</div>
+                <p>This is often a mechanical friction or pressure issue. Audit your surfaces. If you are walking on
+                    "Hard Concrete," find a "Soft" grass or track alternative immediately.</p>
+            </div>
+
+            <div class="scenario">
+                <div class="scenario-title">Scenario 3: The Morning Stiffness</div>
+                <div class="scenario-label">The Signal</div>
+                <p>The first ten steps out of bed feel like walking on glass.</p>
+                <div class="scenario-label">The Action</div>
+                <p>Your tissue is "locking" overnight. Move before you stand. Spend 2 minutes doing "Towel Scrunches" or
+                    ankle circles while still sitting on the edge of the bed to lubricate the fascia before it takes
+                    your full body weight.</p>
+            </div>
+
+            <div class="scenario">
+                <div class="scenario-title">Scenario 4: The Recovery Delay</div>
+                <div class="scenario-label">The Signal</div>
+                <p>A "flare-up" that lasts more than 2 hours after you've finished moving.</p>
+                <div class="scenario-label">The Action</div>
+                <p>You have crossed your current tissue tolerance threshold. You don't need to stop, but you must reduce
+                    the duration of that specific activity by 20% next time to find your "Safe Loading Zone."</p>
+            </div>
+
+            <blockquote>
+                <strong>The Golden Rule:</strong> Data without action is just noise. If the chart says "-20% Duration,"
+                do not try to "tough it out." Trust the algorithm.
+            </blockquote>
+        </section>
+
+        <!-- Section 2: Phase 1 -->
+        <div class="section-header" id="section2">
+            <h2><span class="section-number">02</span>Phase 1: Discovery & Documentation</h2>
+        </div>
+
+        <section class="section">
+            <h3>The 7-Day Pain & Activity Log</h3>
+            <p class="subtitle">Pinpointing triggers and mapping latent inflammatory responses.</p>
+
+            <div class="card card-highlight">
+                <div class="card-title">Purpose of This Tool</div>
+                <p>The 7-Day Pain & Activity Log is your data collection foundation. Before you can fix a problem, you
+                    must understand it. This log helps you identify patterns that might otherwise go unnoticed—like
+                    delayed pain responses or activity correlations.</p>
+            </div>
+
+            <h4>What to Track</h4>
+            <ul class="checklist">
+                <li>Daily activities and duration (walking, standing, exercise)</li>
+                <li>Pain levels throughout the day (morning, midday, evening)</li>
+                <li>Surface types (concrete, grass, treadmill, etc.)</li>
+                <li>Footwear worn</li>
+                <li>Any interventions tried (stretches, ice, tape, etc.)</li>
+                <li>Sleep quality and morning stiffness</li>
+            </ul>
+
+            <h4>How to Score Pain</h4>
+            <p>Use a simple 0–10 scale where:</p>
+            <ul>
+                <li><strong>0–1:</strong> No pain</li>
+                <li><strong>2–3:</strong> Mild discomfort, barely noticeable</li>
+                <li><strong>4–5:</strong> Moderate pain, affects activities somewhat</li>
+                <li><strong>6–7:</strong> Significant pain, limits activities</li>
+                <li><strong>8–10:</strong> Severe pain, cannot perform normal activities</li>
+            </ul>
+
+            <div class="card card-coral">
+                <div class="card-title">Key Insight: The Latent Response</div>
+                <p>Many people with plantar fasciitis experience "latent" pain—discomfort that appears hours after the
+                    triggering activity. This is why logging <em>when</em> pain occurs is just as important as logging
+                    <em>what</em> you did.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 3: Phase 2 -->
+        <div class="section-header" id="section3">
+            <h2><span class="section-number">03</span>Phase 2: Strategy & Planning</h2>
+        </div>
+
+        <section class="section">
+            <h3>The 3-Month Monitoring System</h3>
+            <h4>The One-Step Rule <span style="font-weight: 400; color: var(--text-muted);">(How to grow without the
+                    "flare-up")</span></h4>
+            <p>Instead of doing complex math, think of your progress as a volume knob. You are only allowed to turn it
+                "one click" per week.</p>
+
+            <h4>1. The Simple Rule of Thumb</h4>
+            <div class="formula">
+                For every 10 minutes you walked last week, you can add 1 minute this week.
+            </div>
+            <ul>
+                <li>Last week: 20 minutes? This week: 22 minutes.</li>
+                <li>Last week: 40 minutes? This week: 44 minutes.</li>
+                <li>Last week: 60 minutes? This week: 66 minutes.</li>
+            </ul>
+
+            <h4>2. The "If It Feels Too Easy" Test</h4>
+            <p>If you finish your week and feel like you could have done much more, <strong>do not add more</strong>.
+                The "extra" energy you feel is actually your body successfully repairing itself. If you use up that
+                energy by doing extra miles, you steal the fuel your feet need to finish the healing process.</p>
+
+            <h4>3. The Three Traffic Lights</h4>
+            <p>Look at your 7-Day Log at the end of the week and pick your color:</p>
+
+            <div style="margin: 1.5rem 0;">
+                <div class="traffic-light tl-green" style="margin: 0.5rem 0;">
+                    <span class="tl-dot"></span>
+                    GREEN (Feel Great): Add your "one click" (1 minute for every 10)
+                </div>
+                <div class="traffic-light tl-yellow" style="margin: 0.5rem 0;">
+                    <span class="tl-dot"></span>
+                    YELLOW (Feeling "Twinges"): Stay exactly where you are. Do the same amount next week.
+                </div>
+                <div class="traffic-light tl-red" style="margin: 0.5rem 0;">
+                    <span class="tl-dot"></span>
+                    RED (Flare-up/Pain Spike): Go back to what you did two weeks ago. Your body needs a "Reset."
+                </div>
+            </div>
+
+            <div class="card card-highlight">
+                <div class="card-title">Why This Works</div>
+                <p>Your muscles get stronger in days, but your tendons and fascia (the "cables" in your feet) take weeks
+                    to catch up. The One-Step Rule is a "speed limiter" that keeps your ambition from outrunning your
+                    actual physical recovery.</p>
+            </div>
+
+            <h4>12-Week Progressive Loading Schedule</h4>
+            <p class="subtitle">The Path from Baseline to 3x Capacity</p>
+            <p>This table demonstrates the power of compounding. By following the +10% Rule, you can effectively double
+                your capacity over 12 weeks without ever making a drastic jump that risks a flare-up.</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Total Weekly Minutes</th>
+                        <th>Daily Avg (approx)</th>
+                        <th>Goal / Focus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01</td>
+                        <td>60 min</td>
+                        <td>8.5 min</td>
+                        <td>Baseline: Find the "No-Flare" floor.</td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>66 min</td>
+                        <td>9.5 min</td>
+                        <td>Consistency: Lock in the daily habit.</td>
+                    </tr>
+                    <tr>
+                        <td>03</td>
+                        <td>73 min</td>
+                        <td>10.5 min</td>
+                        <td>Tolerance: Monitoring morning stiffness.</td>
+                    </tr>
+                    <tr>
+                        <td>04</td>
+                        <td>80 min</td>
+                        <td>11.5 min</td>
+                        <td>Deload (Optional): Stay at 80 if tired.</td>
+                    </tr>
+                    <tr>
+                        <td>05</td>
+                        <td>88 min</td>
+                        <td>12.5 min</td>
+                        <td>Density: Start mixing surfaces (grass/flat).</td>
+                    </tr>
+                    <tr>
+                        <td>06</td>
+                        <td>97 min</td>
+                        <td>14.0 min</td>
+                        <td>Milestone: 1.5x Baseline capacity.</td>
+                    </tr>
+                    <tr>
+                        <td>07</td>
+                        <td>107 min</td>
+                        <td>15.0 min</td>
+                        <td>Intensity: Introduce "Score 4" terrain.</td>
+                    </tr>
+                    <tr>
+                        <td>08</td>
+                        <td>117 min</td>
+                        <td>16.5 min</td>
+                        <td>Review: Audit logs for latent triggers.</td>
+                    </tr>
+                    <tr>
+                        <td>09</td>
+                        <td>129 min</td>
+                        <td>18.5 min</td>
+                        <td>Threshold: Moving toward 2x capacity.</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>142 min</td>
+                        <td>20.0 min</td>
+                        <td>Endurance: Sustained brisk walking.</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>156 min</td>
+                        <td>22.0 min</td>
+                        <td>Ready: Prepare for Phase 4 Plyometrics.</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>172 min</td>
+                        <td>24.5 min</td>
+                        <td>Mastery: ~3x Baseline capacity reached.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <blockquote>
+                <strong>The Math of Success:</strong> At a 10% increase, you aren't just adding minutes; you are
+                building a resilient biological structure. In 12 weeks, you will be doing nearly 300% of what you could
+                do on Day 1.
+            </blockquote>
+
+            <h4>How to Handle the "Hiccups"</h4>
+            <p>It is rare to have a perfectly linear 12-week run. Life and biology are messy. Use these three "Logic
+                Gates" to stay on track:</p>
+
+            <div class="scenario">
+                <div class="scenario-title">1. The Stagnation Gate (Yellow)</div>
+                <p>If you hit Week 5 and feel a "twinge" (Pain 4/10), do not go to Week 6. Stay at Week 5 (88 minutes)
+                    for another 7 days. Once the pain returns to baseline (≤ 3/10), proceed with the 10% increase.</p>
+            </div>
+
+            <div class="scenario">
+                <div class="scenario-title">2. The Reset Gate (Red)</div>
+                <p>If you experience a significant flare-up (Pain > 5/10 for 48 hours), drop back two weeks. If you were
+                    at Week 8, return to Week 6 volume. This allows the tissue to settle while maintaining the "habit"
+                    of movement.</p>
+            </div>
+
+            <div class="scenario">
+                <div class="scenario-title">3. The Surface Penalty</div>
+                <p>If you switch from flat pavement to soft sand or trails, reduce your duration by 30% for that
+                    session. The increased mechanical demand of the surface counts toward your "Total Load" even if the
+                    minutes are fewer.</p>
+            </div>
+
+            <h3>The Weekly Load Distribution Blueprint</h3>
+            <h4>The Foot Energy Budget <span style="font-weight: 400; color: var(--text-muted);">(How to spend your
+                    movement "money")</span></h4>
+            <p>Not all steps are equal. Walking on a flat treadmill is "cheap," while walking on soft sand is
+                "expensive." If you spend too much too fast, you get a flare-up.</p>
+
+            <h4>1. The Expense Categories</h4>
+            <p>Instead of "Intensity Scores," think of your activities by their Cost:</p>
+
+            <div class="card" style="border-left: 4px solid #27ae60;">
+                <div class="card-title" style="color: #27ae60;">🟢 LOW COST (Quiet Days)</div>
+                <p>Standing at your desk, shuffling around the house, or wearing your most cushioned shoes.</p>
+                <p><strong>Rule:</strong> You can do these every day. They are "free" movement.</p>
+            </div>
+
+            <div class="card" style="border-left: 4px solid #f1c40f;">
+                <div class="card-title" style="color: #b7950b;">🟡 MODERATE COST (Active Days)</div>
+                <p>Brisk walking on flat pavement or your standard gym workout.</p>
+                <p><strong>Rule:</strong> These are your "bread and butter." Track these minutes carefully.</p>
+            </div>
+
+            <div class="card" style="border-left: 4px solid #e74c3c;">
+                <div class="card-title" style="color: #c0392b;">🔴 HIGH COST (Hard Days)</div>
+                <p>Walking on sand, grass, hills, or wearing thin/minimalist shoes.</p>
+                <p><strong>Rule:</strong> These drain your tank fast. Do not do these two days in a row.</p>
+            </div>
+
+            <h4>2. The 48-Hour Recovery Rule</h4>
+            <p>This is the most important part of the blueprint. If you do a RED (High Cost) activity today, your feet
+                need a "recharge" period.</p>
+            <ul>
+                <li><strong>The Rule:</strong> After a "Hard Day," you must take at least one full day off from hard
+                    movement.</li>
+                <li><strong>What to do instead:</strong> On your recharge day, stick to LOW COST movements only. This
+                    allows the tissue to repair the "micro-damage" before you load it again.</li>
+            </ul>
+
+            <h4>3. The "Back-to-Back" Trap</h4>
+            <p>Never stack two RED days together.</p>
+            <ul>
+                <li><strong>Bad Idea:</strong> Sand walking on Saturday + Hill hiking on Sunday. (This is how 90% of
+                    flare-ups happen).</li>
+                <li><strong>Good Idea:</strong> Sand walking on Saturday + Rest/House shuffling on Sunday + Brisk walk
+                    on Monday.</li>
+            </ul>
+
+            <div class="card card-highlight">
+                <div class="card-title">The Pro Strategy</div>
+                <ol>
+                    <li>Use your 12-Week Roadmap to see how many total minutes you have for the week.</li>
+                    <li>Use this Blueprint to spread those minutes out so you have "Easy Days" between your "Hard Days."
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Section 4: Phase 3 -->
+        <div class="section-header" id="section4">
+            <h2><span class="section-number">04</span>Phase 3: Building the Foundation</h2>
+        </div>
+
+        <section class="section">
+            <h3>The Progressive Foot Strength Log</h3>
+            <p class="subtitle">Objective Metrics for Intrinsic Muscle Development and Form Priority</p>
+
+            <p>Phase 3 is where we shift from "putting out fires" to "fireproofing the building." Your foot contains
+                dozens of tiny intrinsic muscles that act as a natural, internal suspension system. If these muscles are
+                weak, your plantar fascia is forced to do a job it wasn't designed for.</p>
+
+            <h4>1. The "Quality Over Everything" Mandate</h4>
+            <p>In this log, a repetition only counts if your form is perfect. We prioritize Neuromuscular Control over
+                raw volume.</p>
+
+            <ul class="checklist">
+                <li><strong>The Arch Integrity Check:</strong> If your arch collapses or your ankle rolls inward during
+                    a movement, that rep is a "No-Count."</li>
+                <li><strong>The Big Toe Anchor:</strong> Your big toe is your primary stabilizer. If it lifts or "claws"
+                    the ground, stop the set and reset your foot position.</li>
+            </ul>
+
+            <h4>2. How to Use Your Strength Log</h4>
+            <p>Don't just check a box. Use the Difficulty Scale (1-10) to guide your next move:</p>
+
+            <div class="tool-grid">
+                <div class="tool-item" style="border-top: 3px solid #27ae60;">
+                    <div class="tool-name" style="color: #27ae60;">Scores 1–4 (Easy)</div>
+                    <div class="tool-desc">You have mastered this movement. It is time to add a "Challenge Layer" (e.g.,
+                        moving from sitting to standing).</div>
+                </div>
+                <div class="tool-item" style="border-top: 3px solid #f1c40f;">
+                    <div class="tool-name" style="color: #b7950b;">Scores 5–7 (The Growth Zone)</div>
+                    <div class="tool-desc">You feel the muscle working, but your form remains steady. Stay here for at
+                        least two sessions.</div>
+                </div>
+                <div class="tool-item" style="border-top: 3px solid #e74c3c;">
+                    <div class="tool-name" style="color: #c0392b;">Scores 8–10 (Technical Failure)</div>
+                    <div class="tool-desc">Your form is breaking. You are "muscling" the movement rather than
+                        "controlling" it. Scale back to the previous level immediately.</div>
+                </div>
+            </div>
+
+            <h4>3. The Two-Session Rule</h4>
+            <div class="card card-coral">
+                <p>Before you move to a harder version of an exercise, you must record <strong>two consecutive
+                        sessions</strong> in the "Growth Zone" with zero pain the following morning.</p>
+            </div>
+
+            <h3>The Daily Habit Stack Tracker</h3>
+            <p class="subtitle">Anchoring Micro-Habits into Your Existing Morning and Evening Routines</p>
+
+            <p>The most common reason foot recovery fails isn't a bad plan; it's a lack of execution. You don't need
+                "more time" in your schedule; you need to anchor your recovery to habits you already perform every
+                single day.</p>
+
+            <h4>1. The Science of the "Stack"</h4>
+            <p>A Habit Stack uses an existing "Anchor" (an automatic daily behavior) to trigger your new "Micro-Habit."
+                This bypasses the need for willpower.</p>
+
+            <div class="formula">
+                "After I [Current Habit], I will [Recovery Move]."
+            </div>
+
+            <h4>2. Your Built-In Anchors</h4>
+            <div class="pillar-grid">
+                <div class="pillar">
+                    <div class="pillar-num">☕</div>
+                    <div class="pillar-title">The Morning Coffee Stack</div>
+                    <p>"While the coffee brews, I will do 10 Toe Spreads."</p>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-num">💻</div>
+                    <div class="pillar-title">The Work-From-Home Stack</div>
+                    <p>"Every time I sit at my desk, I will do 5 Short Foot ISOs."</p>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-num">🌙</div>
+                    <div class="pillar-title">The Bedtime Stack</div>
+                    <p>"While I brush my teeth, I will do a 60-second Calf Stretch."</p>
+                </div>
+            </div>
+
+            <h4>3. System Resilience: The Fallback Plan</h4>
+            <p>Life is unpredictable. Your tracker includes a "Fallback" section for high-stress days.</p>
+
+            <div class="card card-highlight">
+                <div class="card-title">The One-Rep Rule</div>
+                <p>If you are too busy for a full session, do <strong>one single rep</strong> of your stack.</p>
+                <p><strong>Why?</strong> Because the goal isn't just physical—it's neurological. Doing one rep keeps the
+                    "Consistency Chain" alive in your brain. One rep is a victory; zero reps is a break in the system.
+                </p>
+            </div>
+
+            <h4>4. The Weekly Review Logic</h4>
+            <p>At the end of each week, tally your successful stacks:</p>
+            <ul>
+                <li><strong>Hit 5/7 Days?</strong> Progress to the next level of the strength log.</li>
+                <li><strong>Hit <5 Days?</strong> The habit is too "heavy." Simplify the task. Reduce your 10 reps to 3.
+                            Make the habit so small it is impossible to fail.</li>
+            </ul>
+        </section>
+
+        <!-- Section 5: The Clinical Validator -->
+        <div class="section-header" id="section5">
+            <h2><span class="section-number">05</span>The Clinical Validator</h2>
+        </div>
+
+        <section class="section">
+            <h3>The Pre/Post Relief Score Tracker</h3>
+            <p class="subtitle">Measuring Intervention Efficacy Over a 72-Hour Window</p>
+
+            <p>When your feet hurt, you are bombarded with advice: "Try this tape," "Buy these orthotics," "Roll your
+                foot on a frozen water bottle." Without a system, you end up with a closet full of expensive gadgets and
+                no idea what actually works. The Relief Score Tracker is your clinical filter. It turns a "guess" into a
+                "data-point."</p>
+
+            <h4>1. The 72-Hour Testing Protocol</h4>
+            <p>A single session of relief is not proof of success. Inflammation often has a "latent" or delayed
+                response. To validate an intervention (like a new pair of shoes or a specific taping technique), you
+                must track it through three specific "Nodes":</p>
+
+            <div class="stage-ladder">
+                <div class="stage">
+                    <div class="stage-num">1</div>
+                    <div class="stage-content">
+                        <h4>Node 1 (Immediate)</h4>
+                        <p>Did your pain score drop immediately after the intervention?</p>
+                    </div>
+                </div>
+                <div class="stage">
+                    <div class="stage-num">2</div>
+                    <div class="stage-content">
+                        <h4>Node 2 (24 Hours)</h4>
+                        <p>Did the pain return to baseline the next morning?</p>
+                    </div>
+                </div>
+                <div class="stage">
+                    <div class="stage-num">3</div>
+                    <div class="stage-content">
+                        <h4>Node 3 (72 Hours)</h4>
+                        <p>Is the tissue still calm after three days of normal activity?</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4>2. The Decision Guide (Adopt, Modify, or Abandon)</h4>
+            <p>Once you have your 72-hour data, use the "Traffic Light" logic to decide the future of that intervention:
+            </p>
+
+            <div class="card" style="border-left: 4px solid #27ae60;">
+                <div class="card-title" style="color: #27ae60;">🟢 ADOPT</div>
+                <p>Pain decreased immediately AND stayed low for 72 hours. This is a "Keeper."</p>
+            </div>
+
+            <div class="card" style="border-left: 4px solid #f1c40f;">
+                <div class="card-title" style="color: #b7950b;">🟡 MODIFY</div>
+                <p>You felt immediate relief, but experienced a "flare" at 24 hours. The intervention works, but the
+                    intensity or tension (e.g., how tight the tape is) needs to be reduced.</p>
+            </div>
+
+            <div class="card" style="border-left: 4px solid #e74c3c;">
+                <div class="card-title" style="color: #c0392b;">🔴 ABANDON</div>
+                <p>No immediate change in pain or, worse, increased pain at the 72-hour mark. This intervention is a
+                    "mismatch" for your current tissue tolerance. Stop using it and move to the next.</p>
+            </div>
+        </section>
+
+        <!-- Section 6: Phase 4 -->
+        <div class="section-header" id="section6">
+            <h2><span class="section-number">06</span>Phase 4: Mastery & Elite Function</h2>
+        </div>
+
+        <section class="section">
+            <h3>The Impact Readiness Checklist</h3>
+            <p class="subtitle">The "Pre-Flight" Check for Running and Jumping</p>
+
+            <p>Phase 4 is the bridge between "walking without pain" and "returning to sport." Most re-injuries happen
+                because people start running based on a date on the calendar rather than data in their logbook. This
+                checklist is your objective green light.</p>
+
+            <h4>The Four Pillars of Readiness</h4>
+            <p>Before you attempt a single "Impact" rep (running or jumping), you must be able to check "YES" to all
+                four:</p>
+
+            <div class="pillar-grid">
+                <div class="pillar">
+                    <div class="pillar-num">1</div>
+                    <div class="pillar-title">Pain-Free Walking</div>
+                    <p>Can you walk for 30 minutes on flat pavement with a pain score of 0/10?</p>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-num">2</div>
+                    <div class="pillar-title">The Morning Baseline</div>
+                    <p>Have you had 7 consecutive days with zero "first-step" morning stiffness?</p>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-num">3</div>
+                    <div class="pillar-title">Single-Leg Stability</div>
+                    <p>Can you stand on your affected leg for 30 seconds without losing balance or arch collapse?</p>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-num">4</div>
+                    <div class="pillar-title">Calf Raise Volume</div>
+                    <p>Can you perform 15 slow, controlled single-leg calf raises with perfect form?</p>
+                </div>
+            </div>
+
+            <h3>The Plyometric Progression Scale</h3>
+            <p class="subtitle">A 5-Stage Ladder for Rebuilding Tendon Elasticity and "Spring"</p>
+
+            <p>Tendons are like springs. After an injury, they lose their "elastic recoil." This scale safely retrains
+                your fascia to handle the high-velocity loads of running.</p>
+
+            <div class="stage-ladder">
+                <div class="stage">
+                    <div class="stage-num">1</div>
+                    <div class="stage-content">
+                        <h4>The ISO-Hold</h4>
+                        <p>Holding a "Mid-Range" calf raise for 30 seconds. No movement, just tension.</p>
+                    </div>
+                </div>
+                <div class="stage">
+                    <div class="stage-num">2</div>
+                    <div class="stage-content">
+                        <h4>The Controlled Eccentric</h4>
+                        <p>Raising up with two feet, and lowering down slowly (3–5 seconds) with just the affected foot.
+                        </p>
+                    </div>
+                </div>
+                <div class="stage">
+                    <div class="stage-num">3</div>
+                    <div class="stage-content">
+                        <h4>The Pogo Hop</h4>
+                        <p>Small, rhythmic hops in place (staying on the balls of your feet). The goal is "stiffness,"
+                            not height.</p>
+                    </div>
+                </div>
+                <div class="stage">
+                    <div class="stage-num">4</div>
+                    <div class="stage-content">
+                        <h4>The Directional Shift</h4>
+                        <p>Moving from vertical hops to side-to-side "Skater" hops.</p>
+                    </div>
+                </div>
+                <div class="stage">
+                    <div class="stage-num">5</div>
+                    <div class="stage-content">
+                        <h4>The Return to Run</h4>
+                        <p>Integrating short intervals (e.g., 1 minute run / 2 minutes walk).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="golden-rules">
+                <h3>Final Thoughts</h3>
+                <p>Remember: Recovery is not linear. There will be setbacks, "hiccups," and days when your feet don't
+                    cooperate. The difference between those who succeed and those who stay stuck is simple:
+                    <strong>data-driven adaptation</strong>.
+                </p>
+                <p style="margin-top: 1rem;">Trust the process. Trust your logs. Trust yourself.</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div class="ebook-footer">
+            <p class="brand">The Foot Recovery Toolkit</p>
+            <p>A Companion Guide to The Foot Capacity System</p>
+            <p>By Dr. Jonathan Schutza, PT, DPT</p>
+            <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.8;">© 2025 Fix Your Movement. All rights
+                reserved.</p>
+        </div>
+    </div>
+</body>
+
+</html>
