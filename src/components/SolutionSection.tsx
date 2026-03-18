@@ -55,7 +55,7 @@ const SolutionSection = () => {
           </p>
 
           <div className="section-card p-8 md:p-10 border-l-4 border-sage mt-6">
-            <p className="text-foreground font-body text-lg mb-4">
+            <p className="text-primary font-display text-xl font-semibold mb-4">
               Instead of asking... <em>"How do I calm this down today?"</em>
             </p>
             <p className="text-primary font-display text-xl font-semibold">

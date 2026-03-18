@@ -12,7 +12,7 @@ const WhatItIsSection = () => {
           className="text-center mb-10"
         >
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
-            What The Foot Capacity System Is
+            What Is The Foot Capacity System
           </h2>
         </motion.div>
 
