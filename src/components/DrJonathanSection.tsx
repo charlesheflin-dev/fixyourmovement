@@ -24,32 +24,64 @@ const DrJonathanSection = () => {
           className="space-y-5 text-lg text-muted-foreground font-body leading-relaxed"
         >
           <p>
-            Early in his career, Dr. Jonathan followed the same standard playbook many people with chronic foot pain have already experienced.
+            Early in his career, Dr. Jonathan began noticing the same pattern.
           </p>
-          <p className="font-medium text-foreground">Rest. Ice. Stretch. Repeat.</p>
-          <p>Patients would often feel better at first.</p>
-          <p>Then they came back.</p>
-          <p>Same pain. Same foot. Same frustration.</p>
-          <p>That raised an uncomfortable question.</p>
+          <p>Patients arrived after trying everything.</p>
+          <p>Rest. Ice. Stretching. Orthotics. Even physical therapy.</p>
+          <p>Many had already been told nothing more could be done.</p>
+          <p>Some said it the moment they walked in.</p>
 
-          <div className="section-card p-8 md:p-10 text-center border-l-4 border-coral mt-6 mb-6">
+          <div className="section-card p-8 md:p-10 text-center border-l-4 border-coral my-8">
             <p className="text-xl md:text-2xl font-display text-primary italic leading-relaxed">
-              Why were so many people going through the same cycle of temporary relief without actually rebuilding their foot's capacity?
+              "PT didn't work for me."
             </p>
           </div>
 
           <p>
-            Over time, Dr. Jonathan began refining a different approach focused on restoring strength and tissue capacity. Patients who had tried everything elsewhere often came to him after unsuccessful treatment and began seeing lasting improvement.
+            But when Dr. Jonathan evaluated them and guided them through a different progression,
+            something surprising happened.
           </p>
+          <p>They improved.</p>
+          <p>That raised an important question.</p>
+
+          <div className="section-card p-8 md:p-10 text-center border-l-4 border-sage my-8">
+            <p className="text-xl md:text-2xl font-display text-primary italic leading-relaxed">
+              If therapy had already "failed," why were these patients finally making progress?
+            </p>
+          </div>
+
+          <p>Over time the answer became clear.</p>
           <p>
-            When he started sharing this perspective publicly, the response was immediate. Many people said they had never heard their condition explained this way before.
+            Most approaches were focused on calming symptoms instead of rebuilding the tissue's ability to
+            tolerate load.
+          </p>
+          <p>Pain might improve for a while.</p>
+          <p>But the underlying capacity problem remained.</p>
+          <p>
+            Dr. Jonathan approached these conditions differently, helping people rebuild the kind of foot that
+            could tolerate the forces of everyday life.
+          </p>
+          <p>Then something else happened.</p>
+          <p>
+            As he began sharing this perspective online, hundreds of people reached out saying the same
+            thing.
+          </p>
+          <p>They had never heard their condition explained this way before.</p>
+
+          <div className="section-card p-8 md:p-10 text-center border-l-4 border-coral my-8">
+            <p className="text-xl md:text-2xl font-display text-primary italic leading-relaxed">
+              It became clear that many people simply did not have access to this kind of care.
+            </p>
+          </div>
+
+          <p>
+            So Dr. Jonathan built a way to bring his systems based, capacity building approach into people's
+            homes.
           </p>
           <p className="text-foreground font-medium">
-            The Foot Capacity System was built to bring this systems based, capacity building approach to people who do not have access to that level of care in their local area.
+            That work became the foundation of The Foot Capacity System.
           </p>
         </motion.div>
-
-
       </div>
     </section>
   );
