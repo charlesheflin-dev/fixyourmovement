@@ -697,6 +697,68 @@
             text-decoration: underline;
         }
 
+        /* Download Card */
+        .download-card {
+            background: linear-gradient(135deg, var(--sage-light) 0%, #d4e5d8 100%);
+            border-left: 4px solid var(--sage);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .download-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .download-content {
+            flex: 1;
+        }
+
+        .download-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--navy-deep);
+            margin-bottom: 0.25rem;
+        }
+
+        .download-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--navy);
+            color: var(--ivory) !important;
+            padding: 0.6rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .download-btn:hover {
+            background: var(--navy-deep);
+            text-decoration: none;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(42, 74, 94, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .download-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
         /* Emphasis */
         strong {
             color: var(--navy-deep);
@@ -963,6 +1025,18 @@
                     triggering activity. This is why logging <em>when</em> pain occurs is just as important as logging
                     <em>what</em> you did.
                 </p>
+            </div>
+
+            <div class="download-card">
+                <div class="download-icon">📋</div>
+                <div class="download-content">
+                    <div class="download-title">7-Day Pain & Activity Log</div>
+                    <div class="download-desc">Track your daily activities, pain levels, and patterns to identify your
+                        unique triggers and recovery trajectory.</div>
+                    <a href="7-day-pain-activity-log.pdf" class="download-btn" download>
+                        <span>⬇</span> Download PDF
+                    </a>
+                </div>
             </div>
         </section>
 
