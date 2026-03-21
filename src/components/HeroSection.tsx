@@ -68,6 +68,7 @@ const HeroSection = () => {
             transition={{ duration: 0.7, delay: 0.5 }}
             className="mt-8"
           >
+            {/* 
             <a
               href="https://whop.com/checkout/plan_Kb2UZ3Iqj7Vn9"
               target="_blank"
@@ -76,6 +77,13 @@ const HeroSection = () => {
             >
               Get Instant Access to The Foot Capacity System Today
             </a>
+            */}
+            <button
+              className="cta-button opacity-70 cursor-not-allowed text-xl"
+              disabled
+            >
+              Registration Opening Soon
+            </button>
             <p className="mt-4 text-muted-foreground text-base">
               Secure checkout · Instant access · No subscription
             </p>

@@ -26,9 +26,17 @@ const FinalCTA = () => {
             </p>
             <p>If you are, this is your next step.</p>
           </div>
+          {/* 
           <a href="#pricing" className="cta-button animate-pulse-glow text-xl">
             Start Rebuilding Your Foot Capacity Today
           </a>
+          */}
+          <button
+            className="cta-button opacity-70 cursor-not-allowed text-xl"
+            disabled
+          >
+            Registration Opening Soon
+          </button>
         </motion.div>
       </div>
     </section>
