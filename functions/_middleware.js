@@ -9,9 +9,13 @@ REMOVE TRAILING SLASH
 
 */
 
-if (url.pathname.length > 1 && url.pathname.endsWith("/")) {
-url.pathname = url.pathname.slice(0, -1)
-return Response.redirect(url.toString(), 301)
+// Skip trailing slash removal for bonus subdirectory pages
+// (Cloudflare Pages requires trailing slash to serve directory index.html)
+const isSubdirPage = url.pathname.startsWith("/bonuses/")
+
+if (!isSubdirPage && url.pathname.length > 1 && url.pathname.endsWith("/")) {
+  url.pathname = url.pathname.slice(0, -1)
+  return Response.redirect(url.toString(), 301)
 }
 
 /*
