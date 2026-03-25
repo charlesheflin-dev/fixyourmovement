@@ -45,21 +45,16 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="video-container aspect-video max-w-3xl mx-auto"
+            className="video-container max-w-3xl mx-auto shadow-2xl rounded-xl overflow-hidden"
           >
-            <div className="w-full h-full flex items-center justify-center bg-navy-deep relative rounded-xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-navy/90 to-navy-deep flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-coral/90 flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-coral transition-colors hover:scale-105 transform duration-200">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" className="ml-1">
-                      <path d="M8 5V19L19 12L8 5Z" fill="hsl(40, 33%, 96%)" />
-                    </svg>
-                  </div>
-                  <p className="text-primary-foreground/80 font-body text-base md:text-lg">
-                    Watch the Video
-                  </p>
-                </div>
-              </div>
+            <div style={{ position: "relative", paddingTop: "56.25%" }}>
+              <iframe
+                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/750e83d9423c254263ed9cd7971bbb0d/iframe?preload=true&poster=https%3A%2F%2Fcustomer-hene8ngxxo3eajlj.cloudflarestream.com%2F750e83d9423c254263ed9cd7971bbb0d%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+                loading="lazy"
+                style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen={true}
+              ></iframe>
             </div>
           </motion.div>
 
