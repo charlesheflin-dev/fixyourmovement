@@ -7,7 +7,7 @@ const HeroSection = () => {
         {/* Desktop Image */}
         <img src="/photo_2026-03-25_13-59-21.jpg" alt="" className="hidden md:block w-full h-full object-cover" loading="eager" />
         {/* Mobile Image */}
-        <img src="/new-top.png" alt="" className="block md:hidden w-full h-full object-cover" loading="eager" />
+        <img src="/new-top2.png" alt="" className="block md:hidden w-full h-full object-cover" loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/70 to-background" />
       </div>
 
