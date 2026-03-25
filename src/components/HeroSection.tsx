@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <section className="relative pt-28 pb-8 md:pt-36 md:pb-12 overflow-hidden">
+    <section className="relative pt-16 pb-8 md:pt-24 md:pb-12 overflow-hidden">
       <div className="absolute inset-0">
         {/* Desktop Image */}
         <img src="/photo_2026-03-25_13-59-21.jpg" alt="" className="hidden md:block w-full h-full object-cover" loading="eager" />
@@ -17,7 +17,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <div className="mb-4">
+          <div className="mb-2">
             <span className="trust-badge">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-sage">
                 <path d="M8 1L10 5.5L15 6L11.5 9.5L12.5 14.5L8 12L3.5 14.5L4.5 9.5L1 6L6 5.5L8 1Z" fill="currentColor" />
@@ -29,15 +29,15 @@ const HeroSection = () => {
             </p>
           </div>
 
-          <h1 className="font-display text-3xl md:text-5xl lg:text-[3.5rem] font-bold text-primary leading-tight mb-4">
+          <h1 className="font-display text-3xl md:text-5xl lg:text-[3.5rem] font-bold text-primary leading-tight mb-3">
             Foot Pain Doesn't Keep Coming Back by Accident
           </h1>
 
-          <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-coral-deep italic mb-4 leading-snug">
+          <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-coral-deep italic mb-3 leading-snug">
             Most Treatments Calm Symptoms. Few Rebuild the Strength and Load Capacity Your Feet Actually Need.
           </h2>
 
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 font-body leading-relaxed">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-4 font-body leading-relaxed">
             A structured 12-week system designed to rebuild foot strength, restore load tolerance, and help your feet handle real life again, from home.
           </p>
 
