@@ -31,7 +31,7 @@ const HeroSection = () => {
           </h1>
 
           <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-coral-deep italic mb-4 leading-snug">
-            Most treatments calm symptoms. Few rebuild the strength and load capacity your feet actually need.
+            Most Treatments Calm Symptoms. Few Rebuild the Strength and Load Capacity Your Feet Actually Need.
           </h2>
 
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 font-body leading-relaxed">
