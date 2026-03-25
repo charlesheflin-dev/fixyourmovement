@@ -28,15 +28,15 @@ const HeroSection = () => {
           </div>
 
           <h1 className="font-display text-3xl md:text-5xl lg:text-[3.5rem] font-bold text-primary leading-tight mb-4">
-            The Missing Piece in Most Foot Pain Treatment Is Load Capacity
+            Foot Pain Doesn't Keep Coming Back by Accident
           </h1>
 
           <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-coral-deep italic mb-4 leading-snug">
-            Without Restoring Your Foot's Ability to Tolerate Load,<br />Symptoms Return.
+            Most treatments calm symptoms. Few rebuild the strength and load capacity your feet actually need.
           </h2>
 
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 font-body leading-relaxed">
-            A step-by-step rehabilitation progression designed to rebuild strength, restore load tolerance, and help your body handle everyday activity again.
+            A structured 12-week system designed to rebuild foot strength, restore load tolerance, and help your feet handle real life again, from home.
           </p>
 
           <motion.div
