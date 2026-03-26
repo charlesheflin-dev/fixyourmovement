@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foot Strength Progress Log - Foot Recovery Toolkit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #16a34a 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .print-btn:hover {
+            background: #15803d;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            color: #1e3a5f;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #16a34a;
+        }
+
+        .form-signal-box {
+            background: #f0fdf4;
+            border: 2px solid #16a34a;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-signal-box h3 {
+            color: #15803d;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-signal-box p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .form-signal-box .highlight {
+            background: #dcfce7;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #16a34a;
+            font-weight: 500;
+            color: #166534;
+        }
+
+        .rpe-scale {
+            background: #eff6ff;
+            border: 1px solid #3b82f6;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .rpe-scale h3 {
+            color: #1e40af;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .rpe-description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .rpe-levels {
+            display: grid;
+            gap: 8px;
+        }
+
+        .rpe-level {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid;
+        }
+
+        .rpe-level.easy {
+            border-left-color: #22c55e;
+        }
+
+        .rpe-level.moderate {
+            border-left-color: #eab308;
+        }
+
+        .rpe-level.hard {
+            border-left-color: #f97316;
+        }
+
+        .rpe-level.max {
+            border-left-color: #ef4444;
+        }
+
+        .rpe-level .score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .rpe-level.easy .score {
+            color: #16a34a;
+        }
+
+        .rpe-level.moderate .score {
+            color: #ca8a04;
+        }
+
+        .rpe-level.hard .score {
+            color: #ea580c;
+        }
+
+        .rpe-level.max .score {
+            color: #dc2626;
+        }
+
+        .rpe-level .description {
+            flex: 1;
+        }
+
+        .rpe-level .label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .rpe-level .detail {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .technique-note {
+            background: #fefce8;
+            border: 1px solid #eab308;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .technique-note h4 {
+            color: #a16207;
+            margin-bottom: 10px;
+        }
+
+        .technique-note p {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .session-card {
+            background: #f8f7f4;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .session-title {
+            font-size: 1.1rem;
+            color: #1e3a5f;
+            font-weight: 600;
+        }
+
+        .date-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .exercise-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .exercise-row.header {
+            font-weight: 600;
+            color: #555;
+            font-size: 13px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .exercise-row input,
+        .exercise-row select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .session-notes {
+            margin-top: 15px;
+        }
+
+        .session-notes label {
+            display: block;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .session-notes textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .progress-rules {
+            background: #f0fdf4;
+            border: 1px solid #16a34a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .progress-rules h3 {
+            color: #15803d;
+            margin-bottom: 15px;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .rule-item .condition {
+            font-weight: bold;
+            color: #16a34a;
+            min-width: 120px;
+        }
+
+        .rule-item .criteria {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .rule-item .action {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .weekly-summary {
+            background: #ede9fe;
+            border: 1px solid #8b5cf6;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .weekly-summary h3 {
+            color: #5b21b6;
+            margin-bottom: 15px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .summary-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .summary-item label {
+            display: block;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .summary-item input,
+        .summary-item textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .quick-checks {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .quick-checks h3 {
+            color: #0369a1;
+            margin-bottom: 15px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .check-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+
+        .check-item label {
+            flex: 1;
+            color: #555;
+        }
+
+        .instructions {
+            background: #e0f2fe;
+            border-left: 4px solid #0ea5e9;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .instructions h3 {
+            color: #0369a1;
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .print-btn {
+                display: none;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+
+            .session-card {
+                break-inside: avoid;
+            }
+
+            input,
+            textarea,
+            select {
+                border: 1px solid #999 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .exercise-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .exercise-row.header {
+                display: none;
+            }
+
+            .session-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="print-btn" onclick="window.print()">🖨️ Print to PDF</button>
+
+    <div class="container">
+        <div class="header">
+            <h1>Progressive Foot Strength Progress Log</h1>
+            <p>Objective Metrics for Intrinsic Muscle Development</p>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 How to Use This Log</h3>
+            <ul>
+                <li><strong>Form is a Signal:</strong> If technique breaks down, that's a sign you're moving beyond your
+                    tissues' abilities and need to rest/stop.</li>
+                <li><strong>Track every session:</strong> Record exercises, reps, load, and RPE (Rate of Perceived
+                    Exertion).</li>
+                <li><strong>Use the progress rules:</strong> Follow the criteria to know when to increase, maintain, or
+                    decrease load.</li>
+                <li><strong>Focus on control:</strong> Technique should be considered, but control is what matters most.
+                </li>
+            </ul>
+        </div>
+
+        <div class="form-signal-box">
+            <h3>🎯 Form is a Signal</h3>
+            <p>Most people don't have a clue as to what they are and aren't doing wrong. That's okay — focus on what you
+                CAN feel.</p>
+            <div class="highlight">
+                "If your technique and form begin to break down, you are likely moving beyond your tissues' abilities
+                and need to rest/stop."
+            </div>
+        </div>
+
+        <div class="rpe-scale">
+            <h3>📊 RPE Scale (Rate of Perceived Exertion)</h3>
+            <p class="rpe-description">Use this 1-10 scale to rate how hard each exercise feels. This helps determine
+                when to progress.</p>
+
+            <div class="rpe-levels">
+                <div class="rpe-level easy">
+                    <span class="score">1</span>
+                    <div class="description">
+                        <div class="label">Very Light</div>
+                        <div class="detail">Can do all day, almost no effort</div>
+                    </div>
+                </div>
+
+                <div class="rpe-level easy">
+                    <span class="score">2-3</span>
+                    <div class="description">
+                        <div class="label">Light</div>
+                        <div class="detail">Breathing slightly harder, feels easy</div>
+                    </div>
+                </div>
+
+                <div class="rpe-level moderate">
+                    <span class="score">4-5</span>
+                    <div class="description">
+                        <div class="label">Moderate</div>
+                        <div class="detail">Can still talk comfortably, sustainable pace</div>
+                    </div>
+                </div>
+
+                <div class="rpe-level hard">
+                    <span class="score">6-7</span>
+                    <div class="description">
+                        <div class="label">Vigorous</div>
+                        <div class="detail">Challenging, breathing hard, can say a few words</div>
+                    </div>
+                </div>
+
+                <div class="rpe-level hard">
+                    <span class="score">8-9</span>
+                    <div class="description">
+                        <div class="label">Hard</div>
+                        <div class="detail">Very challenging, can barely talk</div>
+                    </div>
+                </div>
+
+                <div class="rpe-level max">
+                    <span class="score">10</span>
+                    <div class="description">
+                        <div class="label">Maximum Effort</div>
+                        <div class="detail">Cannot continue, complete exhaustion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="technique-note">
+            <h4>💡 Technique vs. Control</h4>
+            <p>While technique is important for getting proper tension on the proper tissues, research doesn't always
+                support "ugly" movement being worse for you. <strong>Technique should be considered, but not harped on.
+                    Control is what matters most.</strong> Most people won't have perfect control out of the gate —
+                that's normal.</p>
+        </div>
+
+        <div class="progress-rules">
+            <h3>📈 Progress Rules</h3>
+            <p style="margin-bottom: 15px; color: #666;">Use these criteria to determine when to adjust your load.</p>
+
+            <div class="rule-item">
+                <span class="condition">INCREASE</span>
+                <div>
+                    <div class="criteria">If: Completed all targets with RPE ≤ 6/10 for 2 consecutive sessions AND no
+                        pain increase</div>
+                    <div class="action">Then: +10% weight or +2-4 reps</div>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <span class="condition">KEEP SAME</span>
+                <div>
+                    <div class="criteria">If: Met targets but RPE 7-8/10 or mild delayed ache</div>
+                    <div class="action">Then: Keep load, focus on form and control</div>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <span class="condition">MODIFY</span>
+                <div>
+                    <div class="criteria">If: Pain DURING exercise > 3/10 OR sharp/radiating/tingling/swelling</div>
+                    <div class="action">Then: Stop, reduce load 30-50%, contact mentor if persists</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-checks">
+            <h3>✓ Functional Quick Checks (Before Each Session)</h3>
+            <label class="check-item">
+                <input type="checkbox">
+                <span>Can I stand on one foot for 30 seconds without pain?</span>
+            </label>
+            <label class="check-item">
+                <input type="checkbox">
+                <span>Can I do 10 heel raises with control?</span>
+            </label>
+            <label class="check-item">
+                <input type="checkbox">
+                <span>Is my morning stiffness < 2/10?</span>
+            </label>
+            <label class="check-item">
+                <input type="checkbox">
+                <span>Did I sleep > 6 hours?</span>
+            </label>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📝 Session Logs</h2>
+
+            <!-- Session 1 -->
+            <div class="session-card">
+                <div class="session-header">
+                    <span class="session-title">Session 1</span>
+                    <input type="date" class="date-input">
+                </div>
+
+                <div class="exercise-row header">
+                    <div>Exercise</div>
+                    <div>Sets</div>
+                    <div>Reps</div>
+                    <div>Load</div>
+                    <div>RPE</div>
+                </div>
+
+                <div class="exercise-row">
+                    <input type="text" placeholder="e.g., Short Foot ISO">
+                    <input type="number" placeholder="3">
+                    <input type="number" placeholder="10">
+                    <input type="text" placeholder="Bodyweight">
+                    <select>
+                        <option value="">RPE</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="exercise-row">
+                    <input type="text" placeholder="e.g., Toe Spreads">
+                    <input type="number" placeholder="3">
+                    <input type="number" placeholder="15">
+                    <input type="text" placeholder="Band">
+                    <select>
+                        <option value="">RPE</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="exercise-row">
+                    <input type="text" placeholder="Add exercise">
+                    <input type="number" placeholder="Sets">
+                    <input type="number" placeholder="Reps">
+                    <input type="text" placeholder="Load">
+                    <select>
+                        <option value="">RPE</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="session-notes">
+                    <label>Session Notes (Form, Control, Pain, etc.):</label>
+                    <textarea placeholder="How did it feel? Any form breakdown? Pain levels?"></textarea>
+                </div>
+            </div>
+
+            <!-- Session 2 -->
+            <div class="session-card">
+                <div class="session-header">
+                    <span class="session-title">Session 2</span>
+                    <input type="date" class="date-input">
+                </div>
+
+                <div class="exercise-row header">
+                    <div>Exercise</div>
+                    <div>Sets</div>
+                    <div>Reps</div>
+                    <div>Load</div>
+                    <div>RPE</div>
+                </div>
+
+                <div class="exercise-row">
+                    <input type="text" placeholder="e.g., Short Foot ISO">
+                    <input type="number" placeholder="3">
+                    <input type="number" placeholder="10">
+                    <input type="text" placeholder="Bodyweight">
+                    <select>
+                        <option value="">RPE</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="exercise-row">
+                    <input type="text" placeholder="e.g., Toe Spreads">
+                    <input type="number" placeholder="3">
+                    <input type="number" placeholder="15">
+                    <input type="text" placeholder="Band">
+                    <select>
+                        <option value="">RPE</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="exercise-row">
+                    <input type="text" placeholder="Add exercise">
+                    <input type="number" placeholder="Sets">
+                    <input type="number" placeholder="Reps">
+                    <input type="text" placeholder="Load">
+                    <select>
+                        <option value="">RPE</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="session-notes">
+                    <label>Session Notes (Form, Control, Pain, etc.):</label>
+                    <textarea placeholder="How did it feel? Any form breakdown? Pain levels?"></textarea>
+                </div>
+            </div>
+
+            <!-- Session 3 -->
+            <div class="session-card">
+                <div class="session-header">
+                    <span class="session-title">Session 3</span>
+                    <input type="date" class="date-input">
+                </div>
+
+                <div class="exercise-row header">
+                    <div>Exercise</div>
+                    <div>Sets</div>
+                    <div>Reps</div>
+                    <div>Load</div>
+                    <div>RPE</div>
+                </div>
+
+                <div class="exercise-row">
+                    <input type="text" placeholder="e.g., Short Foot ISO">
+                    <input type="number" placeholder="3">
+                    <input type="number" placeholder="10">
+                    <input type="text" placeholder="Bodyweight">
+                    <select>
+                        <option value="">RPE</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="exercise-row">
+                    <input type="text" placeholder="e.g., Toe Spreads">
+                    <input type="number" placeholder="3">
+                    <input type="number" placeholder="15">
+                    <input type="text" placeholder="Band">
+                    <select>
+                        <option value="">RPE</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="exercise-row">
+                    <input type="text" placeholder="Add exercise">
+                    <input type="number" placeholder="Sets">
+                    <input type="number" placeholder="Reps">
+                    <input type="text" placeholder="Load">
+                    <select>
+                        <option value="">RPE</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="session-notes">
+                    <label>Session Notes (Form, Control, Pain, etc.):</label>
+                    <textarea placeholder="How did it feel? Any form breakdown? Pain levels?"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📊 Weekly Summary</h2>
+
+            <div class="weekly-summary">
+                <h3>Week Review</h3>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <label>Total Sessions This Week:</label>
+                        <input type="number" placeholder="0">
+                    </div>
+
+                    <div class="summary-item">
+                        <label>Average RPE:</label>
+                        <input type="text" placeholder="e.g., 5.5">
+                    </div>
+
+                    <div class="summary-item">
+                        <label>Progress Decision:</label>
+                        <select style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                            <option value="">Select...</option>
+                            <option value="increase">📈 Increase Load (+10%)</option>
+                            <option value="maintain">➡️ Keep Same</option>
+                            <option value="decrease">📉 Reduce Load</option>
+                        </select>
+                    </div>
+
+                    <div class="summary-item">
+                        <label>Next Week Focus:</label>
+                        <input type="text" placeholder="e.g., Improve control">
+                    </div>
+
+                    <div class="summary-item" style="grid-column: 1 / -1;">
+                        <label>Notes & Observations:</label>
+                        <textarea rows="3" placeholder="What improved? What needs work?"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" style="text-align: center; color: #666; font-size: 14px;">
+            <p>© 2025 The Foot Capacity System | Dr. Jonathan Schutza, PT, DPT</p>
+            <p style="margin-top: 10px;">Remember: Control matters more than perfection. Progress, not perfection.</p>
+        </div>
+    </div>
+</body>
+
+</html>
