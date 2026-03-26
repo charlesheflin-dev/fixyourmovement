@@ -394,18 +394,349 @@
         }
 
         @media (max-width: 768px) {
-            .calendar-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
             }
 
             .color-codes {
                 grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .color-code {
+                padding: 15px;
+            }
+
+            .color-code h3 {
+                font-size: 1rem;
+            }
+
+            .color-code p {
+                font-size: 13px;
+            }
+
+            .golden-rule {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .golden-rule h2 {
+                font-size: 1.3rem;
+            }
+
+            .golden-rule p {
+                font-size: 1.1rem;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .day-column {
+                padding: 12px;
+            }
+
+            .day-column h4 {
+                font-size: 0.8rem;
+                margin-bottom: 8px;
+            }
+
+            .day-color-select {
+                padding: 8px;
+                font-size: 13px;
+                margin-bottom: 8px;
+            }
+
+            .activity-input {
+                padding: 8px;
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .intensity-select {
+                padding: 6px;
+                font-size: 12px;
+            }
+
+            .intensity-guide {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .intensity-guide h3 {
+                font-size: 1.1rem;
+            }
+
+            .intensity-levels {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 8px;
+            }
+
+            .intensity-level {
+                padding: 10px;
+            }
+
+            .intensity-level .score {
+                font-size: 1.2rem;
+            }
+
+            .intensity-level .label {
+                font-size: 13px;
+            }
+
+            .intensity-level .desc {
+                font-size: 11px;
+            }
+
+            .recovery-windows {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .recovery-windows h3 {
+                font-size: 1.1rem;
+            }
+
+            .recovery-rule {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 10px;
+            }
+
+            .recovery-rule .intensity {
+                min-width: auto;
+                font-size: 14px;
+            }
+
+            .recovery-rule .rule {
+                font-size: 13px;
+            }
+
+            .weekly-planning {
+                padding: 15px;
+            }
+
+            .weekly-planning h3 {
+                font-size: 1.1rem;
+            }
+
+            .planning-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .planning-item {
+                padding: 12px;
+            }
+
+            .planning-item label {
+                font-size: 13px;
+            }
+
+            .planning-item input,
+            .planning-item textarea {
+                font-size: 13px;
+            }
+
+            .tips-box {
+                padding: 12px 15px;
+                margin-top: 15px;
+            }
+
+            .tips-box h4 {
+                font-size: 1rem;
+            }
+
+            .tips-box ul {
+                margin-left: 15px;
+            }
+
+            .tips-box li {
+                margin-bottom: 4px;
+                font-size: 12px;
+            }
+
+            .print-btn {
+                top: 10px;
+                right: 10px;
+                padding: 10px 20px;
+                font-size: 14px;
             }
         }
 
         @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.3rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            .section {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            .color-code {
+                padding: 12px;
+            }
+
+            .color-code p {
+                font-size: 12px;
+            }
+
+            .golden-rule {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .golden-rule h2 {
+                font-size: 1.2rem;
+            }
+
+            .golden-rule p {
+                font-size: 1rem;
+            }
+
             .calendar-grid {
                 grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .day-column {
+                padding: 10px;
+            }
+
+            .day-column h4 {
+                font-size: 0.7rem;
+                margin-bottom: 6px;
+            }
+
+            .day-color-select {
+                padding: 6px;
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .activity-input {
+                padding: 6px;
+                font-size: 11px;
+                margin-bottom: 4px;
+            }
+
+            .intensity-select {
+                padding: 5px;
+                font-size: 11px;
+            }
+
+            .intensity-guide {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .intensity-levels {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .intensity-level {
+                padding: 8px;
+            }
+
+            .intensity-level .score {
+                font-size: 1rem;
+            }
+
+            .intensity-level .label {
+                font-size: 12px;
+            }
+
+            .intensity-level .desc {
+                font-size: 10px;
+            }
+
+            .recovery-windows {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .recovery-rule {
+                padding: 8px;
+            }
+
+            .recovery-rule .rule {
+                font-size: 12px;
+            }
+
+            .weekly-planning {
+                padding: 12px;
+            }
+
+            .planning-item {
+                padding: 10px;
+            }
+
+            .planning-item label {
+                font-size: 12px;
+            }
+
+            .planning-item input,
+            .planning-item textarea {
+                font-size: 12px;
+            }
+
+            .tips-box {
+                padding: 10px 12px;
+                margin-top: 12px;
+            }
+
+            .tips-box li {
+                font-size: 11px;
+            }
+
+            .print-btn {
+                top: 8px;
+                right: 8px;
+                padding: 8px 16px;
+                font-size: 12px;
             }
         }
     </style>

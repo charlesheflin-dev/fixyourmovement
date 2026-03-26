@@ -350,19 +350,301 @@
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
             .activity-grid {
                 grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .activity-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 12px;
+            }
+
+            .activity-item input[type="text"] {
+                width: 100%;
             }
 
             .pain-scale {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
+            }
+
+            .pain-input {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .pain-input label {
+                font-size: 13px;
+            }
+
+            .pain-input input {
+                width: 80px;
+                font-size: 14px;
             }
 
             .day-header {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 10px;
+            }
+
+            .day-title {
+                font-size: 1.1rem;
+            }
+
+            .date-input {
+                width: 100%;
+            }
+
+            .day-activities {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .day-activity-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+                padding: 10px;
+            }
+
+            .day-activity-item input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+            }
+
+            .notes-area {
+                font-size: 13px;
+                min-height: 80px;
+            }
+
+            .pain-scale-reference {
+                padding: 12px;
+                margin-bottom: 20px;
+            }
+
+            .pain-scale-reference h3 {
+                font-size: 0.9rem;
+            }
+
+            .pain-scale-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 8px;
+            }
+
+            .pain-level {
+                padding: 8px;
+                font-size: 11px;
+            }
+
+            .pain-level .score {
+                font-size: 1.2rem;
+            }
+
+            .weekly-summary {
+                padding: 15px;
+            }
+
+            .weekly-summary h3 {
+                font-size: 1rem;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .summary-item {
+                padding: 12px;
+            }
+
+            .summary-item label {
+                font-size: 13px;
+            }
+
+            .summary-item input,
+            .summary-item textarea {
+                font-size: 13px;
+            }
+
+            .instructions {
+                padding: 12px 15px;
+                margin-bottom: 20px;
+            }
+
+            .instructions h3 {
+                font-size: 1rem;
+            }
+
+            .instructions ul {
+                margin-left: 15px;
+            }
+
+            .instructions li {
+                margin-bottom: 6px;
+                font-size: 13px;
+            }
+
+            .print-btn {
+                top: 10px;
+                right: 10px;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.3rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            .section {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            .baseline-activities {
+                padding: 15px;
+            }
+
+            .baseline-activities h3 {
+                font-size: 1rem;
+            }
+
+            .activity-item {
+                padding: 10px;
+            }
+
+            .activity-item input[type="text"] {
+                font-size: 13px;
+            }
+
+            .day-card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .day-title {
+                font-size: 1rem;
+            }
+
+            .day-activities {
+                gap: 6px;
+            }
+
+            .day-activity-item {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .pain-input input {
+                width: 60px;
+                font-size: 13px;
+            }
+
+            .notes-area {
+                font-size: 12px;
+                min-height: 60px;
+            }
+
+            .pain-scale-reference {
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+
+            .pain-scale-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+            }
+
+            .pain-level {
+                padding: 6px;
+                font-size: 10px;
+            }
+
+            .pain-level .score {
+                font-size: 1rem;
+            }
+
+            .weekly-summary {
+                padding: 12px;
+            }
+
+            .summary-item {
+                padding: 10px;
+            }
+
+            .summary-item label {
+                font-size: 12px;
+            }
+
+            .summary-item input,
+            .summary-item textarea {
+                font-size: 12px;
+            }
+
+            .instructions {
+                padding: 10px 12px;
+                margin-bottom: 15px;
+            }
+
+            .instructions li {
+                font-size: 12px;
+            }
+
+            .print-btn {
+                top: 8px;
+                right: 8px;
+                padding: 8px 16px;
+                font-size: 12px;
             }
         }
     </style>

@@ -465,18 +465,390 @@
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
             .exercise-row {
                 grid-template-columns: 1fr;
-                gap: 5px;
+                gap: 8px;
             }
 
             .exercise-row.header {
                 display: none;
             }
 
+            .exercise-row input,
+            .exercise-row select {
+                padding: 10px;
+                font-size: 14px;
+            }
+
             .session-header {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 10px;
+            }
+
+            .session-title {
+                font-size: 1.1rem;
+            }
+
+            .date-input {
+                width: 100%;
+            }
+
+            .form-signal-box {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .form-signal-box h3 {
+                font-size: 1.1rem;
+            }
+
+            .form-signal-box p {
+                font-size: 14px;
+            }
+
+            .form-signal-box .highlight {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .rpe-scale {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .rpe-scale h3 {
+                font-size: 1.1rem;
+            }
+
+            .rpe-description {
+                font-size: 13px;
+            }
+
+            .rpe-level {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 10px;
+            }
+
+            .rpe-level .score {
+                font-size: 1.2rem;
+                min-width: auto;
+            }
+
+            .rpe-level .description {
+                width: 100%;
+            }
+
+            .rpe-level .label {
+                font-size: 14px;
+            }
+
+            .rpe-level .detail {
+                font-size: 12px;
+            }
+
+            .technique-note {
+                padding: 12px;
+                margin-bottom: 20px;
+            }
+
+            .technique-note h4 {
+                font-size: 1rem;
+            }
+
+            .technique-note p {
+                font-size: 13px;
+            }
+
+            .session-card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .session-notes {
+                margin-top: 12px;
+            }
+
+            .session-notes label {
+                font-size: 13px;
+            }
+
+            .session-notes textarea {
+                font-size: 13px;
+                min-height: 50px;
+            }
+
+            .progress-rules {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .progress-rules h3 {
+                font-size: 1.1rem;
+            }
+
+            .rule-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 10px;
+            }
+
+            .rule-item .condition {
+                min-width: auto;
+                font-size: 14px;
+            }
+
+            .rule-item .criteria {
+                font-size: 12px;
+            }
+
+            .rule-item .action {
+                font-size: 13px;
+            }
+
+            .weekly-summary {
+                padding: 15px;
+            }
+
+            .weekly-summary h3 {
+                font-size: 1.1rem;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .summary-item {
+                padding: 12px;
+            }
+
+            .summary-item label {
+                font-size: 13px;
+            }
+
+            .summary-item input,
+            .summary-item textarea {
+                font-size: 13px;
+            }
+
+            .quick-checks {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .quick-checks h3 {
+                font-size: 1.1rem;
+            }
+
+            .check-item {
+                padding: 10px;
+                margin-bottom: 6px;
+            }
+
+            .check-item input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+            }
+
+            .check-item label {
+                font-size: 14px;
+            }
+
+            .instructions {
+                padding: 12px 15px;
+                margin-bottom: 20px;
+            }
+
+            .instructions h3 {
+                font-size: 1rem;
+            }
+
+            .instructions ul {
+                margin-left: 15px;
+            }
+
+            .instructions li {
+                margin-bottom: 6px;
+                font-size: 13px;
+            }
+
+            .print-btn {
+                top: 10px;
+                right: 10px;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.3rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            .section {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            .exercise-row input,
+            .exercise-row select {
+                padding: 8px;
+                font-size: 13px;
+            }
+
+            .session-card {
+                padding: 12px;
+                margin-bottom: 12px;
+            }
+
+            .form-signal-box {
+                padding: 12px;
+            }
+
+            .form-signal-box .highlight {
+                padding: 10px;
+                font-size: 13px;
+            }
+
+            .rpe-scale {
+                padding: 12px;
+            }
+
+            .rpe-level {
+                padding: 8px;
+            }
+
+            .rpe-level .score {
+                font-size: 1rem;
+            }
+
+            .rpe-level .label {
+                font-size: 13px;
+            }
+
+            .rpe-level .detail {
+                font-size: 11px;
+            }
+
+            .technique-note {
+                padding: 10px;
+            }
+
+            .technique-note p {
+                font-size: 12px;
+            }
+
+            .session-notes textarea {
+                font-size: 12px;
+                min-height: 40px;
+            }
+
+            .progress-rules {
+                padding: 12px;
+            }
+
+            .rule-item {
+                padding: 8px;
+            }
+
+            .rule-item .criteria {
+                font-size: 11px;
+            }
+
+            .rule-item .action {
+                font-size: 12px;
+            }
+
+            .weekly-summary {
+                padding: 12px;
+            }
+
+            .summary-item {
+                padding: 10px;
+            }
+
+            .summary-item label {
+                font-size: 12px;
+            }
+
+            .summary-item input,
+            .summary-item textarea {
+                font-size: 12px;
+            }
+
+            .quick-checks {
+                padding: 12px;
+            }
+
+            .check-item {
+                padding: 8px;
+            }
+
+            .check-item label {
+                font-size: 13px;
+            }
+
+            .instructions {
+                padding: 10px 12px;
+                margin-bottom: 15px;
+            }
+
+            .instructions li {
+                font-size: 12px;
+            }
+
+            .print-btn {
+                top: 8px;
+                right: 8px;
+                padding: 8px 16px;
+                font-size: 12px;
             }
         }
     </style>
