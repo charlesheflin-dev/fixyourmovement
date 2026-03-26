@@ -1,0 +1,17 @@
+{
+    "name": "Foot Recovery Toolkit",
+    "short_name": "Foot Recovery",
+    "description": "Your companion guide for tracking, testing, and accelerating your foot recovery",
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "./favicon.ico",
+            "sizes": "any",
+            "type": "image/x-icon"
+        }
+    ]
+}
