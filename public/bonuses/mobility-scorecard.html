@@ -477,11 +477,27 @@
             -webkit-print-color-adjust: exact;
         }
 
-        /* Print only the logbook/progress, hide chrome */
+        .print-header {
+            display: none;
+        }
+
         @media print {
             .print-btn, .bonus-nav, .header, .section, .next-section { display: none !important; }
-            body { padding: 0; margin: 0; background: #fff; }
+
+            @page { margin: 0.5in; }
+            body { padding: 0; margin: 0; background: #fff; font-size: 11pt; }
+
+            .print-header { display: block; text-align: center; margin-bottom: 12pt; }
+            .print-header h2 { font-size: 14pt; color: #333; margin: 0; }
+            .print-header p { font-size: 10pt; color: #666; margin: 4px 0 0; }
+
             .print-area { display: block; }
+            .logbook-instructions { break-inside: avoid; }
+            .week-table { width: 100%; break-inside: avoid; box-shadow: none; }
+            .reflection { break-inside: avoid; }
+            .progress-section { page-break-before: always; }
+
+            input, textarea { border: 1px solid #999 !important; background: #fff !important; }
         }
 
         @media (max-width: 768px) {
@@ -591,6 +607,10 @@
         </div>
 
         <!-- The Printable Logbook -->
+        <div class="print-header">
+            <h2>Mobility Scorecard — Weeks 5–8</h2>
+            <p>Your 12‑Week Recovery Logbook</p>
+        </div>
         <div class="logbook print-area">
             <h3>Your 4-Week Mobility Log</h3>
             <div class="logbook-instructions">
