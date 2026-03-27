@@ -358,16 +358,17 @@
             position: relative;
             margin: 20px 0;
             background: #fafafa;
+            padding-left: 35px;
         }
 
         .chart-grid {
             position: absolute;
             top: 0;
-            left: 0;
+            left: 35px;
             right: 0;
             bottom: 60px;
-            border-left: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
+            border-left: 2px solid #718096;
+            border-bottom: 2px solid #718096;
         }
 
         .grid-line {
@@ -389,19 +390,30 @@
 
         .chart-labels {
             position: absolute;
-            left: -40px;
+            left: 0;
             top: 0;
             bottom: 60px;
             width: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+        
+        .chart-label {
+            font-size: 0.85rem;
+            color: #4a5568;
+            text-align: right;
+            padding-right: 8px;
+            font-weight: 500;
         }
 
         .chart-weeks {
             position: absolute;
-            left: 0;
+            left: 35px;
             right: 0;
             bottom: 0;
             height: 60px;
-            border-top: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: space-around;
@@ -1468,17 +1480,17 @@
                     <div class="grid-line vertical" style="left: 75%;"></div>
                 </div>
                 <div class="chart-labels">
-                    <div style="position: absolute; top: 10%; left: 5px; font-size: 0.8rem; color: #666;">10</div>
-                    <div style="position: absolute; top: 20%; left: 5px; font-size: 0.8rem; color: #666;">9</div>
-                    <div style="position: absolute; top: 30%; left: 5px; font-size: 0.8rem; color: #666;">8</div>
-                    <div style="position: absolute; top: 40%; left: 5px; font-size: 0.8rem; color: #666;">7</div>
-                    <div style="position: absolute; top: 50%; left: 5px; font-size: 0.8rem; color: #666;">6</div>
-                    <div style="position: absolute; top: 60%; left: 5px; font-size: 0.8rem; color: #666;">5</div>
-                    <div style="position: absolute; top: 70%; left: 5px; font-size: 0.8rem; color: #666;">4</div>
-                    <div style="position: absolute; top: 80%; left: 5px; font-size: 0.8rem; color: #666;">3</div>
-                    <div style="position: absolute; top: 90%; left: 5px; font-size: 0.8rem; color: #666;">2</div>
-                    <div style="position: absolute; top: 95%; left: 5px; font-size: 0.8rem; color: #666;">1</div>
-                    <div style="position: absolute; top: 98%; left: 5px; font-size: 0.8rem; color: #666;">0</div>
+                    <div class="chart-label">10</div>
+                    <div class="chart-label">9</div>
+                    <div class="chart-label">8</div>
+                    <div class="chart-label">7</div>
+                    <div class="chart-label">6</div>
+                    <div class="chart-label">5</div>
+                    <div class="chart-label">4</div>
+                    <div class="chart-label">3</div>
+                    <div class="chart-label">2</div>
+                    <div class="chart-label">1</div>
+                    <div class="chart-label">0</div>
                 </div>
                 <div class="chart-weeks">
                     <div class="week-label">Week 1</div>
