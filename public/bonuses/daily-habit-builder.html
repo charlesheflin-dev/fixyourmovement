@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Daily Habit Builder - Dr. Jonathan Schutza, PT, DPT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fefce8;
+            color: #431407;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .header .intro {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .section h2 {
+            color: #d97706;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #fef3c7;
+            padding-bottom: 10px;
+        }
+
+        .habits-intro {
+            text-align: center;
+            color: #92400e;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .habits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .habit-card {
+            background: #fef3c7;
+            border-radius: 12px;
+            padding: 25px;
+            border: 2px solid #fde68a;
+            transition: all 0.3s ease;
+        }
+
+        .habit-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
+        }
+
+        .habit-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .habit-icon {
+            width: 40px;
+            height: 40px;
+            background: #d97706;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .habit-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #92400e;
+        }
+
+        .habit-when {
+            font-size: 0.9rem;
+            color: #d97706;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .habit-description {
+            color: #78350f;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .logbook {
+            background: white;
+            border: 2px solid #fde68a;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .logbook h3 {
+            color: #d97706;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+        }
+
+        .logbook-instructions {
+            background: #fef3c7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #d97706;
+        }
+
+        .logbook-instructions p {
+            color: #78350f;
+            font-style: italic;
+        }
+
+        .week-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: white;
+        }
+
+        .week-table th {
+            background: #d97706;
+            color: white;
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #fde68a;
+        }
+
+        .week-table td {
+            padding: 12px 10px;
+            border: 1px solid #fde68a;
+            vertical-align: top;
+            line-height: 1.4;
+        }
+
+        .week-table .day-header {
+            background: #fef3c7;
+            font-weight: 600;
+            color: #92400e;
+            text-align: center;
+        }
+
+        .week-table .habit-cell {
+            height: 50px;
+            vertical-align: middle;
+        }
+
+        .habit-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.9rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+        }
+
+        .checkbox-item input[type="number"] {
+            width: 50px;
+            padding: 4px;
+            border: 1px solid #d97706;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .week-table .score-cell {
+            height: 50px;
+            text-align: center;
+            font-weight: 600;
+            color: #d97706;
+        }
+
+        .reflection {
+            background: #fef3c7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 4px solid #d97706;
+        }
+
+        .reflection h4 {
+            color: #d97706;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .reflection-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .reflection-line label {
+            color: #78350f;
+            font-weight: 500;
+        }
+
+        .reflection-line input {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #d97706;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .streak-section {
+            background: white;
+            border: 2px solid #fde68a;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .streak-section h3 {
+            color: #d97706;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+        }
+
+        .streak-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin: 20px 0;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .streak-day {
+            aspect-ratio: 1;
+            border: 2px solid #fde68a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #d97706;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: white;
+        }
+
+        .streak-day:hover {
+            border-color: #d97706;
+            background: #fef3c7;
+        }
+
+        .streak-day.completed {
+            background: #d97706;
+            color: white;
+            border-color: #d97706;
+        }
+
+        .streak-day-header {
+            text-align: center;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin: 15px 0;
+        }
+
+        .calendar-cell {
+            aspect-ratio: 1;
+            border: 1px solid #fde68a;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #78350f;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-cell:hover {
+            background: #fef3c7;
+        }
+
+        .calendar-cell.completed {
+            background: #d97706;
+            color: white;
+        }
+
+        .calendar-instructions {
+            text-align: center;
+            color: #78350f;
+            font-style: italic;
+            margin-top: 15px;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .summary-section h3 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .summary-table th,
+        .summary-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .summary-table th {
+            background: rgba(217, 119, 6, 0.8);
+            font-weight: 600;
+        }
+
+        .summary-table td {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-instructions {
+            text-align: center;
+            font-style: italic;
+            margin-top: 15px;
+            opacity: 0.9;
+        }
+
+        .final-section {
+            background: linear-gradient(135deg, #92400e 0%, #78350f 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .final-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .final-section p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            opacity: 0.95;
+            line-height: 1.7;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .signature {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            opacity: 0.9;
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #d97706;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .print-btn:hover {
+            background: #b45309;
+        }
+
+        .print-area {
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .habits-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .week-table {
+                font-size: 0.9rem;
+            }
+            
+            .week-table th,
+            .week-table td {
+                padding: 8px 5px;
+            }
+            
+            .streak-calendar {
+                gap: 4px;
+            }
+            
+            .calendar-grid {
+                gap: 2px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="print-btn" onclick="window.print()">Print This Habit Builder</button>
+    
+    <div class="container">
+        <!-- Welcome Header -->
+        <div class="header">
+            <h1>Your Daily Habit Builder</h1>
+            <div class="subtitle">Weeks 9–12 — Phase 3 of Your Recovery</div>
+            <div class="intro">
+                You've crushed it. Your pain is down. Your strength is up. Now let's make sure it stays that way — for good. Phase 3 is about building tiny habits into your daily routine so your feet stay strong without you even thinking about it. No extra gym time. No separate exercise sessions. Just small movements attached to things you're already doing every single day.
+            </div>
+        </div>
+
+        <!-- Your Daily Habits -->
+        <div class="section">
+            <h2>Your 4 Daily Habits</h2>
+            <div class="habits-intro">
+                Each of these takes less than 2 minutes. You don't need to set aside special time — you're stacking them onto things you already do.
+            </div>
+            
+            <div class="habits-grid">
+                <div class="habit-card">
+                    <div class="habit-header">
+                        <div class="habit-icon">☕</div>
+                        <div class="habit-title">Toe Spreads While Making Coffee</div>
+                    </div>
+                    <div class="habit-when">Morning routine</div>
+                    <div class="habit-description">
+                        While your coffee brews (or your tea steeps), stand at the counter and do toe spreads. Spread your toes as wide as you can, hold for 2 seconds, release. Repeat. Write down how many you did.
+                    </div>
+                </div>
+                
+                <div class="habit-card">
+                    <div class="habit-header">
+                        <div class="habit-icon">💻</div>
+                        <div class="habit-title">Seated Foot Exercises at Your Desk</div>
+                    </div>
+                    <div class="habit-when">During work/daytime</div>
+                    <div class="habit-description">
+                        While sitting at your desk (or kitchen table, or couch — wherever you sit during the day), do your seated foot exercises. Write down how many you completed.
+                    </div>
+                </div>
+                
+                <div class="habit-card">
+                    <div class="habit-header">
+                        <div class="habit-icon">🌅</div>
+                        <div class="habit-title">AM Calf Raises While Brushing Teeth</div>
+                    </div>
+                    <div class="habit-when">Morning routine</div>
+                    <div class="habit-description">
+                        While brushing your teeth in the morning, do calf raises. Rise up on your toes, hold for a second, lower down. Write down how many you did before you finished brushing.
+                    </div>
+                </div>
+                
+                <div class="habit-card">
+                    <div class="habit-header">
+                        <div class="habit-icon">🌙</div>
+                        <div class="habit-title">PM Calf Raises While Brushing Teeth</div>
+                    </div>
+                    <div class="habit-when">Evening routine</div>
+                    <div class="habit-description">
+                        Same thing, evening. Brushing teeth = calf raises. Write down your count before you finish brushing at night.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Printable Logbook -->
+        <div class="logbook print-area">
+            <h3>Your Daily Habit Log</h3>
+            <div class="logbook-instructions">
+                <p>Each day, check off your habits and write down how many reps you did. Don't worry about being perfect — just try to check more boxes this week than last week.</p>
+            </div>
+
+            <!-- Week 9 -->
+            <h4 style="color: #d97706; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 9</h4>
+            <table class="week-table">
+                <thead>
+                    <tr>
+                        <th class="day-header">Day</th>
+                        <th class="day-header">Toe Spreads (coffee) — How many?</th>
+                        <th class="day-header">Desk Exercises — How many?</th>
+                        <th class="day-header">AM Calf Raises (brushing teeth) — How many?</th>
+                        <th class="day-header">PM Calf Raises (brushing teeth) — How many?</th>
+                        <th class="day-header">Daily Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-header">Mon</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9m1">
+                                    <input type="number" id="w9m1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9m2">
+                                    <input type="number" id="w9m2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9m3">
+                                    <input type="number" id="w9m3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9m4">
+                                    <input type="number" id="w9m4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Tue</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9t1">
+                                    <input type="number" id="w9t1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9t2">
+                                    <input type="number" id="w9t2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9t3">
+                                    <input type="number" id="w9t3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9t4">
+                                    <input type="number" id="w9t4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Wed</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9w1">
+                                    <input type="number" id="w9w1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9w2">
+                                    <input type="number" id="w9w2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9w3">
+                                    <input type="number" id="w9w3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9w4">
+                                    <input type="number" id="w9w4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Thu</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9h1">
+                                    <input type="number" id="w9h1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9h2">
+                                    <input type="number" id="w9h2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9h3">
+                                    <input type="number" id="w9h3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9h4">
+                                    <input type="number" id="w9h4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Fri</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9f1">
+                                    <input type="number" id="w9f1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9f2">
+                                    <input type="number" id="w9f2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9f3">
+                                    <input type="number" id="w9f3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9f4">
+                                    <input type="number" id="w9f4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Sat</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9s1">
+                                    <input type="number" id="w9s1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9s2">
+                                    <input type="number" id="w9s2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9s3">
+                                    <input type="number" id="w9s3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9s4">
+                                    <input type="number" id="w9s4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Sun</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9u1">
+                                    <input type="number" id="w9u1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9u2">
+                                    <input type="number" id="w9u2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9u3">
+                                    <input type="number" id="w9u3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w9u4">
+                                    <input type="number" id="w9u4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Week 9 Reflection -->
+            <div class="reflection">
+                <h4>Week 9 Habit Streak</h4>
+                <div class="reflection-line">
+                    <label>Days I completed ALL 4 habits:</label>
+                    <input type="number" min="0" max="7" placeholder="__ / 7">
+                </div>
+                <div class="reflection-line">
+                    <label>My best day this week:</label>
+                    <input type="text" placeholder="which day felt easiest?">
+                </div>
+            </div>
+
+            <!-- Week 10 -->
+            <h4 style="color: #d97706; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 10</h4>
+            <table class="week-table">
+                <thead>
+                    <tr>
+                        <th class="day-header">Day</th>
+                        <th class="day-header">Toe Spreads (coffee) — How many?</th>
+                        <th class="day-header">Desk Exercises — How many?</th>
+                        <th class="day-header">AM Calf Raises (brushing teeth) — How many?</th>
+                        <th class="day-header">PM Calf Raises (brushing teeth) — How many?</th>
+                        <th class="day-header">Daily Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-header">Mon</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10m1">
+                                    <input type="number" id="w10m1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10m2">
+                                    <input type="number" id="w10m2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10m3">
+                                    <input type="number" id="w10m3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10m4">
+                                    <input type="number" id="w10m4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Tue</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10t1">
+                                    <input type="number" id="w10t1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10t2">
+                                    <input type="number" id="w10t2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10t3">
+                                    <input type="number" id="w10t3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10t4">
+                                    <input type="number" id="w10t4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Wed</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10w1">
+                                    <input type="number" id="w10w1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10w2">
+                                    <input type="number" id="w10w2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10w3">
+                                    <input type="number" id="w10w3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10w4">
+                                    <input type="number" id="w10w4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Thu</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10h1">
+                                    <input type="number" id="w10h1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10h2">
+                                    <input type="number" id="w10h2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10h3">
+                                    <input type="number" id="w10h3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10h4">
+                                    <input type="number" id="w10h4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Fri</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10f1">
+                                    <input type="number" id="w10f1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10f2">
+                                    <input type="number" id="w10f2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10f3">
+                                    <input type="number" id="w10f3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10f4">
+                                    <input type="number" id="w10f4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Sat</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10s1">
+                                    <input type="number" id="w10s1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10s2">
+                                    <input type="number" id="w10s2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10s3">
+                                    <input type="number" id="w10s3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10s4">
+                                    <input type="number" id="w10s4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Sun</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10u1">
+                                    <input type="number" id="w10u1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10u2">
+                                    <input type="number" id="w10u2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10u3">
+                                    <input type="number" id="w10u3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w10u4">
+                                    <input type="number" id="w10u4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Week 10 Reflection -->
+            <div class="reflection">
+                <h4>Week 10 Habit Streak</h4>
+                <div class="reflection-line">
+                    <label>Days I completed ALL 4 habits:</label>
+                    <input type="number" min="0" max="7" placeholder="__ / 7">
+                </div>
+                <div class="reflection-line">
+                    <label>My best day this week:</label>
+                    <input type="text" placeholder="which day felt easiest?">
+                </div>
+            </div>
+
+            <!-- Week 11 -->
+            <h4 style="color: #d97706; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 11</h4>
+            <table class="week-table">
+                <thead>
+                    <tr>
+                        <th class="day-header">Day</th>
+                        <th class="day-header">Toe Spreads (coffee) — How many?</th>
+                        <th class="day-header">Desk Exercises — How many?</th>
+                        <th class="day-header">AM Calf Raises (brushing teeth) — How many?</th>
+                        <th class="day-header">PM Calf Raises (brushing teeth) — How many?</th>
+                        <th class="day-header">Daily Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-header">Mon</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11m1">
+                                    <input type="number" id="w11m1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11m2">
+                                    <input type="number" id="w11m2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11m3">
+                                    <input type="number" id="w11m3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11m4">
+                                    <input type="number" id="w11m4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Tue</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11t1">
+                                    <input type="number" id="w11t1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11t2">
+                                    <input type="number" id="w11t2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11t3">
+                                    <input type="number" id="w11t3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11t4">
+                                    <input type="number" id="w11t4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Wed</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11w1">
+                                    <input type="number" id="w11w1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11w2">
+                                    <input type="number" id="w11w2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11w3">
+                                    <input type="number" id="w11w3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11w4">
+                                    <input type="number" id="w11w4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Thu</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11h1">
+                                    <input type="number" id="w11h1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11h2">
+                                    <input type="number" id="w11h2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11h3">
+                                    <input type="number" id="w11h3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11h4">
+                                    <input type="number" id="w11h4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Fri</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11f1">
+                                    <input type="number" id="w11f1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11f2">
+                                    <input type="number" id="w11f2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11f3">
+                                    <input type="number" id="w11f3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11f4">
+                                    <input type="number" id="w11f4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Sat</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11s1">
+                                    <input type="number" id="w11s1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11s2">
+                                    <input type="number" id="w11s2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11s3">
+                                    <input type="number" id="w11s3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11s4">
+                                    <input type="number" id="w11s4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Sun</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11u1">
+                                    <input type="number" id="w11u1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11u2">
+                                    <input type="number" id="w11u2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11u3">
+                                    <input type="number" id="w11u3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w11u4">
+                                    <input type="number" id="w11u4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Week 11 Reflection -->
+            <div class="reflection">
+                <h4>Week 11 Habit Streak</h4>
+                <div class="reflection-line">
+                    <label>Days I completed ALL 4 habits:</label>
+                    <input type="number" min="0" max="7" placeholder="__ / 7">
+                </div>
+                <div class="reflection-line">
+                    <label>My best day this week:</label>
+                    <input type="text" placeholder="which day felt easiest?">
+                </div>
+            </div>
+
+            <!-- Week 12 -->
+            <h4 style="color: #d97706; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 12</h4>
+            <table class="week-table">
+                <thead>
+                    <tr>
+                        <th class="day-header">Day</th>
+                        <th class="day-header">Toe Spreads (coffee) — How many?</th>
+                        <th class="day-header">Desk Exercises — How many?</th>
+                        <th class="day-header">AM Calf Raises (brushing teeth) — How many?</th>
+                        <th class="day-header">PM Calf Raises (brushing teeth) — How many?</th>
+                        <th class="day-header">Daily Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-header">Mon</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12m1">
+                                    <input type="number" id="w12m1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12m2">
+                                    <input type="number" id="w12m2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12m3">
+                                    <input type="number" id="w12m3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12m4">
+                                    <input type="number" id="w12m4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Tue</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12t1">
+                                    <input type="number" id="w12t1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12t2">
+                                    <input type="number" id="w12t2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12t3">
+                                    <input type="number" id="w12t3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12t4">
+                                    <input type="number" id="w12t4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Wed</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12w1">
+                                    <input type="number" id="w12w1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12w2">
+                                    <input type="number" id="w12w2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12w3">
+                                    <input type="number" id="w12w3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12w4">
+                                    <input type="number" id="w12w4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Thu</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12h1">
+                                    <input type="number" id="w12h1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12h2">
+                                    <input type="number" id="w12h2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12h3">
+                                    <input type="number" id="w12h3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12h4">
+                                    <input type="number" id="w12h4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Fri</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12f1">
+                                    <input type="number" id="w12f1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12f2">
+                                    <input type="number" id="w12f2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12f3">
+                                    <input type="number" id="w12f3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12f4">
+                                    <input type="number" id="w12f4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Sat</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12s1">
+                                    <input type="number" id="w12s1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12s2">
+                                    <input type="number" id="w12s2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12s3">
+                                    <input type="number" id="w12s3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12s4">
+                                    <input type="number" id="w12s4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Sun</td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12u1">
+                                    <input type="number" id="w12u1-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12u2">
+                                    <input type="number" id="w12u2-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12u3">
+                                    <input type="number" id="w12u3-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="habit-cell">
+                            <div class="habit-checkbox">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w12u4">
+                                    <input type="number" id="w12u4-num" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="score-cell">__ / 4</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Week 12 Reflection -->
+            <div class="reflection">
+                <h4>Week 12 Habit Streak</h4>
+                <div class="reflection-line">
+                    <label>Days I completed ALL 4 habits:</label>
+                    <input type="number" min="0" max="7" placeholder="__ / 7">
+                </div>
+                <div class="reflection-line">
+                    <label>My best day this week:</label>
+                    <input type="text" placeholder="which day felt easiest?">
+                </div>
+            </div>
+        </div>
+
+        <!-- Your Progress at a Glance -->
+        <div class="streak-section print-area">
+            <h3>Your Habit Streak</h3>
+            <div class="streak-day-header">Weeks 9-12 Calendar Grid</div>
+            <div class="calendar-grid" id="habit-streak-calendar">
+                <!-- Calendar cells will be generated by JavaScript -->
+            </div>
+            <div class="calendar-instructions">
+                Color in each day you completed all 4 habits. Try to build the longest unbroken streak you can. Your goal: fill in the entire grid by Week 12.
+            </div>
+        </div>
+
+        <!-- The Full 12-Week Look-Back -->
+        <div class="summary-section print-area">
+            <h3>Your 12-Week Recovery — The Full Picture</h3>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Pain Score (avg)</th>
+                        <th>Calf Raise Count (best)</th>
+                        <th>Habits Completed (days out of 7)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td><input type="number" min="0" placeholder="--"></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td><input type="number" min="0" placeholder="--"></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td><input type="number" min="0" placeholder="--"></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td><input type="number" min="0" placeholder="--"></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td>—</td>
+                        <td><input type="number" min="0" max="7" placeholder="--"></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td>—</td>
+                        <td><input type="number" min="0" max="7" placeholder="--"></td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td>—</td>
+                        <td><input type="number" min="0" max="7" placeholder="--"></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td><input type="number" min="0" max="10" placeholder="--"></td>
+                        <td>—</td>
+                        <td><input type="number" min="0" max="7" placeholder="--"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="summary-instructions">
+                Go back through your logs from Phase 1 and Phase 2. Fill in your weekly averages here. Now look at the full picture — that's 12 weeks of work, and you did it.
+            </div>
+        </div>
+
+        <!-- Final Encouragement -->
+        <div class="final-section">
+            <h3>Congratulations on Your Recovery Journey!</h3>
+            <p>
+                This is what real recovery looks like. Not a magic fix — a process. You showed up, you tracked your progress, and you built habits that will keep your feet strong for years. If your pain ever starts creeping back, you know exactly what to do: go back to the calm-the-tissue exercises from Phase 1, track your pain, and work your way forward again. You've got the playbook. You've done the work. Now go live your life — pain-free.
+            </p>
+            <div class="signature">
+                — Dr. Jonathan Schutza, PT, DPT
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate calendar grid for habit streak
+        function generateCalendarGrid() {
+            const calendar = document.getElementById('habit-streak-calendar');
+            const weeks = 4;
+            const daysPerWeek = 7;
+            
+            for (let week = 0; week < weeks; week++) {
+                for (let day = 0; day < daysPerWeek; day++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'calendar-cell';
+                    cell.textContent = `${week + 9}-${day + 1}`;
+                    cell.addEventListener('click', function() {
+                        this.classList.toggle('completed');
+                    });
+                    calendar.appendChild(cell);
+                }
+            }
+        }
+
+        // Initialize calendar when page loads
+        document.addEventListener('DOMContentLoaded', generateCalendarGrid);
+    </script>
+</body>
+
+</html>

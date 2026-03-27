@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Pain Relief Tracker - Dr. Jonathan Schutza, PT, DPT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f7f4;
+            color: #2c3e50;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c7a7b 0%, #38b2ac 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .header .intro {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .section h2 {
+            color: #2c7a7b;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .steps {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            counter-increment: step-counter;
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-left: 50px;
+            position: relative;
+        }
+
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #2c7a7b;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step h3 {
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .step p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .steps .closing {
+            text-align: center;
+            font-style: italic;
+            color: #2c7a7b;
+            font-weight: 500;
+            margin-top: 25px;
+        }
+
+        .pain-scale {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .pain-scale h3 {
+            color: #2c7a7b;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .scale-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .scale-item {
+            text-align: center;
+            padding: 15px 10px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .scale-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .scale-item.score-0 { background: #c6f6d5; border-color: #68d391; }
+        .scale-item.score-1 { background: #c6f6d5; border-color: #68d391; }
+        .scale-item.score-2 { background: #c6f6d5; border-color: #68d391; }
+        .scale-item.score-3 { background: #f0fff4; border-color: #9ae6b4; }
+        .scale-item.score-4 { background: #f0fff4; border-color: #9ae6b4; }
+        .scale-item.score-5 { background: #fefcbf; border-color: #f6e05e; }
+        .scale-item.score-6 { background: #fefcbf; border-color: #f6e05e; }
+        .scale-item.score-7 { background: #fed7d7; border-color: #fc8181; }
+        .scale-item.score-8 { background: #fed7d7; border-color: #fc8181; }
+        .scale-item.score-9 { background: #feb2b2; border-color: #f56565; }
+        .scale-item.score-10 { background: #feb2b2; border-color: #f56565; }
+
+        .score-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .score-description {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.4;
+        }
+
+        .logbook {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .logbook h3 {
+            color: #2c7a7b;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+        }
+
+        .logbook-instructions {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #2c7a7b;
+        }
+
+        .logbook-instructions p {
+            color: #4a5568;
+            font-style: italic;
+        }
+
+        .week-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: white;
+        }
+
+        .week-table th {
+            background: #2c7a7b;
+            color: white;
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
+        }
+
+        .week-table td {
+            padding: 12px 10px;
+            border: 1px solid #e2e8f0;
+            vertical-align: top;
+            line-height: 1.4;
+        }
+
+        .week-table .day-header {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #2d3748;
+            text-align: center;
+        }
+
+        .week-table .date-cell {
+            height: 40px;
+        }
+
+        .week-table .pain-cell {
+            height: 40px;
+            text-align: center;
+        }
+
+        .week-table .exercise-cell {
+            height: 40px;
+        }
+
+        .week-table .notes-cell {
+            height: 40px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.9rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+        }
+
+        .reflection {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 4px solid #2c7a7b;
+        }
+
+        .reflection h4 {
+            color: #2c7a7b;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .reflection-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .reflection-line label {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .reflection-line input {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .progress-section {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .progress-section h3 {
+            color: #2c7a7b;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+        }
+
+        .progress-chart {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            margin: 20px 0;
+            background: #fafafa;
+        }
+
+        .chart-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 60px;
+            border-left: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .grid-line {
+            position: absolute;
+            background: #e2e8f0;
+        }
+
+        .grid-line.horizontal {
+            left: 0;
+            right: 0;
+            height: 1px;
+        }
+
+        .grid-line.vertical {
+            top: 0;
+            bottom: 0;
+            width: 1px;
+        }
+
+        .chart-labels {
+            position: absolute;
+            left: -40px;
+            top: 0;
+            bottom: 60px;
+            width: 30px;
+        }
+
+        .chart-weeks {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 60px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .week-label {
+            text-align: center;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .chart-instructions {
+            text-align: center;
+            color: #4a5568;
+            font-style: italic;
+            margin-top: 15px;
+        }
+
+        .next-section {
+            background: linear-gradient(135deg, #38b2ac 0%, #4fd1c7 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .next-section h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
+        .next-section p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #2c7a7b;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c7a7b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .print-btn:hover {
+            background: #234e52;
+        }
+
+        .print-area {
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .scale-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            
+            .week-table {
+                font-size: 0.9rem;
+            }
+            
+            .week-table th,
+            .week-table td {
+                padding: 8px 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="print-btn" onclick="window.print()">Print This Tracker</button>
+    
+    <div class="container">
+        <!-- Welcome Header -->
+        <div class="header">
+            <h1>Your Pain Relief Tracker</h1>
+            <div class="subtitle">Weeks 1–4 — Phase 1 of Your Recovery</div>
+            <div class="intro">
+                Welcome to Phase 1. Over the next 4 weeks, you're going to watch your pain shrink — and this tracker is how you'll see it happen. After you finish each calm-the-tissue video module, come here and log two things: your pain level and what you did. That's it. No complicated forms. No guesswork. Just a quick check-in so you can look back and see how far you've come.
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="section">
+            <h2>How to Use This Tracker</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-content">
+                        <h3>Watch your video module</h3>
+                        <p>Complete the calm-the-tissue exercises from the course.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h3>Rate your pain</h3>
+                        <p>On a scale of 0 to 10, how does your foot feel right now? (0 = no pain, 10 = worst pain imaginable)</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h3>Check what you did</h3>
+                        <p>Check off which calm-the-tissue exercises you completed today.</p>
+                    </div>
+                </div>
+                <div class="steps closing">
+                    Do this after every session. In 4 weeks, you'll see the trend — and you'll be amazed.
+                </div>
+            </div>
+        </div>
+
+        <!-- Understanding Your Pain Scale -->
+        <div class="pain-scale">
+            <h3>Understanding Your Pain Scale</h3>
+            <div class="scale-grid">
+                <div class="scale-item score-0">
+                    <div class="score-number">0</div>
+                    <div class="score-description">No pain at all</div>
+                </div>
+                <div class="scale-item score-1-2">
+                    <div class="score-number">1-2</div>
+                    <div class="score-description">Barely noticeable — you have to think about it to feel it</div>
+                </div>
+                <div class="scale-item score-3-4">
+                    <div class="score-number">3-4</div>
+                    <div class="score-description">Mild — it's there, but it doesn't stop you from doing things</div>
+                </div>
+                <div class="scale-item score-5-6">
+                    <div class="score-number">5-6</div>
+                    <div class="score-description">Moderate — it's hard to ignore and starts affecting your day</div>
+                </div>
+                <div class="scale-item score-7-8">
+                    <div class="score-number">7-8</div>
+                    <div class="score-description">Severe — it's difficult to do normal activities</div>
+                </div>
+                <div class="scale-item score-9-10">
+                    <div class="score-number">9-10</div>
+                    <div class="score-description">Worst pain imaginable — you can't function</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Printable Logbook -->
+        <div class="logbook print-area">
+            <h3>Your 4-Week Pain & Activity Log</h3>
+            <div class="logbook-instructions">
+                <p>Fill this in after each session. Circle your pain score and check off what you did. At the end of each week, look back — you should see your numbers dropping.</p>
+            </div>
+
+            <!-- Week 1 -->
+            <h4 style="color: #2c7a7b; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 1</h4>
+            <table class="week-table">
+                <thead>
+                    <tr>
+                        <th class="day-header">Day</th>
+                        <th class="day-header">Date</th>
+                        <th class="day-header">Pain Score (0–10)</th>
+                        <th class="day-header">Calm-the-Tissue Exercises Completed</th>
+                        <th class="day-header">Notes (optional)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-header">Day 1</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d1-ex1">
+                                    <label for="w1d1-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d1-ex2">
+                                    <label for="w1d1-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d1-ex3">
+                                    <label for="w1d1-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d1-ex4">
+                                    <label for="w1d1-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 2</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d2-ex1">
+                                    <label for="w1d2-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d2-ex2">
+                                    <label for="w1d2-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d2-ex3">
+                                    <label for="w1d2-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d2-ex4">
+                                    <label for="w1d2-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 3</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d3-ex1">
+                                    <label for="w1d3-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d3-ex2">
+                                    <label for="w1d3-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d3-ex3">
+                                    <label for="w1d3-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d3-ex4">
+                                    <label for="w1d3-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 4</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d4-ex1">
+                                    <label for="w1d4-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d4-ex2">
+                                    <label for="w1d4-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d4-ex3">
+                                    <label for="w1d4-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d4-ex4">
+                                    <label for="w1d4-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 5</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d5-ex1">
+                                    <label for="w1d5-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d5-ex2">
+                                    <label for="w1d5-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d5-ex3">
+                                    <label for="w1d5-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d5-ex4">
+                                    <label for="w1d5-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 6</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d6-ex1">
+                                    <label for="w1d6-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d6-ex2">
+                                    <label for="w1d6-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d6-ex3">
+                                    <label for="w1d6-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d6-ex4">
+                                    <label for="w1d6-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 7</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d7-ex1">
+                                    <label for="w1d7-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d7-ex2">
+                                    <label for="w1d7-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d7-ex3">
+                                    <label for="w1d7-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w1d7-ex4">
+                                    <label for="w1d7-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Week 1 Reflection -->
+            <div class="reflection">
+                <h4>End of Week 1 Check-In</h4>
+                <div class="reflection-line">
+                    <label>My pain score at the start of this week:</label>
+                    <input type="number" min="0" max="10" placeholder="--">
+                </div>
+                <div class="reflection-line">
+                    <label>My pain score at the end of this week:</label>
+                    <input type="number" min="0" max="10" placeholder="--">
+                </div>
+            </div>
+
+            <!-- Week 2 -->
+            <h4 style="color: #2c7a7b; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 2</h4>
+            <table class="week-table">
+                <thead>
+                    <tr>
+                        <th class="day-header">Day</th>
+                        <th class="day-header">Date</th>
+                        <th class="day-header">Pain Score (0–10)</th>
+                        <th class="day-header">Calm-the-Tissue Exercises Completed</th>
+                        <th class="day-header">Notes (optional)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-header">Day 1</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d1-ex1">
+                                    <label for="w2d1-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d1-ex2">
+                                    <label for="w2d1-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d1-ex3">
+                                    <label for="w2d1-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d1-ex4">
+                                    <label for="w2d1-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 2</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d2-ex1">
+                                    <label for="w2d2-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d2-ex2">
+                                    <label for="w2d2-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d2-ex3">
+                                    <label for="w2d2-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d2-ex4">
+                                    <label for="w2d2-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 3</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d3-ex1">
+                                    <label for="w2d3-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d3-ex2">
+                                    <label for="w2d3-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d3-ex3">
+                                    <label for="w2d3-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d3-ex4">
+                                    <label for="w2d3-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 4</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d4-ex1">
+                                    <label for="w2d4-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d4-ex2">
+                                    <label for="w2d4-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d4-ex3">
+                                    <label for="w2d4-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d4-ex4">
+                                    <label for="w2d4-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 5</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d5-ex1">
+                                    <label for="w2d5-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d5-ex2">
+                                    <label for="w2d5-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d5-ex3">
+                                    <label for="w2d5-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d5-ex4">
+                                    <label for="w2d5-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 6</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d6-ex1">
+                                    <label for="w2d6-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d6-ex2">
+                                    <label for="w2d6-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d6-ex3">
+                                    <label for="w2d6-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d6-ex4">
+                                    <label for="w2d6-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 7</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d7-ex1">
+                                    <label for="w2d7-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d7-ex2">
+                                    <label for="w2d7-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d7-ex3">
+                                    <label for="w2d7-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w2d7-ex4">
+                                    <label for="w2d7-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Week 2 Reflection -->
+            <div class="reflection">
+                <h4>End of Week 2 Check-In</h4>
+                <div class="reflection-line">
+                    <label>My pain score at the start of this week:</label>
+                    <input type="number" min="0" max="10" placeholder="--">
+                </div>
+                <div class="reflection-line">
+                    <label>My pain score at the end of this week:</label>
+                    <input type="number" min="0" max="10" placeholder="--">
+                </div>
+            </div>
+
+            <!-- Week 3 -->
+            <h4 style="color: #2c7a7b; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 3</h4>
+            <table class="week-table">
+                <thead>
+                    <tr>
+                        <th class="day-header">Day</th>
+                        <th class="day-header">Date</th>
+                        <th class="day-header">Pain Score (0–10)</th>
+                        <th class="day-header">Calm-the-Tissue Exercises Completed</th>
+                        <th class="day-header">Notes (optional)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-header">Day 1</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d1-ex1">
+                                    <label for="w3d1-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d1-ex2">
+                                    <label for="w3d1-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d1-ex3">
+                                    <label for="w3d1-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d1-ex4">
+                                    <label for="w3d1-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 2</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d2-ex1">
+                                    <label for="w3d2-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d2-ex2">
+                                    <label for="w3d2-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d2-ex3">
+                                    <label for="w3d2-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d2-ex4">
+                                    <label for="w3d2-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 3</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d3-ex1">
+                                    <label for="w3d3-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d3-ex2">
+                                    <label for="w3d3-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d3-ex3">
+                                    <label for="w3d3-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d3-ex4">
+                                    <label for="w3d3-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 4</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d4-ex1">
+                                    <label for="w3d4-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d4-ex2">
+                                    <label for="w3d4-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d4-ex3">
+                                    <label for="w3d4-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d4-ex4">
+                                    <label for="w3d4-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 5</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d5-ex1">
+                                    <label for="w3d5-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d5-ex2">
+                                    <label for="w3d5-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d5-ex3">
+                                    <label for="w3d5-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d5-ex4">
+                                    <label for="w3d5-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 6</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d6-ex1">
+                                    <label for="w3d6-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d6-ex2">
+                                    <label for="w3d6-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d6-ex3">
+                                    <label for="w3d6-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d6-ex4">
+                                    <label for="w3d6-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 7</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d7-ex1">
+                                    <label for="w3d7-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d7-ex2">
+                                    <label for="w3d7-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d7-ex3">
+                                    <label for="w3d7-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w3d7-ex4">
+                                    <label for="w3d7-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Week 3 Reflection -->
+            <div class="reflection">
+                <h4>End of Week 3 Check-In</h4>
+                <div class="reflection-line">
+                    <label>My pain score at the start of this week:</label>
+                    <input type="number" min="0" max="10" placeholder="--">
+                </div>
+                <div class="reflection-line">
+                    <label>My pain score at the end of this week:</label>
+                    <input type="number" min="0" max="10" placeholder="--">
+                </div>
+            </div>
+
+            <!-- Week 4 -->
+            <h4 style="color: #2c7a7b; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 4</h4>
+            <table class="week-table">
+                <thead>
+                    <tr>
+                        <th class="day-header">Day</th>
+                        <th class="day-header">Date</th>
+                        <th class="day-header">Pain Score (0–10)</th>
+                        <th class="day-header">Calm-the-Tissue Exercises Completed</th>
+                        <th class="day-header">Notes (optional)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-header">Day 1</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d1-ex1">
+                                    <label for="w4d1-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d1-ex2">
+                                    <label for="w4d1-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d1-ex3">
+                                    <label for="w4d1-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d1-ex4">
+                                    <label for="w4d1-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 2</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d2-ex1">
+                                    <label for="w4d2-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d2-ex2">
+                                    <label for="w4d2-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d2-ex3">
+                                    <label for="w4d2-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d2-ex4">
+                                    <label for="w4d2-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 3</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d3-ex1">
+                                    <label for="w4d3-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d3-ex2">
+                                    <label for="w4d3-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d3-ex3">
+                                    <label for="w4d3-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d3-ex4">
+                                    <label for="w4d3-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 4</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d4-ex1">
+                                    <label for="w4d4-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d4-ex2">
+                                    <label for="w4d4-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d4-ex3">
+                                    <label for="w4d4-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d4-ex4">
+                                    <label for="w4d4-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 5</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d5-ex1">
+                                    <label for="w4d5-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d5-ex2">
+                                    <label for="w4d5-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d5-ex3">
+                                    <label for="w4d5-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d5-ex4">
+                                    <label for="w4d5-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 6</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d6-ex1">
+                                    <label for="w4d6-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d6-ex2">
+                                    <label for="w4d6-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d6-ex3">
+                                    <label for="w4d6-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d6-ex4">
+                                    <label for="w4d6-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="day-header">Day 7</td>
+                        <td class="date-cell"></td>
+                        <td class="pain-cell"></td>
+                        <td class="exercise-cell">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d7-ex1">
+                                    <label for="w4d7-ex1">☐ Toe Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d7-ex2">
+                                    <label for="w4d7-ex2">☐ Plantar Fascia Release</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d7-ex3">
+                                    <label for="w4d7-ex3">☐ Calf Stretch</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="w4d7-ex4">
+                                    <label for="w4d7-ex4">☐ Foot Rolling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="notes-cell"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Week 4 Reflection -->
+            <div class="reflection">
+                <h4>End of Week 4 Check-In</h4>
+                <div class="reflection-line">
+                    <label>My pain score at the start of this week:</label>
+                    <input type="number" min="0" max="10" placeholder="--">
+                </div>
+                <div class="reflection-line">
+                    <label>My pain score at the end of this week:</label>
+                    <input type="number" min="0" max="10" placeholder="--">
+                </div>
+            </div>
+        </div>
+
+        <!-- Your Progress at a Glance -->
+        <div class="progress-section print-area">
+            <h3>Watch Your Pain Shrink</h3>
+            <div class="progress-chart">
+                <div class="chart-grid">
+                    <div class="grid-line horizontal" style="top: 10%;"></div>
+                    <div class="grid-line horizontal" style="top: 20%;"></div>
+                    <div class="grid-line horizontal" style="top: 30%;"></div>
+                    <div class="grid-line horizontal" style="top: 40%;"></div>
+                    <div class="grid-line horizontal" style="top: 50%;"></div>
+                    <div class="grid-line horizontal" style="top: 60%;"></div>
+                    <div class="grid-line horizontal" style="top: 70%;"></div>
+                    <div class="grid-line horizontal" style="top: 80%;"></div>
+                    <div class="grid-line horizontal" style="top: 90%;"></div>
+                    
+                    <div class="grid-line vertical" style="left: 25%;"></div>
+                    <div class="grid-line vertical" style="left: 50%;"></div>
+                    <div class="grid-line vertical" style="left: 75%;"></div>
+                </div>
+                <div class="chart-labels">
+                    <div style="position: absolute; top: 10%; left: 5; font-size: 0.8rem; color: #666;">10</div>
+                    <div style="position: absolute; top: 20%; left: 5; font-size: 0.8rem; color: #666;">9</div>
+                    <div style="position: absolute; top: 30%; left: 5; font-size: 0.8rem; color: #666;">8</div>
+                    <div style="position: absolute; top: 40%; left: 5; font-size: 0.8rem; color: #666;">7</div>
+                    <div style="position: absolute; top: 50%; left: 5; font-size: 0.8rem; color: #666;">6</div>
+                    <div style="position: absolute; top: 60%; left: 5; font-size: 0.8rem; color: #666;">5</div>
+                    <div style="position: absolute; top: 70%; left: 5; font-size: 0.8rem; color: #666;">4</div>
+                    <div style="position: absolute; top: 80%; left: 5; font-size: 0.8rem; color: #666;">3</div>
+                    <div style="position: absolute; top: 90%; left: 5; font-size: 0.8rem; color: #666;">2</div>
+                    <div style="position: absolute; top: 95%; left: 5; font-size: 0.8rem; color: #666;">1</div>
+                    <div style="position: absolute; top: 98%; left: 5; font-size: 0.8rem; color: #666;">0</div>
+                </div>
+                <div class="chart-weeks">
+                    <div class="week-label">Week 1</div>
+                    <div class="week-label">Week 2</div>
+                    <div class="week-label">Week 3</div>
+                    <div class="week-label">Week 4</div>
+                </div>
+            </div>
+            <div class="chart-instructions">
+                At the end of each week, plot your average pain score on this chart. Connect the dots. That downward line? That's your progress.
+            </div>
+        </div>
+
+        <!-- Encouragement / What's Next -->
+        <div class="next-section">
+            <h3>Ready for What's Next?</h3>
+            <p>
+                By the end of Week 4, most patients see their pain drop significantly. If you're at a 3–5, you're right on track. In Phase 2, we're going to start building strength — and your Mobility Scorecard will show you just how much stronger your feet are getting. Keep going. You're doing this.
+            </p>
+            <a href="mobility-scorecard.html" class="cta-button">Ready for Phase 2? →</a>
+        </div>
+    </div>
+</body>
+
+</html>
