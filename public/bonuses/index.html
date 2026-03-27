@@ -27,12 +27,13 @@
     .how h2 { margin: 0 0 14px; color: #0e7490; font-size: 1.4rem; }
     .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 14px; }
     .step { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
-    .step b { display: inline-block; background: #0e7490; color: #fff; min-width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; margin-right: 8px; font-weight: 700; }
+    .step { display: flex; align-items: flex-start; }
+    .step b { display: inline-block; flex-shrink: 0; background: #0e7490; color: #fff; min-width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; margin-right: 8px; font-weight: 700; }
 
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 18px; margin-bottom: 24px; }
     .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
     .card__head { padding: 18px; font-weight: 700; font-size: 1.15rem; color: #0f172a; display: flex; align-items: center; gap: 10px; }
-    .tag { font-size: 0.85rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; color: #0f172a; background: #e2e8f0; }
+    .tag { font-size: 0.85rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; color: #0f172a; background: #e2e8f0; white-space: nowrap; }
     .tag--p1 { background: #ccfbf1; color: #115e59; }
     .tag--p2 { background: #bae6fd; color: #075985; }
     .tag--p3 { background: #fde68a; color: #92400e; }
