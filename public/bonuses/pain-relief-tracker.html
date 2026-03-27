@@ -66,6 +66,31 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
+        /* Top Navigation */
+        .bonus-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: saturate(120%) blur(6px);
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin: 10px auto 18px;
+            max-width: 900px;
+        }
+        .bonus-nav a {
+            color: #2c7a7b; text-decoration: none; font-weight: 600; font-size: 0.95rem;
+            padding: 6px 10px; border-radius: 8px; border: 1px solid transparent;
+        }
+        .bonus-nav a:hover { background: #edf2f7; }
+        .bonus-nav .brand { color: #2d3748; }
+        .bonus-nav .active { background: #e6fffa; border-color: #b2f5ea; color: #285e61; }
+        .bonus-nav .spacer { flex: 1; }
+
         .section h2 {
             color: #2c7a7b;
             font-size: 1.8rem;
@@ -162,16 +187,11 @@
         }
 
         .scale-item.score-0 { background: #c6f6d5; border-color: #68d391; }
-        .scale-item.score-1 { background: #c6f6d5; border-color: #68d391; }
-        .scale-item.score-2 { background: #c6f6d5; border-color: #68d391; }
-        .scale-item.score-3 { background: #f0fff4; border-color: #9ae6b4; }
-        .scale-item.score-4 { background: #f0fff4; border-color: #9ae6b4; }
-        .scale-item.score-5 { background: #fefcbf; border-color: #f6e05e; }
-        .scale-item.score-6 { background: #fefcbf; border-color: #f6e05e; }
-        .scale-item.score-7 { background: #fed7d7; border-color: #fc8181; }
-        .scale-item.score-8 { background: #fed7d7; border-color: #fc8181; }
-        .scale-item.score-9 { background: #feb2b2; border-color: #f56565; }
-        .scale-item.score-10 { background: #feb2b2; border-color: #f56565; }
+        .scale-item.score-1, .scale-item.score-2, .scale-item.score-1-2 { background: #c6f6d5; border-color: #68d391; }
+        .scale-item.score-3, .scale-item.score-4, .scale-item.score-3-4 { background: #f0fff4; border-color: #9ae6b4; }
+        .scale-item.score-5, .scale-item.score-6, .scale-item.score-5-6 { background: #fefcbf; border-color: #f6e05e; }
+        .scale-item.score-7, .scale-item.score-8, .scale-item.score-7-8 { background: #fed7d7; border-color: #fc8181; }
+        .scale-item.score-9, .scale-item.score-10, .scale-item.score-9-10 { background: #feb2b2; border-color: #f56565; }
 
         .score-number {
             font-size: 2rem;
@@ -278,6 +298,7 @@
         .checkbox-item input[type="checkbox"] {
             width: 16px;
             height: 16px;
+            display: none; /* Hide on-screen to avoid duplicate boxes with the label symbol */
         }
 
         .reflection {
@@ -460,6 +481,13 @@
             -webkit-print-color-adjust: exact;
         }
 
+        /* Print only the logbook/progress, hide chrome */
+        @media print {
+            .print-btn, .bonus-nav, .header, .section, .next-section { display: none !important; }
+            body { padding: 0; margin: 0; background: #fff; }
+            .print-area { display: block; }
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -490,7 +518,14 @@
 </head>
 
 <body>
-    <button class="print-btn" onclick="window.print()">Print This Tracker</button>
+    <button class="print-btn" onclick="window.print()" aria-label="Print this logbook">Print This Tracker</button>
+    <nav class="bonus-nav" role="navigation" aria-label="Bonus navigation">
+        <a href="index.html" class="brand">Bonuses Home</a>
+        <div class="spacer"></div>
+        <a href="pain-relief-tracker.html" class="active">Weeks 1–4: Pain Relief</a>
+        <a href="mobility-scorecard.html">Weeks 5–8: Mobility</a>
+        <a href="daily-habit-builder.html">Weeks 9–12: Habits</a>
+    </nav>
     
     <div class="container">
         <!-- Welcome Header -->
@@ -1433,17 +1468,17 @@
                     <div class="grid-line vertical" style="left: 75%;"></div>
                 </div>
                 <div class="chart-labels">
-                    <div style="position: absolute; top: 10%; left: 5; font-size: 0.8rem; color: #666;">10</div>
-                    <div style="position: absolute; top: 20%; left: 5; font-size: 0.8rem; color: #666;">9</div>
-                    <div style="position: absolute; top: 30%; left: 5; font-size: 0.8rem; color: #666;">8</div>
-                    <div style="position: absolute; top: 40%; left: 5; font-size: 0.8rem; color: #666;">7</div>
-                    <div style="position: absolute; top: 50%; left: 5; font-size: 0.8rem; color: #666;">6</div>
-                    <div style="position: absolute; top: 60%; left: 5; font-size: 0.8rem; color: #666;">5</div>
-                    <div style="position: absolute; top: 70%; left: 5; font-size: 0.8rem; color: #666;">4</div>
-                    <div style="position: absolute; top: 80%; left: 5; font-size: 0.8rem; color: #666;">3</div>
-                    <div style="position: absolute; top: 90%; left: 5; font-size: 0.8rem; color: #666;">2</div>
-                    <div style="position: absolute; top: 95%; left: 5; font-size: 0.8rem; color: #666;">1</div>
-                    <div style="position: absolute; top: 98%; left: 5; font-size: 0.8rem; color: #666;">0</div>
+                    <div style="position: absolute; top: 10%; left: 5px; font-size: 0.8rem; color: #666;">10</div>
+                    <div style="position: absolute; top: 20%; left: 5px; font-size: 0.8rem; color: #666;">9</div>
+                    <div style="position: absolute; top: 30%; left: 5px; font-size: 0.8rem; color: #666;">8</div>
+                    <div style="position: absolute; top: 40%; left: 5px; font-size: 0.8rem; color: #666;">7</div>
+                    <div style="position: absolute; top: 50%; left: 5px; font-size: 0.8rem; color: #666;">6</div>
+                    <div style="position: absolute; top: 60%; left: 5px; font-size: 0.8rem; color: #666;">5</div>
+                    <div style="position: absolute; top: 70%; left: 5px; font-size: 0.8rem; color: #666;">4</div>
+                    <div style="position: absolute; top: 80%; left: 5px; font-size: 0.8rem; color: #666;">3</div>
+                    <div style="position: absolute; top: 90%; left: 5px; font-size: 0.8rem; color: #666;">2</div>
+                    <div style="position: absolute; top: 95%; left: 5px; font-size: 0.8rem; color: #666;">1</div>
+                    <div style="position: absolute; top: 98%; left: 5px; font-size: 0.8rem; color: #666;">0</div>
                 </div>
                 <div class="chart-weeks">
                     <div class="week-label">Week 1</div>
@@ -1463,7 +1498,7 @@
             <p>
                 By the end of Week 4, most patients see their pain drop significantly. If you're at a 3–5, you're right on track. In Phase 2, we're going to start building strength — and your Mobility Scorecard will show you just how much stronger your feet are getting. Keep going. You're doing this.
             </p>
-            <a href="mobility-scorecard.html" class="cta-button">Ready for Phase 2? →</a>
+            <a href="mobility-scorecard.html" class="cta-button" aria-label="Open Weeks 5 to 8 Mobility Scorecard">Open Weeks 5–8 Logbook →</a>
         </div>
     </div>
 </body>
