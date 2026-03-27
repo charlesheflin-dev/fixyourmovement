@@ -497,10 +497,11 @@
             display: none;
         }
 
+        @page { margin: 0.5in; }
+
         @media print {
             .print-btn, .bonus-nav, .header, .section, .next-section { display: none !important; }
 
-            @page { margin: 0.5in; }
             body { padding: 0; margin: 0; background: #fff; font-size: 11pt; }
 
             .print-header { display: block; text-align: center; margin-bottom: 12pt; }
@@ -509,9 +510,11 @@
 
             .print-area { display: block; }
             .logbook-instructions { break-inside: avoid; }
-            .week-table { width: 100%; break-inside: avoid; box-shadow: none; }
+            .week-table { width: 100%; break-inside: auto; box-shadow: none; }
             .reflection { break-inside: avoid; }
-            .progress-section { page-break-before: always; }
+
+            h4 { page-break-before: always; }
+            h4.first-week { page-break-before: auto; }
 
             input, textarea { border: 1px solid #999 !important; background: #fff !important; }
         }
@@ -636,7 +639,7 @@
             </div>
 
             <!-- Week 1 -->
-            <h4 style="color: #2c7a7b; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 1</h4>
+            <h4 class="first-week" style="color: #2c7a7b; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 1</h4>
             <table class="week-table">
                 <thead>
                     <tr>
