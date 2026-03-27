@@ -486,19 +486,32 @@
         @media print {
             .print-btn, .bonus-nav, .header, .section, .next-section { display: none !important; }
 
-            body { padding: 0; margin: 0; background: #fff; font-size: 11pt; }
+            body { padding: 0; margin: 0; background: #fff; font-size: 9pt; }
 
-            .print-header { display: block; text-align: center; margin-bottom: 12pt; }
-            .print-header h2 { font-size: 14pt; color: #333; margin: 0; }
-            .print-header p { font-size: 10pt; color: #666; margin: 4px 0 0; }
+            .print-header { display: block; text-align: center; margin-bottom: 10pt; }
+            .print-header h2 { font-size: 13pt; color: #333; margin: 0; }
+            .print-header p { font-size: 9pt; color: #666; margin: 3px 0 0; }
 
             .print-area { display: block; }
-            .logbook-instructions { break-inside: avoid; }
-            .week-table { width: 100%; break-inside: auto; box-shadow: none; }
-            .reflection { break-inside: avoid; }
 
-            h4 { page-break-before: always; }
+            .logbook h3 { font-size: 12pt; margin-bottom: 6pt; }
+            .logbook-instructions { padding: 8px 12px; font-size: 8.5pt; margin-bottom: 10pt; break-inside: avoid; }
+
+            h4 { page-break-before: always; font-size: 11pt; margin: 10pt 0 6pt !important; }
             h4.first-week { page-break-before: auto; }
+
+            .week-table { width: 100%; border-collapse: collapse; break-inside: avoid; }
+            .week-table th { padding: 4px 6px; font-size: 8pt; font-weight: 600; }
+            .week-table td { padding: 4px 6px; font-size: 8pt; line-height: 1.2; }
+            .week-table .date-cell, .week-table .pain-cell, .week-table .exercise-cell, .week-table .notes-cell { height: auto; }
+
+            .reflection { padding: 8px 12px; margin: 8pt 0; break-inside: avoid; }
+            .reflection h4 { font-size: 10pt; margin-bottom: 6pt !important; }
+            .reflection-line { margin-bottom: 6px; }
+            .reflection-line input { width: 60px; padding: 4px; font-size: 9pt; }
+
+            .progress-section { page-break-before: always; }
+            .progress-section h3 { font-size: 12pt; }
 
             input, textarea { border: 1px solid #999 !important; background: #fff !important; }
         }
