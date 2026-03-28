@@ -484,7 +484,7 @@
         @page { margin: 0.5in; }
 
         @media print {
-            .print-btn, .bonus-nav, .header, .section, .next-section { display: none !important; }
+            .print-btn, .bonus-nav, .header, .section, .next-section, .starting-point { display: none !important; }
 
             body { padding: 0; margin: 0; background: #fff; font-size: 9pt; }
 
@@ -493,20 +493,19 @@
             .print-header p { font-size: 9pt; color: #666; margin: 3px 0 0; }
 
             .print-area { display: block; }
-
+            .logbook { border: none; border-radius: 0; padding: 0; margin: 0; box-shadow: none; }
             .logbook h3 { font-size: 12pt; margin-bottom: 6pt; }
             .logbook-instructions { padding: 8px 12px; font-size: 8.5pt; margin-bottom: 10pt; break-inside: avoid; }
 
-            h4 { page-break-before: always; font-size: 11pt; margin: 10pt 0 6pt !important; }
-            h4.first-week { page-break-before: auto; }
+            .week-page { page-break-before: always; }
+            .week-page:first-of-type { page-break-before: auto; }
 
-            .week-table { width: 100%; border-collapse: collapse; break-inside: avoid; }
+            .week-table { width: 100%; border-collapse: collapse; }
             .week-table th { padding: 4px 6px; font-size: 8pt; font-weight: 600; }
             .week-table td { padding: 4px 6px; font-size: 8pt; line-height: 1.2; }
             .week-table .date-cell, .week-table .pain-cell, .week-table .exercise-cell, .week-table .notes-cell { height: auto; }
 
-            .reflection { padding: 8px 12px; margin: 8pt 0; break-inside: avoid; }
-            .reflection h4 { font-size: 10pt; margin-bottom: 6pt !important; }
+            .reflection { padding: 8px 12px; margin: 8pt 0; }
             .reflection-line { margin-bottom: 6px; }
             .reflection-line input { width: 60px; padding: 4px; font-size: 9pt; }
 
@@ -634,7 +633,8 @@
             </div>
 
             <!-- Week 5 -->
-            <h4 class="first-week" style="color: #0891b2; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 5</h4>
+            <div class="week-page">
+            <h4 style="color: #0891b2; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 5</h4>
             <table class="week-table">
                 <thead>
                     <tr>
@@ -710,8 +710,10 @@
                     <input type="number" min="0" placeholder="--">
                 </div>
             </div>
+            </div>
 
             <!-- Week 6 -->
+            <div class="week-page">
             <h4 style="color: #0891b2; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 6</h4>
             <table class="week-table">
                 <thead>
@@ -788,8 +790,10 @@
                     <input type="number" min="0" placeholder="--">
                 </div>
             </div>
+            </div>
 
             <!-- Week 7 -->
+            <div class="week-page">
             <h4 style="color: #0891b2; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 7</h4>
             <table class="week-table">
                 <thead>
@@ -866,8 +870,10 @@
                     <input type="number" min="0" placeholder="--">
                 </div>
             </div>
+            </div>
 
             <!-- Week 8 -->
+            <div class="week-page">
             <h4 style="color: #0891b2; margin: 30px 0 15px 0; font-size: 1.4rem;">WEEK 8</h4>
             <table class="week-table">
                 <thead>
@@ -943,6 +949,7 @@
                     <label>My best calf raise count this week:</label>
                     <input type="number" min="0" placeholder="--">
                 </div>
+            </div>
             </div>
         </div>
 
