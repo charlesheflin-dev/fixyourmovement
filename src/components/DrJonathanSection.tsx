@@ -11,16 +11,6 @@ const DrJonathanSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-10"
         >
-          <div className="flex justify-center mb-8">
-            <div className="w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden border-4 border-coral/30 shadow-lg">
-              <img
-                src="/bonuses/images/dr-jonathan-schutza.jpg"
-                alt="Dr. Jonathan Schutza, PT, DPT"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-          </div>
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
             Why Dr. Jonathan Built The Foot Capacity System
           </h2>
