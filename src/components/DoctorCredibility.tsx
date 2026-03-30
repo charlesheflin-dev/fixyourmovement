@@ -28,7 +28,7 @@ const DoctorCredibility = () => {
                             </div>
                             <a href="https://www.instagram.com/dr.schutza.pt/" target="_blank" rel="noopener noreferrer">
                                 <img
-                                    src="/bonuses/images/insta-image-3.jpg"
+                                    src="/bonuses/images/insta-4.png"
                                     alt="Follow Dr. Schutza on Instagram"
                                     className="h-10 w-auto hover:opacity-80 transition-opacity"
                                     loading="lazy"
