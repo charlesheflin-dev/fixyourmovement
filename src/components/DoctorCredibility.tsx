@@ -30,7 +30,7 @@ const DoctorCredibility = () => {
                                 <img
                                     src="/bonuses/new-insta-button.jpg"
                                     alt="Follow Dr. Schutza on Instagram"
-                                    className="h-10 w-auto hover:opacity-80 transition-opacity"
+                                    className="h-[120px] w-auto hover:opacity-80 transition-opacity"
                                     loading="lazy"
                                 />
                             </a>
