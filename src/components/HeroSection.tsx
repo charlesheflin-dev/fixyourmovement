@@ -49,7 +49,7 @@ const HeroSection = () => {
           >
             <div style={{ position: "relative", paddingTop: "56.25%" }}>
               <iframe
-                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/750e83d9423c254263ed9cd7971bbb0d/iframe?preload=true&poster=https%3A%2F%2Fcustomer-hene8ngxxo3eajlj.cloudflarestream.com%2F750e83d9423c254263ed9cd7971bbb0d%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/750e83d9423c254263ed9cd7971bbb0d/iframe?preload=true&poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F0a494412-2b90-4019-153b-0df194979600%2Fpublic"
                 loading="lazy"
                 style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
                 allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
