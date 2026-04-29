@@ -9,33 +9,49 @@ import {
 const faqs = [
   {
     q: "Is this just another set of exercises I can find online?",
-    a: "No. This is a structured rehabilitation progression built around biomechanics, tissue adaptation, and progressive load tolerance.",
-  },
-  {
-    q: "Is this only for plantar fasciitis?",
-    a: "Plantar fasciitis is one of the primary conditions addressed, but the system focuses on rebuilding foot capacity more broadly.",
+    a: "No. This is a structured clinical progression built around biomechanics, load tolerance, and real decision-making — sequenced in a way you will not find in a YouTube video.",
   },
   {
     q: "Do I need special equipment?",
-    a: "No. Most exercises require minimal equipment.",
+    a: "No. Most of the work requires minimal or no equipment. You can follow the system from home without any special setup.",
   },
   {
-    q: "Do I need to stop activity completely?",
-    a: "Not usually. The goal is intelligent load modification while rebuilding strength.",
+    q: "How does the app guide me through my recovery?",
+    a: "You log simple daily inputs — pain levels and activity. The system reads that data and directs your next step based on how your body is actually responding, not a fixed calendar.",
   },
   {
-    q: "How long before I see progress?",
-    a: "Many participants notice improvements as they consistently follow the progression and rebuild load tolerance.",
+    q: "What if my pain goes up and down?",
+    a: "That is expected. The system is built to respond to those changes so you can adjust early — before a spike becomes a setback.",
   },
   {
-    q: "Is Dr. Jonathan an actual physical therapist?",
-    a: "Yes. Dr. Jonathan Schutza is a licensed PT with a Doctor of Physical Therapy degree specializing in biomechanics-driven rehabilitation.",
+    q: "Is this personalized to my situation?",
+    a: "Tier 2 adapts your progression based on your own data. Tier 3 adds direct clinical oversight from Dr. Jonathan, with case-specific adjustments throughout your 12 weeks.",
+  },
+  {
+    q: "Do I need to stop all activity while I recover?",
+    a: "In most cases, no. The goal is to modify how much load you place on the tissue while you rebuild its capacity — not to stop moving entirely.",
+  },
+  {
+    q: "How long before I start seeing progress?",
+    a: "Most people begin to notice a shift as their consistency builds and their tissue starts tolerating more load. There is no fixed timeline — the system moves at the pace your body signals it is ready.",
+  },
+  {
+    q: "I have already tried physical therapy. Why would this be different?",
+    a: "Most physical therapy addresses symptoms. This system addresses the root cause — the tissue's low capacity to handle load. That is the piece most approaches skip entirely.",
+  },
+  {
+    q: "What if I follow the program and it does not work for me?",
+    a: "The system is backed by a 90-day guarantee. Follow it, do the work, and if you have not seen a meaningful reduction in pain and improved confidence to move, show us the work and you get a full refund.",
+  },
+  {
+    q: "Which tier is right for me?",
+    a: "If you are self-directed and ready to follow a clear structure independently, the Blueprint is built for you. If you want your progression guided by your own data, the Guided Recovery System is the stronger choice. If you want direct clinical oversight and one-on-one sessions with Dr. Jonathan, Private Recovery Access is the highest level available — and it is limited to 10 people.",
   },
 ];
 
 const FAQSection = () => {
   return (
-    <section className="py-8 md:py-12">
+    <section className="py-12 md:py-20">
       <div className="container mx-auto px-6 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

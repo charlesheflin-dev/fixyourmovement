@@ -1,83 +1,54 @@
 import { motion } from "framer-motion";
-import { ClipboardList, Shield, Footprints } from "lucide-react";
-
-const bonuses = [
-  {
-    icon: ClipboardList,
-    title: "The Foot Recovery Tracking Toolkit",
-    desc: "Helps you monitor progress in pain, strength, and activity tolerance.",
-  },
-  {
-    icon: Shield,
-    title: "The Flare Recovery Playbook",
-    desc: "Gives you a clear plan for what to do if symptoms spike so you always know how to respond.",
-  },
-  {
-    icon: Footprints,
-    title: "The Movement Re-Patterning Toolkit",
-    desc: "Helps identify walking patterns and movement habits that may contribute to repeated irritation.",
-  },
-];
+import { Shield } from "lucide-react";
 
 const BonusSection = () => {
   return (
-    <section className="py-8 md:py-12 bg-sage-light/50">
-      <div className="container mx-auto px-6 max-w-4xl">
+    <section className="py-12 md:py-20 bg-sage-light/50">
+      <div className="container mx-auto px-6 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-6"
+          transition={{ duration: 0.7 }}
+          className="section-card p-8 md:p-14 text-center border-t-4 border-sage"
         >
-          <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
-            What You Receive Inside the Program
+          <div className="w-16 h-16 rounded-full bg-sage-light flex items-center justify-center mx-auto mb-6">
+            <Shield className="w-8 h-8 text-sage" />
+          </div>
+
+          <h2 className="font-display text-2xl md:text-4xl text-primary mb-8">
+            The "Walk Pain-Free or It's Free" 90-Day Guarantee
           </h2>
-          <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
-            Inside the system, you receive guided video instruction from Dr. Jonathan along with tools designed to make the process easier to follow.
-          </p>
-          <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed mt-4">
-            You will also receive practical support resources including:
-          </p>
+
+          <div className="space-y-6 text-left text-lg text-muted-foreground font-body leading-relaxed">
+            <p>
+              Follow the system for 90 days. If you have not experienced a real, noticeable reduction in your
+              daily foot and ankle pain — and a renewed confidence to move — show us you did the work. We will
+              refund 100% of your investment. No questions asked.
+            </p>
+            <p>
+              The reason this guarantee exists is simple. This system is built on a clinical framework that works
+              when it is followed. Dr. Jonathan has seen it work for people who had already tried everything else
+              — cortisone shots, custom orthotics, years of physical therapy. The methodology is sound. The
+              progression is deliberate. The results are real.
+            </p>
+
+            <div className="section-card p-6 border-l-4 border-coral my-6">
+              <p className="text-xl font-display text-primary font-semibold">
+                The only risk here is staying where you are.
+              </p>
+            </div>
+
+            <p>
+              Another year of flare-ups. More money on appointments that offer temporary relief. More activities
+              missed. More distance from the life you want to be living.
+            </p>
+            <p>
+              You have already taken enough chances on approaches that did not address the root problem. This
+              time, the risk is entirely ours.
+            </p>
+          </div>
         </motion.div>
-
-        <div className="grid md:grid-cols-3 gap-6 mt-10">
-          {bonuses.map((bonus, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="section-card p-8 text-center"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-coral/15 flex items-center justify-center mx-auto mb-6">
-                <bonus.icon className="w-8 h-8 text-coral-deep" />
-              </div>
-              <h3 className="font-display text-lg text-primary mb-3">{bonus.title}</h3>
-              <p className="text-muted-foreground font-body">{bonus.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="text-center text-muted-foreground text-lg mt-10 italic"
-        >
-          Together these tools help turn recovery from something vague and frustrating
-        </motion.p>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="text-center text-muted-foreground text-lg mt-2 italic"
-        >
-          into something structured and measurable.
-        </motion.p>
       </div>
     </section>
   );

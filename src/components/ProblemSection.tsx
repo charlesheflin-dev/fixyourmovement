@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const ProblemSection = () => {
   return (
-    <section className="py-8 md:py-12 bg-sage-light/50">
+    <section className="py-12 md:py-20 bg-sage-light/50">
       <div className="container mx-auto px-6 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -12,7 +12,7 @@ const ProblemSection = () => {
           className="text-center mb-10"
         >
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
-            Why Your Foot Pain Keeps Coming Back
+            Why Your Foot Pain Keeps Coming Back Has Nothing to Do With Your Foot
           </h2>
         </motion.div>
 
@@ -21,52 +21,46 @@ const ProblemSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="section-card p-8 md:p-10 mb-10"
+          className="space-y-6 text-lg text-muted-foreground font-body leading-relaxed"
         >
-          <div className="text-lg text-muted-foreground font-body leading-relaxed space-y-4">
-            <p>If you have been dealing with plantar fasciitis or chronic foot pain for months, maybe even years, you already know how discouraging the cycle can feel.</p>
-            <p>You stretch. You rest. You try new shoes, inserts, massage, taping, maybe even physical therapy.</p>
-            <p>And sometimes it feels better for a little while. Then the pain comes back.</p>
-          </div>
+          <p>
+            You have rested it. Stretched it. Bought the shoes, the orthotics, the insoles. You have sat through
+            the appointments, followed the advice, and done everything you were told to do.
+          </p>
+          <p>
+            And still, the moment you try to get back to your life — a morning run, a long walk, a hike with the
+            family — it comes back.
+          </p>
+          <p>
+            Here is what no one has told you: the pain is not the problem. It is a signal. And the signal is
+            saying one thing — your tissue does not have enough capacity to handle the load you are placing on it.
+            Not because you are broken. Not because you are getting old. Because the approach you have been given
+            was never designed to fix that.
+          </p>
+          <p>
+            Rest lowers your load. But it also lowers your capacity. So every time you return to activity, you are
+            asking a weaker foot to do the same job. That is not bad luck. That is a predictable outcome of the
+            wrong strategy.
+          </p>
+          <p>
+            The stretches, the injections, the orthotics — they are not useless. But they are all working on the
+            symptom, not the source. And that is why you are still here, still frustrated, still wondering if this
+            is just your life now.
+          </p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="space-y-5 text-lg text-muted-foreground font-body leading-relaxed"
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="section-card p-8 md:p-10 mt-10 border-l-4 border-coral"
         >
-          <p>
-            Not because you are lazy. Not because your body is broken. And not because you are somehow doing recovery wrong.
+          <p className="text-lg text-muted-foreground font-body leading-relaxed italic">
+            It is not your fault. You followed the advice you were given.
           </p>
-          <p>
-            The real problem is that most treatments ONLY focus on calming symptoms instead of rebuilding the strength and capacity your foot actually needs to handle load.
-          </p>
-          <p>
-            Every time you walk, stand, push off, climb stairs, or exercise, your feet absorb force.
-          </p>
-          <p>
-            If the muscles, tendons, and connective tissue in your foot do not have the load capacity to tolerate that force repeatedly, symptoms return.
-          </p>
-          <p>That is why pain keeps cycling back.</p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="section-card p-8 md:p-10 mt-10 text-center border-l-4 border-coral"
-        >
-          <p className="text-xl md:text-2xl font-display text-primary italic leading-relaxed">
-            It is not a mystery. It is not bad luck.
-          </p>
-          <p className="mt-4 text-xl md:text-2xl font-display text-coral-deep font-semibold">
-            It is a capacity problem.
-          </p>
-          <p className="mt-4 text-muted-foreground font-body text-lg">
-            And until that capacity is rebuilt in a structured way,<br />the pain often keeps returning.
+          <p className="mt-3 text-xl font-display text-coral-deep font-semibold">
+            The advice was incomplete.
           </p>
         </motion.div>
       </div>

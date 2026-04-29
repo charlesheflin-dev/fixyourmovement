@@ -2,17 +2,17 @@ import { motion } from "framer-motion";
 
 const SolutionSection = () => {
   return (
-    <section className="py-8 md:py-12">
+    <section className="py-12 md:py-20">
       <div className="container mx-auto px-6 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-12"
         >
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
-            A Different Way to Recover
+            There Is a Different Way to Fix This — and It Starts With Building, Not Protecting
           </h2>
         </motion.div>
 
@@ -21,49 +21,38 @@ const SolutionSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="space-y-5 text-lg text-muted-foreground font-body leading-relaxed"
+          className="space-y-6 text-lg text-muted-foreground font-body leading-relaxed"
         >
-          <p>Most people with chronic foot pain have never been given a real progression.</p>
-          <p>They have been given pieces.</p>
-
-          <div className="section-card p-6 md:p-8">
-            <ul className="space-y-3">
-              {[
-                "A stretch here.",
-                "A shoe recommendation there.",
-                "A few exercises.",
-                "A rest period.",
-                "A temporary reduction in pain.",
-              ].map((item, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-2 h-2 rounded-full bg-coral mt-3" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <p className="text-foreground font-medium text-xl">
-            But relief is not the same as recovery.
-          </p>
-
           <p>
-            Recovery happens when the body becomes more capable. When tissue can tolerate more load. When strength improves. When movement becomes more efficient.
+            The reason structured, progressive strengthening works when everything else has failed is simple: it
+            is the only approach that actually changes what your tissue is capable of. Not temporarily.
+            Structurally. You are not managing the pain. You are removing the condition that causes it.
           </p>
           <p>
-            When fear begins to fade because your foot is finally becoming more resilient instead of more protected.
+            The Foot Capacity System is built on one core principle — tissues heal and grow stronger when exposed
+            to the right amount of load, applied in the right sequence, at the right time. That is not a theory.
+            That is how the body works. When you follow a system designed around that principle, something shifts.
+            The flare-ups become less frequent. Then less intense. Then they stop being the thing you plan your
+            entire week around.
           </p>
+        </motion.div>
 
-          <div className="section-card p-8 md:p-10 border-l-4 border-sage mt-6">
-            <p className="text-primary font-display text-xl font-semibold mb-4">
-              Instead of asking... <em>"How do I calm this down today?"</em>
-            </p>
-            <p className="text-primary font-display text-xl font-semibold">
-              You start asking... <em>"How do I rebuild a foot that can handle everyday life again?"</em>
-            </p>
-          </div>
-
-          <p className="mt-6">That is the shift this system is built around.</p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="section-card p-8 md:p-10 mt-10 border-l-4 border-sage"
+        >
+          <p className="text-xl md:text-2xl font-display text-primary leading-relaxed">
+            Picture waking up and not thinking about your foot before you get out of bed. Signing up for a 10K
+            without a week of anxiety leading up to it. Saying yes to the hiking trip, the family walk, the
+            morning run — without negotiating with your pain first.
+          </p>
+          <p className="mt-6 text-lg text-muted-foreground font-body leading-relaxed">
+            That is not a fantasy version of recovery. That is what happens when the tissue is actually strong
+            enough to handle your life again. That is what this system is designed to give you.
+          </p>
         </motion.div>
       </div>
     </section>

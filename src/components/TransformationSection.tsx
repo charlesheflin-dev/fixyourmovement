@@ -1,51 +1,61 @@
 import { motion } from "framer-motion";
 
+const features = [
+  {
+    label: "NO MORE PLANNING AROUND PAIN",
+    desc:
+      "Right now, you think twice before every walk, every trip, every morning. When your tissue can handle load, that mental math disappears. You just go.",
+  },
+  {
+    label: "REAL STRENGTH, NOT BORROWED TIME",
+    desc:
+      "Orthotics and injections rent you a few good weeks. This system builds the structural capacity your foot needs to hold up on its own, permanently.",
+  },
+  {
+    label: "A CLEAR PATH FORWARD",
+    desc:
+      "No more guessing, no more conflicting advice. You follow a structured 12-week progression, and you always know exactly what to do next and why.",
+  },
+  {
+    label: "CONFIDENCE IN YOUR BODY AGAIN",
+    desc:
+      "The hardest part of chronic pain is not trusting your own foot. As your load tolerance grows, so does your certainty. You stop fearing movement and start owning it.",
+  },
+];
+
 const TransformationSection = () => {
   return (
-    <section className="py-8 md:py-12 bg-sage-light/50">
-      <div className="container mx-auto px-6 max-w-3xl">
+    <section className="py-12 md:py-20">
+      <div className="container mx-auto px-6 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className="text-center mb-12"
         >
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
-            What This Can Change
+            What Changes When Your Foot Is Actually Strong Again
           </h2>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="space-y-5 text-lg text-muted-foreground font-body leading-relaxed"
-        >
-          <p>The goal here is not just less pain.</p>
-          <p className="text-foreground font-medium text-xl">The goal is that your life begins to open back up.</p>
-          <p>
-            You wake up and those first steps are not a battle. You walk without bracing for what your heel might feel like later. You stand longer without constantly thinking about your foot.
-          </p>
-          <p>
-            You move through the day with more trust in your body and less fear that everything will flare up again.
-          </p>
-          <p>That is what strength and capacity actually give you.</p>
-          <p>Not just symptom control.</p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="section-card p-8 md:p-10 mt-10 text-center border-t-4 border-sage"
-        >
-          <h3 className="font-display text-3xl md:text-4xl text-primary font-bold">
-            Freedom.
-          </h3>
-        </motion.div>
+        <div className="grid md:grid-cols-2 gap-6">
+          {features.map((feature, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.12 }}
+              className="section-card p-8"
+            >
+              <p className="font-display text-sm font-bold tracking-widest text-coral-deep mb-3 uppercase">
+                {feature.label}
+              </p>
+              <p className="text-muted-foreground font-body text-lg leading-relaxed">{feature.desc}</p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
