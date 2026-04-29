@@ -27,6 +27,9 @@ const BonusSection = () => {
               refund 100% of your investment. No questions asked.
             </p>
             <p>
+              That is three full months to follow the system, track your progress, and feel the difference.
+            </p>
+            <p>
               The reason this guarantee exists is simple. This system is built on a clinical framework that works
               when it is followed. Dr. Jonathan has seen it work for people who had already tried everything else
               — cortisone shots, custom orthotics, years of physical therapy. The methodology is sound. The

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   Accordion,
   AccordionContent,
@@ -6,7 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const faqs = [
+const faqs: { q: string; a: React.ReactNode; highlight?: boolean }[] = [
   {
     q: "Is this just another set of exercises I can find online?",
     a: "No. This is a structured clinical progression built around biomechanics, load tolerance, and real decision-making — sequenced in a way you will not find in a YouTube video.",
@@ -41,7 +42,14 @@ const faqs = [
   },
   {
     q: "What if I follow the program and it does not work for me?",
-    a: "The system is backed by a 90-day guarantee. Follow it, do the work, and if you have not seen a meaningful reduction in pain and improved confidence to move, show us the work and you get a full refund.",
+    a: (
+      <>
+        The system is backed by the <strong>Walk Pain-Free or It's Free</strong> 90-day guarantee. Follow it,
+        do the work, and if you have not seen a meaningful reduction in pain and improved confidence to move,
+        show us the work and you get a full refund.
+      </>
+    ),
+    highlight: true,
   },
   {
     q: "Which tier is right for me?",
@@ -76,7 +84,9 @@ const FAQSection = () => {
               <AccordionItem
                 key={i}
                 value={`faq-${i}`}
-                className="section-card px-6 md:px-8 border-none"
+                className={`section-card px-6 md:px-8 border-none ${
+                  faq.highlight ? "border-l-4 border-sage" : ""
+                }`}
               >
                 <AccordionTrigger className="text-left text-lg font-display text-primary hover:no-underline py-6">
                   {faq.q}
@@ -87,6 +97,16 @@ const FAQSection = () => {
               </AccordionItem>
             ))}
           </Accordion>
+
+          {/* Bottom CTA */}
+          <div className="text-center mt-10">
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center font-display font-semibold text-base py-3.5 px-8 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200"
+            >
+              Still have a question? Reach out before you decide. →
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>

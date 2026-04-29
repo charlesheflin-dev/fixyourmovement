@@ -35,6 +35,19 @@ const SolutionSection = () => {
             The flare-ups become less frequent. Then less intense. Then they stop being the thing you plan your
             entire week around.
           </p>
+          <p>
+            I saw this pattern in clinic week after week. Patients who had been told to rest the foot, protect it,
+            offload it with orthotics. And for a window, the pain quieted. But the tissue never got stronger. It
+            just got unloaded. The model said: if it hurts, stop doing the thing that hurts. But that model keeps
+            people weak. And weak tissue fails. Every time.
+          </p>
+          <p>
+            What I was seeing in every one of those patients had a name:{" "}
+            <span className="font-semibold text-primary">Biomechanical Deconditioning</span>. The tissue had not
+            just been injured — it had been systematically undertrained. Weakened by rest, unloaded by orthotics,
+            and never given the progressive stress it needed to rebuild. That is the condition most chronic foot
+            pain patients are actually living with. And it is the condition this system is designed to reverse.
+          </p>
         </motion.div>
 
         <motion.div
