@@ -1,259 +1,510 @@
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import {
+  BookOpen,
+  Layers,
+  Play,
+  CheckCircle,
+  Shield,
+  Users,
+  ArrowRight,
+  Smartphone,
+  BarChart2,
+  SlidersHorizontal,
+  Bell,
+  RefreshCw,
+  Cpu,
+  Target,
+  Calendar,
+  User,
+  MessageSquare,
+  Star,
+  Lock,
+  X,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const tiers = [
-  {
-    id: "t1",
-    name: "The Foot Capacity Blueprint",
-    price: "$247",
-    badge: null,
-    badgeStyle: null,
-    checkoutUrl: "https://whop.com/checkout/plan_Kb2UZ3Iqj7Vn9",
-    ctaLabel: "Start With the Blueprint →",
-    image: "/images/T1.jpg",
-    highlight: false,
-    features: [
-      "Complete 12-week Foot Capacity System",
-      "Full video library — every exercise demonstrated",
-      "Weekly progression templates",
-      "Load management frameworks",
-      "Private web-based training portal with lifetime access",
-      "Walk Pain-Free or It's Free — 90-Day Guarantee",
-    ],
-  },
-  {
-    id: "t2",
-    name: "The Guided Recovery System",
-    price: "$397",
-    badge: "MOST POPULAR",
-    badgeStyle: "amber",
-    checkoutUrl: "https://whop.com/checkout/plan_f7hnKFT1vq0zb",
-    ctaLabel: "Get the Guided System →",
-    image: "/images/T2.jpg",
-    highlight: true,
-    features: [
-      "Everything in the Blueprint, plus:",
-      "Full access to the Foot Capacity app",
-      "Signal-based progression — advance when your body is ready",
-      "Daily pain and activity tracking",
-      "Visual progress dashboard",
-      "Ongoing system refinements from Dr. Jonathan",
-      "Walk Pain-Free or It's Free — 90-Day Guarantee",
-    ],
-  },
-  {
-    id: "t3",
-    name: "Private Recovery Access",
-    price: "$697",
-    badge: "LIMITED TO 10 SPOTS",
-    badgeStyle: "navy",
-    checkoutUrl: "https://whop.com/checkout/plan_g6WVNs6annwO6",
-    ctaLabel: "Apply for Private Access →",
-    image: "/images/T3.jpg",
-    highlight: false,
-    features: [
-      "Everything in the Guided Recovery System, plus:",
-      "Six private 30-minute sessions with Dr. Jonathan",
-      "Two additional sessions post-program",
-      "Active case monitoring — issues flagged before they become setbacks",
-      "Case-specific modifications based on your diagnosis and history",
-      "Direct access to the expert who built the system",
-      "Walk Pain-Free or It's Free — 90-Day Guarantee",
-    ],
-  },
-];
+// ─── Shared sub-components ──────────────────────────────────────────────────
 
-const trustBadges = [
-  {
-    emoji: "🛡",
-    label: "90-Day Guarantee",
-    sub: "Follow it or get a full refund.",
-  },
-  {
-    emoji: "✓",
-    label: "Evidence-Based Progression",
-    sub: "Built on science. Designed for real results.",
-  },
-  {
-    emoji: "👟",
-    label: "Built for Real-World Movement",
-    sub: "Stronger feet. Lasting change.",
-  },
-];
-
-const TierCard = ({
-  tier,
-  orderClass,
+const FeatureRow = ({
+  icon: Icon,
+  title,
+  subtitle,
+  last = false,
 }: {
-  tier: (typeof tiers)[number];
-  orderClass: string;
-}) => {
-  const isHighlight = tier.highlight;
+  icon: LucideIcon;
+  title: string;
+  subtitle: string;
+  last?: boolean;
+}) => (
+  <>
+    <div className="flex items-start gap-3 py-3.5">
+      <span className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center flex-shrink-0">
+        <Icon className="w-5 h-5 text-teal-700" />
+      </span>
+      <div>
+        <p className="font-semibold text-gray-800 font-body text-sm leading-snug">{title}</p>
+        <p className="text-xs text-gray-500 font-body mt-0.5 leading-relaxed">{subtitle}</p>
+      </div>
+    </div>
+    {!last && <hr className="border-gray-100" />}
+  </>
+);
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: isHighlight ? 0.05 : tier.id === "t1" ? 0.15 : 0.25 }}
-      className={`flex flex-col ${orderClass} ${
-        isHighlight ? "md:scale-105 md:z-10" : ""
-      }`}
-    >
-      <div
-        className={`section-card overflow-hidden flex flex-col flex-1 ${
-          isHighlight
-            ? "border-2 border-amber-400 shadow-2xl"
-            : tier.badgeStyle === "navy"
-            ? "border border-border"
-            : "border border-border"
-        }`}
-      >
-        {/* Badge */}
-        {tier.badge && (
-          <div
-            className={`w-full text-center font-body font-bold text-xs tracking-widest uppercase py-2.5 px-4 ${
-              tier.badgeStyle === "amber"
-                ? "bg-amber-500 text-white"
-                : "bg-primary text-primary-foreground"
-            }`}
-          >
-            {tier.badge}
-          </div>
-        )}
-
-        {/* Tier Image */}
-        <img
-          src={tier.image}
-          alt={tier.name}
-          className="w-full object-cover aspect-video"
-        />
-
-        {/* Content */}
-        <div className="p-6 md:p-7 flex flex-col flex-1">
-          {/* Name & Price */}
-          <h2
-            className={`font-display font-bold text-xl mb-1 ${
-              isHighlight ? "text-primary" : "text-foreground"
-            }`}
-          >
-            {tier.name}
-          </h2>
-          <div
-            className={`font-display text-4xl font-bold mb-5 ${
-              isHighlight ? "text-coral-deep" : "text-primary"
-            }`}
-          >
-            {tier.price}
-          </div>
-
-          {/* Feature List */}
-          <ul className="space-y-3 mb-7 flex-1">
-            {tier.features.map((feature, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <span className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-sage-light flex items-center justify-center">
-                  <Check className="w-3 h-3 text-sage" />
-                </span>
-                <span className="font-body text-sm text-muted-foreground leading-relaxed">
-                  {feature}
-                </span>
-              </li>
-            ))}
-          </ul>
-
-          {/* CTA Button */}
-          {isHighlight ? (
-            <a
-              href={tier.checkoutUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="animate-pulse-glow block w-full text-center font-display font-semibold text-base rounded-2xl py-4 px-6 transition-all duration-300 hover:-translate-y-0.5"
-              style={{
-                background:
-                  "linear-gradient(135deg, hsl(var(--coral)), hsl(var(--coral-deep)))",
-                color: "hsl(var(--ivory-warm))",
-                boxShadow: "var(--shadow-cta)",
-              }}
-            >
-              {tier.ctaLabel}
-            </a>
-          ) : (
-            <a
-              href={tier.checkoutUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full text-center font-display font-semibold text-base py-4 px-6 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200"
-            >
-              {tier.ctaLabel}
-            </a>
+const GuaranteeRow = ({ subtitle }: { subtitle?: string }) => (
+  <div className="border border-gray-200 rounded-xl mx-6 mb-6">
+    <div className="grid grid-cols-2">
+      <div className="flex items-start gap-2.5 p-4">
+        <Shield className="w-5 h-5 text-teal-700 flex-shrink-0 mt-0.5" />
+        <div>
+          <p className="font-bold text-teal-700 text-sm font-body leading-snug">
+            Walk Pain-Free or It's Free — 90-Day Guarantee
+          </p>
+          {subtitle && (
+            <p className="text-xs text-gray-500 font-body italic mt-1 leading-relaxed">{subtitle}</p>
           )}
         </div>
       </div>
-    </motion.div>
-  );
-};
+      <div className="flex items-center gap-2 border-l border-gray-200 px-4">
+        <span className="text-teal-700 text-xl font-bold leading-none">∞</span>
+        <p className="font-bold text-gray-800 text-sm font-body">LIFETIME ACCESS</p>
+      </div>
+    </div>
+  </div>
+);
+
+const BestNotForRow = ({
+  bestFor,
+  notFor,
+}: {
+  bestFor: string[];
+  notFor: string[];
+}) => (
+  <div className="grid grid-cols-2 gap-4 mx-6 mb-6">
+    <div className="bg-teal-50 rounded-xl p-4">
+      <div className="flex items-center gap-1.5 mb-2.5">
+        <Users className="w-4 h-4 text-teal-700 flex-shrink-0" />
+        <p className="font-bold text-teal-700 text-xs uppercase tracking-wider font-body">Best For</p>
+      </div>
+      <div className="text-xs text-gray-700 font-body space-y-1.5 leading-relaxed">
+        {bestFor.map((item, i) => (
+          <p key={i}>✅ {item}</p>
+        ))}
+      </div>
+    </div>
+    <div className="bg-red-50 rounded-xl p-4">
+      <div className="flex items-center gap-1.5 mb-2.5">
+        <X className="w-4 h-4 text-red-500 flex-shrink-0" />
+        <p className="font-bold text-red-500 text-xs uppercase tracking-wider font-body">Not For</p>
+      </div>
+      <div className="text-xs text-gray-700 font-body space-y-1.5 leading-relaxed">
+        {notFor.map((item, i) => (
+          <p key={i}>❌ {item}</p>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+const CTAButton = ({
+  href,
+  LeftIcon,
+  label,
+}: {
+  href: string;
+  LeftIcon: LucideIcon;
+  label: string;
+}) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-teal-800 hover:bg-teal-900 text-white font-bold py-5 px-6 w-full flex items-center justify-between text-base md:text-lg transition-colors font-body rounded-b-2xl"
+  >
+    <LeftIcon className="w-5 h-5 flex-shrink-0" />
+    <span className="flex-1 text-center px-3">{label}</span>
+    <ArrowRight className="w-5 h-5 flex-shrink-0" />
+  </a>
+);
+
+// ─── Page ────────────────────────────────────────────────────────────────────
 
 const ChooseYourPlan = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50">
       <Header />
       <main className="pt-28 pb-16 md:pt-36 md:pb-24">
-        <div className="container mx-auto px-6 max-w-6xl">
-          {/* Page Heading */}
+        <div className="max-w-5xl mx-auto px-4 py-12">
+
+          {/* Page heading */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-center mb-12 md:mb-16"
+            transition={{ duration: 0.6 }}
+            className="text-center mb-14"
           >
             <h1 className="font-display text-3xl md:text-5xl text-primary mb-4 leading-tight">
-              Choose Your Path to Stronger,{" "}
-              <span className="whitespace-nowrap">Pain-Free Movement</span>
+              Choose Your Path to Stronger, Pain-Free Movement
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto font-body leading-relaxed">
-              Every tier rebuilds foot capacity. The difference is how guided,
-              personalized, and accelerated your recovery becomes.
+              Every tier rebuilds foot capacity. The difference is how guided, personalized, and accelerated your
+              recovery becomes.
             </p>
           </motion.div>
 
-          {/* Tier Cards — mobile: T2, T1, T3 / desktop: T1, T2, T3 */}
-          <div className="flex flex-col md:flex-row gap-6 md:gap-5 py-6 md:items-stretch">
-            <TierCard tier={tiers[0]} orderClass="order-2 md:order-1 flex-1" />
-            <TierCard tier={tiers[1]} orderClass="order-1 md:order-2 flex-1" />
-            <TierCard tier={tiers[2]} orderClass="order-3 md:order-3 flex-1" />
-          </div>
+          {/* Cards — vertical single-column, max-w-2xl centered */}
+          <div className="flex flex-col gap-12 max-w-2xl mx-auto">
 
-          {/* Trust Badges */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="grid md:grid-cols-3 gap-6 mt-14 md:mt-20"
-          >
-            {trustBadges.map((badge, i) => (
-              <div
-                key={i}
-                className="section-card p-6 flex items-start gap-4"
-              >
-                <span
-                  className="text-2xl flex-shrink-0 w-10 h-10 rounded-xl bg-sage-light flex items-center justify-center"
-                  aria-hidden="true"
-                >
-                  {badge.emoji}
+            {/* ══════════════════════════════════════════
+                TIER 1 — The Blueprint
+            ══════════════════════════════════════════ */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0 }}
+              className="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden"
+            >
+              {/* Top badge */}
+              <div className="flex justify-center py-4 bg-gray-50 border-b border-gray-100">
+                <span className="bg-teal-800 text-white text-xs font-bold font-body tracking-widest uppercase px-5 py-1.5 rounded-full">
+                  TIER 1
                 </span>
-                <div>
-                  <p className="font-display font-bold text-primary text-base mb-1">
-                    {badge.label}
-                  </p>
-                  <p className="text-muted-foreground font-body text-sm">
-                    {badge.sub}
-                  </p>
+              </div>
+
+              {/* Header block */}
+              <div className="px-6 pt-5 pb-6 border-b border-gray-100">
+                <h2 className="font-display text-3xl font-bold text-gray-900 mb-1">The Blueprint</h2>
+                <p className="text-teal-700 font-body text-base mb-4">
+                  The complete Foot Capacity System. Self-guided. Structured. Ready to follow.
+                </p>
+                <div className="flex items-baseline gap-2 mb-4">
+                  <span className="font-display text-4xl font-bold text-gray-900">$247</span>
+                  <span className="text-gray-400 font-body text-sm">USD / one-time</span>
+                </div>
+                <span className="inline-flex items-center gap-1.5 border border-teal-700 text-teal-700 text-xs font-bold font-body px-4 py-1.5 rounded-full">
+                  <span className="text-base leading-none">∞</span>
+                  LIFETIME ACCESS
+                </span>
+              </div>
+
+              {/* Feature list */}
+              <div className="px-6 pt-2 pb-2">
+                <FeatureRow
+                  icon={BookOpen}
+                  title="Full 12-week progression"
+                  subtitle="A complete plan from start to finish."
+                />
+                <FeatureRow
+                  icon={Layers}
+                  title="Step-by-step, pre-mapped system"
+                  subtitle="Every week, every phase — already planned."
+                />
+                <FeatureRow
+                  icon={Play}
+                  title="Every exercise demonstrated"
+                  subtitle="Clear video guidance for every movement."
+                />
+                <FeatureRow
+                  icon={CheckCircle}
+                  title="No interpretation required"
+                  subtitle="Just follow the plan and execute."
+                  last
+                />
+              </div>
+
+              {/* Disclaimer */}
+              <p className="text-center text-teal-600 italic font-body text-sm px-6 py-4">
+                Web portal access only — no app guidance
+              </p>
+
+              {/* Guarantee + Lifetime */}
+              <GuaranteeRow />
+
+              {/* Best For / Not For */}
+              <BestNotForRow
+                bestFor={[
+                  "Self-starters who execute when the path is clear",
+                  "People who do not need feedback to move forward",
+                ]}
+                notFor={[
+                  "Those who want guidance or confirmation",
+                  "Complex or stalled cases needing support",
+                ]}
+              />
+
+              {/* CTA */}
+              <CTAButton
+                href="https://whop.com/checkout/plan_Kb2UZ3Iqj7Vn9"
+                LeftIcon={BookOpen}
+                label="Follow the Blueprint →"
+              />
+            </motion.div>
+
+            {/* ══════════════════════════════════════════
+                TIER 2 — The Guided Recovery System
+            ══════════════════════════════════════════ */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden"
+            >
+              {/* Top badges */}
+              <div className="flex flex-col items-center gap-2 py-4 bg-gray-50 border-b border-gray-100">
+                <span
+                  className="inline-flex items-center gap-1.5 text-white text-xs font-bold font-body tracking-widest uppercase px-5 py-1.5 rounded-full"
+                  style={{ backgroundColor: "#c9930a" }}
+                >
+                  <Star className="w-3.5 h-3.5 fill-white stroke-none" />
+                  MOST POPULAR
+                </span>
+                <span className="bg-teal-800 text-white text-xs font-bold font-body tracking-widest uppercase px-5 py-1.5 rounded-full">
+                  TIER 2
+                </span>
+              </div>
+
+              {/* Header block */}
+              <div className="px-6 pt-5 pb-6 border-b border-gray-100">
+                <h2 className="font-display text-3xl font-bold text-gray-900 mb-1">
+                  The System in Your Pocket
+                </h2>
+                <p className="text-teal-700 font-body text-base mb-3">
+                  Dr. Jonathan guides you day by day.
+                </p>
+                <p className="font-semibold text-gray-800 font-body text-sm leading-relaxed mb-4">
+                  The Foot Capacity app adapts to you in real time — tracking your pain, adjusting your
+                  progression, and keeping you accountable.
+                </p>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-display text-4xl font-bold text-gray-900">$397</span>
+                  <span className="text-gray-400 font-body text-sm">USD / one-time</span>
                 </div>
               </div>
-            ))}
-          </motion.div>
+
+              {/* "Everything in Tier 1, plus:" pill */}
+              <div className="flex justify-center py-4 px-6">
+                <span className="bg-teal-50 text-teal-700 text-xs font-bold font-body tracking-wide px-5 py-2 rounded-full border border-teal-200">
+                  Everything in Tier 1, plus:
+                </span>
+              </div>
+
+              {/* Two-column: mockup + features */}
+              <div className="grid md:grid-cols-2 gap-6 px-6 pb-6">
+                <img
+                  src="/images/app-mockup-t2.png"
+                  alt="Foot Capacity App"
+                  className="w-full rounded-xl shadow-md object-contain"
+                />
+                <div className="pt-1">
+                  <FeatureRow
+                    icon={Smartphone}
+                    title="Full app access"
+                    subtitle="The system lives on your phone."
+                  />
+                  <FeatureRow
+                    icon={BarChart2}
+                    title="Daily pain + progress tracking"
+                    subtitle="Log your pain. Track your trend. See what's improving."
+                  />
+                  <FeatureRow
+                    icon={SlidersHorizontal}
+                    title="Adaptive progression"
+                    subtitle="The app adjusts your plan based on your inputs and results."
+                  />
+                  <FeatureRow
+                    icon={Bell}
+                    title="In-app accountability"
+                    subtitle="Reminders, streaks, and milestones keep you consistent."
+                  />
+                  <FeatureRow
+                    icon={RefreshCw}
+                    title="Smart check-ins"
+                    subtitle="The system responds to your data and keeps you on track."
+                    last
+                  />
+                </div>
+              </div>
+
+              {/* HOW IT WORKS flow */}
+              <div className="mx-6 mb-4 border-t border-gray-100 pt-5">
+                <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-5 font-body">
+                  How It Works
+                </p>
+                <div className="flex items-start justify-center gap-2 flex-wrap pb-4">
+                  <div className="flex flex-col items-center gap-1.5 max-w-[90px]">
+                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center">
+                      <Smartphone className="w-5 h-5 text-teal-700" />
+                    </div>
+                    <p className="text-xs text-gray-600 font-body text-center leading-tight">
+                      You log your pain each day
+                    </p>
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-teal-400 flex-shrink-0 mt-2.5" />
+                  <div className="flex flex-col items-center gap-1.5 max-w-[90px]">
+                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center">
+                      <Cpu className="w-5 h-5 text-teal-700" />
+                    </div>
+                    <p className="text-xs text-gray-600 font-body text-center leading-tight">
+                      The app analyzes your trend
+                    </p>
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-teal-400 flex-shrink-0 mt-2.5" />
+                  <div className="flex flex-col items-center gap-1.5 max-w-[90px]">
+                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center">
+                      <Target className="w-5 h-5 text-teal-700" />
+                    </div>
+                    <p className="text-xs text-gray-600 font-body text-center leading-tight">
+                      It adjusts what you do next
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Status row */}
+              <div className="mx-6 mb-5 rounded-xl overflow-hidden grid grid-cols-3 bg-teal-800 text-white">
+                <div className="p-4 text-center border-r border-teal-700">
+                  <p className="text-xs font-bold font-body mb-1">🟢 IMPROVING?</p>
+                  <p className="text-xs font-body text-teal-200">You progress.</p>
+                </div>
+                <div className="p-4 text-center border-r border-teal-700">
+                  <p className="text-xs font-bold font-body mb-1">🟡 STALLED?</p>
+                  <p className="text-xs font-body text-teal-200">You hold.</p>
+                </div>
+                <div className="p-4 text-center">
+                  <p className="text-xs font-bold font-body mb-1">🔴 PAIN UP?</p>
+                  <p className="text-xs font-body text-teal-200">You modify immediately.</p>
+                </div>
+              </div>
+
+              {/* Confirmation line */}
+              <div className="flex items-center justify-center gap-2 pb-6 px-6">
+                <CheckCircle className="w-4 h-4 text-teal-700 flex-shrink-0" />
+                <p className="text-sm font-body text-gray-600">
+                  No guessing. No second-guessing. Just forward progress.
+                </p>
+              </div>
+
+              {/* CTA */}
+              <CTAButton
+                href="https://whop.com/checkout/plan_f7hnKFT1vq0zb"
+                LeftIcon={Smartphone}
+                label="Get the Guided System – Mobile App INCLUDED →"
+              />
+            </motion.div>
+
+            {/* ══════════════════════════════════════════
+                TIER 3 — Private Recovery Access
+            ══════════════════════════════════════════ */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden"
+            >
+              {/* Top badges */}
+              <div className="flex flex-col items-center gap-2 py-4 bg-gray-50 border-b border-gray-100">
+                <span
+                  className="inline-flex items-center gap-1.5 text-white text-xs font-bold font-body tracking-widest uppercase px-5 py-1.5 rounded-full"
+                  style={{ backgroundColor: "#c9930a" }}
+                >
+                  <Lock className="w-3.5 h-3.5" />
+                  LIMITED ACCESS
+                </span>
+                <span className="bg-teal-800 text-white text-xs font-bold font-body tracking-widest uppercase px-5 py-1.5 rounded-full">
+                  ONLY 10 SPOTS AVAILABLE
+                </span>
+                <span className="bg-teal-800 text-white text-xs font-bold font-body tracking-widest uppercase px-5 py-1.5 rounded-full">
+                  TIER 3
+                </span>
+              </div>
+
+              {/* Header block */}
+              <div className="px-6 pt-5 pb-6 border-b border-gray-100">
+                <h2 className="font-display text-3xl font-bold text-gray-900 mb-1">
+                  Private Recovery Access
+                </h2>
+                <p className="text-teal-700 font-body text-base mb-4">The Doctor in Your Pocket</p>
+                <div className="flex items-baseline gap-2 mb-4">
+                  <span className="font-display text-4xl font-bold text-gray-900">$697</span>
+                  <span className="text-gray-400 font-body text-sm">USD / one-time</span>
+                </div>
+                <span className="inline-flex items-center gap-1.5 border border-teal-700 text-teal-700 text-xs font-bold font-body px-4 py-1.5 rounded-full">
+                  <span className="text-base leading-none">∞</span>
+                  LIFETIME ACCESS
+                </span>
+              </div>
+
+              {/* Two-column: mockup + features */}
+              <div className="grid md:grid-cols-2 gap-6 px-6 py-6">
+                <img
+                  src="/images/app-mockup-t3.png"
+                  alt="Private Recovery App"
+                  className="w-full rounded-xl shadow-md object-contain"
+                />
+                <div className="pt-1">
+                  <p className="font-bold text-gray-900 text-sm font-body uppercase tracking-wider mb-1">
+                    Direct Access to Dr. Jonathan
+                  </p>
+                  <p className="text-teal-700 font-body text-sm mb-4 leading-relaxed">
+                    Everything in Tier 2 — now personally guided.
+                  </p>
+                  <FeatureRow
+                    icon={Calendar}
+                    title="Priority 1:1 Sessions When Needed"
+                    subtitle="Two private 30-minute sessions per month for 6 months (12 total), plus 2 bonus months (14 total) for extra support when you need it."
+                  />
+                  <FeatureRow
+                    icon={User}
+                    title="Your Progress Personally Reviewed"
+                    subtitle="Dr. Jonathan monitors your data throughout the program and adjusts your plan as needed."
+                  />
+                  <FeatureRow
+                    icon={MessageSquare}
+                    title="Dr. Jonathan Reaches Out First"
+                    subtitle="Your data is flagged for review. He reaches out when patterns need attention — before problems become setbacks."
+                  />
+                  <FeatureRow
+                    icon={Bell}
+                    title="Pain Spikes Flagged Early"
+                    subtitle="Active monitoring identifies issues early so they don't derail your recovery."
+                  />
+                  <FeatureRow
+                    icon={SlidersHorizontal}
+                    title="Case-Specific Adjustments"
+                    subtitle="Modifications and progressions based on your diagnosis, history, response to load, and goals."
+                    last
+                  />
+                </div>
+              </div>
+
+              {/* Guarantee + Lifetime */}
+              <GuaranteeRow subtitle="Try the system risk-free for 90 days. Your success is our promise." />
+
+              {/* Best For / Not For */}
+              <BestNotForRow
+                bestFor={[
+                  "Those who want maximum confidence and direct access when it matters",
+                  "People who want expert oversight throughout their recovery",
+                ]}
+                notFor={[
+                  "Those comfortable working independently without direct expert support",
+                  "People looking for a one-time check-in or quick fixes",
+                ]}
+              />
+
+              {/* CTA */}
+              <CTAButton
+                href="https://whop.com/checkout/plan_g6WVNs6annwO6"
+                LeftIcon={Shield}
+                label="Get Direct Access to Dr. Jonathan – Mobile App INCLUDED →"
+              />
+            </motion.div>
+
+          </div>
         </div>
       </main>
       <Footer />
