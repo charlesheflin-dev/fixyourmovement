@@ -1,3 +1,4 @@
+// ChooseYourPlan — v2 rich tier cards
 import { motion } from "framer-motion";
 import {
   BookOpen,
