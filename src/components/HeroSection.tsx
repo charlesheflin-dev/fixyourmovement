@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
@@ -75,12 +76,12 @@ const HeroSection = () => {
               Get Instant Access to The Foot Capacity System Today
             </a>
             */}
-            <button
-              className="cta-button opacity-70 cursor-not-allowed text-xl"
-              disabled
+            <Link
+              to="/choose-your-plan"
+              className="cta-button animate-pulse-glow text-xl"
             >
-              Registration Opening Soon
-            </button>
+              Yes — I'm Ready to Fix My Foot Pain →
+            </Link>
             <p className="mt-4 text-muted-foreground text-base">
               Secure checkout · Instant access · No subscription
             </p>
