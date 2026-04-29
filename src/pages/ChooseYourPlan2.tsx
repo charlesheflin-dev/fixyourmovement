@@ -4,19 +4,19 @@ import Footer from "@/components/Footer";
 
 const tiers = [
   {
-    image: "/dist/images/TIER1.jpg",
+    image: "/images/TIER1.jpg",
     alt: "Tier 1 — The Blueprint: complete 12-week self-guided foot capacity program",
     label: "Follow the Blueprint →",
     href: "https://whop.com/checkout/plan_Kb2UZ3Iqj7Vn9",
   },
   {
-    image: "/dist/images/TIER2.jpg",
+    image: "/images/TIER2.jpg",
     alt: "Tier 2 — The Guided Recovery System: app-guided daily progression with adaptive tracking",
     label: "Get the Guided System →",
     href: "https://whop.com/checkout/plan_f7hnKFT1vq0zb",
   },
   {
-    image: "/dist/images/TIER3.jpg",
+    image: "/images/TIER3.jpg",
     alt: "Tier 3 — Private Recovery Access: direct 1-on-1 oversight with Dr. Jonathan",
     label: "Get Direct Access to Dr. Jonathan →",
     href: "https://whop.com/checkout/plan_g6WVNs6annwO6",
