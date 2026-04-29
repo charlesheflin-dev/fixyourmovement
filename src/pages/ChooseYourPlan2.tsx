@@ -1,4 +1,6 @@
-import { ArrowRight } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -29,26 +31,70 @@ const trustBadges = [
   { emoji: "👟", label: "Built for Real-World Movement", sub: "Stronger feet. Lasting change." },
 ];
 
+// Carousel order: index 0 = Tier 2 (focus on load)
+// leftIndex  = (activeIndex - 1 + 3) % 3 → Tier 1 peek left
+// rightIndex = (activeIndex + 1)     % 3 → Tier 3 peek right
+const carouselCards = [tiers[1], tiers[2], tiers[0]]; // [T2, T3, T1]
+
+const variants = {
+  focus: { x: "0%",   scale: 1,    opacity: 1,    zIndex: 20 },
+  left:  { x: "-62%", scale: 0.75, opacity: 0.45, zIndex: 10 },
+  right: { x: "62%",  scale: 0.75, opacity: 0.45, zIndex: 10 },
+} as const;
+
 const ChooseYourPlan2 = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  // Start with a tall default so the carousel isn't collapsed before images load
+  const [containerHeight, setContainerHeight] = useState(800);
+  const focusCardRef = useRef<HTMLDivElement>(null);
+
+  const getPosition = (i: number): "focus" | "left" | "right" => {
+    if (i === activeIndex) return "focus";
+    if (i === (activeIndex - 1 + 3) % 3) return "left";
+    return "right";
+  };
+
+  const advanceLeft  = () => setActiveIndex((p) => (p - 1 + 3) % 3);
+  const advanceRight = () => setActiveIndex((p) => (p + 1) % 3);
+
+  // Measure focus card height on mount and whenever active card changes.
+  // ResizeObserver also catches image-load reflow so the container is always correct.
+  useEffect(() => {
+    const card = focusCardRef.current;
+    if (!card) return;
+
+    // Immediate read
+    setContainerHeight(card.offsetHeight);
+
+    // Watch for image-load reflow
+    const obs = new ResizeObserver(() => {
+      if (focusCardRef.current) {
+        setContainerHeight(focusCardRef.current.offsetHeight);
+      }
+    });
+    obs.observe(card);
+    return () => obs.disconnect();
+  }, [activeIndex]);
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <main className="pt-28 pb-16 md:pt-36 md:pb-24">
-        <div className="max-w-4xl mx-auto px-4 py-12">
 
-          {/* Page heading */}
-          <div className="text-center mb-12">
-            <h1 className="font-display text-3xl md:text-5xl text-primary mb-4 leading-tight">
-              Choose Your Path to Stronger, Pain-Free Movement
-            </h1>
-            <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto font-body leading-relaxed">
-              Every tier rebuilds foot capacity. The difference is how guided, personalized, and accelerated your
-              recovery becomes.
-            </p>
-          </div>
+        {/* ── Page heading ── */}
+        <div className="max-w-4xl mx-auto px-4 text-center pt-12 mb-12">
+          <h1 className="font-display text-3xl md:text-5xl text-primary mb-4 leading-tight">
+            Choose Your Path to Stronger, Pain-Free Movement
+          </h1>
+          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto font-body leading-relaxed">
+            Every tier rebuilds foot capacity. The difference is how guided, personalized, and accelerated your
+            recovery becomes.
+          </p>
+        </div>
 
-          {/* Tier grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
+        {/* ── Mobile layout — single column, hidden on md+ ── */}
+        <div className="max-w-4xl mx-auto px-4 md:hidden">
+          <div className="grid grid-cols-1 gap-12">
             {tiers.map((tier, i) => (
               <div key={i}>
                 <img
@@ -71,11 +117,103 @@ const ChooseYourPlan2 = () => {
               </div>
             ))}
           </div>
+        </div>
 
-          {/* Trust badges */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+        {/* ── Desktop carousel — hidden on mobile ── */}
+        <div className="hidden md:block">
+          {/*
+            Outer wrapper: relative (containing block for arrows), no overflow-hidden.
+            Inner viewport: relative + overflow-hidden (containing block for cards + clips peeks).
+          */}
+          <div className="relative w-full max-w-6xl mx-auto">
+
+            {/* Left arrow */}
+            <button
+              onClick={advanceLeft}
+              aria-label="Previous tier"
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center hover:bg-teal-50 transition-colors cursor-pointer"
+            >
+              <ChevronLeft className="w-6 h-6 text-gray-600" />
+            </button>
+
+            {/* Viewport: clips peek cards, is the containing block for absolute cards */}
+            <div
+              className="relative overflow-hidden"
+              style={{ height: `${containerHeight}px` }}
+            >
+              {carouselCards.map((card, i) => {
+                const pos = getPosition(i);
+                return (
+                  <motion.div
+                    key={i}
+                    ref={pos === "focus" ? focusCardRef : null}
+                    variants={variants}
+                    animate={pos}
+                    initial={false}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="absolute inset-x-0 mx-auto"
+                    style={{
+                      width: "100%",
+                      maxWidth: "36rem",
+                      cursor: pos !== "focus" ? "pointer" : undefined,
+                    }}
+                    onClick={pos !== "focus" ? () => setActiveIndex(i) : undefined}
+                  >
+                    <img
+                      src={card.image}
+                      alt={card.alt}
+                      width="100%"
+                      height="auto"
+                      loading="lazy"
+                      style={{ display: "block" }}
+                    />
+                    <a
+                      href={card.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-teal-800 hover:bg-teal-900 text-white text-lg font-bold w-full mt-4 flex items-center justify-center gap-2 transition-colors rounded-xl py-4 px-6 font-body"
+                    >
+                      {card.label}
+                      <ArrowRight className="w-5 h-5 flex-shrink-0" />
+                    </a>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Right arrow */}
+            <button
+              onClick={advanceRight}
+              aria-label="Next tier"
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center hover:bg-teal-50 transition-colors cursor-pointer"
+            >
+              <ChevronRight className="w-6 h-6 text-gray-600" />
+            </button>
+          </div>
+
+          {/* Indicator dots */}
+          <div className="hidden md:flex justify-center gap-3 mt-6">
+            {carouselCards.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveIndex(i)}
+                aria-label={`Go to tier ${i + 1}`}
+                className={`w-3 h-3 rounded-full transition-colors ${
+                  i === activeIndex ? "bg-teal-700" : "bg-gray-300 cursor-pointer"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* ── Trust badges (both breakpoints) ── */}
+        <div className="max-w-4xl mx-auto px-4 mt-16 pb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {trustBadges.map((badge, i) => (
-              <div key={i} className="flex items-start gap-3 text-center md:text-left justify-center md:justify-start">
+              <div
+                key={i}
+                className="flex items-start gap-3 text-center md:text-left justify-center md:justify-start"
+              >
                 <span className="text-2xl flex-shrink-0" aria-hidden="true">{badge.emoji}</span>
                 <div>
                   <p className="font-display font-bold text-primary text-base">{badge.label}</p>
@@ -84,8 +222,8 @@ const ChooseYourPlan2 = () => {
               </div>
             ))}
           </div>
-
         </div>
+
       </main>
       <Footer />
     </div>
