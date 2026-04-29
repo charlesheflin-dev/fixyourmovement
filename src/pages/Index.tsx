@@ -4,7 +4,7 @@ import ProblemSection from "@/components/ProblemSection";
 import SolutionSection from "@/components/SolutionSection";
 import WhatItIsSection from "@/components/WhatItIsSection";
 import TransformationSection from "@/components/TransformationSection";
-import MissionSection from "@/components/MissionSection";
+import DoctorCredibility from "@/components/DoctorCredibility";
 import DrJonathanSection from "@/components/DrJonathanSection";
 import ProgramSection from "@/components/ProgramSection";
 import TestimonialSection from "@/components/TestimonialSection";
@@ -25,7 +25,7 @@ const Index = () => {
         <SolutionSection />
         <WhatItIsSection />
         <TransformationSection />
-        <MissionSection />
+        <DoctorCredibility />
         <DrJonathanSection />
         <ProgramSection />
         <TestimonialSection />
