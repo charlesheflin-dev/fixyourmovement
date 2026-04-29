@@ -12,7 +12,7 @@ const Header = () => {
           </span>
         </Link>
         <a
-          href="https://whop.com/login/"
+          href="https://members.fixyourmovement.com/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-muted-foreground hover:text-primary transition-colors font-body text-[12px] md:text-base whitespace-nowrap"
