@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const FinalCTA = () => {
   return (
@@ -67,17 +68,12 @@ const FinalCTA = () => {
 
           {/* CTA */}
           <div className="text-center">
-            {/*
-            <a href="#pricing" className="cta-button animate-pulse-glow text-xl">
-              Yes — I'm Ready to Build Something That Holds
-            </a>
-            */}
-            <button
-              className="cta-button opacity-70 cursor-not-allowed text-xl"
-              disabled
+            <Link
+              to="/choose-your-plan"
+              className="cta-button animate-pulse-glow text-xl"
             >
-              Yes — I'm Ready to Build Something That Holds
-            </button>
+              Yes — I'm Ready to Build Something That Holds →
+            </Link>
           </div>
         </motion.div>
       </div>
