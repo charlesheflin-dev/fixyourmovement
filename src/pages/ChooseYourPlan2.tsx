@@ -1,26 +1,60 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, BookOpen, Smartphone, ShieldCheck, ArrowRight, LucideIcon } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const tiers = [
   {
-    image: "/images/TIER1.jpg",
+    image: "/images/TIER1B.jpg",
     alt: "Tier 1 — The Blueprint: complete 12-week self-guided foot capacity program",
     href: "https://whop.com/checkout/plan_Kb2UZ3Iqj7Vn9",
+    buttonIcon: BookOpen as LucideIcon,
+    buttonPrimary: "Follow the Blueprint",
+    buttonSecondary: null as string | null,
   },
   {
-    image: "/images/TIER2.jpg",
+    image: "/images/TIER2B.jpg",
     alt: "Tier 2 — The Guided Recovery System: app-guided daily progression with adaptive tracking",
     href: "https://whop.com/checkout/plan_f7hnKFT1vq0zb",
+    buttonIcon: Smartphone as LucideIcon,
+    buttonPrimary: "Get the Guided System",
+    buttonSecondary: "Mobile App INCLUDED" as string | null,
   },
   {
-    image: "/images/TIER3.jpg",
+    image: "/images/TIER3B.jpg",
     alt: "Tier 3 — Private Recovery Access: direct 1-on-1 oversight with Dr. Jonathan",
     href: "https://whop.com/checkout/plan_g6WVNs6annwO6",
+    buttonIcon: ShieldCheck as LucideIcon,
+    buttonPrimary: "Get Direct Access to Dr. Jonathan",
+    buttonSecondary: "Mobile App INCLUDED" as string | null,
   },
 ];
+
+type Tier = typeof tiers[0];
+
+const TierButton = ({ tier }: { tier: Tier }) => {
+  const Icon = tier.buttonIcon;
+  return (
+    <a
+      href={tier.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center justify-between w-full mt-3 px-5 py-4 rounded-xl bg-[#1a5c3a] hover:bg-[#154d30] transition-colors text-white font-bold text-lg cursor-pointer no-underline"
+    >
+      <div className="w-12 h-12 rounded-full border-2 border-white/40 flex items-center justify-center flex-shrink-0">
+        <Icon className="w-6 h-6 text-white" />
+      </div>
+      <div className="flex-1 text-center px-3">
+        <div>{tier.buttonPrimary}</div>
+        {tier.buttonSecondary && (
+          <div className="text-sm font-normal opacity-90">{tier.buttonSecondary}</div>
+        )}
+      </div>
+      <ArrowRight className="w-6 h-6 text-white flex-shrink-0" />
+    </a>
+  );
+};
 
 const trustBadges = [
   { emoji: "🛡", label: "90-Day Guarantee", sub: "Follow it or get a full refund." },
@@ -104,6 +138,7 @@ const ChooseYourPlan2 = () => {
                     style={{ display: "block" }}
                   />
                 </a>
+                <TierButton tier={tier} />
               </div>
             ))}
           </div>
@@ -159,6 +194,7 @@ const ChooseYourPlan2 = () => {
                         style={{ display: "block" }}
                       />
                     </a>
+                    <TierButton tier={card} />
                   </motion.div>
                 );
               })}
@@ -214,4 +250,3 @@ const ChooseYourPlan2 = () => {
 };
 
 export default ChooseYourPlan2;
-
