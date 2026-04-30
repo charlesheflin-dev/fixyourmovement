@@ -171,7 +171,6 @@ const ChooseYourPlan2 = () => {
                 return (
                   <motion.div
                     key={i}
-                    ref={pos === "focus" ? focusCardRef : null}
                     variants={variants}
                     animate={pos}
                     initial={false}
@@ -184,17 +183,19 @@ const ChooseYourPlan2 = () => {
                     }}
                     onClick={pos !== "focus" ? () => setActiveIndex(i) : undefined}
                   >
-                    <a href={card.href} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
-                      <img
-                        src={card.image}
-                        alt={card.alt}
-                        width="100%"
-                        height="auto"
-                        loading="lazy"
-                        style={{ display: "block" }}
-                      />
-                    </a>
-                    <TierButton tier={card} />
+                    <div ref={pos === "focus" ? focusCardRef : null}>
+                      <a href={card.href} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+                        <img
+                          src={card.image}
+                          alt={card.alt}
+                          width="100%"
+                          height="auto"
+                          loading="lazy"
+                          style={{ display: "block" }}
+                        />
+                      </a>
+                      <TierButton tier={card} />
+                    </div>
                   </motion.div>
                 );
               })}
