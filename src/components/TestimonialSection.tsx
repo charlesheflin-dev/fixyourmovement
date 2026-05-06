@@ -47,7 +47,7 @@ const TestimonialSection = () => {
     }, [api, isHovered]);
 
     return (
-        <section className="py-8 md:py-12 bg-sage-light/30">
+        <section className="py-8 md:py-12 bg-slate-100/30">
             <div className="container mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}

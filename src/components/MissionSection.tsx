@@ -15,7 +15,7 @@ const quotes = [
 
 const MissionSection = () => {
   return (
-    <section className="py-12 md:py-20 bg-sage-light/50">
+    <section className="py-12 md:py-20 bg-slate-100/50">
       <div className="container mx-auto px-6 max-w-5xl">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12">
           {quotes.map((quote, i) => (
@@ -28,8 +28,7 @@ const MissionSection = () => {
               className="section-card p-8 md:p-10"
             >
               <div
-                className="font-display text-6xl leading-none mb-4 select-none"
-                style={{ color: "hsl(var(--navy))", opacity: 0.25 }}
+                className="font-display text-6xl leading-none mb-4 select-none text-slate-900 opacity-25"
                 aria-hidden="true"
               >
                 &ldquo;

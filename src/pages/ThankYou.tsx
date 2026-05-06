@@ -35,12 +35,12 @@ const ThankYou = () => {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="video-container aspect-video max-w-3xl mx-auto mb-10"
                     >
-                        <div className="w-full h-full flex items-center justify-center bg-navy-deep relative rounded-xl overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-br from-navy/90 to-navy-deep flex items-center justify-center">
+                        <div className="w-full h-full flex items-center justify-center bg-slate-900 relative rounded-xl overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 to-slate-900 flex items-center justify-center">
                                 <div className="text-center">
-                                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-coral/90 flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-coral transition-colors hover:scale-105 transform duration-200">
+                                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-blue/90 flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-blue transition-colors hover:scale-105 transform duration-200">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" className="ml-1">
-                                            <path d="M8 5V19L19 12L8 5Z" fill="hsl(40, 33%, 96%)" />
+                                            <path d="M8 5V19L19 12L8 5Z" fill="hsl(0 0% 100%)" />
                                         </svg>
                                     </div>
                                     <p className="text-primary-foreground/80 font-body text-base md:text-lg">

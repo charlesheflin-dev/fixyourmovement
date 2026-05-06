@@ -18,7 +18,7 @@ const FinalCTA = () => {
           {/* Two-column vision split */}
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             {/* Left — With the System */}
-            <div className="rounded-2xl p-8 md:p-10" style={{ background: "hsl(var(--sage-light))" }}>
+            <div className="rounded-2xl p-8 md:p-10 bg-slate-100">
               <p className="font-display font-bold text-base text-primary uppercase tracking-widest mb-5">
                 With the System
               </p>
@@ -40,7 +40,7 @@ const FinalCTA = () => {
 
             {/* Right — Without Action */}
             <div className="rounded-2xl p-8 md:p-10" style={{ background: "hsl(var(--primary) / 0.07)" }}>
-              <p className="font-display font-bold text-base text-coral-deep uppercase tracking-widest mb-5">
+              <p className="font-display font-bold text-base text-blue uppercase tracking-widest mb-5">
                 Without Action
               </p>
               <div className="space-y-4 text-base text-muted-foreground font-body leading-relaxed">

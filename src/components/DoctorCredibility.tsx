@@ -10,7 +10,7 @@ const DoctorCredibility = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="section-card p-8 md:p-12 border-t-4 border-sage"
+                    className="section-card p-8 md:p-12 border-t-4 border-slate-200"
                 >
                     <h2 className="font-display text-2xl md:text-3xl text-primary mb-8 text-center">
                         Built by a Doctor of Physical Therapy
@@ -18,7 +18,7 @@ const DoctorCredibility = () => {
 
                     <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
                         <div className="shrink-0 flex flex-col items-center gap-4">
-                            <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-sage/30 shadow-lg">
+                            <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-slate-200 shadow-lg">
                                 <img
                                     src="/bonuses/images/dr-jonathan-schutza.jpg"
                                     alt="Dr. Jonathan Schutza, PT, DPT"

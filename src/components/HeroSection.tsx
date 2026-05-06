@@ -20,7 +20,7 @@ const HeroSection = () => {
         >
           <div className="mb-2">
             <span className="trust-badge">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-sage">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-blue">
                 <path d="M8 1L10 5.5L15 6L11.5 9.5L12.5 14.5L8 12L3.5 14.5L4.5 9.5L1 6L6 5.5L8 1Z" fill="currentColor" />
               </svg>
               Created by Dr. Jonathan Schutza, PT, DPT
@@ -34,7 +34,7 @@ const HeroSection = () => {
             Foot Pain Doesn't Keep Coming Back by Accident
           </h1>
 
-          <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-coral-deep italic mb-3 leading-snug">
+          <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-blue italic mb-3 leading-snug">
             Most Treatments Calm Symptoms. Few Rebuild the Strength and Load Capacity Your Feet Actually Need.
           </h2>
 
@@ -50,7 +50,7 @@ const HeroSection = () => {
           >
             <div style={{ position: "relative", paddingTop: "56.25%" }}>
               <iframe
-                                 src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/750e83d9423c254263ed9cd7971bbb0d/iframe?preload=true&poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F465ad095-c137-48c8-47e0-fb9792922200%2Fpublic"
+                               src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/750e83d9423c254263ed9cd7971bbb0d/iframe?preload=true&poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F465ad095-c137-48c8-47e0-fb9792922200%2Fpublic"
                 loading="lazy"
                 style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
                 allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"

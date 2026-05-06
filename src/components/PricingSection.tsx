@@ -74,7 +74,7 @@ const PricingSection = () => {
               </h3>
               <div
                 className={`font-display text-4xl font-bold mb-7 ${
-                  tier.highlight ? "text-coral-deep" : "text-primary"
+                  tier.highlight ? "text-blue" : "text-primary"
                 }`}
               >
                 {tier.price}

@@ -40,7 +40,7 @@ const TierButton = ({ tier }: { tier: Tier }) => {
       href={tier.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center justify-between w-full mt-3 px-5 py-4 rounded-xl bg-[#1a5c3a] hover:bg-[#154d30] transition-colors text-white font-bold text-lg cursor-pointer no-underline"
+      className="flex items-center justify-between w-full mt-3 px-5 py-4 rounded-xl bg-blue hover:bg-blue-dark transition-colors text-white font-bold text-lg cursor-pointer no-underline"
     >
       <div className="w-12 h-12 rounded-full border-2 border-white/40 flex items-center justify-center flex-shrink-0">
         <Icon className="w-6 h-6 text-white" />
@@ -108,7 +108,7 @@ const ChooseYourPlan2 = () => {
   }, [activeIndex]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-slate-50">
       <Header />
       <main className="pt-28 pb-16 md:pt-36 md:pb-24">
 
@@ -156,9 +156,9 @@ const ChooseYourPlan2 = () => {
             <button
               onClick={advanceLeft}
               aria-label="Previous tier"
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center hover:bg-teal-50 transition-colors cursor-pointer"
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white shadow-lg border border-slate-200 flex items-center justify-center hover:bg-blue-light transition-colors cursor-pointer"
             >
-              <ChevronLeft className="w-6 h-6 text-gray-600" />
+              <ChevronLeft className="w-6 h-6 text-slate-500" />
             </button>
 
             {/* Viewport: clips peek cards, is the containing block for absolute cards */}
@@ -205,9 +205,9 @@ const ChooseYourPlan2 = () => {
             <button
               onClick={advanceRight}
               aria-label="Next tier"
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center hover:bg-teal-50 transition-colors cursor-pointer"
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white shadow-lg border border-slate-200 flex items-center justify-center hover:bg-blue-light transition-colors cursor-pointer"
             >
-              <ChevronRight className="w-6 h-6 text-gray-600" />
+              <ChevronRight className="w-6 h-6 text-slate-500" />
             </button>
           </div>
 
@@ -219,7 +219,7 @@ const ChooseYourPlan2 = () => {
                 onClick={() => setActiveIndex(i)}
                 aria-label={`Go to tier ${i + 1}`}
                 className={`w-3 h-3 rounded-full transition-colors ${
-                  i === activeIndex ? "bg-teal-700" : "bg-gray-300 cursor-pointer"
+                  i === activeIndex ? "bg-blue" : "bg-slate-200 cursor-pointer"
                 }`}
               />
             ))}

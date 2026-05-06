@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const ProblemSection = () => {
   return (
-    <section className="py-12 md:py-20 bg-sage-light/50">
+    <section className="py-12 md:py-20 bg-slate-100/50">
       <div className="container mx-auto px-6 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -54,12 +54,12 @@ const ProblemSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="section-card p-8 md:p-10 mt-10 border-l-4 border-coral"
+          className="section-card p-8 md:p-10 mt-10 border-l-4 border-blue"
         >
           <p className="text-lg text-muted-foreground font-body leading-relaxed italic">
             It is not your fault. You followed the advice you were given.
           </p>
-          <p className="mt-3 text-xl font-display text-coral-deep font-semibold">
+          <p className="mt-3 text-xl font-display text-blue font-semibold">
             The advice was incomplete.
           </p>
         </motion.div>

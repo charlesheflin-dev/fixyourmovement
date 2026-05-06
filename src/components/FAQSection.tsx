@@ -85,7 +85,7 @@ const FAQSection = () => {
                 key={i}
                 value={`faq-${i}`}
                 className={`section-card px-6 md:px-8 border-none ${
-                  faq.highlight ? "border-l-4 border-sage" : ""
+                  faq.highlight ? "border-l-4 border-slate-200" : ""
                 }`}
               >
                 <AccordionTrigger className="text-left text-lg font-display text-primary hover:no-underline py-6">

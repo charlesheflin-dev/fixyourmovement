@@ -55,7 +55,7 @@ const SolutionSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="section-card p-8 md:p-10 mt-10 border-l-4 border-sage"
+          className="section-card p-8 md:p-10 mt-10 border-l-4 border-slate-200"
         >
           <p className="text-xl md:text-2xl font-display text-primary leading-relaxed">
             Picture waking up and not thinking about your foot before you get out of bed. Signing up for a 10K

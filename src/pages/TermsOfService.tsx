@@ -122,7 +122,7 @@ const TermsOfService = () => {
                             </p>
                         </section>
 
-                        <section className="section-card p-8 md:p-10 border-t-4 border-sage">
+                        <section className="section-card p-8 md:p-10 border-t-4 border-slate-200">
                             <h2 className="font-display text-xl md:text-2xl text-primary font-semibold mb-4">
                                 Contact
                             </h2>
@@ -131,7 +131,7 @@ const TermsOfService = () => {
                                 Email:{" "}
                                 <a
                                     href="mailto:contact@fixyourmovement.com"
-                                    className="text-sage hover:text-primary transition-colors"
+                                    className="text-blue hover:text-blue-dark transition-colors"
                                 >
                                     contact@fixyourmovement.com
                                 </a>

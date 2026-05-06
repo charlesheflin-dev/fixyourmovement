@@ -31,7 +31,7 @@ const DrJonathanSection = () => {
           <p>Many had already been told nothing more could be done.</p>
           <p>Some said it the moment they walked in.</p>
 
-          <div className="section-card p-8 md:p-10 text-center border-l-4 border-coral my-8">
+          <div className="section-card p-8 md:p-10 text-center border-l-4 border-blue my-8">
             <p className="text-xl md:text-2xl font-display text-primary italic leading-relaxed">
               "PT didn't work for me."
             </p>
@@ -44,7 +44,7 @@ const DrJonathanSection = () => {
           <p>They improved.</p>
           <p>That raised an important question.</p>
 
-          <div className="section-card p-8 md:p-10 text-center border-l-4 border-sage my-8">
+          <div className="section-card p-8 md:p-10 text-center border-l-4 border-slate-200 my-8">
             <p className="text-xl md:text-2xl font-display text-primary italic leading-relaxed">
               If therapy had already "failed," why were these patients finally making progress?
             </p>
@@ -68,7 +68,7 @@ const DrJonathanSection = () => {
           </p>
           <p>They had never heard their condition explained this way before.</p>
 
-          <div className="section-card p-8 md:p-10 text-center border-l-4 border-coral my-8">
+          <div className="section-card p-8 md:p-10 text-center border-l-4 border-blue my-8">
             <p className="text-xl md:text-2xl font-display text-primary italic leading-relaxed">
               It became clear that many people simply did not have access to this kind of care.
             </p>

@@ -3,17 +3,17 @@ import { Shield } from "lucide-react";
 
 const BonusSection = () => {
   return (
-    <section className="py-12 md:py-20 bg-sage-light/50">
+    <section className="py-12 md:py-20 bg-slate-100/50">
       <div className="container mx-auto px-6 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="section-card p-8 md:p-14 text-center border-t-4 border-sage"
+          className="section-card p-8 md:p-14 text-center border-t-4 border-slate-200"
         >
-          <div className="w-16 h-16 rounded-full bg-sage-light flex items-center justify-center mx-auto mb-6">
-            <Shield className="w-8 h-8 text-sage" />
+          <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-6">
+            <Shield className="w-8 h-8 text-slate-400" />
           </div>
 
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-8">
@@ -36,7 +36,7 @@ const BonusSection = () => {
               progression is deliberate. The results are real.
             </p>
 
-            <div className="section-card p-6 border-l-4 border-coral my-6">
+            <div className="section-card p-6 border-l-4 border-blue my-6">
               <p className="text-xl font-display text-primary font-semibold">
                 The only risk here is staying where you are.
               </p>

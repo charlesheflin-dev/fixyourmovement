@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Lora", "Georgia", "serif"],
-        body: ["Source Sans 3", "system-ui", "sans-serif"],
+        display: ["Inter", "system-ui", "sans-serif"],
+        body: ["Inter", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -51,22 +51,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sage: {
-          DEFAULT: "hsl(var(--sage))",
-          light: "hsl(var(--sage-light))",
+        blue: {
+          DEFAULT: "#2563EB",
+          dark: "#1D4ED8",
+          light: "#EFF6FF",
         },
-        ivory: {
-          DEFAULT: "hsl(var(--ivory))",
-          warm: "hsl(var(--ivory-warm))",
+        green: {
+          DEFAULT: "#16A34A",
         },
-        navy: {
-          DEFAULT: "hsl(var(--navy))",
-          deep: "hsl(var(--navy-deep))",
-        },
-        coral: {
-          DEFAULT: "hsl(var(--coral))",
-          warm: "hsl(var(--coral-warm))",
-          deep: "hsl(var(--coral-deep))",
+        red: {
+          DEFAULT: "#DC2626",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -98,8 +92,8 @@ export default {
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 8px 30px -4px hsl(18 68% 70% / 0.5)" },
-          "50%": { boxShadow: "0 8px 40px -4px hsl(18 68% 70% / 0.7)" },
+          "0%, 100%": { boxShadow: "0 8px 30px -4px hsl(221 83% 53% / 0.5)" },
+          "50%": { boxShadow: "0 8px 40px -4px hsl(221 83% 53% / 0.7)" },
         },
       },
       animation: {

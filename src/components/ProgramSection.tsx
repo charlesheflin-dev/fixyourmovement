@@ -100,18 +100,18 @@ const ProgramSection = () => {
                   </div>
 
                   <div className="flex-1">
-                    <p className="font-display text-xs font-bold tracking-widest text-coral-deep uppercase mb-2">
+                    <p className="font-display text-xs font-bold tracking-widest text-blue uppercase mb-2">
                       {step.label}
                     </p>
                     <p className="text-muted-foreground font-body text-lg leading-relaxed mb-4">{step.desc}</p>
                     <ul className="space-y-2">
                       {step.bullets.map((bullet, j) => (
                         <li key={j} className="flex items-start gap-3">
-                          <span className="flex-shrink-0 w-5 h-5 rounded-full bg-sage-light flex items-center justify-center mt-0.5">
+                          <span className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center mt-0.5">
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                               <path
                                 d="M2.5 6L5 8.5L9.5 3.5"
-                                stroke="hsl(100, 12%, 56%)"
+                                stroke="#94A3B8"
                                 strokeWidth="1.5"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"

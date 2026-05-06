@@ -49,7 +49,7 @@ const TransformationSection = () => {
               transition={{ duration: 0.5, delay: i * 0.12 }}
               className="section-card p-8"
             >
-              <p className="font-display text-sm font-bold tracking-widest text-coral-deep mb-3 uppercase">
+              <p className="font-display text-sm font-bold tracking-widest text-blue mb-3 uppercase">
                 {feature.label}
               </p>
               <p className="text-muted-foreground font-body text-lg leading-relaxed">{feature.desc}</p>

@@ -20,7 +20,7 @@ const personas = [
 
 const WhatItIsSection = () => {
   return (
-    <section className="py-12 md:py-20 bg-sage-light/50">
+    <section className="py-12 md:py-20 bg-slate-100/50">
       <div className="container mx-auto px-6 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -42,9 +42,9 @@ const WhatItIsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="section-card p-8 border-t-4 border-navy"
+              className="section-card p-8 border-t-4 border-slate-900"
             >
-              <h3 className="font-display text-lg text-navy font-bold mb-4">{persona.title}</h3>
+              <h3 className="font-display text-lg text-slate-900 font-bold mb-4">{persona.title}</h3>
               <p className="text-muted-foreground font-body text-lg leading-relaxed">{persona.desc}</p>
             </motion.div>
           ))}

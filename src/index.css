@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,49 +6,39 @@
 
 @layer base {
   :root {
-    --background: 40 33% 96%;
-    --foreground: 200 35% 16%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
 
-    --card: 40 33% 98%;
-    --card-foreground: 200 35% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
 
-    --popover: 40 33% 98%;
-    --popover-foreground: 200 35% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 200 35% 26%;
-    --primary-foreground: 40 33% 96%;
+    --primary: 222 47% 11%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 100 12% 56%;
-    --secondary-foreground: 40 33% 98%;
+    --secondary: 213 27% 84%;
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 40 20% 92%;
-    --muted-foreground: 200 15% 40%;
+    --muted: 214 32% 91%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 18 68% 70%;
-    --accent-foreground: 200 35% 16%;
+    --accent: 221 83% 53%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 40 20% 88%;
-    --input: 40 20% 88%;
-    --ring: 200 35% 26%;
+    --border: 213 27% 84%;
+    --input: 213 27% 84%;
+    --ring: 221 83% 53%;
 
     --radius: 0.75rem;
 
-    --sage: 100 12% 56%;
-    --sage-light: 100 12% 92%;
-    --ivory: 40 33% 96%;
-    --ivory-warm: 40 40% 98%;
-    --navy: 200 35% 26%;
-    --navy-deep: 200 40% 18%;
-    --coral: 18 68% 70%;
-    --coral-warm: 18 60% 78%;
-    --coral-deep: 18 72% 58%;
-
-    --shadow-video: 0 25px 60px -12px hsl(200 35% 26% / 0.25);
-    --shadow-card: 0 10px 40px -10px hsl(200 35% 26% / 0.1);
-    --shadow-cta: 0 8px 30px -4px hsl(18 68% 70% / 0.5);
+    --shadow-video: 0 25px 60px -12px hsl(222 47% 11% / 0.25);
+    --shadow-card: 0 10px 40px -10px hsl(222 47% 11% / 0.1);
+    --shadow-cta: 0 8px 30px -4px hsl(221 83% 53% / 0.5);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -85,14 +75,14 @@
     min-height: 72px;
     min-width: 280px;
     padding: 20px 48px;
-    background: linear-gradient(135deg, hsl(var(--coral)), hsl(var(--coral-deep)));
-    color: hsl(var(--ivory-warm));
+    background: linear-gradient(135deg, hsl(221 83% 53%), hsl(224 76% 48%));
+    color: hsl(0 0% 100%);
     box-shadow: var(--shadow-cta);
   }
 
   .cta-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 36px -4px hsl(18 68% 70% / 0.6);
+    box-shadow: 0 12px 36px -4px hsl(221 83% 53% / 0.6);
   }
 
   .cta-button:active {
@@ -103,7 +93,7 @@
     border-radius: 1.5rem;
     box-shadow: var(--shadow-video);
     overflow: hidden;
-    background: hsl(var(--navy-deep));
+    background: hsl(222 47% 11%);
   }
 
   .section-card {
@@ -115,7 +105,7 @@
 
   .trust-badge {
     @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-body font-medium;
-    background: hsl(var(--sage-light));
-    color: hsl(var(--navy));
+    background: hsl(214 32% 91%);
+    color: hsl(222 47% 11%);
   }
 }

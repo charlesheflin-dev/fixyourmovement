@@ -36,7 +36,7 @@ const CookieConsent = () => {
           <div className="bg-background/95 backdrop-blur-md border border-border shadow-2xl rounded-2xl p-5 md:p-6 w-full max-w-4xl flex flex-col sm:flex-row items-center justify-between gap-4 pointer-events-auto">
             <div className="text-sm md:text-base text-muted-foreground font-body text-center sm:text-left flex-1">
               We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking "Got it," you consent to our use of cookies. Read our{" "}
-              <Link to="/privacy-policy" className="text-primary underline hover:text-coral transition-colors">
+              <Link to="/privacy-policy" className="text-blue hover:text-blue-dark transition-colors">
                 Privacy Policy
               </Link>{" "}
               to learn more.
@@ -44,7 +44,7 @@ const CookieConsent = () => {
             <div className="flex-shrink-0 w-full sm:w-auto">
               <Button 
                 onClick={handleAccept} 
-                className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-navy-deep font-display rounded-xl py-6 px-10 text-lg transition-transform hover:scale-105 active:scale-95"
+                className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-slate-800 font-display rounded-xl py-6 px-10 text-lg transition-transform hover:scale-105 active:scale-95"
               >
                 Got it
               </Button>

@@ -14,7 +14,7 @@ const Contact = () => {
                         Have a question about The Foot Capacity System? We're here to help.
                     </p>
 
-                    <div className="section-card p-8 md:p-12 border-t-4 border-sage">
+                    <div className="section-card p-8 md:p-12 border-t-4 border-slate-200">
                         <h2 className="font-display text-xl md:text-2xl text-primary font-semibold mb-6">
                             Get in Touch
                         </h2>
@@ -26,7 +26,7 @@ const Contact = () => {
                                 <span className="text-foreground font-medium">Email:</span>
                                 <a
                                     href="mailto:contact@fixyourmovement.com"
-                                    className="text-sage hover:text-primary transition-colors font-medium text-xl"
+                                    className="text-blue hover:text-blue-dark transition-colors font-medium text-xl"
                                 >
                                     contact@fixyourmovement.com
                                 </a>
