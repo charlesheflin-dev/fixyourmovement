@@ -22,7 +22,7 @@ const tiers = [
     buttonSecondary: "Mobile App INCLUDED" as string | null,
   },
   {
-    image: "/images/TIER3B.png",
+    image: "/images/TIER3NEW.jpg",
     alt: "Tier 3 — Private Recovery Access: direct 1-on-1 oversight with Dr. Jonathan",
     href: "https://whop.com/checkout/plan_g6WVNs6annwO6",
     buttonIcon: ShieldCheck as LucideIcon,
@@ -57,7 +57,7 @@ const TierButton = ({ tier }: { tier: Tier }) => {
 };
 
 const trustBadges = [
-  { emoji: "🛡", label: "60-Day Guarantee", sub: "Follow it or get a full refund." },
+  { emoji: "🛡", label: "60-Day Guarantee", sub: "Walk Pain-Free or it's Free" },
   { emoji: "✅", label: "Evidence-Based Progression", sub: "Built on science. Designed for real results." },
   { emoji: "👟", label: "Built for Real-World Movement", sub: "Stronger feet. Lasting change." },
 ];
