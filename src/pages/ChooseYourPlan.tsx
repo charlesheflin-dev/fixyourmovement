@@ -57,7 +57,7 @@ const TierButton = ({ tier }: { tier: Tier }) => {
 };
 
 const trustBadges = [
-  { emoji: "🛡", label: "90-Day Guarantee", sub: "Follow it or get a full refund." },
+  { emoji: "🛡", label: "60-Day Guarantee", sub: "Follow it or get a full refund." },
   { emoji: "✅", label: "Evidence-Based Progression", sub: "Built on science. Designed for real results." },
   { emoji: "👟", label: "Built for Real-World Movement", sub: "Stronger feet. Lasting change." },
 ];
