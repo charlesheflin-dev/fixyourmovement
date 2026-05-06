@@ -17,17 +17,17 @@ const BonusSection = () => {
           </div>
 
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-8">
-            The "Walk Pain-Free or It's Free" 90-Day Guarantee
+            The "Walk Pain-Free or It's Free" 60-Day Guarantee
           </h2>
 
           <div className="space-y-6 text-left text-lg text-muted-foreground font-body leading-relaxed">
             <p>
-              Follow the system for 90 days. If you have not experienced a real, noticeable reduction in your
+              Follow the system for 60 days. If you have not experienced a real, noticeable reduction in your
               daily foot and ankle pain — and a renewed confidence to move — show us you did the work. We will
               refund 100% of your investment. No questions asked.
             </p>
             <p>
-              That is three full months to follow the system, track your progress, and feel the difference.
+              That is two full months to follow the system, track your progress, and feel the difference.
             </p>
             <p>
               The reason this guarantee exists is simple. This system is built on a clinical framework that works

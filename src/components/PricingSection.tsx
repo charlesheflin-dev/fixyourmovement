@@ -16,7 +16,7 @@ const previewTiers = [
   },
   {
     name: "Private Recovery Access",
-    price: "$697",
+    price: "$997",
     badge: null,
     highlight: false,
   },
@@ -101,7 +101,7 @@ const PricingSection = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-center text-muted-foreground font-body text-sm mt-8"
         >
-          Every tier includes the 90-Day Walk Pain-Free Guarantee.
+          Every tier includes the 60-Day Walk Pain-Free Guarantee.
         </motion.p>
       </div>
     </section>
