@@ -22,7 +22,7 @@ const tiers = [
     buttonSecondary: "Mobile App INCLUDED" as string | null,
   },
   {
-    image: "/images/TIER3NEW.jpg",
+    image: "/images/TIER3NEW.png",
     alt: "Tier 3 — Private Recovery Access: direct 1-on-1 oversight with Dr. Jonathan",
     href: "https://whop.com/checkout/plan_g6WVNs6annwO6",
     buttonIcon: ShieldCheck as LucideIcon,
