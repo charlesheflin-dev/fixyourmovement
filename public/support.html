@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Support — Foot Capacity System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #2563EB;
+            --blue-dark: #1D4ED8;
+            --blue-light: #EFF6FF;
+            --slate-900: #0F172A;
+            --slate-700: #334155;
+            --slate-500: #64748B;
+            --slate-400: #94A3B8;
+            --slate-200: #E2E8F0;
+            --slate-100: #F1F5F9;
+            --slate-50: #F8FAFC;
+            --green: #16A34A;
+            --red: #DC2626;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--slate-50);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 24px 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { width: 100%; max-width: 480px; }
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 36px 32px 40px;
+            box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+            border: 1px solid var(--slate-200);
+        }
+        .logo-section { text-align: center; margin-bottom: 24px; }
+        .brand-name {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--slate-900);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+        .tagline { font-size: 13px; color: var(--slate-500); font-weight: 500; margin-top: 6px; }
+        .separator {
+            width: 48px;
+            height: 3px;
+            background: var(--blue);
+            border-radius: 2px;
+            margin: 20px auto 24px;
+        }
+        .instruction {
+            text-align: center;
+            font-size: 15px;
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.5;
+            margin-bottom: 28px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-size: 14px; font-weight: 600; color: var(--slate-900); margin-bottom: 8px; }
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--slate-900);
+            background: #fff;
+            border: 1.5px solid var(--slate-200);
+            border-radius: 10px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .form-input::placeholder { color: var(--slate-400); font-weight: 400; }
+        .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12); }
+        .form-input.error { border-color: var(--red); box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1); }
+        textarea.form-input { resize: vertical; min-height: 120px; line-height: 1.5; }
+        .submit-btn {
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--blue);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.2s, transform 0.1s;
+            margin-top: 8px;
+        }
+        .submit-btn:hover:not(:disabled) { background: var(--blue-dark); }
+        .submit-btn:active:not(:disabled) { transform: scale(0.98); }
+        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+        .submit-btn.success { background: var(--green); }
+        .btn-icon { width: 18px; height: 18px; flex-shrink: 0; }
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(255,255,255,0.35);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+            flex-shrink: 0;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .success-message {
+            display: none;
+            background: #F0FDF4;
+            border: 1.5px solid #BBF7D0;
+            border-radius: 12px;
+            padding: 20px 18px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .success-message.show { display: block; }
+        .success-text { font-size: 17px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+        .success-detail { font-size: 14px; color: #166534; font-weight: 500; line-height: 1.5; }
+        .error-message {
+            display: none;
+            background: #FEF2F2;
+            border: 1.5px solid #FECACA;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 16px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--red);
+        }
+        .error-message.show { display: block; }
+        .form-body.hidden { display: none; }
+        .info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px;
+            background: var(--slate-50);
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+        .info-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--blue-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .info-icon svg { width: 18px; height: 18px; stroke: var(--blue); }
+        .info-title { font-size: 13px; font-weight: 700; color: var(--blue); margin-bottom: 4px; }
+        .info-text { font-size: 13px; color: var(--slate-500); font-weight: 400; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="logo-section">
+                <div class="brand-name">Foot Capacity<br>System</div>
+                <p class="tagline">Rebuild strength. Restore capacity. Stay out of pain.</p>
+                <div class="separator"></div>
+            </div>
+
+            <p class="instruction">Fill in the form below and we'll get back to you within 24 hours.</p>
+
+            <div class="success-message" id="successMsg">
+                <div class="success-text">✓ Support ticket created!</div>
+                <div class="success-detail">We've received your message and will reply to your email within 24 hours.</div>
+            </div>
+
+            <div class="error-message" id="errorMsg">
+                Something went wrong. Please try again or email us directly at support@fixyourmovement.com
+            </div>
+
+            <div class="form-body" id="formBody">
+                <div class="form-group">
+                    <label class="form-label" for="name">Full Name</label>
+                    <input type="text" id="name" class="form-input" placeholder="Your name" autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" id="email" class="form-input" placeholder="your@email.com" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="message">How can we help?</label>
+                    <textarea id="message" class="form-input" placeholder="Describe your issue or question..."></textarea>
+                </div>
+                <button class="submit-btn" id="submitBtn" onclick="submitTicket()">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 2L11 13"/>
+                        <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                    </svg>
+                    <span id="btnText">SUBMIT TICKET</span>
+                    <div class="spinner" id="spinner"></div>
+                </button>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="info-title">What happens next</div>
+                    <div class="info-text">A support ticket will be created and you'll receive a confirmation email. We'll reply within 24 hours.</div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="info-title">Prefer to email directly?</div>
+                    <div class="info-text">Reach us at <a href="mailto:support@fixyourmovement.com" style="color: var(--blue); font-weight: 600;">support@fixyourmovement.com</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function submitTicket() {
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const message = document.getElementById('message');
+            const btn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const spinner = document.getElementById('spinner');
+            const icon = btn.querySelector('.btn-icon');
+            const successMsg = document.getElementById('successMsg');
+            const errorMsg = document.getElementById('errorMsg');
+            const formBody = document.getElementById('formBody');
+
+            name.classList.remove('error');
+            email.classList.remove('error');
+            message.classList.remove('error');
+            errorMsg.classList.remove('show');
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let valid = true;
+            if (!name.value.trim()) { name.classList.add('error'); valid = false; }
+            if (!email.value.trim() || !emailRegex.test(email.value.trim())) { email.classList.add('error'); valid = false; }
+            if (!message.value.trim()) { message.classList.add('error'); valid = false; }
+            if (!valid) return;
+
+            btn.disabled = true;
+            btnText.textContent = 'Sending...';
+            spinner.style.display = 'block';
+            icon.style.display = 'none';
+
+            try {
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        access_key: '34c36038-87ca-44c0-8a4b-a194ab0e3733',
+                        subject: 'Support Request from ' + name.value.trim(),
+                        name: name.value.trim(),
+                        email: email.value.trim(),
+                        message: message.value.trim(),
+                        from_name: 'FCS Support Form'
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    formBody.classList.add('hidden');
+                    successMsg.classList.add('show');
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (err) {
+                btn.disabled = false;
+                btnText.textContent = 'SUBMIT TICKET';
+                spinner.style.display = 'none';
+                icon.style.display = 'block';
+                errorMsg.classList.add('show');
+            }
+        }
+
+        ['name', 'email'].forEach(id => {
+            document.getElementById(id).addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') submitTicket();
+            });
+        });
+    </script>
+</body>
+</html>
