@@ -61,7 +61,7 @@ const ThankYou = () => {
                             Ready to access your program?
                         </p>
                         <a
-                            href="https://whop.com/login/"
+                            href="https://members.fixyourmovement.com/"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
