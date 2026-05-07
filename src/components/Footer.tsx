@@ -10,6 +10,8 @@ const Footer = () => {
         <div className="mt-4 flex items-center justify-center gap-6 text-sm text-muted-foreground flex-wrap">
           <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
           <Link to="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</Link>
+          <Link to="/refund-policy" className="hover:text-primary transition-colors">Refund Policy</Link>
+          <Link to="/eula" className="hover:text-primary transition-colors">EULA</Link>
           <Link to="/contact" className="hover:text-primary transition-colors">Contact</Link>
         </div>
         <p className="mt-4 text-sm text-muted-foreground/70 max-w-lg mx-auto">
