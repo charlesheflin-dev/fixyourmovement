@@ -12,63 +12,43 @@ const FinalCTA = () => {
           transition={{ duration: 0.7 }}
         >
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-10 text-center leading-tight">
-            One Year From Now, Where Will You Be?
+            Ready To See How The Full System Works?
           </h2>
+          <p className="text-xl text-muted-foreground font-body mb-10 text-center">
+            Watch the guided walkthrough to see how The Foot Capacity System helps people approach recovery with more structure, more clarity, and far less guesswork.
+          </p>
 
-          {/* Two-column vision split */}
-          <div className="grid md:grid-cols-2 gap-6 mb-10">
-            {/* Left — With the System */}
-            <div className="rounded-2xl p-8 md:p-10 bg-slate-100">
-              <p className="font-display font-bold text-base text-primary uppercase tracking-widest mb-5">
-                With the System
-              </p>
-              <div className="space-y-4 text-base text-muted-foreground font-body leading-relaxed">
-                <p>
-                  You get up. Your feet hit the floor. And you just... walk. No bracing for that first step. No
-                  testing the ground. No mental calculation of how far you can go before it starts.
-                </p>
-                <p>
-                  You sign up for that hiking trip. You chase your kids around the yard. You lace up for a run
-                  without the quiet dread that follows you through every mile.
-                </p>
-                <p className="text-foreground font-medium">
-                  That is not a fantasy. That is what happens when your tissue finally has the capacity to handle
-                  your life.
-                </p>
-              </div>
-            </div>
-
-            {/* Right — Without Action */}
-            <div className="rounded-2xl p-8 md:p-10" style={{ background: "hsl(var(--primary) / 0.07)" }}>
-              <p className="font-display font-bold text-base text-blue uppercase tracking-widest mb-5">
-                Without Action
-              </p>
-              <div className="space-y-4 text-base text-muted-foreground font-body leading-relaxed">
-                <p>
-                  Same morning. Same floor. Same first step. And the same sharp reminder that nothing has changed.
-                </p>
-                <p>
-                  Tissues that are not progressively loaded get weaker over time. The threshold drops. The
-                  flare-ups come faster. The activities you are still doing today become the ones you avoid next
-                  year.
-                </p>
-                <p className="text-foreground font-medium">
-                  You have already tried the passive route. You know where it leads.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Full-width closing copy */}
-          <div className="max-w-3xl mx-auto space-y-5 text-lg text-muted-foreground font-body leading-relaxed mb-10 text-center">
+          <div className="max-w-3xl mx-auto space-y-6 text-lg text-muted-foreground font-body leading-relaxed mb-10">
             <p>
-              The only thing that changes the outcome is addressing the root cause: rebuilding the structural
-              capacity your foot has lost. That is what this system is built to do. Not manage your symptoms until
-              the next flare. Build the foundation that prevents the next one.
+              Most people dealing with recurring foot and ankle pain are not lacking effort.
             </p>
-            <p className="text-foreground font-medium text-xl">
-              The question is not whether this works. The question is whether you are ready to stop repeating the
-              same pattern and start building something that holds.
+
+            <p>
+              They're usually lacking:
+            </p>
+            <ul className="list-disc list-inside">
+              <li>Structure</li>
+              <li>Consistency</li>
+              <li>Clarity during setbacks</li>
+              <li>Confidence in what to do next</li>
+            </ul>
+
+            <p>
+              The Foot Capacity System was designed to help simplify that process.
+            </p>
+
+            <p>
+              Inside the walkthrough, you'll see how the guided recovery system helps people:
+            </p>
+            <ul className="list-disc list-inside">
+              <li>Follow a more organized recovery process</li>
+              <li>Track progress over time</li>
+              <li>Navigate flare-ups more calmly</li>
+              <li>Stay consistent without constantly second-guessing themselves</li>
+            </ul>
+
+            <p className="text-foreground font-medium text-lg">
+              The goal is simple: Help recovery feel more manageable, more sustainable, and less overwhelming long term.
             </p>
           </div>
 
@@ -78,8 +58,11 @@ const FinalCTA = () => {
               to="/choose-your-plan"
               className="cta-button animate-pulse-glow text-xl"
             >
-              Yes — I'm Ready to Build Something That Holds →
+              Watch The Full Guided Walkthrough
             </Link>
+            <p className="mt-4 text-muted-foreground text-base">
+              Explore how The Foot Capacity System helps people move forward with more confidence, structure, and consistency from home.
+            </p>
           </div>
         </motion.div>
       </div>

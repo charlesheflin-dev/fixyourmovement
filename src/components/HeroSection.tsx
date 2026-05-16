@@ -31,11 +31,11 @@ const HeroSection = () => {
           </div>
 
           <h1 className="font-display text-3xl md:text-5xl lg:text-[3.5rem] font-bold text-primary leading-tight mb-3">
-            Foot Pain Doesn't Keep Coming Back by Accident
+            Stop Chasing Temporary Relief. Rebuild The Capacity Your Feet Actually Need.
           </h1>
 
           <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-blue italic mb-3 leading-snug">
-            Most Treatments Calm Symptoms. Few Rebuild the Strength and Load Capacity Your Feet Actually Need.
+            A clearer, more structured way to rebuild foot and ankle strength from home, without constantly wondering if you're doing too much, too little, or the wrong thing entirely.
           </h2>
 
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-4 font-body leading-relaxed">
@@ -83,7 +83,7 @@ const HeroSection = () => {
               Yes — I'm Ready to Fix My Foot Pain →
             </Link>
             <p className="mt-4 text-muted-foreground text-base">
-              Secure checkout · Instant access · No subscription
+              Guided recovery, progress tracking, flare-up support, and long-term structure inside The Foot Capacity System.
             </p>
           </motion.div>
         </motion.div>

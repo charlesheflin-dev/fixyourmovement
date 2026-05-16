@@ -12,8 +12,11 @@ const SolutionSection = () => {
           className="text-center mb-12"
         >
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
-            There Is a Different Way to Fix This — and It Starts With Building, Not Protecting
+            Most People Don't Need More Random Advice. They Need More Clarity.
           </h2>
+          <p className="text-lg text-muted-foreground font-body mt-2">
+            The hardest part of recovery is often not effort. It's uncertainty.
+          </p>
         </motion.div>
 
         <motion.div
@@ -24,29 +27,25 @@ const SolutionSection = () => {
           className="space-y-6 text-lg text-muted-foreground font-body leading-relaxed"
         >
           <p>
-            The reason structured, progressive strengthening works when everything else has failed is simple: it
-            is the only approach that actually changes what your tissue is capable of. Not temporarily.
-            Structurally. You are not managing the pain. You are removing the condition that causes it.
+            One of the biggest reasons people stay stuck in recurring foot and ankle pain is because recovery feels unpredictable.
           </p>
           <p>
-            The Foot Capacity System is built on one core principle — tissues heal and grow stronger when exposed
-            to the right amount of load, applied in the right sequence, at the right time. That is not a theory.
-            That is how the body works. When you follow a system designed around that principle, something shifts.
-            The flare-ups become less frequent. Then less intense. Then they stop being the thing you plan your
-            entire week around.
+            On good days, people often do too much too quickly. On bad days, they panic, shut everything down, and feel like they're right back at the beginning again.
           </p>
           <p>
-            I saw this pattern in clinic week after week. Patients who had been told to rest the foot, protect it,
-            offload it with orthotics. And for a window, the pain quieted. But the tissue never got stronger. It
-            just got unloaded. The model said: if it hurts, stop doing the thing that hurts. But that model keeps
-            people weak. And weak tissue fails. Every time.
+            Most people are constantly asking themselves:
+          </p>
+          <ul className="list-disc list-inside">
+            <li>Should I push through this?</li>
+            <li>Am I making things worse?</li>
+            <li>Why does it flare up every time I start improving?</li>
+            <li>Am I actually progressing correctly?</li>
+          </ul>
+          <p>
+            That uncertainty creates inconsistency. And inconsistency makes long-term recovery extremely difficult.
           </p>
           <p>
-            What I was seeing in every one of those patients had a name:{" "}
-            <span className="font-semibold text-primary">Biomechanical Deconditioning</span>. The tissue had not
-            just been injured — it had been systematically undertrained. Weakened by rest, unloaded by orthotics,
-            and never given the progressive stress it needed to rebuild. That is the condition most chronic foot
-            pain patients are actually living with. And it is the condition this system is designed to reverse.
+            Most people end up piecing together random exercises, conflicting advice, and temporary symptom-management strategies while trying to figure recovery out entirely on their own. Eventually, the whole process starts feeling overwhelming.
           </p>
         </motion.div>
 
@@ -58,13 +57,7 @@ const SolutionSection = () => {
           className="section-card p-8 md:p-10 mt-10 border-l-4 border-slate-200"
         >
           <p className="text-xl md:text-2xl font-display text-primary leading-relaxed">
-            Picture waking up and not thinking about your foot before you get out of bed. Signing up for a 10K
-            without a week of anxiety leading up to it. Saying yes to the hiking trip, the family walk, the
-            morning run — without negotiating with your pain first.
-          </p>
-          <p className="mt-6 text-lg text-muted-foreground font-body leading-relaxed">
-            That is not a fantasy version of recovery. That is what happens when the tissue is actually strong
-            enough to handle your life again. That is what this system is designed to give you.
+            The Foot Capacity System was built to help remove that guesswork and create a clearer path forward.
           </p>
         </motion.div>
       </div>

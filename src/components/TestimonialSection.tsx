@@ -57,10 +57,28 @@ const TestimonialSection = () => {
                     className="text-center mb-12"
                 >
                     <h2 className="font-display text-2xl md:text-3xl text-primary mb-4">
-                        What People Notice When They Rebuild Capacity
+                        For Many People, Recovery Means Getting Parts Of Their Life Back
                     </h2>
                     <p className="text-muted-foreground text-lg font-body">
-                        Freely shared testimonials
+                        Recurring foot and ankle pain affects far more than just movement.
+                    </p>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    className="max-w-3xl mx-auto text-center space-y-4 text-lg text-muted-foreground font-body leading-relaxed mb-8"
+                >
+                    <p>
+                        When pain keeps returning, people often begin changing the way they live without even realizing it. They walk less. Exercise less. Travel less. Avoid activities they used to enjoy. And slowly lose confidence in what their body can comfortably handle.
+                    </p>
+                    <p>
+                        That's why the goal is not simply temporary symptom relief. The goal is helping people move through life with more confidence, more consistency, and less fear of constantly triggering another setback.
+                    </p>
+                    <p>
+                        Here are a few examples of what people have shared after using The Foot Capacity System:
                     </p>
                 </motion.div>
 
@@ -106,6 +124,18 @@ const TestimonialSection = () => {
                             </CarouselContent>
                         </Carousel>
                     </div>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="max-w-3xl mx-auto text-center text-lg text-muted-foreground font-body italic mt-8"
+                >
+                    <p>
+                        Most people are not lacking effort. They're lacking a system they can actually stay consistent with long enough to move forward.
+                    </p>
                 </motion.div>
             </div>
         </section>

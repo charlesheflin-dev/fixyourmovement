@@ -9,51 +9,20 @@ import {
 
 const faqs: { q: string; a: React.ReactNode; highlight?: boolean }[] = [
   {
-    q: "Is this just another set of exercises I can find online?",
-    a: "No. This is a structured clinical progression built around biomechanics, load tolerance, and real decision-making — sequenced in a way you will not find in a YouTube video.",
+    q: "Is this only for plantar fasciitis?",
+    a: "No. While many people initially discover the system because of plantar fasciitis or heel pain, The Foot Capacity System was designed more broadly around improving foot and ankle strength, movement tolerance, and long-term recovery consistency.",
   },
   {
-    q: "Do I need special equipment?",
-    a: "No. Most of the work requires minimal or no equipment. You can follow the system from home without any special setup.",
+    q: "What if I've already tried physical therapy, stretching, orthotics, or other programs?",
+    a: "Most people who explore The Foot Capacity System have already tried several approaches before finding it. Usually, the difference is not one magical exercise. It's finally having a more structured approach that helps people stay consistent and stop second-guessing recovery constantly.",
   },
   {
-    q: "How does the app guide me through my recovery?",
-    a: "You log simple daily inputs — pain levels and activity. The system reads that data and directs your next step based on how your body is actually responding, not a fixed calendar.",
+    q: "What happens if symptoms flare up again?",
+    a: "Flare-ups are a normal part of recovery for many people. The system was designed to help people navigate setbacks with more structure and less panic instead of feeling like all their progress has disappeared.",
   },
   {
-    q: "What if my pain goes up and down?",
-    a: "That is expected. The system is built to respond to those changes so you can adjust early — before a spike becomes a setback.",
-  },
-  {
-    q: "Is this personalized to my situation?",
-    a: "Tier 2 adapts your progression based on your own data. Tier 3 adds direct clinical oversight from Dr. Jonathan, with case-specific adjustments throughout your 12 weeks.",
-  },
-  {
-    q: "Do I need to stop all activity while I recover?",
-    a: "In most cases, no. The goal is to modify how much load you place on the tissue while you rebuild its capacity — not to stop moving entirely.",
-  },
-  {
-    q: "How long before I start seeing progress?",
-    a: "Most people begin to notice a shift as their consistency builds and their tissue starts tolerating more load. There is no fixed timeline — the system moves at the pace your body signals it is ready.",
-  },
-  {
-    q: "I have already tried physical therapy. Why would this be different?",
-    a: "Most physical therapy addresses symptoms. This system addresses the root cause — the tissue's low capacity to handle load. That is the piece most approaches skip entirely.",
-  },
-  {
-    q: "What if I follow the program and it does not work for me?",
-    a: (
-      <>
-        The system is backed by the <strong>Walk Pain-Free or It's Free</strong> 90-day guarantee. Follow it,
-        do the work, and if you have not seen a meaningful reduction in pain and improved confidence to move,
-        show us the work and you get a full refund.
-      </>
-    ),
-    highlight: true,
-  },
-  {
-    q: "Which tier is right for me?",
-    a: "If you are self-directed and ready to follow a clear structure independently, the Blueprint is built for you. If you want your progression guided by your own data, the Guided Recovery System is the stronger choice. If you want direct clinical oversight and one-on-one sessions with Dr. Jonathan, Private Recovery Access is the highest level available — and it is limited to 10 people.",
+    q: "Can this be followed from home?",
+    a: "Yes. The Foot Capacity System was specifically designed to help people follow a more structured recovery process from home through guided sessions, tracking tools, and built-in recovery support.",
   },
 ];
 
@@ -71,6 +40,9 @@ const FAQSection = () => {
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
             Frequently Asked Questions
           </h2>
+          <p className="text-lg text-muted-foreground font-body">
+            A few common questions people ask before exploring The Foot Capacity System further.
+          </p>
         </motion.div>
 
         <motion.div

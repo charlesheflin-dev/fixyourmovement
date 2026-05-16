@@ -1,28 +1,5 @@
 import { motion } from "framer-motion";
 
-const features = [
-  {
-    label: "NO MORE PLANNING AROUND PAIN",
-    desc:
-      "Right now, you think twice before every walk, every trip, every morning. When your tissue can handle load, that mental math disappears. You just go.",
-  },
-  {
-    label: "REAL STRENGTH, NOT BORROWED TIME",
-    desc:
-      "Orthotics and injections rent you a few good weeks. This system builds the structural capacity your foot needs to hold up on its own, permanently.",
-  },
-  {
-    label: "A CLEAR PATH FORWARD",
-    desc:
-      "No more guessing, no more conflicting advice. You follow a structured 12-week progression, and you always know exactly what to do next and why.",
-  },
-  {
-    label: "CONFIDENCE IN YOUR BODY AGAIN",
-    desc:
-      "The hardest part of chronic pain is not trusting your own foot. As your load tolerance grows, so does your certainty. You stop fearing movement and start owning it.",
-  },
-];
-
 const TransformationSection = () => {
   return (
     <section className="py-12 md:py-20">
@@ -35,26 +12,52 @@ const TransformationSection = () => {
           className="text-center mb-12"
         >
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
-            What Changes When Your Foot Is Actually Strong Again
+            Designed To Feel Clear, Organized, And Easy To Follow
           </h2>
+          <p className="text-lg text-muted-foreground font-body mt-2">
+            Recovery becomes much less stressful when people stop trying to figure everything out on their own.
+          </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {features.map((feature, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.12 }}
-              className="section-card p-8"
-            >
-              <p className="font-display text-sm font-bold tracking-widest text-blue mb-3 uppercase">
-                {feature.label}
-              </p>
-              <p className="text-muted-foreground font-body text-lg leading-relaxed">{feature.desc}</p>
-            </motion.div>
-          ))}
+        <div className="max-w-3xl mx-auto space-y-6 text-lg text-muted-foreground font-body leading-relaxed">
+          <p>
+            One of the biggest challenges in recovery is not motivation. It's uncertainty. Not knowing whether you're progressing too quickly, doing too much, or responding appropriately can make the entire process feel frustrating and inconsistent.
+          </p>
+          <p>
+            The Foot Capacity System was designed to simplify that experience. Inside the app, members can follow guided recovery sessions, track symptoms over time, monitor progress visually, and navigate flare-ups with more structure and less second-guessing.
+          </p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.12 }}
+            className="section-card p-8"
+          >
+            <p className="font-display text-lg font-bold text-slate-900 mb-4">Everything inside the system is designed to feel:</p>
+            <ul className="list-disc list-inside text-muted-foreground font-body text-lg leading-relaxed">
+              <li>Simple</li>
+              <li>Organized</li>
+              <li>Manageable</li>
+              <li>Supportive</li>
+            </ul>
+          </motion.div>
+
+          <p>
+            The goal is to help people spend less time worrying about what they should do next and more time following a process they can actually stick with consistently.
+          </p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="section-card p-8 mt-6 border-l-4 border-blue"
+          >
+            <p className="text-lg text-muted-foreground font-body leading-relaxed italic">
+              For many people, having a clearer structure becomes the difference between constantly restarting and finally moving forward again.
+            </p>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -1,23 +1,5 @@
 import { motion } from "framer-motion";
 
-const personas = [
-  {
-    title: "The Frustrated Active Adult",
-    desc:
-      "You were a runner, a hiker, or just someone who stayed active — until foot pain started making every step a decision. You have tried the usual fixes and you are done with temporary.",
-  },
-  {
-    title: "The Repeat PT Patient",
-    desc:
-      "You have been to physical therapy. Maybe more than once. You got some relief, then it came back. You are not looking for another round of the same approach — you want something that actually holds.",
-  },
-  {
-    title: "The Independent Self-Manager",
-    desc:
-      "You do not want to rearrange your week around appointments. You want a clear, structured plan you can follow at home, on your schedule, which gives you real results without depending on anyone else to keep you on track.",
-  },
-];
-
 const WhatItIsSection = () => {
   return (
     <section className="py-12 md:py-20 bg-slate-100/50">
@@ -30,24 +12,34 @@ const WhatItIsSection = () => {
           className="text-center mb-12"
         >
           <h2 className="font-display text-2xl md:text-4xl text-primary mb-5 tracking-widest uppercase">
-            Who This Is For
+            A More Structured Way To Approach Recovery
           </h2>
+          <p className="text-lg text-muted-foreground font-body mt-2">
+            Designed to help people stop guessing and move forward with more confidence from home.
+          </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {personas.map((persona, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="section-card p-8 border-t-4 border-slate-900"
-            >
-              <h3 className="font-display text-lg text-slate-900 font-bold mb-4">{persona.title}</h3>
-              <p className="text-muted-foreground font-body text-lg leading-relaxed">{persona.desc}</p>
-            </motion.div>
-          ))}
+        <div className="max-w-3xl mx-auto space-y-6 text-lg text-muted-foreground font-body leading-relaxed">
+          <p>
+            The Foot Capacity System was created for people who are tired of bouncing between temporary fixes, inconsistent routines, and conflicting advice.
+          </p>
+          <p>
+            Instead of trying to figure everything out alone, the system provides a more organized recovery experience designed to help people stay consistent over time.
+          </p>
+          <p>
+            Inside the guided app experience, members can follow recovery sessions, track symptoms and activity, monitor progress over time, and navigate setbacks with more clarity and less panic.
+          </p>
+          <p>
+            The focus is not just calming symptoms temporarily. It's helping people approach recovery in a way that finally feels manageable and sustainable long term.
+          </p>
+          <p>
+            And when flare-ups happen, the system includes structured support designed to help people regain control and continue moving forward without feeling like all their progress disappeared overnight.
+          </p>
+          <div className="text-center mt-6">
+            <Link to="/choose-your-plan" className="cta-button animate-pulse-glow text-xl">
+              See The Full Guided Walkthrough
+            </Link>
+          </div>
         </div>
       </div>
     </section>
