@@ -80,7 +80,10 @@ const HeroSection = () => {
               to="/choose-your-plan"
               className="cta-button animate-pulse-glow text-base md:text-xl"
             >
-              Yes — I'm Ready to Fix My Foot Pain →
+              <>
+                <span className="md:hidden">I'm Ready to Fix My Foot Pain →</span>
+                <span className="hidden md:inline">Yes — I'm Ready to Fix My Foot Pain →</span>
+              </>
             </Link>
             <p className="mt-4 text-muted-foreground text-base">
               Guided recovery, progress tracking, flare-up support, and long-term structure inside The Foot Capacity System.
