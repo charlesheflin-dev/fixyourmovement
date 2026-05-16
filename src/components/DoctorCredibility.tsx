@@ -3,7 +3,7 @@ import { Stethoscope } from "lucide-react";
 
 const DoctorCredibility = () => {
     return (
-        <section className="py-8 md:py-12">
+        <section className="py-8 md:py-6">
             <div className="container mx-auto px-6 max-w-3xl">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}

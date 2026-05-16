@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const SolutionSection = () => {
   return (
-    <section className="py-12 md:py-20">
+    <section className="py-6 md:py-10">
       <div className="container mx-auto px-6 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

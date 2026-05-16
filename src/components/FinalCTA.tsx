@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const FinalCTA = () => {
   return (
-    <section className="py-12 md:py-20 bg-primary/[0.03]">
+    <section className="py-6 md:py-10 bg-primary/[0.03]">
       <div className="container mx-auto px-6 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
