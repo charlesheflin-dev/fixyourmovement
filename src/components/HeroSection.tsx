@@ -78,7 +78,7 @@ const HeroSection = () => {
             */}
             <Link
               to="/choose-your-plan"
-              className="cta-button animate-pulse-glow text-xl"
+              className="cta-button animate-pulse-glow text-base md:text-xl"
             >
               Yes — I'm Ready to Fix My Foot Pain →
             </Link>
