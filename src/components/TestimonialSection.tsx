@@ -8,15 +8,15 @@ import {
 } from "@/components/ui/carousel";
 
 // Import testimonial images
-import testimonial1 from "@/assets/testimonials/1.jpg";
-import testimonial2 from "@/assets/testimonials/2.jpg";
-import testimonial3 from "@/assets/testimonials/3.jpg";
-import testimonial4 from "@/assets/testimonials/4.jpg";
-import testimonial5 from "@/assets/testimonials/5.jpg";
-import testimonial6 from "@/assets/testimonials/6.jpg";
-import testimonial7 from "@/assets/testimonials/7.jpg";
-import testimonial8 from "@/assets/testimonials/8.jpg";
-import testimonial9 from "@/assets/testimonials/9.jpg";
+import testimonial1 from "@/assets/testimonials/1B.jpg";
+import testimonial2 from "@/assets/testimonials/2B.jpg";
+import testimonial3 from "@/assets/testimonials/3B.jpg";
+import testimonial4 from "@/assets/testimonials/4B.jpg";
+import testimonial5 from "@/assets/testimonials/5B.jpg";
+import testimonial6 from "@/assets/testimonials/6B.jpg";
+import testimonial7 from "@/assets/testimonials/7B.jpg";
+import testimonial8 from "@/assets/testimonials/8B.jpg";
+import testimonial9 from "@/assets/testimonials/9B.jpg";
 
 const testimonialImages = [
     testimonial1,
