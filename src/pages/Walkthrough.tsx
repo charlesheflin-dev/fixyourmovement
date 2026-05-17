@@ -31,6 +31,7 @@ import {
   TrendingUp,
   Heart,
   Eye,
+  UserCheck,
 } from "lucide-react";
 import {
   LineChart,
@@ -196,12 +197,187 @@ export default function Walkthrough() {
 
       {/* 4. PRODUCT SUMMARY SECTION */}
       <section className="bg-white py-16">
-        <div className="max-w-3xl mx-auto px-6">
-          <img
-            src="/images/whats-included.png"
-            alt="What's included in the Foot Capacity System"
-            className="w-full rounded-2xl shadow-sm"
-          />
+        <div className="max-w-2xl mx-auto px-6">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden">
+
+            {/* Header */}
+            <div className="text-center px-8 pt-10 pb-6">
+              <img src={logo} alt="FCS" className="h-10 mx-auto mb-4" />
+              <h2 className="text-3xl font-bold text-slate-900 mb-2">The Foot Capacity System</h2>
+              <p className="text-blue-600 italic text-sm max-w-md mx-auto">A structured recovery system designed to help you stop guessing and move forward with more clarity and confidence.</p>
+            </div>
+
+            {/* Phone + Charts */}
+            <div className="px-6 pb-6">
+              <div className="flex flex-col sm:flex-row gap-4">
+                {/* Phone */}
+                <div className="sm:w-2/5 flex items-start justify-center">
+                  <img src="/images/new-phone.jpg" alt="App screenshot" className="w-full max-w-[180px] rounded-2xl shadow-lg" />
+                </div>
+                {/* Charts column */}
+                <div className="sm:w-3/5 flex flex-col gap-4">
+
+                  {/* Phase 1 Reset Chart */}
+                  <div className="bg-white border border-slate-200 rounded-xl p-4">
+                    <p className="font-semibold text-slate-900 text-sm">Phase 1: Reset</p>
+                    <p className="text-slate-500 text-xs mb-3">May 11 – present</p>
+                    <ResponsiveContainer width="100%" height={80}>
+                      <LineChart data={[
+                        { day: "May 11", red: 7, green: 5 },
+                        { day: "May 12", red: 6, green: 5.5 },
+                        { day: "May 13", red: 6.5, green: 6 },
+                        { day: "May 14", red: 5.5, green: 6.5 },
+                        { day: "May 15", red: 6, green: 7 },
+                        { day: "May 16", red: 5, green: 7.5 },
+                        { day: "May 17", red: 5.5, green: 8 },
+                        { day: "May 18", red: 4.5, green: 8.5 },
+                        { day: "Jun 16", red: 5, green: 9 },
+                      ]}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                        <XAxis dataKey="day" tick={{ fontSize: 9 }} interval="preserveStartEnd" />
+                        <YAxis domain={[0, 10]} tick={{ fontSize: 9 }} width={20} />
+                        <Line type="monotone" dataKey="red" stroke="#ef4444" dot={false} strokeWidth={2} />
+                        <Line type="monotone" dataKey="green" stroke="#16A34A" dot={false} strokeWidth={2} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                    <div className="flex justify-around mt-3 text-center">
+                      <div><p className="text-lg font-bold text-slate-900">8</p><p className="text-xs text-slate-500">Starting pain</p></div>
+                      <div><p className="text-lg font-bold text-slate-900">6</p><p className="text-xs text-slate-500">Ending pain</p></div>
+                      <div><p className="text-lg font-bold text-slate-900">10</p><p className="text-xs text-slate-500">Days logged</p></div>
+                    </div>
+                  </div>
+
+                  {/* FAAM */}
+                  <div className="bg-white border border-slate-200 rounded-xl p-4">
+                    <p className="font-semibold text-slate-900 text-sm">Foot Function Progress (FAAM)</p>
+                    <p className="text-slate-500 text-xs mb-3">Your Foot and Ankle Ability score at each phase — higher is better. 100% = full function.</p>
+                    <div className="flex items-center justify-between bg-slate-50 rounded-lg px-4 py-2">
+                      <span className="text-sm text-slate-700">Baseline (Onboarding)</span>
+                      <span className="text-xl font-bold text-red-500">31%</span>
+                    </div>
+                  </div>
+
+                  {/* Pain Over Time Chart */}
+                  <div className="bg-white border border-slate-200 rounded-xl p-4">
+                    <p className="font-semibold text-slate-900 text-sm">Insights</p>
+                    <p className="font-medium text-slate-700 text-xs mt-1">Pain Over Time</p>
+                    <p className="text-slate-500 text-xs mb-3">Daily pain scores from 0 (no pain) to 10 (worst)</p>
+                    <ResponsiveContainer width="100%" height={100}>
+                      <LineChart data={[
+                        { month: "May 11", pain: 8 },
+                        { month: "May 12", pain: 7 },
+                        { month: "May 13", pain: 7.5 },
+                        { month: "May 14", pain: 6 },
+                        { month: "May 15", pain: 6.5 },
+                        { month: "May 16", pain: 5.5 },
+                        { month: "May 17", pain: 6 },
+                        { month: "Jun 15", pain: 5 },
+                        { month: "Jun 16", pain: 6 },
+                      ]}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                        <XAxis dataKey="month" tick={{ fontSize: 9 }} interval="preserveStartEnd" />
+                        <YAxis domain={[0, 10]} tick={{ fontSize: 9 }} width={20} />
+                        <Line type="monotone" dataKey="pain" stroke="#16A34A" dot={{ r: 3, fill: "#16A34A" }} strokeWidth={2} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                    {/* Analytics */}
+                    <div className="flex justify-around mt-3 text-center flex-wrap gap-2">
+                      <div><p className="text-base font-bold text-slate-900">30</p><p className="text-xs text-slate-500">Rehab Minutes</p></div>
+                      <div><p className="text-base font-bold text-slate-900">10</p><p className="text-xs text-slate-500">Days Logged</p></div>
+                      <div><p className="text-base font-bold text-slate-900">7</p><p className="text-xs text-slate-500">Avg Pain Score</p></div>
+                      <div><p className="text-base font-bold text-green-600">-3</p><p className="text-xs text-slate-500">Pain Change</p></div>
+                      <div><p className="text-base font-bold text-slate-900">4</p><p className="text-xs text-slate-500">Milestones</p></div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            {/* What's Included */}
+            <div className="px-8 pb-6">
+              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest text-center mb-6">What's Included</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div className="flex flex-col items-start gap-2">
+                  <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
+                    <Smartphone size={18} className="text-blue-600" />
+                  </div>
+                  <p className="font-semibold text-slate-900 text-sm">Full App Access</p>
+                  <p className="text-slate-500 text-xs">Complete access to the app, exercises, and all program features.</p>
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
+                    <BarChart2 size={18} className="text-blue-600" />
+                  </div>
+                  <p className="font-semibold text-slate-900 text-sm">Progress Tracking</p>
+                  <p className="text-slate-500 text-xs">Track strength, mobility, and consistency with powerful visual insights.</p>
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
+                    <SlidersHorizontal size={18} className="text-blue-600" />
+                  </div>
+                  <p className="font-semibold text-slate-900 text-sm">Structured Phases</p>
+                  <p className="text-slate-500 text-xs">Step-by-step phases guide you from foundation to fuller function.</p>
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
+                    <Heart size={18} className="text-blue-600" />
+                  </div>
+                  <p className="font-semibold text-slate-900 text-sm">Flare-Up Support</p>
+                  <p className="text-slate-500 text-xs">Tools and guidance to help you manage setbacks and stay on track.</p>
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
+                    <Infinity size={18} className="text-blue-600" />
+                  </div>
+                  <p className="font-semibold text-slate-900 text-sm">Lifetime Access</p>
+                  <p className="text-slate-500 text-xs">Use the system for as long as you need, with future updates included.</p>
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
+                    <UserCheck size={18} className="text-blue-600" />
+                  </div>
+                  <p className="font-semibold text-slate-900 text-sm">Guided Recovery</p>
+                  <p className="text-slate-500 text-xs">Clear instructions and expert guidance every step of the way.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Guarantee */}
+            <div className="mx-6 mb-4 bg-blue-50 rounded-2xl p-5 flex gap-4 items-start">
+              <div className="bg-blue-600 rounded-full p-2 shrink-0">
+                <ShieldCheck size={20} className="text-white" />
+              </div>
+              <div>
+                <p className="font-semibold text-slate-900 text-sm">60-Day Guarantee</p>
+                <p className="text-slate-600 text-xs mt-1">Try The Foot Capacity System risk-free for 60 days. If you don't feel it's the right fit, let us know and we'll make it right—no hassle.</p>
+              </div>
+            </div>
+
+            {/* Price */}
+            <div className="mx-6 mb-6 border border-slate-200 rounded-2xl p-5 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-4xl font-bold text-blue-600">$397</p>
+                <p className="text-blue-600 text-xs font-semibold">One-Time Payment</p>
+                <p className="text-slate-500 text-xs">No monthly fees. No subscriptions.</p>
+              </div>
+              <div className="flex flex-col items-start gap-1">
+                <div className="flex items-center gap-2">
+                  <Infinity size={20} className="text-slate-400" />
+                  <p className="font-semibold text-slate-900 text-sm">Lifetime Access Included</p>
+                </div>
+                <p className="text-slate-500 text-xs">Get lifetime access to the complete system, all updates, and everything you need to keep moving forward.</p>
+              </div>
+            </div>
+
+            {/* Trust badges */}
+            <div className="border-t border-slate-100 px-8 py-4 flex justify-around text-xs text-slate-500">
+              <span className="flex items-center gap-1"><Lock size={12} className="text-blue-500" /> Secure Checkout</span>
+              <span className="flex items-center gap-1"><Tag size={12} className="text-blue-500" /> One-Time Payment</span>
+              <span className="flex items-center gap-1"><Infinity size={12} className="text-blue-500" /> Lifetime Access</span>
+            </div>
+
+          </div>
         </div>
       </section>
 
