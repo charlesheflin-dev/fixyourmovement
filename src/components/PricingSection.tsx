@@ -80,7 +80,7 @@ const PricingSection = () => {
                 {tier.price}
               </div>
               <Link
-                to="/choose-your-plan"
+                to="/walkthrough"
                 className={`block w-full font-display font-semibold text-base py-3.5 px-6 rounded-xl transition-all duration-200 ${
                   tier.highlight
                     ? "bg-primary text-primary-foreground hover:bg-primary/90"

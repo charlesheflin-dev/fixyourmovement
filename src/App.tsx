@@ -13,6 +13,7 @@ import ChooseYourPlan from "./pages/ChooseYourPlan.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import RefundPolicy from "./pages/RefundPolicy.tsx";
 import EULA from "./pages/EULA.tsx";
+import Walkthrough from "./pages/Walkthrough";
 import CookieConsent from "./components/CookieConsent.tsx";
 
 const queryClient = new QueryClient();
@@ -45,7 +46,8 @@ const App = () => (
             <Route path="/choose-your-plan" element={<ChooseYourPlan />} />
             <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/eula" element={<EULA />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+             <Route path="/walkthrough" element={<Walkthrough />} />
+             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>

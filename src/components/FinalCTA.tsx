@@ -55,7 +55,7 @@ const FinalCTA = () => {
           {/* CTA */}
           <div className="text-center">
             <Link
-              to="/choose-your-plan"
+              to="/walkthrough"
               className="cta-button animate-pulse-glow text-xl"
             >
               Watch The Full Guided Walkthrough
