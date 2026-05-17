@@ -202,20 +202,8 @@ export default function Walkthrough() {
               {/* Left Column */}
               <div className="lg:w-1/2 p-8">
                 <img
-                  src={logo}
-                  alt="FCS Logo"
-                  className="h-8 mx-auto mb-4"
-                />
-                <h2 className="text-2xl font-bold text-slate-900 text-center">
-                  The Foot Capacity System
-                </h2>
-                <p className="text-blue-600 italic text-center text-sm mt-1 mb-6">
-                  A structured recovery system designed to help you stop
-                  guessing and move forward with more clarity and confidence.
-                </p>
-                <img
-                  src="/images/app-mockup-walkthrough.png"
-                  alt="App mockup"
+                  src="/images/whats-included.png"
+                  alt="What's included in the Foot Capacity System"
                   className="w-full rounded-xl"
                 />
               </div>
