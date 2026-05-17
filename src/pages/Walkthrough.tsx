@@ -61,7 +61,6 @@ export default function Walkthrough() {
       {/* 2. HERO SECTION */}
       <section className="bg-white py-16 text-center">
         <div className="max-w-4xl mx-auto px-6">
-          <img src={logo} alt="FCS Logo" className="h-10 mx-auto mb-6" />
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
             Recovery Becomes Much Less Overwhelming With The{" "}
             <span className="text-blue-600">Right Structure</span>
@@ -396,7 +395,7 @@ export default function Walkthrough() {
             {/* Accordion Item 1 */}
             <AccordionItem
               value="item-1"
-              className="rounded-xl border border-slate-200 bg-white shadow-sm px-2"
+              className="rounded-xl border border-slate-200 bg-white shadow-sm px-4"
             >
               <AccordionTrigger className="flex gap-3 items-center">
                 <div className="flex gap-3 items-center">
@@ -416,6 +415,7 @@ export default function Walkthrough() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
+                <div className="px-2">
                 <p className="text-slate-600 text-sm mb-6">
                   Recovery happens in phases. The system gives you a clear plan
                   for each stage—so you always know what to focus on and why.
@@ -477,13 +477,14 @@ export default function Walkthrough() {
                     The system looks for consistent trends, not perfect days.
                   </p>
                 </div>
+                </div>
               </AccordionContent>
             </AccordionItem>
 
             {/* Accordion Item 2 */}
             <AccordionItem
               value="item-2"
-              className="rounded-xl border border-slate-200 bg-white shadow-sm px-2"
+              className="rounded-xl border border-slate-200 bg-white shadow-sm px-4"
             >
               <AccordionTrigger className="flex gap-3 items-center">
                 <div className="flex gap-3 items-center">
@@ -503,6 +504,7 @@ export default function Walkthrough() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
+                <div className="px-2">
                 <p className="text-slate-600 text-sm mb-6">
                   Flare-ups happen during recovery. The system helps you
                   temporarily reduce overload, adjust your plan, and keep
@@ -554,13 +556,14 @@ export default function Walkthrough() {
                     helps you reset, not restart.
                   </p>
                 </div>
+                </div>
               </AccordionContent>
             </AccordionItem>
 
             {/* Accordion Item 3 */}
             <AccordionItem
               value="item-3"
-              className="rounded-xl border border-slate-200 bg-white shadow-sm px-2"
+              className="rounded-xl border border-slate-200 bg-white shadow-sm px-4"
             >
               <AccordionTrigger className="flex gap-3 items-center">
                 <div className="flex gap-3 items-center">
@@ -580,6 +583,7 @@ export default function Walkthrough() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
+                <div className="px-2">
                 <p className="text-slate-600 text-sm mb-4">
                   Recovery is rarely perfectly linear. The system helps you look
                   at longer-term trends instead of reacting emotionally to every
@@ -641,6 +645,7 @@ export default function Walkthrough() {
                     the overall direction over time.
                   </p>
                 </div>
+                </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -676,7 +681,7 @@ export default function Walkthrough() {
           >
             <AccordionItem
               value="faq-1"
-              className="rounded-xl border border-slate-200 px-2"
+              className="rounded-xl border border-slate-200 px-4"
             >
               <AccordionTrigger className="flex items-center">
                 <div className="flex items-center">
@@ -687,18 +692,20 @@ export default function Walkthrough() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <p className="text-slate-600 text-sm">
-                  The system is designed to meet you where you are. Whether
-                  you've been dealing with foot pain for weeks, months, or
-                  years, the structured phases help you start making progress
-                  from your current baseline.
-                </p>
+                <div className="px-2">
+                  <p className="text-slate-600 text-sm">
+                    The system is designed to meet you where you are. Whether
+                    you've been dealing with foot pain for weeks, months, or
+                    years, the structured phases help you start making progress
+                    from your current baseline.
+                  </p>
+                </div>
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem
               value="faq-2"
-              className="rounded-xl border border-slate-200 px-2"
+              className="rounded-xl border border-slate-200 px-4"
             >
               <AccordionTrigger className="flex items-center">
                 <div className="flex items-center">
@@ -709,17 +716,19 @@ export default function Walkthrough() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <p className="text-slate-600 text-sm">
-                  Flare-ups are a normal part of recovery. The system is
-                  designed to help you adjust temporarily, reduce overload, and
-                  keep moving forward without feeling like you're starting over.
-                </p>
+                <div className="px-2">
+                  <p className="text-slate-600 text-sm">
+                    Flare-ups are a normal part of recovery. The system is
+                    designed to help you adjust temporarily, reduce overload, and
+                    keep moving forward without feeling like you're starting over.
+                  </p>
+                </div>
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem
               value="faq-3"
-              className="rounded-xl border border-slate-200 px-2"
+              className="rounded-xl border border-slate-200 px-4"
             >
               <AccordionTrigger className="flex items-center">
                 <div className="flex items-center">
@@ -730,17 +739,19 @@ export default function Walkthrough() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <p className="text-slate-600 text-sm">
-                  Most daily tasks take around 10–15 minutes. The system is
-                  designed to fit into your existing routine without adding
-                  unnecessary burden.
-                </p>
+                <div className="px-2">
+                  <p className="text-slate-600 text-sm">
+                    Most daily tasks take around 10–15 minutes. The system is
+                    designed to fit into your existing routine without adding
+                    unnecessary burden.
+                  </p>
+                </div>
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem
               value="faq-4"
-              className="rounded-xl border border-slate-200 px-2"
+              className="rounded-xl border border-slate-200 px-4"
             >
               <AccordionTrigger className="flex items-center">
                 <div className="flex items-center">
@@ -751,16 +762,18 @@ export default function Walkthrough() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <p className="text-slate-600 text-sm">
-                  No. The exercises and activities in the system can be done at
-                  home with minimal or no equipment.
-                </p>
+                <div className="px-2">
+                  <p className="text-slate-600 text-sm">
+                    No. The exercises and activities in the system can be done at
+                    home with minimal or no equipment.
+                  </p>
+                </div>
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem
               value="faq-5"
-              className="rounded-xl border border-slate-200 px-2"
+              className="rounded-xl border border-slate-200 px-4"
             >
               <AccordionTrigger className="flex items-center">
                 <div className="flex items-center">
@@ -771,16 +784,18 @@ export default function Walkthrough() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <p className="text-slate-600 text-sm">
-                  Yes. You get lifetime access. Return to the system anytime you
-                  need structure, guidance, or support.
-                </p>
+                <div className="px-2">
+                  <p className="text-slate-600 text-sm">
+                    Yes. You get lifetime access. Return to the system anytime you
+                    need structure, guidance, or support.
+                  </p>
+                </div>
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem
               value="faq-6"
-              className="rounded-xl border border-slate-200 px-2"
+              className="rounded-xl border border-slate-200 px-4"
             >
               <AccordionTrigger className="flex items-center">
                 <div className="flex items-center">
@@ -791,17 +806,19 @@ export default function Walkthrough() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <p className="text-slate-600 text-sm">
-                  The system includes structured phases that adapt based on how
-                  you're responding. While it follows a guided framework, it's
-                  designed to flex around your progress.
-                </p>
+                <div className="px-2">
+                  <p className="text-slate-600 text-sm">
+                    The system includes structured phases that adapt based on how
+                    you're responding. While it follows a guided framework, it's
+                    designed to flex around your progress.
+                  </p>
+                </div>
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem
               value="faq-7"
-              className="rounded-xl border border-slate-200 px-2"
+              className="rounded-xl border border-slate-200 px-4"
             >
               <AccordionTrigger className="flex items-center">
                 <div className="flex items-center">
@@ -812,11 +829,13 @@ export default function Walkthrough() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <p className="text-slate-600 text-sm">
-                  That's what the 60-day guarantee is for. If you genuinely
-                  follow the structure and don't feel like you're heading in the
-                  right direction, we'll make it right.
-                </p>
+                <div className="px-2">
+                  <p className="text-slate-600 text-sm">
+                    That's what the 60-day guarantee is for. If you genuinely
+                    follow the structure and don't feel like you're heading in the
+                    right direction, we'll make it right.
+                  </p>
+                </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
