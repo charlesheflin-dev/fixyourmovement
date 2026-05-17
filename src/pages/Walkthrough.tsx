@@ -59,7 +59,7 @@ export default function Walkthrough() {
       <Header />
 
       {/* 2. HERO SECTION */}
-      <section className="bg-white py-16 text-center">
+      <section className="bg-white pt-24 py-16 text-center">
         <div className="max-w-4xl mx-auto px-6">
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
             Recovery Becomes Much Less Overwhelming With The{" "}
