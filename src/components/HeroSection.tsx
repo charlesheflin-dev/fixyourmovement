@@ -66,16 +66,6 @@ const HeroSection = () => {
             transition={{ duration: 0.7, delay: 0.5 }}
             className="mt-8"
           >
-            {/* 
-            <a
-              href="https://whop.com/checkout/plan_Kb2UZ3Iqj7Vn9"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta-button animate-pulse-glow text-xl"
-            >
-              Get Instant Access to The Foot Capacity System Today
-            </a>
-            */}
             <Link
               to="/walkthrough"
               className="cta-button animate-pulse-glow text-base md:text-xl"
