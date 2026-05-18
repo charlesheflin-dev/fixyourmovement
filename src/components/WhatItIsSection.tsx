@@ -37,7 +37,7 @@ const WhatItIsSection = () => {
             And when flare-ups happen, the system includes structured support designed to help people regain control and continue moving forward without feeling like all their progress disappeared overnight.
           </p>
           <div className="text-center mt-6">
-            <Link to="/choose-your-plan" className="cta-button animate-pulse-glow text-xl">
+            <Link to="/walkthrough" className="cta-button animate-pulse-glow text-xl">
               See The Full Guided Walkthrough
             </Link>
           </div>
