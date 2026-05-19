@@ -73,17 +73,15 @@ export default function Walkthrough() {
           </p>
 
           {/* Video Placeholder */}
-          <div className="bg-slate-100 rounded-2xl aspect-video max-w-2xl mx-auto mt-8 flex items-center justify-center">
-            <div className="bg-blue-600 rounded-full w-16 h-16 flex items-center justify-center">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="white"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <polygon points="8,5 20,12 8,19" />
-              </svg>
+          <div className="max-w-2xl mx-auto mt-8">
+            <div style={{ position: "relative", paddingTop: "56.25%" }} className="rounded-2xl overflow-hidden shadow-2xl">
+              <iframe
+                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/cc807c25475b8fcae62d9ff40db7143a/iframe?preload=true"
+                loading="lazy"
+                style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen={true}
+              ></iframe>
             </div>
           </div>
 
