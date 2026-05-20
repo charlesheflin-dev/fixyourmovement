@@ -71,12 +71,12 @@ const HeroSection = () => {
               className="cta-button animate-pulse-glow text-base md:text-xl"
             >
               <>
-                <span className="md:hidden">I'm Ready to Fix My Foot Pain →</span>
-                <span className="hidden md:inline">Yes — I'm Ready to Fix My Foot Pain →</span>
+                <span className="md:hidden">Start The Guided Recovery Process →</span>
+                <span className="hidden md:inline">Start The Guided Recovery Process →</span>
               </>
             </Link>
             <p className="mt-4 text-muted-foreground text-base">
-              Guided recovery, progress tracking, flare-up support, and long-term structure inside The Foot Capacity System.
+              No clinic visits required. Follow from home at your own pace.
             </p>
           </motion.div>
         </motion.div>
