@@ -1,56 +1,127 @@
 import { motion } from "framer-motion";
-import { Shield } from "lucide-react";
+import { Shield, CalendarDays, TrendingUp, Award, CheckCircle, AlertCircle } from "lucide-react";
 
 const BonusSection = () => {
   return (
-    <section className="py-6 md:py-10 bg-slate-100/50">
-      <div className="container mx-auto px-6 max-w-3xl">
+    <section className="py-6 md:py-10">
+      <div className="container mx-auto px-6 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="section-card p-8 md:p-14 text-center border-t-4 border-slate-200"
+          className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden"
         >
-          <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-6">
-            <Shield className="w-8 h-8 text-slate-400" />
+          {/* Header */}
+          <div className="p-8 md:p-12 border-b border-slate-200">
+            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-blue-50 rounded-full p-2">
+                    <Shield size={18} className="text-blue-600" />
+                  </div>
+                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest">Our 60-Day Guarantee</p>
+                </div>
+                <h2 className="font-display text-2xl md:text-4xl font-bold text-slate-900 leading-tight mb-6">
+                  The <span className="text-blue-600">"Walk Pain-Free Or It's Free"</span> 60-Day Guarantee
+                </h2>
+                <div className="w-full h-px bg-slate-200 mb-6" />
+                {/* Main guarantee statement */}
+                <div className="flex items-start gap-4">
+                  <div className="bg-blue-50 rounded-full p-3 shrink-0 mt-1">
+                    <Shield size={20} className="text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="text-slate-700 text-base leading-relaxed font-medium">
+                      Try the system for 60 days.<br />
+                      If you do the work and do not experience meaningful improvement, we will{" "}
+                      <span className="text-blue-600 font-bold">refund 100%</span> of your investment. No questions asked.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {/* Badge image */}
+              <div className="shrink-0 flex items-start justify-center lg:justify-end">
+                <img
+                  src="/images/60-day-guarantee.png"
+                  alt="60-Day Guarantee"
+                  className="w-32 h-32 object-contain"
+                />
+              </div>
+            </div>
           </div>
 
-          <h2 className="font-display text-2xl md:text-4xl text-primary mb-8">
-            The "Walk Pain-Free or It's Free" 60-Day Guarantee
-          </h2>
-
-          <div className="space-y-6 text-left text-lg text-muted-foreground font-body leading-relaxed">
-            <p>
-              Follow the system for 60 days. If you have not experienced a real, noticeable reduction in your
-              daily foot and ankle pain — and a renewed confidence to move — show us you did the work. We will
-              refund 100% of your investment. No questions asked.
-            </p>
-            <p>
-              That is two full months to follow the system, track your progress, and feel the difference.
-            </p>
-            <p>
-              The reason this guarantee exists is simple. This system is built on a clinical framework that works
-              when it is followed. Dr. Jonathan has seen it work for people who had already tried everything else
-              — cortisone shots, custom orthotics, years of physical therapy. The methodology is sound. The
-              progression is deliberate. The results are real.
-            </p>
-
-            <div className="section-card p-6 border-l-4 border-blue my-6">
-              <p className="text-xl font-display text-primary font-semibold">
-                The only risk here is staying where you are.
-              </p>
+          {/* Middle: two columns */}
+          <div className="flex flex-col lg:flex-row">
+            {/* Left: 3 feature cards */}
+            <div className="lg:w-3/5 p-8 md:p-10 border-b lg:border-b-0 lg:border-r border-slate-200">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="bg-slate-50 rounded-2xl p-5 text-center">
+                  <div className="bg-blue-50 rounded-full p-3 w-12 h-12 flex items-center justify-center mx-auto mb-3">
+                    <CalendarDays size={20} className="text-blue-600" />
+                  </div>
+                  <p className="font-semibold text-slate-900 text-sm mb-2">60 Full Days<br />To Test The System</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">Two full months to follow the program and see real results.</p>
+                </div>
+                <div className="bg-slate-50 rounded-2xl p-5 text-center">
+                  <div className="bg-green-50 rounded-full p-3 w-12 h-12 flex items-center justify-center mx-auto mb-3">
+                    <TrendingUp size={20} className="text-green-600" />
+                  </div>
+                  <p className="font-semibold text-slate-900 text-sm mb-2">Track Progress<br />Inside The App</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">Monitor pain, activity, and improvement every step of the way.</p>
+                </div>
+                <div className="bg-slate-50 rounded-2xl p-5 text-center">
+                  <div className="bg-purple-50 rounded-full p-3 w-12 h-12 flex items-center justify-center mx-auto mb-3">
+                    <Award size={20} className="text-purple-600" />
+                  </div>
+                  <p className="font-semibold text-slate-900 text-sm mb-2">100% Refund<br />If You're Not Satisfied</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">Do the work. If you don't get meaningful improvement, we make it right.</p>
+                </div>
+              </div>
             </div>
 
-            <p>
-              Another year of flare-ups. More money on appointments that offer temporary relief. More activities
-              missed. More distance from the life you want to be living.
-            </p>
-            <p>
-              You have already taken enough chances on approaches that did not address the root problem. This
-              time, the risk is entirely ours.
+            {/* Right: 3 checkmark points */}
+            <div className="lg:w-2/5 p-8 md:p-10 bg-slate-50 flex flex-col justify-center gap-5">
+              <div className="flex items-start gap-3">
+                <div className="bg-blue-50 rounded-full p-1.5 shrink-0 mt-0.5">
+                  <CheckCircle size={16} className="text-blue-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900 text-sm mb-1">Two Months. A Clear Process.</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">Follow the system, track your progress, and experience the difference.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="bg-blue-50 rounded-full p-1.5 shrink-0 mt-0.5">
+                  <CheckCircle size={16} className="text-blue-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900 text-sm mb-1">Built On What Works.</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">A clinically-informed framework that has helped people after other approaches failed.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="bg-blue-50 rounded-full p-1.5 shrink-0 mt-0.5">
+                  <CheckCircle size={16} className="text-blue-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900 text-sm mb-1">No Risk. All Confidence.</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">The only risk is staying where you are and hoping something changes.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom callout */}
+          <div className="border-t border-slate-200 bg-slate-50 px-8 py-6 flex items-start gap-4">
+            <div className="bg-blue-50 rounded-full p-2 shrink-0 mt-0.5">
+              <AlertCircle size={20} className="text-blue-600" />
+            </div>
+            <p className="text-slate-800 text-base font-semibold leading-relaxed">
+              The only real risk is staying stuck in the same cycle of flare-ups, setbacks, and temporary fixes.
             </p>
           </div>
+
         </motion.div>
       </div>
     </section>
