@@ -15,31 +15,17 @@ const FinalCTA = () => {
         >
           <div className="flex flex-col lg:flex-row">
 
-            {/* Left: image with quote overlay */}
-            <div className="lg:w-2/5 relative min-h-[300px] lg:min-h-0">
+            {/* Left: image */}
+            <div className="lg:w-1/2 relative min-h-[300px] lg:min-h-0">
               <img
                 src="/images/moves-you-forward.png"
                 alt="Recovery isn't about doing more. It's about doing what moves you forward."
                 className="w-full h-full object-cover"
               />
-              {/* Quote overlay */}
-              <div className="absolute top-6 left-6 right-6">
-                <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-sm">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="bg-blue-50 rounded-full p-1">
-                      <CheckCircle size={14} className="text-blue-600" />
-                    </div>
-                  </div>
-                  <p className="text-slate-800 text-sm font-medium leading-relaxed">
-                    "Recovery isn't about doing more. It's about doing what{" "}
-                    <span className="text-blue-600">moves you forward.</span>"
-                  </p>
-                </div>
-              </div>
             </div>
 
             {/* Right: text + features + CTA */}
-            <div className="lg:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+            <div className="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
               <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-4">Ready To See How The Full System Works?</p>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
                 Watch the Guided Walkthrough
