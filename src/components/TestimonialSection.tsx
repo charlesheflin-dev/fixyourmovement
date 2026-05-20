@@ -132,12 +132,11 @@ const TestimonialSection = () => {
                     transition={{ duration: 0.6, delay: 0.15 }}
                     className="max-w-3xl mx-auto mb-8"
                 >
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-6 text-center">
-                        <p className="text-slate-700 text-lg font-medium leading-relaxed">
-                            Here are a few examples of what people have shared after using{" "}
-                            <span className="text-blue-600 font-semibold">The Foot Capacity System:</span>
-                        </p>
-                    </div>
+                    <img
+                      src="/images/patient-experiences.png"
+                      alt="Patient experiences with The Foot Capacity System"
+                      className="w-full rounded-2xl"
+                    />
                 </motion.div>
 
                 <motion.div
