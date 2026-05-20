@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import TestimonialSection from "@/components/TestimonialSection";
+import WalkthroughTestimonialSection from "@/components/WalkthroughTestimonialSection";
 import {
   Accordion,
   AccordionContent,
@@ -664,7 +664,7 @@ export default function Walkthrough() {
       </section>
 
       {/* 6. TESTIMONIALS SECTION */}
-      <TestimonialSection />
+      <WalkthroughTestimonialSection />
 
       {/* 7. FAQ SECTION */}
       <section className="bg-white py-16">
