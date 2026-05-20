@@ -129,6 +129,21 @@ const TestimonialSection = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.15 }}
+                    className="max-w-3xl mx-auto mb-8"
+                >
+                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-6 text-center">
+                        <p className="text-slate-700 text-lg font-medium leading-relaxed">
+                            Here are a few examples of what people have shared after using{" "}
+                            <span className="text-blue-600 font-semibold">The Foot Capacity System:</span>
+                        </p>
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="max-w-6xl mx-auto"
                 >
