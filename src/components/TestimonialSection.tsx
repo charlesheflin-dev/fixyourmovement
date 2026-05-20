@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { CheckCircle } from "lucide-react";
 import {
     Carousel,
     CarouselContent,
@@ -54,32 +55,74 @@ const TestimonialSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="text-center mb-12"
+                    className="mb-10"
                 >
-                    <h2 className="font-display text-2xl md:text-3xl text-primary mb-4">
-                        For Many People, Recovery Means Getting Parts Of Their Life Back
-                    </h2>
-                    <p className="text-muted-foreground text-lg font-body">
-                        Recurring foot and ankle pain affects far more than just movement.
-                    </p>
-                </motion.div>
+                    <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+                        {/* Top: text left, photos right */}
+                        <div className="flex flex-col lg:flex-row">
+                            {/* Left: text */}
+                            <div className="lg:w-2/5 p-8 md:p-12 flex flex-col justify-center">
+                                <div className="w-8 h-0.5 bg-blue-600 mb-6" />
+                                <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
+                                    For Many People, Recovery Means{" "}
+                                    <span className="text-blue-600">Getting Parts Of Their Life Back.</span>
+                                </h2>
+                                <p className="text-slate-500 text-base leading-relaxed mb-6">
+                                    Recurring foot and ankle pain affects more than just movement— it affects <span className="text-blue-600 font-medium">life.</span>
+                                </p>
+                                <div className="w-full h-px bg-slate-200 mb-6" />
+                                <p className="text-slate-700 text-base leading-relaxed font-medium">
+                                    The goal isn't just temporary relief. It's helping you move through life with more{" "}
+                                    <span className="text-blue-600">confidence</span>,{" "}
+                                    <span className="text-blue-600">consistency</span>, and{" "}
+                                    <span className="text-blue-600">less fear</span> of setbacks.
+                                </p>
+                            </div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    className="max-w-3xl mx-auto text-center space-y-4 text-lg text-muted-foreground font-body leading-relaxed mb-8"
-                >
-                    <p>
-                        When pain keeps returning, people often begin changing the way they live without even realizing it. They walk less. Exercise less. Travel less. Avoid activities they used to enjoy. And slowly lose confidence in what their body can comfortably handle.
-                    </p>
-                    <p>
-                        That's why the goal is not simply temporary symptom relief. The goal is helping people move through life with more confidence, more consistency, and less fear of constantly triggering another setback.
-                    </p>
-                    <p>
-                        Here are a few examples of what people have shared after using The Foot Capacity System:
-                    </p>
+                            {/* Right: 3 person photo cards */}
+                            <div className="lg:w-3/5 p-6 lg:p-8">
+                                <div className="grid grid-cols-3 gap-3 h-full">
+                                    <div className="flex flex-col items-center gap-3">
+                                        <img src="/images/person1.png" alt="Move with confidence" className="w-full rounded-2xl object-cover" />
+                                        <p className="font-semibold text-slate-900 text-sm text-center">Move With Confidence</p>
+                                        <p className="text-slate-500 text-xs text-center leading-relaxed">Walk, exercise, and enjoy daily activities with less hesitation.</p>
+                                    </div>
+                                    <div className="flex flex-col items-center gap-3">
+                                        <img src="/images/person2.png" alt="Live more freely" className="w-full rounded-2xl object-cover" />
+                                        <p className="font-semibold text-slate-900 text-sm text-center">Live More Freely</p>
+                                        <p className="text-slate-500 text-xs text-center leading-relaxed">Travel, explore, and stay active without holding back.</p>
+                                    </div>
+                                    <div className="flex flex-col items-center gap-3">
+                                        <img src="/images/person3.png" alt="Get back to what matters" className="w-full rounded-2xl object-cover" />
+                                        <p className="font-semibold text-slate-900 text-sm text-center">Get Back To What Matters</p>
+                                        <p className="text-slate-500 text-xs text-center leading-relaxed">Spend more time doing the things you love with the people you love.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Bottom: 3 checkmark callouts */}
+                        <div className="border-t border-slate-200 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 bg-slate-50">
+                            <div className="flex items-center gap-3 p-5">
+                                <div className="bg-blue-50 rounded-full p-2 shrink-0">
+                                    <CheckCircle size={16} className="text-blue-600" />
+                                </div>
+                                <p className="font-semibold text-slate-900 text-sm">Less fear of setbacks.</p>
+                            </div>
+                            <div className="flex items-center gap-3 p-5">
+                                <div className="bg-green-50 rounded-full p-2 shrink-0">
+                                    <CheckCircle size={16} className="text-green-600" />
+                                </div>
+                                <p className="font-semibold text-slate-900 text-sm">More consistency in daily life.</p>
+                            </div>
+                            <div className="flex items-center gap-3 p-5">
+                                <div className="bg-purple-50 rounded-full p-2 shrink-0">
+                                    <CheckCircle size={16} className="text-purple-600" />
+                                </div>
+                                <p className="font-semibold text-slate-900 text-sm">More confidence in your body.</p>
+                            </div>
+                        </div>
+                    </div>
                 </motion.div>
 
                 <motion.div
