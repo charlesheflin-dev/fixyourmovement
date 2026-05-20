@@ -76,7 +76,7 @@ export default function Walkthrough() {
           <div className="max-w-2xl mx-auto mt-8">
             <div style={{ position: "relative", paddingTop: "56.25%" }} className="rounded-2xl overflow-hidden shadow-2xl">
               <iframe
-                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/cc807c25475b8fcae62d9ff40db7143a/iframe?preload=true"
+                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/cc807c25475b8fcae62d9ff40db7143a/iframe?preload=true&poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F6ec4d8b4-8156-40b2-b196-836d95530f00%2Fpublic"
                 loading="lazy"
                 style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
                 allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
