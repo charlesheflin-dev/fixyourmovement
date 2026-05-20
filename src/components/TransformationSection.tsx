@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { HelpCircle, Smartphone, ClipboardList, TrendingUp, Shield, SignpostBig, CheckCircle } from "lucide-react";
 
 const TransformationSection = () => {
   return (
@@ -9,56 +10,98 @@ const TransformationSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden"
         >
-          <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
-            Designed To Feel Clear, Organized, And Easy To Follow
-          </h2>
-          <p className="text-lg text-muted-foreground font-body mt-2">
-            Recovery becomes much less stressful when people stop trying to figure everything out on their own.
-          </p>
-        </motion.div>
+          {/* Top: two columns */}
+          <div className="flex flex-col lg:flex-row">
 
-        <div className="max-w-3xl mx-auto space-y-6 text-lg text-muted-foreground font-body leading-relaxed">
-          <p>
-            One of the biggest challenges in recovery is not motivation. It's uncertainty. Not knowing whether you're progressing too quickly, doing too much, or responding appropriately can make the entire process feel frustrating and inconsistent.
-          </p>
-          <p>
-            The Foot Capacity System was designed to simplify that experience. Inside the app, members can follow guided recovery sessions, track symptoms over time, monitor progress visually, and navigate flare-ups with more structure and less second-guessing.
-          </p>
+            {/* Left: heading + two feature rows */}
+            <div className="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+              <div className="w-8 h-0.5 bg-blue-600 mb-6" />
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
+                Designed To Feel{" "}
+                <span className="text-blue-600">Clear, Organized, And Easy To Follow</span>
+              </h2>
+              <p className="text-slate-600 text-base leading-relaxed mb-6">
+                Recovery becomes much less stressful when people stop trying to figure everything out on their own.
+              </p>
+              <div className="w-full h-px bg-slate-200 mb-6" />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.12 }}
-            className="section-card p-8"
-          >
-            <p className="font-display text-lg font-bold text-slate-900 mb-4">Everything inside the system is designed to feel:</p>
-            <ul className="list-disc list-inside text-muted-foreground font-body text-lg leading-relaxed">
-              <li>Simple</li>
-              <li>Organized</li>
-              <li>Manageable</li>
-              <li>Supportive</li>
-            </ul>
-          </motion.div>
+              {/* Two feature items */}
+              <div className="space-y-5">
+                <div className="flex items-start gap-4">
+                  <div className="bg-purple-50 rounded-full p-3 shrink-0">
+                    <HelpCircle size={18} className="text-purple-600" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900 text-sm mb-1">Uncertainty makes recovery harder.</p>
+                    <p className="text-slate-500 text-xs leading-relaxed">Not knowing if you're doing too much, too little, or the right thing can make the process feel frustrating and inconsistent.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="bg-green-50 rounded-full p-3 shrink-0">
+                    <Smartphone size={18} className="text-green-600" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900 text-sm mb-1">We built a better way.</p>
+                    <p className="text-slate-500 text-xs leading-relaxed">The Foot Capacity System simplifies recovery with guided sessions, progress tracking, structured phases, and clearer direction during setbacks.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <p>
-            The goal is to help people spend less time worrying about what they should do next and more time following a process they can actually stick with consistently.
-          </p>
+            {/* Right: 4 feature cards */}
+            <div className="lg:w-1/2 p-8 md:p-12 bg-slate-50 flex flex-col justify-center gap-4">
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-start gap-4">
+                <div className="bg-blue-50 rounded-xl p-3 shrink-0">
+                  <ClipboardList size={20} className="text-blue-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900 text-sm mb-1">Guided Sessions</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">Follow structured recovery progressions step by step.</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-start gap-4">
+                <div className="bg-green-50 rounded-xl p-3 shrink-0">
+                  <TrendingUp size={20} className="text-green-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900 text-sm mb-1">Progress Tracking</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">Monitor symptoms, activity, and trends over time.</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-start gap-4">
+                <div className="bg-purple-50 rounded-xl p-3 shrink-0">
+                  <Shield size={20} className="text-purple-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900 text-sm mb-1">Flare-Up Support</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">Adjust without panic when setbacks happen.</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-start gap-4">
+                <div className="bg-blue-50 rounded-xl p-3 shrink-0">
+                  <SignpostBig size={20} className="text-blue-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900 text-sm mb-1">Clearer Direction</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">Spend less time second-guessing what to do next.</p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="section-card p-8 mt-6 border-l-4 border-blue"
-          >
-            <p className="text-lg text-muted-foreground font-body leading-relaxed italic">
+          {/* Bottom callout */}
+          <div className="border-t border-slate-200 bg-slate-50 px-8 py-6 flex items-start gap-4">
+            <div className="bg-blue-50 rounded-full p-2 shrink-0 mt-0.5">
+              <CheckCircle size={20} className="text-blue-600" />
+            </div>
+            <p className="text-slate-800 text-base font-semibold leading-relaxed">
               For many people, having a clearer structure becomes the difference between constantly restarting and finally moving forward again.
             </p>
-          </motion.div>
-        </div>
+          </div>
+
+        </motion.div>
       </div>
     </section>
   );
