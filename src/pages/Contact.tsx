@@ -22,11 +22,11 @@ const Contact = () => {
                             <p>
                                 For questions about the program, your purchase, or anything else, reach out directly:
                             </p>
-                            <div className="flex items-center gap-3 mt-6">
+                            <div className="flex flex-wrap items-center gap-3 mt-6">
                                 <span className="text-foreground font-medium">Email:</span>
                                 <a
                                     href="mailto:contact@fixyourmovement.com"
-                                    className="text-blue hover:text-blue-dark transition-colors font-medium text-xl"
+                                    className="text-blue hover:text-blue-dark transition-colors font-medium text-xl break-all"
                                 >
                                     contact@fixyourmovement.com
                                 </a>
