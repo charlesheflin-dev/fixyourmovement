@@ -29,24 +29,40 @@ const ProblemSection = () => {
 
               {/* Cycle steps */}
               <p className="font-semibold text-slate-900 text-sm mb-4">Most people get stuck in the same frustrating cycle:</p>
-              <div className="flex items-center gap-2 flex-wrap mb-6">
-                {[
-                  { icon: PersonStanding, label: "Stretch." },
-                  { icon: Clock, label: "Rest." },
-                  { icon: Hand, label: "Massage." },
-                  { icon: Footprints, label: "Different shoes or inserts." },
-                  { icon: CheckCircle, label: "Temporary relief." },
-                ].map(({ icon: Icon, label }, i, arr) => (
-                  <div key={label} className="flex items-center gap-2">
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="bg-blue-50 rounded-full p-2">
-                        <Icon size={16} className="text-blue-600" />
+              <div className="mb-6">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  {[
+                    { icon: PersonStanding, label: "Stretch." },
+                    { icon: Clock, label: "Rest." },
+                    { icon: Hand, label: "Massage." },
+                  ].map(({ icon: Icon, label }, i, arr) => (
+                    <div key={label} className="flex items-center gap-2">
+                      <div className="flex flex-col items-center gap-1">
+                        <div className="bg-blue-50 rounded-full p-2">
+                          <Icon size={16} className="text-blue-600" />
+                        </div>
+                        <p className="text-slate-600 text-xs font-medium text-center max-w-[60px]">{label}</p>
                       </div>
-                      <p className="text-slate-600 text-xs font-medium text-center max-w-[60px]">{label}</p>
+                      {i < arr.length - 1 && <span className="text-slate-300 text-lg mb-4">›</span>}
                     </div>
-                    {i < arr.length - 1 && <span className="text-slate-300 text-lg mb-4">›</span>}
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  {[
+                    { icon: Footprints, label: "Different shoes or inserts." },
+                    { icon: CheckCircle, label: "Temporary relief." },
+                  ].map(({ icon: Icon, label }, i, arr) => (
+                    <div key={label} className="flex items-center gap-2">
+                      <div className="flex flex-col items-center gap-1">
+                        <div className="bg-blue-50 rounded-full p-2">
+                          <Icon size={16} className="text-blue-600" />
+                        </div>
+                        <p className="text-slate-600 text-xs font-medium text-center max-w-[60px]">{label}</p>
+                      </div>
+                      {i < arr.length - 1 && <span className="text-slate-300 text-lg mb-4">›</span>}
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <p className="text-slate-600 text-sm leading-relaxed mb-3">
