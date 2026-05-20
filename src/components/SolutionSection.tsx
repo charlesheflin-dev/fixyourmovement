@@ -37,11 +37,6 @@ const SolutionSection = () => {
             {/* Right: image */}
             <div className="lg:w-3/5 flex items-center justify-center p-6 lg:p-8">
               <div className="w-full">
-                <div className="flex justify-center gap-8 mb-4 text-sm font-semibold">
-                  <span className="text-slate-500">From Guesswork</span>
-                  <span className="text-slate-400">──────→</span>
-                  <span className="text-blue-600">To Clarity</span>
-                </div>
                 <img
                   src="/images/guesswork-to-clarity.png"
                   alt="From guesswork to clarity with the Foot Capacity System"
