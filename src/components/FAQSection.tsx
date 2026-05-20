@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import {
   Accordion,
   AccordionContent,
@@ -69,16 +68,6 @@ const FAQSection = () => {
               </AccordionItem>
             ))}
           </Accordion>
-
-          {/* Bottom CTA */}
-          <div className="text-center mt-10">
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center font-display font-semibold text-base py-3.5 px-8 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200"
-            >
-              Still have a question? Reach out before you decide. →
-            </Link>
-          </div>
         </motion.div>
       </div>
     </section>
