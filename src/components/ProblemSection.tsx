@@ -1,70 +1,96 @@
 import { motion } from "framer-motion";
+import { PersonStanding, Clock, Hand, Footprints, CheckCircle, Lightbulb, Target } from "lucide-react";
 
 const ProblemSection = () => {
   return (
-    <section className="py-6 md:py-10 bg-slate-100/50">
-      <div className="container mx-auto px-6 max-w-3xl">
+    <section className="py-6 md:py-10">
+      <div className="container mx-auto px-6 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden"
         >
-          <h2 className="font-display text-2xl md:text-4xl text-primary mb-5">
-            Why Does Foot And Ankle Pain Keep Coming Back?
-          </h2>
-          <p className="text-lg text-muted-foreground font-body mt-2">
-            Because temporary relief and long-term recovery are not the same thing.
-          </p>
-        </motion.div>
+          {/* Top: two columns */}
+          <div className="flex flex-col lg:flex-row">
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="space-y-6 text-lg text-muted-foreground font-body leading-relaxed"
-        >
-          <p>
-            Most people dealing with recurring foot or ankle pain end up stuck in the same frustrating cycle.
-          </p>
-          <p>
-            They stretch.
-          </p>
-          <p>
-            Rest.
-          </p>
-          <p>
-            Massage the area.
-          </p>
-          <p>
-            Try different shoes or inserts.
-          </p>
-          <p>
-            Maybe things improve for a little while. But the moment they start walking more, exercising again, traveling, or simply getting back to normal life, the pain flares back up.
-          </p>
-          <p>
-            After enough setbacks, a lot of people quietly start wondering: "Is this just something I'm going to have to live with?"
-          </p>
-          <p>
-            In many cases, the problem is not that the foot is permanently damaged. It's that the tissues simply do not yet have the strength and tolerance to consistently handle the demands being placed on them.
-          </p>
-          <p>
-            That's the missing piece most people are never taught. Once that starts making sense, recovery usually starts making more sense too.
-          </p>
-        </motion.div>
+            {/* Left: text */}
+            <div className="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+              <div className="w-8 h-0.5 bg-blue-600 mb-6" />
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
+                Why Does Foot And Ankle Pain Keep{" "}
+                <span className="text-blue-600">Coming Back?</span>
+              </h2>
+              <p className="text-slate-500 text-base leading-relaxed mb-6">
+                Because temporary relief and long-term recovery are not the same thing.
+              </p>
+              <div className="w-full h-px bg-slate-200 mb-6" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="section-card p-8 md:p-10 mt-10 border-l-4 border-blue"
-        >
-          <p className="text-lg text-muted-foreground font-body leading-relaxed italic">
-            Most people are never shown how to rebuild that strength gradually or where to even begin.
-          </p>
+              {/* Cycle steps */}
+              <p className="font-semibold text-slate-900 text-sm mb-4">Most people get stuck in the same frustrating cycle:</p>
+              <div className="flex items-center gap-2 flex-wrap mb-6">
+                {[
+                  { icon: PersonStanding, label: "Stretch." },
+                  { icon: Clock, label: "Rest." },
+                  { icon: Hand, label: "Massage." },
+                  { icon: Footprints, label: "Different shoes or inserts." },
+                  { icon: CheckCircle, label: "Temporary relief." },
+                ].map(({ icon: Icon, label }, i, arr) => (
+                  <div key={label} className="flex items-center gap-2">
+                    <div className="flex flex-col items-center gap-1">
+                      <div className="bg-blue-50 rounded-full p-2">
+                        <Icon size={16} className="text-blue-600" />
+                      </div>
+                      <p className="text-slate-600 text-xs font-medium text-center max-w-[60px]">{label}</p>
+                    </div>
+                    {i < arr.length - 1 && <span className="text-slate-300 text-lg mb-4">›</span>}
+                  </div>
+                ))}
+              </div>
+
+              <p className="text-slate-600 text-sm leading-relaxed mb-3">
+                Maybe things improve for a little while. But the moment life becomes more active again, the pain often returns.
+              </p>
+              <p className="text-slate-600 text-sm leading-relaxed mb-3">
+                After enough setbacks, a lot of people quietly start wondering:
+              </p>
+              <p className="text-blue-600 font-semibold text-sm italic">
+                "Is this just something I'm going to have to live with?"
+              </p>
+            </div>
+
+            {/* Right: cycle image + insight card */}
+            <div className="lg:w-1/2 p-8 md:p-12 bg-slate-50 flex flex-col justify-center gap-6">
+              <img
+                src="/images/why-pain-returns.png"
+                alt="The pain cycle diagram"
+                className="w-full rounded-2xl"
+              />
+              <div className="bg-white rounded-2xl border border-slate-200 p-5 flex items-start gap-4">
+                <div className="bg-blue-600 rounded-full p-2.5 shrink-0 mt-0.5">
+                  <Lightbulb size={18} className="text-white" />
+                </div>
+                <p className="text-slate-700 text-sm leading-relaxed">
+                  In many cases, the problem is not that the foot is permanently damaged. It's that the tissues simply do not yet have the{" "}
+                  <span className="text-blue-600 font-semibold">strength and tolerance</span>{" "}
+                  to consistently handle the demands being placed on them.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom callout */}
+          <div className="border-t border-slate-200 bg-slate-50 px-8 py-6 flex items-start gap-4">
+            <div className="bg-blue-50 rounded-full p-2 shrink-0 mt-0.5">
+              <Target size={20} className="text-blue-600" />
+            </div>
+            <p className="text-slate-800 text-base font-semibold leading-relaxed">
+              Most people are never shown how to rebuild that strength gradually or where to even begin.{" "}
+              <span className="text-blue-600">That's the missing piece.</span>
+            </p>
+          </div>
+
         </motion.div>
       </div>
     </section>
