@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WalkthroughTestimonialSection from "@/components/WalkthroughTestimonialSection";
@@ -57,16 +56,6 @@ const painData = [
 export default function Walkthrough() {
   return (
     <div className="min-h-screen bg-white font-inter">
-      <Helmet>
-        <title>Foot Capacity System Walkthrough | See How The System Works</title>
-        <meta name="title" content="Foot Capacity System Walkthrough | See How The System Works" />
-        <meta name="description" content="Watch the guided walkthrough of The Foot Capacity System and see how the app helps people follow a more structured, trackable, and confidence-building recovery process from home." />
-        <meta property="og:title" content="Foot Capacity System Walkthrough | See How The System Works" />
-        <meta property="og:description" content="Watch the guided walkthrough of The Foot Capacity System and see how the app helps people follow a more structured, trackable, and confidence-building recovery process from home." />
-        <meta property="og:url" content="https://fixyourmovement.com/walkthrough" />
-        <meta name="twitter:title" content="Foot Capacity System Walkthrough | See How The System Works" />
-        <meta name="twitter:description" content="Watch the guided walkthrough of The Foot Capacity System and see how the app helps people follow a more structured, trackable, and confidence-building recovery process from home." />
-      </Helmet>
       {/* 1. HEADER */}
       <Header />
 
