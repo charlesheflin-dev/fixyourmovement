@@ -210,8 +210,8 @@ export default function Walkthrough() {
               <div className="flex flex-col sm:flex-row gap-4">
                 {/* Phone */}
                 <div className="sm:w-2/5 flex flex-col items-center gap-4">
-                  <img src="/images/new-phone.jpg" alt="App screenshot" className="w-full max-w-[180px] rounded-2xl shadow-lg" />
-                  <img src="/images/new-phone2.jpg" alt="App screenshot 2" className="w-full max-w-[180px] rounded-2xl shadow-lg mt-4" />
+                  <img src="/images/new-phone.jpg" alt="App screenshot" className="w-full max-w-[180px] rounded-2xl" />
+                  <img src="/images/new-phone2.jpg" alt="App screenshot 2" className="w-full max-w-[180px] rounded-2xl mt-4" />
                 </div>
                 {/* Charts column */}
                 <div className="sm:w-3/5 flex flex-col gap-4">
