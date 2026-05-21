@@ -1,66 +1,76 @@
 import { motion } from "framer-motion";
-import { Stethoscope } from "lucide-react";
 
 const DoctorCredibility = () => {
     return (
         <section className="py-8 md:py-6">
-            <div className="container mx-auto px-6 max-w-3xl">
+            <div className="container mx-auto px-6 max-w-5xl">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="section-card p-8 md:p-12 border-t-4 border-slate-200"
+                    className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden"
                 >
-                    <h2 className="font-display text-2xl md:text-3xl text-primary mb-8 text-center">
-                        Built by a Doctor of Physical Therapy
-                    </h2>
+                    <div className="flex flex-col lg:flex-row">
 
-                    <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-                        <div className="shrink-0 flex flex-col items-center gap-4">
-                            <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-slate-200 shadow-lg">
+                        {/* Left: headshot + social buttons */}
+                        <div className="lg:w-2/5 p-8 md:p-12 flex flex-col items-center justify-center gap-6 border-b lg:border-b-0 lg:border-r border-slate-200 bg-slate-50">
+                            <img
+                                src="/images/dr-jonathan-schutza-headshot.png"
+                                alt="Dr. Jonathan Schutza, PT, DPT"
+                                className="w-48 h-48 rounded-full object-cover border-4 border-white shadow-lg"
+                                loading="lazy"
+                            />
+                            
+                            <a
+                                href="https://www.instagram.com/dr.schutza.pt/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full max-w-[220px] hover:opacity-80 transition-opacity"
+                            >
                                 <img
-                                    src="/bonuses/images/dr-jonathan-schutza.jpg"
-                                    alt="Dr. Jonathan Schutza, PT, DPT"
-                                    className="w-full h-full object-cover"
-                                    loading="lazy"
-                                />
-                            </div>
-                            <a href="https://www.instagram.com/dr.schutza.pt/" target="_blank" rel="noopener noreferrer">
-                                <img
-                                    src="/bonuses/images/insta-4.png"
-                                    alt="Follow Dr. Schutza on Instagram"
-                                    className="h-20 w-auto hover:opacity-80 transition-opacity"
+                                    src="/images/follow-on-instagram.png"
+                                    alt="Follow on Instagram"
+                                    className="w-full rounded-xl"
                                     loading="lazy"
                                 />
                             </a>
+                            
                             <a
                                 href="https://www.facebook.com/share/18vGC5rzP8/?mibextid=wwXIfr"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 bg-[#1877F2] hover:opacity-80 transition-opacity text-white font-bold text-sm px-4 py-2 rounded-xl h-10"
-                                style={{ minWidth: '140px' }}
+                                className="w-full max-w-[220px] hover:opacity-80 transition-opacity"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
-                                    <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
-                                </svg>
-                                As Seen on Facebook
+                                <img
+                                    src="/images/follow-on-facebook.png"
+                                    alt="Follow on Facebook"
+                                    className="w-full rounded-xl"
+                                    loading="lazy"
+                                />
                             </a>
                         </div>
 
-                        <div className="space-y-4 text-lg text-muted-foreground font-body leading-relaxed">
-                            <p>
-                                <strong className="text-foreground">Dr. Jonathan Schutza, PT, DPT</strong> is a licensed physical therapist specializing in biomechanics-driven rehabilitation for chronic foot pain.
-                            </p>
-                            <p>
-                                His approach focuses on rebuilding tissue capacity through structured movement, progressive loading, and strength development.
-                            </p>
-                            <p>
-                                Passive treatments can help reduce pain, but they are only the beginning. Real recovery happens when the body rebuilds strength and tissue capacity through structured movement and progressive loading.
-                            </p>
-                            <p>
-                                That is the focus of Dr. Schutza's approach.
-                            </p>
+                        {/* Right: text */}
+                        <div className="lg:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+                            <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
+                                Built by a Doctor<br />of Physical Therapy
+                            </h2>
+                            <div className="w-10 h-0.5 bg-blue-600 mb-6" />
+                            <div className="space-y-4 text-slate-600 text-base leading-relaxed">
+                                <p>
+                                    <span className="text-blue-600 font-semibold">Dr. Jonathan Schutza, PT, DPT</span> is a licensed physical therapist specializing in biomechanics-driven rehabilitation for chronic foot pain.
+                                </p>
+                                <p>
+                                    His approach focuses on rebuilding tissue capacity through structured movement, progressive loading, and strength development.
+                                </p>
+                                <p>
+                                    Passive treatments can help reduce pain, but they are only the beginning. Real recovery happens when the body rebuilds strength and tissue capacity through structured movement and progressive loading.
+                                </p>
+                                <p>
+                                    That is the focus of Dr. Schutza's approach.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </motion.div>
