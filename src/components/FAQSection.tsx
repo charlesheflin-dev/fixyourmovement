@@ -8,8 +8,8 @@ import {
 
 const faqs: { q: string; a: React.ReactNode; highlight?: boolean }[] = [
   {
-    q: "Is this only for plantar fasciitis?",
-    a: "No. While many people initially discover the system because of plantar fasciitis or heel pain, The Foot Capacity System was designed more broadly around improving foot and ankle strength, movement tolerance, and long-term recovery consistency.",
+    q: "What if my heel pain was never formally diagnosed?",
+    a: "Many people start the program without ever receiving a formal diagnosis. If you're dealing with ongoing heel pain, stiffness, or discomfort with walking and daily activity, The Foot Capacity System provides a structured approach designed to help rebuild strength, movement tolerance, and long-term consistency.",
   },
   {
     q: "What if I've already tried physical therapy, stretching, orthotics, or other programs?",
