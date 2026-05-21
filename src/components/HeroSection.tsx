@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+
 
 const HeroSection = () => {
   return (
@@ -66,15 +66,17 @@ const HeroSection = () => {
             transition={{ duration: 0.7, delay: 0.5 }}
             className="mt-8"
           >
-            <Link
-              to="/walkthrough"
+            <a
+              href="https://fixyourmovement.com/walkthrough"
+              target="_blank"
+              rel="noopener noreferrer"
               className="cta-button animate-pulse-glow text-base md:text-xl"
             >
               <>
                 <span className="md:hidden">Start The Guided Recovery Process →</span>
                 <span className="hidden md:inline">Start The Guided Recovery Process →</span>
               </>
-            </Link>
+            </a>
             <p className="mt-4 text-muted-foreground text-base">
               No clinic visits required. Follow from home at your own pace.
             </p>

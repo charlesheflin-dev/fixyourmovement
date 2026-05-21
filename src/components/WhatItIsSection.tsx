@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+
 import { Play, BarChart2, Shield, CheckCircle } from "lucide-react";
 
 const WhatItIsSection = () => {
@@ -78,9 +78,9 @@ const WhatItIsSection = () => {
 
               {/* CTA */}
               <div className="text-center">
-                <Link to="/walkthrough" className="cta-button animate-pulse-glow text-base md:text-lg">
+                <a href="https://fixyourmovement.com/walkthrough" target="_blank" rel="noopener noreferrer" className="cta-button animate-pulse-glow text-base md:text-lg">
                   See The Full Guided Walkthrough
-                </Link>
+                </a>
               </div>
             </div>
           </div>

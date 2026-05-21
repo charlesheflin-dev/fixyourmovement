@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+
 import { Map, BarChart2, Shield, Target, CheckCircle } from "lucide-react";
 
 const FinalCTA = () => {
@@ -83,9 +83,9 @@ const FinalCTA = () => {
 
               {/* CTA */}
               <div className="text-center">
-                <Link to="/walkthrough" className="cta-button animate-pulse-glow text-base md:text-lg">
+                <a href="https://fixyourmovement.com/walkthrough" target="_blank" rel="noopener noreferrer" className="cta-button animate-pulse-glow text-base md:text-lg">
                   Watch The Full Guided Walkthrough
-                </Link>
+                </a>
               </div>
             </div>
           </div>
