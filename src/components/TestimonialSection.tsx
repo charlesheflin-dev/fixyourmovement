@@ -188,9 +188,9 @@ const TestimonialSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="max-w-3xl mx-auto text-center text-lg text-muted-foreground font-body italic mt-8"
+                    className="max-w-3xl mx-auto text-center mt-8"
                 >
-                    <p>
+                    <p className="text-[26px] font-medium leading-[1.45] text-gray-900 not-italic">
                         Most people are not lacking effort. They're lacking a system they can actually stay consistent with long enough to move forward.
                     </p>
                 </motion.div>
