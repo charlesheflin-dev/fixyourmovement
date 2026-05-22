@@ -6,10 +6,16 @@ const HeroSection = () => {
     <section className="relative pt-16 pb-8 md:pt-24 md:pb-12 overflow-hidden">
       <div className="absolute inset-0">
         {/* Desktop Image */}
-        <img src="/photo_2026-03-25_13-59-21.jpg" alt="" className="hidden md:block w-full h-full object-cover" loading="eager" />
+        <img src="/photo_2026-03-25_13-59-21.jpg" alt="" className="hero-img-desktop hidden md:block w-full h-full object-cover" loading="eager" />
         {/* Mobile Image */}
         <img src="/new-top2.png" alt="" className="block md:hidden w-full h-full object-cover" loading="eager" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/70 to-background" />
+        <style>{`
+          .hero-img-desktop {
+            filter: grayscale(20%) saturate(70%) brightness(1.02);
+            opacity: 0.32;
+          }
+        `}</style>
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(245,248,252,0.96) 0%, rgba(240,244,250,0.88) 55%, rgba(232,238,247,0.78) 100%)" }} />
       </div>
 
       <div className="relative container mx-auto px-6 max-w-4xl text-center">
