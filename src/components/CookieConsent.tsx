@@ -13,7 +13,7 @@ const CookieConsent = () => {
       // Small delay so it doesn't pop up instantly on first load
       const timer = setTimeout(() => {
         setIsVisible(true);
-      }, 1000);
+      }, 30000);
       return () => clearTimeout(timer);
     }
   }, []);
