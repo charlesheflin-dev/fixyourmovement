@@ -14,6 +14,8 @@ import NotFound from "./pages/NotFound.tsx";
 import RefundPolicy from "./pages/RefundPolicy.tsx";
 import EULA from "./pages/EULA.tsx";
 import Walkthrough from "./pages/Walkthrough";
+import NewIndex from "./pages/NewIndex.tsx";
+import NewWalkthrough from "./pages/NewWalkthrough.tsx";
 import CookieConsent from "./components/CookieConsent.tsx";
 
 const queryClient = new QueryClient();
@@ -47,8 +49,10 @@ const App = () => (
             <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/eula" element={<EULA />} />
              <Route path="/walkthrough" element={<Walkthrough />} />
-             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="/newindex" element={<NewIndex />} />
+              <Route path="/newwalkthrough" element={<NewWalkthrough />} />
+             <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
     </TooltipProvider>
