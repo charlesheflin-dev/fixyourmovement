@@ -70,14 +70,14 @@ export default function Index() {
                     <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Symptoms that improve temporarily but always come back</span>
                   </div>
 
-                <a
-                  href="https://fixyourmovement.com/newwalkthrough2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
-                >
-                  See How The Full System Works →
-                </a>
+               <a
+                 href="/walkthrough"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
+               >
+                 See How The Full System Works →
+               </a>
 
                   <div className="flex flex-wrap gap-4 mt-6 text-sm text-slate-500">
                     <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-600" />60-Day Guarantee</span>
@@ -229,16 +229,16 @@ export default function Index() {
                 </p>
               </div>
 
-              <div className="mt-10">
-                <a
-                  href="https://fixyourmovement.com/newwalkthrough2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
-                >
-                  See How The Full System Works →
-                </a>
-              </div>
+               <div className="mt-10">
+                 <a
+                   href="/walkthrough"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
+                 >
+                   See How The Full System Works →
+                 </a>
+               </div>
             </motion.div>
           </div>
         </section>
@@ -326,17 +326,17 @@ export default function Index() {
                 />
               </div>
 
-              <div className="text-center">
-                <a
-                  href="https://fixyourmovement.com/newwalkthrough2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
-                >
-                  See How The Full System Works →
-                </a>
-                <p className="text-slate-400 text-sm mt-3">No clinic visits required. No commitment.</p>
-              </div>
+               <div className="text-center">
+                 <a
+                   href="/walkthrough"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
+                 >
+                   See How The Full System Works →
+                 </a>
+                 <p className="text-slate-400 text-sm mt-3">No clinic visits required. No commitment.</p>
+               </div>
             </motion.div>
           </div>
         </section>
@@ -569,14 +569,14 @@ export default function Index() {
                 Understand how guided recovery, structured progression, and daily consistency work together — and whether this system is the right fit for where you are right now.
               </p>
 
-              <a
-                href="https://fixyourmovement.com/newwalkthrough2"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
-              >
-                See How The Full System Works →
-              </a>
+                <a
+                   href="/walkthrough"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
+                 >
+                   See How The Full System Works →
+                 </a>
 
               <div className="flex flex-wrap gap-6 mt-8 text-sm text-slate-500">
                 <span className="flex items-center gap-2"><CheckCircle size={14} className="text-blue-600 shrink-0" />Guided from home</span>
@@ -612,14 +612,14 @@ export default function Index() {
           showStickyCTA ? "translate-y-0" : "translate-y-full"
         }`}
       >
-        <a
-          href="https://fixyourmovement.com/newwalkthrough2"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-semibold text-base text-white text-center w-full"
-        >
-          See How The Full System Works →
-        </a>
+         <a
+           href="/walkthrough"
+           target="_blank"
+           rel="noopener noreferrer"
+           className="font-semibold text-base text-white text-center w-full"
+         >
+           See How The Full System Works →
+         </a>
       </div>
     </div>
   );
