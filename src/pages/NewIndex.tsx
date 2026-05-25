@@ -83,8 +83,11 @@ export default function NewIndex() {
                     Stop Guessing Your Way Through Foot Pain
                   </h1>
 
-                  <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-6">
+                  <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-2">
                     Rebuild foot and ankle strength from home with a guided recovery system designed to reduce confusion, improve consistency, and help you move forward with more confidence.
+                  </p>
+                  <p className="text-slate-400 text-sm leading-relaxed mb-6 italic">
+                    Especially when flare-ups and conflicting advice keep pulling you backward.
                   </p>
 
                   {/* Primary CTA — above fold on mobile */}
@@ -96,6 +99,15 @@ export default function NewIndex() {
                   >
                     See How The Full System Works
                   </a>
+
+                  <div className="flex items-center gap-3 mt-4 mb-2 justify-center lg:justify-start">
+                    <div className="flex -space-x-2">
+                      <div className="w-8 h-8 rounded-full bg-blue-200 border-2 border-white flex items-center justify-center text-blue-700 text-xs font-bold">A</div>
+                      <div className="w-8 h-8 rounded-full bg-blue-300 border-2 border-white flex items-center justify-center text-blue-800 text-xs font-bold">B</div>
+                      <div className="w-8 h-8 rounded-full bg-blue-400 border-2 border-white flex items-center justify-center text-white text-xs font-bold">C</div>
+                    </div>
+                    <p className="text-slate-500 text-xs">Trusted by people dealing with chronic foot and heel pain.</p>
+                  </div>
 
                   {/* Trust row */}
                   <div className="text-sm text-slate-500 flex flex-wrap gap-4 justify-center lg:justify-start mt-4">
@@ -439,6 +451,10 @@ export default function NewIndex() {
           <div className="max-w-3xl mx-auto px-6">
             <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900 text-center mb-4">Why Plantar Fasciitis Keeps Coming Back</h2>
 
+            <p className="text-slate-500 text-base text-center mb-6 max-w-xl mx-auto leading-relaxed">
+              Discover the real reasons your heel pain returns — and the structured approach that helps you break the cycle for good.
+            </p>
+
             <div
               style={{ position: "relative", paddingTop: "56.25%" }}
               className="rounded-2xl overflow-hidden shadow-2xl"
@@ -460,7 +476,7 @@ export default function NewIndex() {
             </div>
 
             <p className="text-center text-slate-500 text-sm mt-4">
-              No clinic visits required. Designed to be followed from home at your own pace.
+              No clinic visits required. No commitment.
             </p>
 
             <div className="flex justify-center mt-6">
@@ -473,6 +489,25 @@ export default function NewIndex() {
                 See How The Full System Works
               </a>
             </div>
+
+            <div className="flex flex-wrap justify-center gap-4 mt-6 text-xs text-slate-500">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle size={13} className="text-blue-600 shrink-0" />
+                100% from home
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle size={13} className="text-blue-600 shrink-0" />
+                12-week guided system
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle size={13} className="text-blue-600 shrink-0" />
+                60-day guarantee
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle size={13} className="text-blue-600 shrink-0" />
+                Lifetime access
+              </span>
+            </div>
           </div>
         </section>
 
@@ -484,7 +519,7 @@ export default function NewIndex() {
             <div className="text-center mb-10">
               <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Patient Experiences</p>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 mb-3">What Patients Shared After Following The System</h2>
-              <p className="text-slate-500 text-base max-w-xl mx-auto">Here is what people shared after following The Foot Capacity System approach.</p>
+              <p className="text-slate-500 text-base max-w-xl mx-auto">Real people. Real progress. Here's what people experienced after following The Foot Capacity System approach.</p>
             </div>
 
             {/* Editorial transition block */}
@@ -521,7 +556,8 @@ export default function NewIndex() {
 
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
                 <div className="text-blue-600 text-3xl font-bold leading-none mb-3">"</div>
-                <p className="text-slate-700 text-sm leading-relaxed mb-4">Over the years I've had numerous injuries requiring physical therapy. PT would often improve the immediate problem, but never addressed the deeper issues. Jonathan assessed my gait and began a regimen that got to the root of the problem — basically <span className="font-semibold text-slate-900">teaching me how to walk again.</span></p>
+                <p className="text-slate-700 text-sm leading-relaxed mb-1">Over the years I've had numerous injuries requiring physical therapy. PT would often improve the immediate problem, but never addressed the deeper issues. Jonathan assessed my gait and began a regimen that got to the root of the problem — basically <span className="font-semibold text-slate-900">teaching me how to walk again.</span></p>
+                <p className="text-blue-600 text-xs font-medium mt-1 mb-4 cursor-pointer hover:underline">Read Full Experience →</p>
                 <div className="flex items-center gap-3 mt-auto">
                   <div className="w-6 h-0.5 bg-blue-600" />
                   <p className="text-blue-600 font-semibold text-xs">Lory Tubbs</p>
@@ -530,7 +566,8 @@ export default function NewIndex() {
 
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
                 <div className="text-blue-600 text-3xl font-bold leading-none mb-3">"</div>
-                <p className="text-slate-700 text-sm leading-relaxed mb-4">I tore a tendon in my plantar fascia in January and developed a DVT in the same leg in March. In May, I started with Dr. Jonathan Schutza and had <span className="font-semibold text-slate-900">remarkable progress.</span> Through his guided strengthening program, I was able to walk with better mobility and less pain.</p>
+                <p className="text-slate-700 text-sm leading-relaxed mb-1">I tore a tendon in my plantar fascia in January and developed a DVT in the same leg in March. In May, I started with Dr. Jonathan Schutza and had <span className="font-semibold text-slate-900">remarkable progress.</span> Through his guided strengthening program, I was able to walk with better mobility and less pain.</p>
+                <p className="text-blue-600 text-xs font-medium mt-1 mb-4 cursor-pointer hover:underline">Read Full Experience →</p>
                 <div className="flex items-center gap-3 mt-auto">
                   <div className="w-6 h-0.5 bg-blue-600" />
                   <p className="text-blue-600 font-semibold text-xs">Wendy Peterman</p>
@@ -539,7 +576,8 @@ export default function NewIndex() {
 
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
                 <div className="text-blue-600 text-3xl font-bold leading-none mb-3">"</div>
-                <p className="text-slate-700 text-sm leading-relaxed mb-4">Dr. Jonathan Schutza is a truly exceptional Physical Therapist whose innovative approach has made a significant impact on my recovery. What sets him apart is <span className="font-semibold text-slate-900">recording himself demonstrating the correct form for every exercise</span> — ensuring clarity when I continue rehabilitation at home.</p>
+                <p className="text-slate-700 text-sm leading-relaxed mb-1">Dr. Jonathan Schutza is a truly exceptional Physical Therapist whose innovative approach has made a significant impact on my recovery. What sets him apart is <span className="font-semibold text-slate-900">recording himself demonstrating the correct form for every exercise</span> — ensuring clarity when I continue rehabilitation at home.</p>
+                <p className="text-blue-600 text-xs font-medium mt-1 mb-4 cursor-pointer hover:underline">Read Full Experience →</p>
                 <div className="flex items-center gap-3 mt-auto">
                   <div className="w-6 h-0.5 bg-blue-600" />
                   <p className="text-blue-600 font-semibold text-xs">Debbie Wisenor</p>
@@ -548,7 +586,8 @@ export default function NewIndex() {
 
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
                 <div className="text-blue-600 text-3xl font-bold leading-none mb-3">"</div>
-                <p className="text-slate-700 text-sm leading-relaxed mb-4">You have helped me and my chronically painful foot by giving me <span className="font-semibold text-slate-900">the language and background knowledge to talk to my doctor and my PT.</span> It has had an impact on my recovery for sure. Also — good reminders for me to keep practicing!</p>
+                <p className="text-slate-700 text-sm leading-relaxed mb-1">You have helped me and my chronically painful foot by giving me <span className="font-semibold text-slate-900">the language and background knowledge to talk to my doctor and my PT.</span> It has had an impact on my recovery for sure. Also — good reminders for me to keep practicing!</p>
+                <p className="text-blue-600 text-xs font-medium mt-1 mb-4 cursor-pointer hover:underline">Read Full Experience →</p>
                 <div className="flex items-center gap-3 mt-auto">
                   <div className="w-6 h-0.5 bg-blue-600" />
                   <p className="text-blue-600 font-semibold text-xs">@vicbre415</p>
@@ -590,9 +629,7 @@ export default function NewIndex() {
             </div>
 
             {/* Disclaimer */}
-            <p className="text-xs text-slate-400 text-center mt-6">
-              Individual results vary. These reflect real experiences and may not be typical for everyone.
-            </p>
+            <p className="text-xs text-slate-400 text-center mt-6">Results vary. These are real experiences from people who followed the system and stayed consistent.</p>
 
             {/* Closing quote */}
             <div className="max-w-3xl mx-auto text-center mt-8">
@@ -655,16 +692,31 @@ export default function NewIndex() {
                 {/* Right: text */}
                 <div className="lg:w-3/5 p-8 md:p-12 flex flex-col justify-center">
                   <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
-                    A More Structured Approach To Foot & Ankle Recovery
+                    A Structured Approach Created By A Physical Therapist
                   </h2>
                    <div className="w-10 h-0.5 bg-blue-600 mb-6" />
                    <div className="space-y-4 text-slate-600 text-base leading-relaxed">
                      <p><span className="text-blue-600 font-semibold">Dr. Jonathan Schutza, PT, DPT</span> is a licensed physical therapist who built this system around one core belief: lasting recovery requires structure, not just symptom management.</p>
                      <p>His approach focuses on progressive movement and guided consistency — helping people rebuild strength and confidence from home, at their own pace.</p>
-                     <div className="space-y-2 mt-2">
-                       <div className="flex items-center gap-2"><span className="text-blue-600 font-bold">—</span><p className="text-slate-700 text-sm">Progressive, structured recovery process</p></div>
-                       <div className="flex items-center gap-2"><span className="text-blue-600 font-bold">—</span><p className="text-slate-700 text-sm">Guided consistency over passive treatment</p></div>
-                       <div className="flex items-center gap-2"><span className="text-blue-600 font-bold">—</span><p className="text-slate-700 text-sm">Built for home recovery, not clinic visits</p></div>
+                     <div className="space-y-3 mt-2">
+                       <div className="flex items-center gap-3">
+                         <div className="bg-blue-50 rounded-full p-2 shrink-0">
+                           <CheckCircle size={16} className="text-blue-600" />
+                         </div>
+                         <p className="text-slate-700 text-sm">Evidence-based. Practical. Progressive.</p>
+                       </div>
+                       <div className="flex items-center gap-3">
+                         <div className="bg-blue-50 rounded-full p-2 shrink-0">
+                           <CheckCircle size={16} className="text-blue-600" />
+                         </div>
+                         <p className="text-slate-700 text-sm">Clarity and confidence in every step.</p>
+                       </div>
+                       <div className="flex items-center gap-3">
+                         <div className="bg-blue-50 rounded-full p-2 shrink-0">
+                           <CheckCircle size={16} className="text-blue-600" />
+                         </div>
+                         <p className="text-slate-700 text-sm">Designed for real life. Built for home recovery.</p>
+                       </div>
                      </div>
                    </div>
                 </div>
@@ -722,6 +774,10 @@ export default function NewIndex() {
                     </span>
                   </div>
 
+                  <p className="text-slate-400 text-xs text-center mt-6">
+                    Your investment is protected. Your recovery is the priority.
+                  </p>
+
                 </div>
               </div>
             </motion.div>
@@ -734,8 +790,11 @@ export default function NewIndex() {
             <h2 className="font-display text-2xl md:text-4xl text-slate-900 mb-4 text-center">
               Frequently Asked Questions
             </h2>
-            <p className="text-base text-slate-500 text-center mb-10">
+            <p className="text-base text-slate-500 text-center mb-4">
               A few common questions people ask before exploring The Foot Capacity System further.
+            </p>
+            <p className="text-sm text-slate-400 text-center italic mb-10 max-w-xl mx-auto">
+              Most people are not wondering if they should recover. They're wondering if they can finally stay consistent long enough to make progress.
             </p>
             <Accordion type="single" collapsible defaultValue="faq-1" className="space-y-4">
               <AccordionItem
@@ -855,9 +914,24 @@ export default function NewIndex() {
             >
               Watch The Full Guided Walkthrough
             </a>
-            <p className="text-slate-400 text-sm mt-4">
-              No clinic visits required. One-time investment. Lifetime access.
-            </p>
+            <div className="flex flex-wrap justify-center gap-4 mt-6 text-xs text-slate-500">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle size={13} className="text-blue-600 shrink-0" />
+                Guided from home
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle size={13} className="text-blue-600 shrink-0" />
+                60-day guarantee
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle size={13} className="text-blue-600 shrink-0" />
+                Track progress daily
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle size={13} className="text-blue-600 shrink-0" />
+                Lifetime access
+              </span>
+            </div>
           </div>
         </section>
 
