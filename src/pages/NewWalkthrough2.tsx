@@ -513,6 +513,29 @@ export default function NewWalkthrough2() {
 
         {/* SECTION 7 — TESTIMONIALS */}
         <WalkthroughTestimonialSection />
+ 
+        {/* POST-TESTIMONIAL CTA */}
+        <section className="py-14 md:py-16 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6 text-center">
+            <p className="text-slate-600 text-lg leading-relaxed mb-8">
+              Ready to stop guessing and start building real foot capacity?
+            </p>
+            
+            <a
+              href={CHECKOUT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
+            >
+              Get Started With The Foot Capacity System →
+            </a>
+            <div className="flex justify-center gap-6 mt-5 text-sm text-slate-500">
+              <span className="flex items-center gap-1"><Tag size={13} className="text-blue-500 inline" /> One-time purchase</span>
+              <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> 60-Day guarantee</span>
+              <span className="flex items-center gap-1"><Lock size={13} className="text-blue-500 inline" /> Secure checkout</span>
+            </div>
+          </div>
+        </section>
 
         {/* SECTION 8 — FAQ */}
         <section className="py-16 md:py-20 bg-white border-t border-slate-100">
