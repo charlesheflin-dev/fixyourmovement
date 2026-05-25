@@ -52,26 +52,32 @@ export default function NewIndex2() {
                   <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-4">The Foot Capacity System</p>
 
                   <h1 className="font-display text-4xl md:text-6xl font-bold text-slate-900 leading-[1.1] mb-6">
-                    Stop Guessing Your Way Through<br />
-                    <span className="text-blue-600">Foot Pain.</span>
+                    Stop Guessing Through<br />
+                    <span className="text-blue-600">Plantar Fasciitis Recovery.</span>
                   </h1>
 
                   <p className="text-slate-700 text-xl leading-relaxed mb-3">
                     A guided recovery system designed to help people move beyond recurring foot and heel pain — with more structure, more clarity, and less second-guessing.
                   </p>
 
-                  <p className="text-slate-400 text-base italic leading-relaxed mb-8">
+                  <p className="text-slate-400 text-base italic leading-relaxed mb-3">
                     Especially when flare-ups and conflicting advice keep pulling you backward.
                   </p>
+                  <div className="flex flex-col gap-1.5 mb-8">
+                    <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Sharp pain with your first steps in the morning</span>
+                    <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Heel pain that improves as you move but returns later</span>
+                    <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Flare-ups after walking more than usual</span>
+                    <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Symptoms that improve temporarily but always come back</span>
+                  </div>
 
-                  <a
-                    href="https://fixyourmovement.com/newwalkthrough2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
-                  >
-                    See The Full System And Pricing →
-                  </a>
+                <a
+                  href="https://fixyourmovement.com/newwalkthrough2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
+                >
+                  See How The Full System Works →
+                </a>
 
                   <div className="flex flex-wrap gap-4 mt-6 text-sm text-slate-500">
                     <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-600" />60-Day Guarantee</span>
@@ -110,7 +116,7 @@ export default function NewIndex2() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Why You're Still Stuck</p>
+              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Why Plantar Fasciitis Keeps Coming Back</p>
 
               <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-8">
                 Most people dealing with chronic foot pain are not failing recovery.<br />
@@ -119,7 +125,7 @@ export default function NewIndex2() {
 
               <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
                 <p>
-                  You've probably tried stretching every morning. Rolled a frozen water bottle under your heel. Bought new shoes, tried orthotics, rested for weeks. Maybe you did a round of physical therapy, got some relief, and then — the pain came back the moment life returned to normal.
+                  You've probably tried stretching your plantar fascia every morning. Rolled a frozen water bottle under your heel. Bought new shoes, tried orthotics, rested for weeks, maybe even had a cortisone injection. You did a round of physical therapy, got some relief — and then the heel pain came back the moment life returned to normal.
                 </p>
                 <p>
                   That cycle isn't a sign that your foot is permanently broken. It's a sign that the approaches you've tried were focused on managing symptoms rather than building the underlying capacity your foot needs to actually handle the demands of daily life.
@@ -135,7 +141,7 @@ export default function NewIndex2() {
           </div>
         </section>
 
-        {/* SECTION 3 — THE INSIGHT */}
+        {/* SECTION 3 — TRANSFORMATION BRIDGE */}
         <section className="py-16 md:py-20 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
@@ -144,31 +150,51 @@ export default function NewIndex2() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">The Missing Piece</p>
+              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Why People Find This System</p>
 
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-8">
-                Temporary relief and long-term recovery are not the same thing.
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
+                Most People Don't End Up Here First.
               </h2>
+
+              <p className="text-slate-500 text-lg leading-relaxed mb-10">
+                They usually arrive after months, or years, of trying things that temporarily calm symptoms without ever creating lasting progress.
+              </p>
 
               <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
                 <p>
-                  Stretching reduces tension temporarily. Rest reduces load temporarily. Orthotics redistribute pressure temporarily. None of these approaches are wrong — but none of them ask the foot to actually get stronger.
+                  By the time most people find this system, they've already tried stretching routines, orthotics, rest, injections, physical therapy, massage tools, online videos, and multiple pairs of shoes.
                 </p>
                 <p>
-                  What the foot needs — what it has never gotten in most standard treatment approaches — is progressive loading. Gradually increasing the demands placed on the tissue over time, in a structured way, so that the foot builds the capacity to handle real life without breaking down.
+                  Sometimes something helps briefly. Then the pain returns.
                 </p>
                 <p>
-                  That's not complicated. But it requires consistency. And consistency requires structure — a clear process, daily guidance, and a way to know whether you're moving in the right direction.
+                  The frustrating part is not just the discomfort itself. It's the feeling of constantly restarting. Good weeks followed by setbacks. Progress followed by uncertainty. Relief followed by another flare-up.
+                </p>
+                <p>
+                  Over time, many people quietly begin wondering: <span className="text-slate-900 font-semibold italic">"Why does this keep happening?"</span>
+                </p>
+                <p>
+                  In many cases, the issue is not effort. It's that most recovery approaches never build enough structure, consistency, and progressive capacity over time.
+                </p>
+                <p className="text-slate-900 font-semibold text-xl">
+                  That is what this system is designed to change.
                 </p>
               </div>
 
-              {/* Pull quote */}
+              <div className="mt-10 flex flex-col gap-3">
+                <span className="flex items-center gap-3 text-slate-600 text-base"><span className="text-blue-600 font-bold shrink-0">—</span>No more guessing what to do next</span>
+                <span className="flex items-center gap-3 text-slate-600 text-base"><span className="text-blue-600 font-bold shrink-0">—</span>Progress you can actually track</span>
+                <span className="flex items-center gap-3 text-slate-600 text-base"><span className="text-blue-600 font-bold shrink-0">—</span>Structure that helps consistency stick</span>
+                <span className="flex items-center gap-3 text-slate-600 text-base"><span className="text-blue-600 font-bold shrink-0">—</span>Flare-ups that no longer feel like complete restarts</span>
+              </div>
+
               <div className="mt-12 pl-6 border-l-4 border-blue-600">
                 <p className="text-slate-800 text-xl md:text-2xl font-medium leading-relaxed italic">
                   "I had heel pain for over five years. I tried everything. Dr. Jonathan Schutza was the first to explain the real cause of my pain and create a plan that finally worked. He's not just fixing the pain — he's teaching me how to stay better."
                 </p>
                 <p className="text-blue-600 font-semibold text-sm mt-4">— Dee Bell</p>
               </div>
+
             </motion.div>
           </div>
         </section>
@@ -193,13 +219,13 @@ export default function NewIndex2() {
                   The Foot Capacity System is a 12-week guided recovery program built by Dr. Jonathan Schutza, PT, DPT. It gives you a clear process to follow every day — structured sessions, daily tracking, and built-in guidance for when flare-ups happen.
                 </p>
                 <p>
-                  The system works in phases. Each phase builds on the last, gradually increasing the demands on your foot as your capacity improves. You track your symptoms and progress over time, so you can actually see whether things are getting better — instead of guessing.
+                  The system works in phases. Each phase builds on the last, gradually increasing the demands on your foot as your capacity improves. You track your symptoms and progress over time, so you can start trusting your feet again — instead of guessing after every walk whether you pushed too far.
                 </p>
                 <p>
                   When setbacks happen — and they will — the system tells you exactly how to adjust. Temporarily reduce load. Keep moving. Build back gradually. A flare-up is not a restart. It's a signal to adjust, not stop.
                 </p>
                 <p>
-                  Everything is done at home. No clinic visits. No special equipment. No need to figure it out on your own.
+                  Everything is done at home. No clinic visits. No special equipment. And for the first time, you'll know exactly what to do during a flare-up instead of panicking and starting over.
                 </p>
               </div>
 
@@ -210,7 +236,7 @@ export default function NewIndex2() {
                   rel="noopener noreferrer"
                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
                 >
-                  See The Full System And Pricing →
+                  See How The Full System Works →
                 </a>
               </div>
             </motion.div>
@@ -307,7 +333,7 @@ export default function NewIndex2() {
                   rel="noopener noreferrer"
                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
                 >
-                  See The Full System And Pricing →
+                  See How The Full System Works →
                 </a>
                 <p className="text-slate-400 text-sm mt-3">No clinic visits required. No commitment.</p>
               </div>
@@ -337,16 +363,25 @@ export default function NewIndex2() {
                 <div>
                   <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-4">Built By A Physical Therapist</p>
                   <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-6">
-                    Dr. Jonathan Schutza, PT, DPT
+                    Built Around How Recovery Actually Works
                   </h2>
                   <div className="space-y-4 text-slate-600 text-lg leading-relaxed">
                     <p>
-                      Dr. Schutza is a licensed physical therapist who built this system around one core belief: lasting recovery requires structure, not just symptom management.
+                      Dr. Jonathan Schutza, PT, DPT created The Foot Capacity System after seeing how many people struggled with the same cycle: temporary relief, conflicting advice, inconsistent routines, and repeated flare-ups.
                     </p>
                     <p>
-                      His approach focuses on progressive movement and guided consistency — helping people rebuild strength and confidence from home, at their own pace. The Foot Capacity System is the result of that philosophy applied to the most common and most mismanaged condition in foot and ankle rehabilitation.
+                      Most people were not lacking motivation. They were lacking a process they could realistically follow consistently long enough to build meaningful progress.
+                    </p>
+                    <p>
+                      That is why this system focuses less on passive treatment and more on progressive loading, structure, guidance, and helping people regain confidence in how they move over time.
+                    </p>
+                    <p>
+                      The goal is not perfection. It is helping recovery finally feel clearer, calmer, and more manageable again.
                     </p>
                   </div>
+                  <p className="text-slate-400 text-sm italic mt-6">
+                    Designed for guided recovery from home, with more structure and less guesswork.
+                  </p>
                   <div className="flex gap-4 mt-6">
                     <a href="https://www.instagram.com/dr.schutza.pt/" target="_blank" rel="noopener noreferrer" className="text-blue-600 text-sm font-medium hover:underline">Instagram</a>
                     <a href="https://www.facebook.com/share/18vGC5rzP8/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-blue-600 text-sm font-medium hover:underline">Facebook</a>
@@ -368,22 +403,34 @@ export default function NewIndex2() {
             >
               <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Risk-Free</p>
 
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-6">
-                "Walk Pain-Free Or It's Free."
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-3">
+                60-Day Satisfaction Guarantee
               </h2>
 
-              <p className="text-slate-600 text-xl leading-relaxed mb-4">
-                Try the system for 60 days. Follow the program, track your progress, and if you do not experience meaningful improvement, we'll refund your investment. No questions asked.
-              </p>
+              <p className="text-blue-600 font-semibold text-lg mb-6">Walk Pain-Free Or It's Free</p>
 
-              <p className="text-slate-400 text-base italic mb-10">
-                Our goal is meaningful progress, not pressure. Your investment is protected. Your recovery is the priority.
-              </p>
+              <div className="w-10 h-0.5 bg-blue-600 mb-8" />
 
-              <div className="flex flex-wrap gap-6 text-sm text-slate-500">
-                <span className="flex items-center gap-2"><CheckCircle size={15} className="text-blue-600 shrink-0" />60 full days to build consistency</span>
-                <span className="flex items-center gap-2"><CheckCircle size={15} className="text-blue-600 shrink-0" />Track improvement week by week</span>
-                <span className="flex items-center gap-2"><CheckCircle size={15} className="text-blue-600 shrink-0" />Try the system risk-free</span>
+              <div className="space-y-5 text-slate-600 text-lg leading-relaxed mb-8">
+                <p>
+                  Recovery can feel frustrating when you've already invested time, money, and energy into things that never fully solved the problem.
+                </p>
+                <p>
+                  That is why we want people to explore this system without pressure. Follow the program, track your progress, and give yourself time to build consistency.
+                </p>
+                <p>
+                  If you do not feel the system is helping you make meaningful progress within 60 days, we'll refund your investment.
+                </p>
+                <p className="text-slate-900 font-semibold">
+                  Our goal is not perfection overnight. It is helping recovery finally feel more clear, manageable, and sustainable.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />60 full days to explore the system</span>
+                <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />Track progress directly inside the app</span>
+                <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />Built for consistency from home</span>
+                <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />Full refund if the program is not right for you</span>
               </div>
             </motion.div>
           </div>
@@ -398,12 +445,11 @@ export default function NewIndex2() {
               Frequently Asked Questions
             </h2>
 
-            <p className="text-slate-500 text-lg mb-4">
-              A few common questions people ask before exploring The Foot Capacity System further.
+            <p className="text-slate-600 text-lg leading-relaxed mb-4">
+              Most people are not wondering whether recovery matters. They're wondering whether they can finally stay consistent long enough to make meaningful progress without constantly second-guessing themselves.
             </p>
-
-            <p className="text-slate-400 text-base italic mb-12">
-              Most people are not wondering if they should recover. They're wondering if they can finally stay consistent long enough to make progress.
+            <p className="text-slate-400 text-base mb-12">
+              Below are some of the most common questions people ask before starting.
             </p>
 
             <Accordion type="single" collapsible defaultValue="faq-1" className="space-y-3">
@@ -411,8 +457,13 @@ export default function NewIndex2() {
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">
                   What makes this different from regular physical therapy?
                 </AccordionTrigger>
-                <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">
-                  Traditional physical therapy often focuses on hands-on treatment and short-term symptom management. The Foot Capacity System is built around progressive loading and structured daily guidance — giving you a clear process to follow from home, every day, not just during clinic visits. The difference is consistency and structure over time.
+                <AccordionContent className="pb-5">
+                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Recovery Process</p>
+                  <div className="space-y-3 text-slate-600 text-base leading-relaxed">
+                    <p>Many people feel frustrated because recovery advice often changes from visit to visit, or focuses only on temporary symptom relief.</p>
+                    <p>The Foot Capacity System is designed differently. Instead of relying on occasional appointments, the system gives you a structured process to follow consistently from home, with guided progressions, progress tracking, and clearer direction during setbacks.</p>
+                    <p>The goal is not just temporary relief. The goal is helping you steadily build more confidence and capacity over time.</p>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
 
@@ -429,8 +480,13 @@ export default function NewIndex2() {
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">
                   What if my pain has been going on for years?
                 </AccordionTrigger>
-                <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">
-                  Duration of pain does not determine outcome. Most people who go through this system have been dealing with foot pain for months or years before finding it. Consistency with the right process matters far more than how long the pain has been present.
+                <AccordionContent className="pb-5">
+                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Chronic Pain</p>
+                  <div className="space-y-3 text-slate-600 text-base leading-relaxed">
+                    <p>Many people who use this system have already been dealing with foot or heel pain for a long time before starting. Chronic symptoms can make recovery feel discouraging, especially after trying multiple approaches without lasting progress.</p>
+                    <p>That is why this system focuses heavily on consistency, gradual progression, and reducing the constant stop-and-start cycle that keeps many people stuck.</p>
+                    <p>The goal is not overnight change. It is creating a clearer process that becomes more manageable to follow over time.</p>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
 
@@ -438,8 +494,13 @@ export default function NewIndex2() {
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">
                   What happens if symptoms flare up again?
                 </AccordionTrigger>
-                <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">
-                  Flare-ups are a normal part of recovery for many people. The system was designed to help people navigate setbacks with more structure and less panic instead of feeling like all their progress has disappeared.
+                <AccordionContent className="pb-5">
+                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Flare-Ups</p>
+                  <div className="space-y-3 text-slate-600 text-base leading-relaxed">
+                    <p>Flare-ups are common during recovery, especially when pain has been ongoing for a long time. That does not automatically mean you are back at the beginning.</p>
+                    <p>One of the biggest goals of this system is helping people respond to setbacks with more clarity instead of panic. Rather than completely stopping or guessing what to do next, the system helps you adjust gradually while continuing to move forward safely.</p>
+                    <p>Over time, many people find that flare-ups feel less overwhelming and easier to navigate.</p>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
 
@@ -505,7 +566,7 @@ export default function NewIndex2() {
                 rel="noopener noreferrer"
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
               >
-                See The Full System And Pricing →
+                See How The Full System Works →
               </a>
 
               <div className="flex flex-wrap gap-6 mt-8 text-sm text-slate-500">
@@ -548,7 +609,7 @@ export default function NewIndex2() {
           rel="noopener noreferrer"
           className="font-semibold text-base text-white text-center w-full"
         >
-          See Full System & Pricing →
+          See How The Full System Works →
         </a>
       </div>
     </div>

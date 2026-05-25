@@ -32,7 +32,7 @@ export default function NewWalkthrough2() {
               <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">The Foot Capacity System</p>
 
               <h1 className="font-display text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-6">
-                Recovery Becomes Much Less Overwhelming With The Right Structure.
+                Stop Guessing Through Plantar Fasciitis Recovery.
               </h1>
 
               <p className="text-slate-600 text-xl leading-relaxed mb-4">
@@ -42,6 +42,14 @@ export default function NewWalkthrough2() {
               <p className="text-slate-400 text-base italic leading-relaxed mb-10">
                 The system was built to help people spend less time feeling stuck and more time steadily moving forward.
               </p>
+
+              {/* Symptoms list */}
+              <div className="flex flex-col gap-1.5 mb-10">
+                <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Sharp pain with your first steps in the morning</span>
+                <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Heel pain that improves as you move but returns later</span>
+                <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Flare-ups after walking more than usual</span>
+                <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Symptoms that improve temporarily but always come back</span>
+              </div>
 
               {/* Video */}
               <div style={{ position: "relative", paddingTop: "56.25%" }} className="rounded-2xl overflow-hidden shadow-xl mb-8">
@@ -98,7 +106,7 @@ export default function NewWalkthrough2() {
                 </div>
                 <div>
                   <p className="font-semibold text-slate-900 text-xl mb-2">More confidence moving forward.</p>
-                  <p>The goal is not perfection. The goal is helping recovery feel more steady, manageable, and sustainable long term.</p>
+                  <p>The goal is not perfection. The goal is helping you trust your feet again — and feel capable moving through daily life without obsessing over pain.</p>
                 </div>
               </div>
             </motion.div>
@@ -260,8 +268,8 @@ export default function NewWalkthrough2() {
                   <ShieldCheck size={20} className="text-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-slate-900 text-sm">60-Day Guarantee</p>
-                  <p className="text-slate-600 text-xs mt-1">Try The Foot Capacity System risk-free for 60 days. If you don't feel it's the right fit, let us know and we'll make it right—no hassle.</p>
+                  <p className="font-semibold text-slate-900 text-sm">60-Day Satisfaction Guarantee</p>
+                  <p className="text-slate-600 text-xs mt-1">Follow the program for 60 days. If you do not feel the system is helping you make meaningful progress, we'll refund your investment. Our goal is not pressure — it's meaningful progress.</p>
                 </div>
               </div>
 
@@ -516,8 +524,11 @@ export default function NewWalkthrough2() {
               Questions people ask before getting started.
             </h2>
 
-            <p className="text-slate-400 text-base italic mb-12">
-              Honest answers to the questions we hear most often.
+            <p className="text-slate-600 text-lg leading-relaxed mb-4">
+              Most people are not wondering whether recovery matters. They're wondering whether they can finally stay consistent long enough to make meaningful progress without constantly second-guessing themselves.
+            </p>
+            <p className="text-slate-400 text-base mb-12">
+              Below are some of the most common questions people ask before starting.
             </p>
 
             <Accordion type="single" collapsible defaultValue="faq-cat-1" className="space-y-3">
@@ -526,8 +537,13 @@ export default function NewWalkthrough2() {
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">
                   Will this actually work if I've tried everything else and nothing has helped?
                 </AccordionTrigger>
-                <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">
-                  Most people who come to this system have already tried stretching, orthotics, rest, cortisone shots, and generic physical therapy exercises. The reason those things often don't work long term is that they address symptoms without building the underlying capacity your feet actually need. This system is built around a different approach — structured progressive loading that rebuilds tissue tolerance from the ground up. It's not another set of exercises to try. It's a process designed to work when other things haven't.
+                <AccordionContent className="pb-5">
+                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Recovery Process</p>
+                  <div className="space-y-3 text-slate-600 text-base leading-relaxed">
+                    <p>Many people feel frustrated because recovery advice often changes from visit to visit, or focuses only on temporary symptom relief.</p>
+                    <p>Most people who come to this system have already tried stretching, orthotics, rest, cortisone shots, and generic physical therapy exercises. The reason those things often don't work long term is that they address symptoms without building the underlying capacity your feet actually need.</p>
+                    <p>This system is built around a different approach — structured progressive loading that rebuilds tissue tolerance from the ground up. It's not another set of exercises to try. It's a process designed to work when other things haven't.</p>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
 
@@ -544,8 +560,13 @@ export default function NewWalkthrough2() {
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">
                   What if I have a flare-up — do I have to start over from the beginning?
                 </AccordionTrigger>
-                <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">
-                  No. Flare-ups are a normal and expected part of recovery — they don't erase your progress. The system includes built-in flare-up support that helps you temporarily reduce load, stay consistent at a lower intensity, and build back gradually without losing ground. A setback is not a restart. The system is designed to keep you moving forward even on difficult days.
+                <AccordionContent className="pb-5">
+                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Flare-Ups</p>
+                  <div className="space-y-3 text-slate-600 text-base leading-relaxed">
+                    <p>Flare-ups are common during recovery, especially when pain has been ongoing for a long time. That does not automatically mean you are back at the beginning.</p>
+                    <p>One of the biggest goals of this system is helping people respond to setbacks with more clarity instead of panic. Rather than completely stopping or guessing what to do next, the system helps you adjust gradually while continuing to move forward safely.</p>
+                    <p>Over time, many people find that flare-ups feel less overwhelming and easier to navigate.</p>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
 
@@ -598,8 +619,13 @@ export default function NewWalkthrough2() {
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">
                   I've had this pain for years — is it too late for me to actually recover?
                 </AccordionTrigger>
-                <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">
-                  It is not too late. Most people who go through this system have been dealing with foot pain for months or years before finding it. Duration of pain does not determine outcome. Consistency with the right process does.
+                <AccordionContent className="pb-5">
+                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Chronic Pain</p>
+                  <div className="space-y-3 text-slate-600 text-base leading-relaxed">
+                    <p>Many people who use this system have already been dealing with foot or heel pain for a long time before starting. Chronic symptoms can make recovery feel discouraging, especially after trying multiple approaches without lasting progress.</p>
+                    <p>That is why this system focuses heavily on consistency, gradual progression, and reducing the constant stop-and-start cycle that keeps many people stuck.</p>
+                    <p>The goal is not overnight change. It is creating a clearer process that becomes more manageable to follow over time.</p>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
 
