@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
   CheckCircle,
@@ -21,27 +20,6 @@ import {
   HelpCircle,
   Smartphone,
 } from "lucide-react";
-import testimonial1 from "@/assets/testimonials/1B.jpg";
-import testimonial2 from "@/assets/testimonials/2B.jpg";
-import testimonial3 from "@/assets/testimonials/3B.jpg";
-import testimonial4 from "@/assets/testimonials/4B.jpg";
-import testimonial5 from "@/assets/testimonials/5B.jpg";
-import testimonial6 from "@/assets/testimonials/6B.jpg";
-import testimonial7 from "@/assets/testimonials/7B.jpg";
-import testimonial8 from "@/assets/testimonials/8B.jpg";
-import testimonial9 from "@/assets/testimonials/9B.jpg";
-
-const testimonialImages = [
-  testimonial1,
-  testimonial2,
-  testimonial3,
-  testimonial4,
-  testimonial5,
-  testimonial6,
-  testimonial7,
-  testimonial8,
-  testimonial9,
-];
 
 const trustItems = [
   { icon: ShieldCheck, label: "90-Day Guarantee" },
@@ -51,20 +29,7 @@ const trustItems = [
 ];
 
 export default function NewIndex() {
-  const [api, setApi] = useState<CarouselApi>();
-  const [isHovered, setIsHovered] = useState(false);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
-
-  // Auto-scroll testimonial carousel
-  useEffect(() => {
-    if (!api) return;
-    const interval = setInterval(() => {
-      if (!isHovered) {
-        api.scrollNext();
-      }
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [api, isHovered]);
 
   // Sticky mobile CTA visibility
   useEffect(() => {
@@ -147,35 +112,130 @@ export default function NewIndex() {
                 </motion.div>
               </div>
 
-              {/* Right column — headshot + two app screenshots */}
+              {/* Right column — app visual */}
               <div className="lg:w-1/2 mt-8 lg:mt-0">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.25, ease: "easeOut" }}
-                  className="flex flex-col items-center"
+                  className="flex items-center justify-center"
                 >
                   <img
-                    src="/images/dr-jonathan-schutza-headshot.png"
-                    alt="Dr. Jonathan Schutza"
-                    className="rounded-full w-32 h-32 object-cover border-4 border-white shadow-lg mx-auto mb-4"
+                    src="/images/3-phones-hero.png"
+                    alt="The Foot Capacity System app"
+                    className="w-full max-w-md rounded-2xl"
                   />
-                  <div className="flex gap-4 w-full">
-                    <img
-                      src="/images/new-phone.jpg"
-                      alt="App screenshot"
-                      className="w-1/2 rounded-2xl shadow-md"
-                    />
-                    <img
-                      src="/images/new-phone2.jpg"
-                      alt="App screenshot 2"
-                      className="w-1/2 rounded-2xl shadow-md"
-                    />
-                  </div>
                 </motion.div>
               </div>
 
             </div>
+          </div>
+        </section>
+
+        {/* ── NEW: Transformation Bridge ───────────────────────────────── */}
+        <section className="bg-white py-12 md:py-16">
+          <div className="max-w-5xl mx-auto px-6">
+
+            {/* Section header */}
+            <div className="text-center mb-12">
+              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Why People Find This System</p>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                Most People Arrive Here After Years Of Trying.
+              </h2>
+              <p className="text-slate-500 text-base max-w-2xl mx-auto leading-relaxed">
+                Not because they gave up — but because nothing they tried actually addressed the root of the problem.
+              </p>
+            </div>
+
+            {/* Three panels */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+
+              {/* Panel 1 — The Before */}
+              <div className="bg-slate-50 rounded-2xl border border-slate-200 p-8">
+                <div className="w-8 h-0.5 bg-blue-600 mb-4" />
+                <h3 className="font-display text-lg font-bold text-slate-900 mb-4">Where Most People Start</h3>
+                <div className="space-y-3">
+                  <p className="text-slate-600 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-blue-600 font-bold shrink-0 mt-0.5">—</span>
+                    Recurring heel pain that keeps coming back no matter what they try
+                  </p>
+                  <p className="text-slate-600 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-blue-600 font-bold shrink-0 mt-0.5">—</span>
+                    Already tried stretching, orthotics, cortisone, rest, and physical therapy
+                  </p>
+                  <p className="text-slate-600 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-blue-600 font-bold shrink-0 mt-0.5">—</span>
+                    Temporary relief followed by another flare-up
+                  </p>
+                  <p className="text-slate-600 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-blue-600 font-bold shrink-0 mt-0.5">—</span>
+                    Quietly starting to wonder if this is just permanent
+                  </p>
+                </div>
+              </div>
+
+              {/* Panel 2 — The Missing Piece */}
+              <div className="bg-blue-600 rounded-2xl p-8 text-white">
+                <div className="w-8 h-0.5 bg-white/40 mb-4" />
+                <h3 className="font-display text-lg font-bold text-white mb-4">Why Nothing Has Worked</h3>
+                <div className="space-y-3">
+                  <p className="text-blue-100 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-white font-bold shrink-0 mt-0.5">—</span>
+                    Most approaches treat the symptom, not the underlying tissue capacity
+                  </p>
+                  <p className="text-blue-100 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-white font-bold shrink-0 mt-0.5">—</span>
+                    Without progressive loading, the foot never builds the strength it needs
+                  </p>
+                  <p className="text-blue-100 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-white font-bold shrink-0 mt-0.5">—</span>
+                    Without structure, consistency becomes almost impossible to maintain
+                  </p>
+                  <p className="text-blue-100 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-white font-bold shrink-0 mt-0.5">—</span>
+                    The cycle continues until the approach changes
+                  </p>
+                </div>
+              </div>
+
+              {/* Panel 3 — The After */}
+              <div className="bg-slate-50 rounded-2xl border border-slate-200 p-8">
+                <div className="w-8 h-0.5 bg-blue-600 mb-4" />
+                <h3 className="font-display text-lg font-bold text-slate-900 mb-4">What Changes With Structure</h3>
+                <div className="space-y-3">
+                  <p className="text-slate-600 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-blue-600 font-bold shrink-0 mt-0.5">—</span>
+                    A clear process to follow every day — not just on good days
+                  </p>
+                  <p className="text-slate-600 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-blue-600 font-bold shrink-0 mt-0.5">—</span>
+                    Progress you can actually track and see over time
+                  </p>
+                  <p className="text-slate-600 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-blue-600 font-bold shrink-0 mt-0.5">—</span>
+                    Flare-ups that no longer feel like complete restarts
+                  </p>
+                  <p className="text-slate-600 text-sm leading-relaxed flex items-start gap-2">
+                    <span className="text-blue-600 font-bold shrink-0 mt-0.5">—</span>
+                    Recovery that finally starts moving in one direction
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Testimonial anchor */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 max-w-3xl mx-auto">
+              <div className="text-blue-600 text-4xl font-bold leading-none mb-4">"</div>
+              <p className="text-slate-800 text-lg md:text-xl font-medium leading-relaxed mb-6">
+                I had heel pain for over five years. I tried everything — orthotics, steroid injections, stretching, different doctors. Nothing worked long-term. Dr. Jonathan Schutza was the first to explain the real cause of my pain and create a plan that finally worked. He's not just fixing the pain — he's teaching me how to stay better.
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-0.5 bg-blue-600" />
+                <p className="text-blue-600 font-semibold text-sm">Dee Bell</p>
+              </div>
+            </div>
+
           </div>
         </section>
 
@@ -202,8 +262,8 @@ export default function NewIndex() {
                   <div className="w-full h-px bg-slate-200 mb-6" />
                   <div className="space-y-5">
                     <div className="flex items-start gap-4">
-                      <div className="bg-purple-50 rounded-full p-3 shrink-0">
-                        <HelpCircle size={18} className="text-purple-600" />
+                      <div className="bg-blue-50 rounded-full p-3 shrink-0">
+                        <HelpCircle size={18} className="text-blue-600" />
                       </div>
                       <div>
                         <p className="font-semibold text-slate-900 text-sm mb-1">Uncertainty makes recovery harder.</p>
@@ -211,8 +271,8 @@ export default function NewIndex() {
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
-                      <div className="bg-green-50 rounded-full p-3 shrink-0">
-                        <Smartphone size={18} className="text-green-600" />
+                      <div className="bg-blue-50 rounded-full p-3 shrink-0">
+                        <Smartphone size={18} className="text-blue-600" />
                       </div>
                       <div>
                         <p className="font-semibold text-slate-900 text-sm mb-1">Structure changes that.</p>
@@ -234,8 +294,8 @@ export default function NewIndex() {
                     </div>
                   </div>
                   <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-start gap-4">
-                    <div className="bg-green-50 rounded-xl p-3 shrink-0">
-                      <TrendingUp size={20} className="text-green-600" />
+                    <div className="bg-blue-50 rounded-xl p-3 shrink-0">
+                      <TrendingUp size={20} className="text-blue-600" />
                     </div>
                     <div>
                       <p className="font-semibold text-slate-900 text-sm mb-1">Progress Tracking</p>
@@ -243,8 +303,8 @@ export default function NewIndex() {
                     </div>
                   </div>
                   <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-start gap-4">
-                    <div className="bg-purple-50 rounded-xl p-3 shrink-0">
-                      <Shield size={20} className="text-purple-600" />
+                    <div className="bg-blue-50 rounded-xl p-3 shrink-0">
+                      <Shield size={20} className="text-blue-600" />
                     </div>
                     <div>
                       <p className="font-semibold text-slate-900 text-sm mb-1">Flare-Up Support</p>
@@ -359,14 +419,14 @@ export default function NewIndex() {
                     <p className="font-semibold text-slate-900 text-sm">Less fear of setbacks.</p>
                   </div>
                   <div className="flex items-center gap-3 py-1.5 px-3">
-                    <div className="bg-green-50 rounded-full p-2 shrink-0">
-                      <CheckCircle size={16} className="text-green-600" />
+                    <div className="bg-blue-50 rounded-full p-2 shrink-0">
+                      <CheckCircle size={16} className="text-blue-600" />
                     </div>
                     <p className="font-semibold text-slate-900 text-sm">More consistency in daily life.</p>
                   </div>
                   <div className="flex items-center gap-3 py-1.5 px-3">
-                    <div className="bg-purple-50 rounded-full p-2 shrink-0">
-                      <CheckCircle size={16} className="text-purple-600" />
+                    <div className="bg-blue-50 rounded-full p-2 shrink-0">
+                      <CheckCircle size={16} className="text-blue-600" />
                     </div>
                     <p className="font-semibold text-slate-900 text-sm">More confidence in your body.</p>
                   </div>
@@ -444,32 +504,92 @@ export default function NewIndex() {
               </div>
             </div>
 
-            {/* patient-experiences.png */}
+            {/* Featured testimonial — large */}
             <div className="max-w-3xl mx-auto mb-8">
-              <img src="/images/patient-experiences.png" alt="Patient experiences with The Foot Capacity System" className="w-full rounded-2xl" />
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 md:p-10">
+                <div className="text-blue-600 text-4xl font-bold leading-none mb-4">"</div>
+                <p className="text-slate-800 text-lg md:text-xl font-medium leading-relaxed mb-2">
+                  I've been struggling with plantar fasciitis for 3 years, tried cortisone, shockwave, thousands of different shoes. Until December when I saw one of your fascia strengthening exercises. For the first time it's been 2 weeks without pain.
+                </p>
+                <p className="text-blue-600 font-bold text-base mt-2 mb-6">It's unreal.</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-0.5 bg-blue-600" />
+                  <p className="text-blue-600 font-semibold text-sm">Lorenzo Luongo</p>
+                </div>
+              </div>
             </div>
 
-            {/* Testimonial carousel */}
-            <div
-              className="max-w-6xl mx-auto"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              onTouchStart={() => setIsHovered(true)}
-              onTouchEnd={() => setIsHovered(false)}
-            >
-              <Carousel setApi={setApi} opts={{ align: "start", loop: true }} className="w-full">
-                <CarouselContent className="-ml-2 md:-ml-4">
-                  {testimonialImages.map((image, index) => (
-                    <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3">
-                      <div className="p-1">
-                        <div className="section-card overflow-hidden">
-                          <img src={image} alt={`Testimonial ${index + 1}`} className="w-full h-auto object-cover" />
-                        </div>
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-              </Carousel>
+            {/* Secondary testimonial cards — 2 col grid desktop, stacked mobile */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto mb-8">
+
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <div className="text-blue-600 text-3xl font-bold leading-none mb-3">"</div>
+                <p className="text-slate-700 text-sm leading-relaxed mb-4">Over the years I've had numerous injuries requiring physical therapy. PT would often improve the immediate problem, but never addressed the deeper issues. Jonathan assessed my gait and began a regimen that got to the root of the problem — basically <span className="font-semibold text-slate-900">teaching me how to walk again.</span></p>
+                <div className="flex items-center gap-3 mt-auto">
+                  <div className="w-6 h-0.5 bg-blue-600" />
+                  <p className="text-blue-600 font-semibold text-xs">Lory Tubbs</p>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <div className="text-blue-600 text-3xl font-bold leading-none mb-3">"</div>
+                <p className="text-slate-700 text-sm leading-relaxed mb-4">I tore a tendon in my plantar fascia in January and developed a DVT in the same leg in March. In May, I started with Dr. Jonathan Schutza and had <span className="font-semibold text-slate-900">remarkable progress.</span> Through his guided strengthening program, I was able to walk with better mobility and less pain.</p>
+                <div className="flex items-center gap-3 mt-auto">
+                  <div className="w-6 h-0.5 bg-blue-600" />
+                  <p className="text-blue-600 font-semibold text-xs">Wendy Peterman</p>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <div className="text-blue-600 text-3xl font-bold leading-none mb-3">"</div>
+                <p className="text-slate-700 text-sm leading-relaxed mb-4">Dr. Jonathan Schutza is a truly exceptional Physical Therapist whose innovative approach has made a significant impact on my recovery. What sets him apart is <span className="font-semibold text-slate-900">recording himself demonstrating the correct form for every exercise</span> — ensuring clarity when I continue rehabilitation at home.</p>
+                <div className="flex items-center gap-3 mt-auto">
+                  <div className="w-6 h-0.5 bg-blue-600" />
+                  <p className="text-blue-600 font-semibold text-xs">Debbie Wisenor</p>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <div className="text-blue-600 text-3xl font-bold leading-none mb-3">"</div>
+                <p className="text-slate-700 text-sm leading-relaxed mb-4">You have helped me and my chronically painful foot by giving me <span className="font-semibold text-slate-900">the language and background knowledge to talk to my doctor and my PT.</span> It has had an impact on my recovery for sure. Also — good reminders for me to keep practicing!</p>
+                <div className="flex items-center gap-3 mt-auto">
+                  <div className="w-6 h-0.5 bg-blue-600" />
+                  <p className="text-blue-600 font-semibold text-xs">@vicbre415</p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Additional testimonials — 3 col grid desktop, stacked mobile */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+
+              <div className="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+                <div className="text-blue-600 text-2xl font-bold leading-none mb-2">"</div>
+                <p className="text-slate-700 text-xs leading-relaxed mb-3">I have had this pain since the beginning of cross country season and it has been bad enough that I couldn't run for a few meets. I talked to my athletic trainer but never got away from it — <span className="font-semibold text-slate-800">and this just gave me relief.</span></p>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-0.5 bg-blue-600" />
+                  <p className="text-blue-600 font-semibold text-xs">Zaiden Peterson</p>
+                </div>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+                <div className="text-blue-600 text-2xl font-bold leading-none mb-2">"</div>
+                <p className="text-slate-700 text-xs leading-relaxed mb-3">I've suffered a lisfranc injury requiring surgery and I'm in rehab regaining all the strength I've lost. <span className="font-semibold text-slate-800">Very clear and exercises are achievable.</span> I'm from Australia — thanks for your work.</p>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-0.5 bg-blue-600" />
+                  <p className="text-blue-600 font-semibold text-xs">@youngcarol</p>
+                </div>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+                <div className="text-blue-600 text-2xl font-bold leading-none mb-2">"</div>
+                <p className="text-slate-700 text-xs leading-relaxed mb-3">You are the most positive, supportive physical therapist I have come across on social media. <span className="font-semibold text-slate-800">The fact that you focus on foot and ankle rehab is a bonus.</span> You have added greatly to my Post Tibial Tendonitis recovery.</p>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-0.5 bg-blue-600" />
+                  <p className="text-blue-600 font-semibold text-xs">@bogiegrl</p>
+                </div>
+              </div>
+
             </div>
 
             {/* Disclaimer */}
