@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
   CheckCircle,
@@ -22,7 +20,7 @@ import {
 } from "lucide-react";
 
 const trustItems = [
-  { icon: ShieldCheck, label: "90-Day Guarantee" },
+  { icon: ShieldCheck, label: "60-Day Guarantee" },
   { icon: CheckCircle, label: "Guided Recovery From Home" },
   { icon: CheckCircle, label: "Track Progress Daily" },
   { icon: CheckCircle, label: "Lifetime Access" },
@@ -43,7 +41,6 @@ export default function NewIndex() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
       <main>
 
         {/* ── 1. Hero ─────────────────────────────────────────────────── */}
@@ -866,7 +863,19 @@ export default function NewIndex() {
         </section>
 
       </main>
-      <Footer />
+      <footer className="bg-white border-t border-slate-200 py-8">
+        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-slate-400 text-xs text-center md:text-left">
+            © {new Date().getFullYear()} The Foot Capacity System. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6 text-xs text-slate-400">
+            <a href="/privacy-policy" className="hover:text-slate-600 transition-colors">Privacy Policy</a>
+            <a href="/terms-of-service" className="hover:text-slate-600 transition-colors">Terms of Service</a>
+            <a href="/contact" className="hover:text-slate-600 transition-colors">Contact</a>
+            <a href="https://members.fixyourmovement.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Patient App</a>
+          </div>
+        </div>
+      </footer>
 
       {/* ── Sticky Mobile CTA ────────────────────────────────────────── */}
       <div
