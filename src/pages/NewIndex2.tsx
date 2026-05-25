@@ -351,26 +351,29 @@ export default function NewIndex2() {
               transition={{ duration: 0.6 }}
             >
               <div className="flex flex-col md:flex-row md:items-start gap-10">
-                <div className="shrink-0">
-                  <img
-                    src="/images/dr-jonathan-schutza-headshot.png"
-                    alt="Dr. Jonathan Schutza, PT, DPT"
-                    className="w-32 h-32 rounded-full object-cover border-4 border-slate-100 shadow-sm"
-                    loading="lazy"
-                  />
-                </div>
+              <div className="shrink-0 mt-8 md:mt-10">
+                <img
+                  src="/images/dr-jonathan-schutza-headshot.png"
+                  alt="Dr. Jonathan Schutza, PT, DPT"
+                  className="w-32 h-32 rounded-full object-cover border-4 border-slate-100 shadow-sm"
+                  loading="lazy"
+                />
+              </div>
 
-                <div>
-                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-4">Built By A Physical Therapist</p>
-                  <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-6">
+                <div className="max-w-[88%]">
+                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Built By A Physical Therapist</p>
+                  <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-snug mb-5">
                     Built Around How Recovery Actually Works
                   </h2>
                   <div className="space-y-4 text-slate-600 text-lg leading-relaxed">
                     <p>
                       Dr. Jonathan Schutza, PT, DPT created The Foot Capacity System after seeing how many people struggled with the same cycle: temporary relief, conflicting advice, inconsistent routines, and repeated flare-ups.
                     </p>
+                    <p className="text-slate-800 text-xl font-semibold mt-6 mb-6 leading-snug">
+                      Most people were not lacking motivation.
+                    </p>
                     <p>
-                      Most people were not lacking motivation. They were lacking a process they could realistically follow consistently long enough to build meaningful progress.
+                      They were lacking a process they could realistically follow consistently long enough to build meaningful progress.
                     </p>
                     <p>
                       That is why this system focuses less on passive treatment and more on progressive loading, structure, guidance, and helping people regain confidence in how they move over time.
@@ -379,12 +382,18 @@ export default function NewIndex2() {
                       The goal is not perfection. It is helping recovery finally feel clearer, calmer, and more manageable again.
                     </p>
                   </div>
-                  <p className="text-slate-400 text-sm italic mt-6">
+                  <p className="text-slate-500 text-sm font-medium italic mt-6">
                     Designed for guided recovery from home, with more structure and less guesswork.
                   </p>
-                  <div className="flex gap-4 mt-6">
-                    <a href="https://www.instagram.com/dr.schutza.pt/" target="_blank" rel="noopener noreferrer" className="text-blue-600 text-sm font-medium hover:underline">Instagram</a>
-                    <a href="https://www.facebook.com/share/18vGC5rzP8/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-blue-600 text-sm font-medium hover:underline">Facebook</a>
+                  <div className="flex gap-3 mt-6">
+                    <a href="https://www.instagram.com/dr.schutza.pt/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-100 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                      Instagram
+                    </a>
+                    <a href="https://www.facebook.com/share/18vGC5rzP8/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-100 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                      Facebook
+                    </a>
                   </div>
                 </div>
               </div>

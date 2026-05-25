@@ -22,29 +22,32 @@ export default function NewWalkthrough2() {
     <div className="min-h-screen bg-white font-inter">
       <main>
         {/* SECTION 1 — HERO */}
-        <section className="bg-white pt-16 pb-16 md:pt-24 md:pb-20">
+        <section className="bg-white pt-20 pb-12 md:pt-28 md:pb-16">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
             >
-              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">The Foot Capacity System</p>
+              <div className="flex items-center gap-3.5 mb-8">
+                <img src={logo} alt="FCS" className="h-[34px] md:h-[42px] w-auto shrink-0" />
+                <span className="text-slate-900 font-bold text-base md:text-lg leading-tight tracking-tight whitespace-nowrap">The Foot Capacity System</span>
+              </div>
 
-              <h1 className="font-display text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-6">
+              <h1 className="font-display text-3xl md:text-[2.75rem] font-bold text-slate-900 leading-snug mb-5">
                 Stop Guessing Through Plantar Fasciitis Recovery.
               </h1>
 
-              <p className="text-slate-600 text-xl leading-relaxed mb-4">
+              <p className="text-slate-600 text-lg leading-relaxed mb-3">
                 The Foot Capacity System helps people move through recovery more calmly — through guided support, progress tracking, and a clearer day-to-day process.
               </p>
 
-              <p className="text-slate-400 text-base italic leading-relaxed mb-10">
+              <p className="text-slate-400 text-sm italic leading-relaxed mb-8">
                 The system was built to help people spend less time feeling stuck and more time steadily moving forward.
               </p>
 
               {/* Symptoms list */}
-              <div className="flex flex-col gap-1.5 mb-10">
+              <div className="flex flex-col gap-1.5 mb-8">
                 <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Sharp pain with your first steps in the morning</span>
                 <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Heel pain that improves as you move but returns later</span>
                 <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Flare-ups after walking more than usual</span>
@@ -77,7 +80,7 @@ export default function NewWalkthrough2() {
         </section>
 
         {/* SECTION 2 — WHAT CHANGES */}
-        <section className="py-16 md:py-20 bg-white border-t border-slate-100">
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -85,9 +88,9 @@ export default function NewWalkthrough2() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">What Starts Changing</p>
+              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">What Starts Changing</p>
 
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-8">
+              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
                 What starts changing with a clearer recovery process.
               </h2>
 
@@ -114,7 +117,7 @@ export default function NewWalkthrough2() {
         </section>
 
         {/* SECTION 3 — PRODUCT SUMMARY */}
-        <section className="py-16 md:py-20 bg-white border-t border-slate-100">
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-2xl mx-auto px-6">
             <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden">
 
@@ -301,7 +304,7 @@ export default function NewWalkthrough2() {
         </section>
 
         {/* SECTION 4 — HOW THE SYSTEM WORKS */}
-        <section className="py-16 md:py-20 bg-white border-t border-slate-100">
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -309,9 +312,9 @@ export default function NewWalkthrough2() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">How The System Supports You</p>
+              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">How The System Supports You</p>
 
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-8">
+              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
                 A closer look at how the system helps guide recovery through both progress and setbacks.
               </h2>
 
@@ -392,7 +395,7 @@ export default function NewWalkthrough2() {
         </section>
 
         {/* SECTION 5 — OBJECTION CARDS */}
-        <section className="py-16 md:py-20 bg-white border-t border-slate-100">
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -400,9 +403,9 @@ export default function NewWalkthrough2() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Common Concerns</p>
+              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">Common Concerns</p>
 
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
+              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-3">
                 Still have questions?
               </h2>
 
@@ -460,7 +463,7 @@ export default function NewWalkthrough2() {
         </section>
 
         {/* SECTION 6 — WHO THIS IS FOR / NOT FOR */}
-        <section className="py-16 md:py-20 bg-white border-t border-slate-100">
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -468,7 +471,7 @@ export default function NewWalkthrough2() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
+              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-3">
                 Is this system right for you?
               </h2>
               <p className="text-slate-500 text-lg leading-relaxed mb-12">
@@ -538,12 +541,12 @@ export default function NewWalkthrough2() {
         </section>
 
         {/* SECTION 8 — FAQ */}
-        <section className="py-16 md:py-20 bg-white border-t border-slate-100">
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
 
-            <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Common Questions</p>
+            <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">Common Questions</p>
 
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
+            <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-3">
               Questions people ask before getting started.
             </h2>
 
