@@ -50,13 +50,6 @@ const trustItems = [
   { icon: CheckCircle, label: "Lifetime Access" },
 ];
 
-const microQuotes = [
-  "Walking no longer felt impossible.",
-  "The structure finally made recovery make sense.",
-  "I stopped panicking during flare-ups.",
-  "Recovery finally felt manageable.",
-];
-
 export default function NewIndex() {
   const [api, setApi] = useState<CarouselApi>();
   const [isHovered, setIsHovered] = useState(false);
@@ -88,7 +81,7 @@ export default function NewIndex() {
       <Header />
       <main>
 
-        {/* ── Section 1: Hero ─────────────────────────────────────────── */}
+        {/* ── 1. Hero ─────────────────────────────────────────────────── */}
         <section className="relative pt-16 pb-8 md:pt-24 md:pb-12 overflow-hidden">
           {/* Background */}
           <div className="absolute inset-0">
@@ -129,7 +122,7 @@ export default function NewIndex() {
                   </h1>
 
                   <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-6">
-                    A guided recovery system designed to help people rebuild foot and ankle strength from home with more structure, more clarity, and less second-guessing.
+                    Rebuild foot and ankle strength from home with a guided recovery system designed to reduce confusion, improve consistency, and help you move forward with more confidence.
                   </p>
 
                   {/* Primary CTA — above fold on mobile */}
@@ -186,49 +179,7 @@ export default function NewIndex() {
           </div>
         </section>
 
-        {/* ── Section 2: Video VSL ─────────────────────────────────────── */}
-        <section className="bg-white py-8 md:py-10">
-          <div className="max-w-3xl mx-auto px-6">
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900 text-center mb-4">A Structured Approach To Foot & Ankle Recovery</h2>
-
-            <div
-              style={{ position: "relative", paddingTop: "56.25%" }}
-              className="rounded-2xl overflow-hidden shadow-2xl"
-            >
-              <iframe
-                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8e2a6e0621ae45bb67e928d218736905/iframe?preload=true&poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F465ad095-c137-48c8-47e0-fb9792922200%2Fpublic"
-                loading="lazy"
-                style={{
-                  border: "none",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  height: "100%",
-                  width: "100%",
-                }}
-                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-                allowFullScreen={true}
-              />
-            </div>
-
-            <p className="text-center text-slate-500 text-sm mt-4">
-              No clinic visits required. Designed to be followed from home at your own pace.
-            </p>
-
-            <div className="flex justify-center mt-6">
-              <a
-                href="https://fixyourmovement.com/walkthrough"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cta-button animate-pulse-glow text-base md:text-lg"
-              >
-                See How The Full System Works
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Section 3: Designed To Feel Clear, Organized, And Easy To Follow ── */}
+        {/* ── 2. Designed To Feel Clear, Organized, And Easy To Follow ── */}
         <section className="py-8 md:py-12 bg-slate-50">
           <div className="container mx-auto px-6 max-w-5xl">
             <motion.div
@@ -248,9 +199,6 @@ export default function NewIndex() {
                     Designed To Feel{" "}
                     <span className="text-blue-600">Clear, Organized, And Easy To Follow</span>
                   </h2>
-                  <p className="text-slate-600 text-base leading-relaxed mb-6">
-                    Recovery becomes much less stressful when people stop trying to figure everything out on their own.
-                  </p>
                   <div className="w-full h-px bg-slate-200 mb-6" />
                   <div className="space-y-5">
                     <div className="flex items-start gap-4">
@@ -259,9 +207,7 @@ export default function NewIndex() {
                       </div>
                       <div>
                         <p className="font-semibold text-slate-900 text-sm mb-1">Uncertainty makes recovery harder.</p>
-                        <p className="text-slate-500 text-xs leading-relaxed">
-                          Not knowing if you're doing too much, too little, or the right thing can make the process feel frustrating and inconsistent.
-                        </p>
+                        <p className="text-slate-500 text-xs leading-relaxed">Not knowing what to do next — or whether you're doing too much — makes the process feel inconsistent and exhausting.</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
@@ -269,10 +215,8 @@ export default function NewIndex() {
                         <Smartphone size={18} className="text-green-600" />
                       </div>
                       <div>
-                        <p className="font-semibold text-slate-900 text-sm mb-1">We built a better way.</p>
-                        <p className="text-slate-500 text-xs leading-relaxed">
-                          The Foot Capacity System simplifies recovery with guided sessions, progress tracking, structured phases, and clearer direction during setbacks.
-                        </p>
+                        <p className="font-semibold text-slate-900 text-sm mb-1">Structure changes that.</p>
+                        <p className="text-slate-500 text-xs leading-relaxed">Guided sessions, progress tracking, and clearer direction during setbacks make recovery feel far more manageable.</p>
                       </div>
                     </div>
                   </div>
@@ -332,7 +276,7 @@ export default function NewIndex() {
           </div>
         </section>
 
-        {/* ── Section 4: Lifestyle Restoration ────────────────────────── */}
+        {/* ── 3. Lifestyle Restoration ─────────────────────────────────── */}
         <section className="bg-white py-8 md:py-10">
           <div className="max-w-5xl mx-auto px-6">
             <motion.div
@@ -408,19 +352,19 @@ export default function NewIndex() {
 
                 {/* Bottom: 3 checkmark callouts */}
                 <div className="border-t border-slate-200 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 bg-slate-50">
-                  <div className="flex items-center gap-3 p-3">
+                  <div className="flex items-center gap-3 py-1.5 px-3">
                     <div className="bg-blue-50 rounded-full p-2 shrink-0">
                       <CheckCircle size={16} className="text-blue-600" />
                     </div>
                     <p className="font-semibold text-slate-900 text-sm">Less fear of setbacks.</p>
                   </div>
-                  <div className="flex items-center gap-3 p-3">
+                  <div className="flex items-center gap-3 py-1.5 px-3">
                     <div className="bg-green-50 rounded-full p-2 shrink-0">
                       <CheckCircle size={16} className="text-green-600" />
                     </div>
                     <p className="font-semibold text-slate-900 text-sm">More consistency in daily life.</p>
                   </div>
-                  <div className="flex items-center gap-3 p-3">
+                  <div className="flex items-center gap-3 py-1.5 px-3">
                     <div className="bg-purple-50 rounded-full p-2 shrink-0">
                       <CheckCircle size={16} className="text-purple-600" />
                     </div>
@@ -433,6 +377,49 @@ export default function NewIndex() {
           </div>
         </section>
 
+        {/* ── 4. Video VSL ─────────────────────────────────────────────── */}
+        <section className="bg-white py-8 md:py-10">
+          <div className="max-w-3xl mx-auto px-6">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900 text-center mb-4">A Structured Approach To Foot & Ankle Recovery</h2>
+
+            <div
+              style={{ position: "relative", paddingTop: "56.25%" }}
+              className="rounded-2xl overflow-hidden shadow-2xl"
+            >
+              <iframe
+                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8e2a6e0621ae45bb67e928d218736905/iframe?preload=true&poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F465ad095-c137-48c8-47e0-fb9792922200%2Fpublic"
+                loading="lazy"
+                style={{
+                  border: "none",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  height: "100%",
+                  width: "100%",
+                }}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen={true}
+              />
+            </div>
+
+            <p className="text-center text-slate-500 text-sm mt-4">
+              No clinic visits required. Designed to be followed from home at your own pace.
+            </p>
+
+            <div className="flex justify-center mt-6">
+              <a
+                href="https://fixyourmovement.com/walkthrough"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cta-button animate-pulse-glow text-base md:text-lg"
+              >
+                See How The Full System Works
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 5. Unified Testimonial Section ───────────────────────────── */}
         <section className="bg-slate-50 py-10 md:py-14">
           <div className="container mx-auto px-6">
 
@@ -443,29 +430,18 @@ export default function NewIndex() {
               <p className="text-slate-500 text-base max-w-xl mx-auto">Here is what people shared after following The Foot Capacity System approach.</p>
             </div>
 
-            {/* Micro quote cards — desktop 2x2 grid, mobile carousel */}
-            {/* Desktop */}
-            <div className="hidden md:grid grid-cols-2 gap-4 max-w-4xl mx-auto mb-10">
-              {microQuotes.map((quote, i) => (
-                <div key={i} className="bg-white rounded-2xl border border-slate-200 border-l-4 border-l-blue-600 p-6">
-                  <p className="text-xl font-medium text-slate-900 leading-snug">{quote}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Mobile carousel */}
-            <div className="md:hidden mb-8">
-              <Carousel opts={{ loop: true, align: "start" }} className="w-full">
-                <CarouselContent>
-                  {microQuotes.map((quote, i) => (
-                    <CarouselItem key={i} className="basis-full">
-                      <div className="bg-white rounded-2xl border border-slate-200 border-l-4 border-l-blue-600 p-6">
-                        <p className="text-xl font-medium text-slate-900 leading-snug">{quote}</p>
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-              </Carousel>
+            {/* Editorial transition block */}
+            <div className="max-w-3xl mx-auto text-center mb-12">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                Recovery finally stopped feeling overwhelming.
+              </h2>
+              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-8 flex-wrap">
+                <span className="text-slate-500 text-base italic">Walking no longer felt impossible.</span>
+                <span className="hidden sm:inline text-slate-300">·</span>
+                <span className="text-slate-500 text-base italic">Flare-ups stopped causing panic.</span>
+                <span className="hidden sm:inline text-slate-300">·</span>
+                <span className="text-slate-500 text-base italic">Recovery finally felt manageable.</span>
+              </div>
             </div>
 
             {/* patient-experiences.png */}
@@ -511,7 +487,7 @@ export default function NewIndex() {
           </div>
         </section>
 
-        {/* ── Section 7: Doctor Credibility ───────────────────────────── */}
+        {/* ── 6. Doctor Credibility ────────────────────────────────────── */}
         <section className="py-8 md:py-10">
           <div className="container mx-auto px-6 max-w-5xl">
             <motion.div
@@ -581,7 +557,7 @@ export default function NewIndex() {
           </div>
         </section>
 
-        {/* ── Section 8: Guarantee ─────────────────────────────────────── */}
+        {/* ── 7. Guarantee ─────────────────────────────────────────────── */}
         <section className="py-8 md:py-10">
           <div className="container mx-auto px-6 max-w-5xl">
             <motion.div
@@ -591,18 +567,21 @@ export default function NewIndex() {
               transition={{ duration: 0.7 }}
             >
               <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-                <div className="p-8 md:p-14 max-w-2xl mx-auto text-center">
+                <div className="p-6 md:p-10 max-w-2xl mx-auto text-center">
 
                   {/* Eyebrow */}
-                  <div className="flex items-center justify-center gap-2 mb-6">
+                  <div className="flex items-center justify-center gap-2 mb-4">
                     <Shield size={18} className="text-blue-600" />
                     <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest">Our 60-Day Guarantee</p>
                   </div>
 
-                  {/* Headline */}
-                  <h2 className="font-display text-2xl md:text-4xl font-bold text-slate-900 leading-tight mb-6">
-                    The <span className="text-blue-600">"Walk Pain-Free Or It's Free"</span> 60-Day Guarantee
+                  {/* Primary headline */}
+                  <h2 className="font-display text-2xl md:text-4xl font-bold text-slate-900 leading-tight mb-3">
+                    60-Day Satisfaction Guarantee
                   </h2>
+
+                  {/* Secondary support line */}
+                  <p className="text-blue-600 font-semibold text-base mb-4">"Walk Pain-Free Or It's Free"</p>
 
                   <div className="w-10 h-0.5 bg-blue-600 mx-auto mb-6" />
 
@@ -633,34 +612,7 @@ export default function NewIndex() {
           </div>
         </section>
 
-        {/* ── Section 9: Transition CTA ────────────────────────────────── */}
-        <section className="bg-white py-16 md:py-20">
-          <div className="max-w-2xl mx-auto px-6 text-center">
-            <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-4">
-              Ready To See How The Full System Works?
-            </p>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              Ready To See How The Full System Works?
-            </h2>
-            <div className="w-10 h-0.5 bg-blue-600 mx-auto mb-6" />
-            <p className="text-slate-600 text-base leading-relaxed mb-8 max-w-xl mx-auto">
-              Explore how The Foot Capacity System helps people approach recovery with more structure, more clarity, and less guesswork from home.
-            </p>
-            <a
-              href="https://fixyourmovement.com/walkthrough"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta-button animate-pulse-glow"
-            >
-              Watch The Full Guided Walkthrough
-            </a>
-            <p className="text-slate-400 text-sm mt-4">
-              No clinic visits required. One-time investment. Lifetime access.
-            </p>
-          </div>
-        </section>
-
-        {/* ── Section 10: FAQ ──────────────────────────────────────────── */}
+        {/* ── 8. FAQ ───────────────────────────────────────────────────── */}
         <section className="bg-slate-50 py-8 md:py-10">
           <div className="max-w-3xl mx-auto px-6">
             <h2 className="font-display text-2xl md:text-4xl text-slate-900 mb-4 text-center">
@@ -669,7 +621,7 @@ export default function NewIndex() {
             <p className="text-base text-slate-500 text-center mb-10">
               A few common questions people ask before exploring The Foot Capacity System further.
             </p>
-            <Accordion type="single" collapsible className="space-y-4">
+            <Accordion type="single" collapsible defaultValue="faq-1" className="space-y-4">
               <AccordionItem
                 value="faq-1"
                 className="bg-white rounded-2xl border border-slate-200 px-6 md:px-8"
@@ -766,6 +718,30 @@ export default function NewIndex() {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+          </div>
+        </section>
+
+        {/* ── 9. Transition CTA ────────────────────────────────────────── */}
+        <section className="bg-white py-16 md:py-20">
+          <div className="max-w-2xl mx-auto px-6 text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              See How The Foot Capacity System Works
+            </h2>
+            <div className="w-10 h-0.5 bg-blue-600 mx-auto mb-6" />
+            <p className="text-slate-600 text-base leading-relaxed mb-8 max-w-xl mx-auto">
+              Explore how The Foot Capacity System helps people approach recovery with more structure, more clarity, and less guesswork from home.
+            </p>
+            <a
+              href="https://fixyourmovement.com/walkthrough"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-button animate-pulse-glow"
+            >
+              Watch The Full Guided Walkthrough
+            </a>
+            <p className="text-slate-400 text-sm mt-4">
+              No clinic visits required. One-time investment. Lifetime access.
+            </p>
           </div>
         </section>
 
