@@ -16,6 +16,8 @@ import EULA from "./pages/EULA.tsx";
 import Walkthrough from "./pages/Walkthrough";
 import NewIndex from "./pages/NewIndex.tsx";
 import NewWalkthrough from "./pages/NewWalkthrough.tsx";
+import NewIndex2 from "./pages/NewIndex2.tsx";
+import NewWalkthrough2 from "./pages/NewWalkthrough2.tsx";
 import CookieConsent from "./components/CookieConsent.tsx";
 
 const queryClient = new QueryClient();
@@ -50,9 +52,11 @@ const App = () => (
             <Route path="/eula" element={<EULA />} />
              <Route path="/walkthrough" element={<Walkthrough />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="/newindex" element={<NewIndex />} />
-              <Route path="/newwalkthrough" element={<NewWalkthrough />} />
-             <Route path="*" element={<NotFound />} />
+               <Route path="/newindex" element={<NewIndex />} />
+               <Route path="/newwalkthrough" element={<NewWalkthrough />} />
+               <Route path="/newindex2" element={<NewIndex2 />} />
+               <Route path="/newwalkthrough2" element={<NewWalkthrough2 />} />
+              <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
     </TooltipProvider>
