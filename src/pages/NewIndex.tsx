@@ -44,7 +44,7 @@ export default function NewIndex() {
       <main>
 
         {/* ── 1. Hero ─────────────────────────────────────────────────── */}
-        <section className="relative pt-16 pb-8 md:pt-24 md:pb-12 overflow-hidden">
+        <section className="relative pt-8 pb-8 md:pt-16 md:pb-12 overflow-hidden">
           {/* Background */}
           <div className="absolute inset-0">
             <img
@@ -437,7 +437,7 @@ export default function NewIndex() {
         {/* ── 4. Video VSL ─────────────────────────────────────────────── */}
         <section className="bg-white py-8 md:py-10">
           <div className="max-w-3xl mx-auto px-6">
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900 text-center mb-4">A Structured Approach To Foot & Ankle Recovery</h2>
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900 text-center mb-4">Why Plantar Fasciitis Keeps Coming Back</h2>
 
             <div
               style={{ position: "relative", paddingTop: "56.25%" }}
@@ -655,16 +655,16 @@ export default function NewIndex() {
                 {/* Right: text */}
                 <div className="lg:w-3/5 p-8 md:p-12 flex flex-col justify-center">
                   <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
-                    Built by a Doctor<br />of Physical Therapy
+                    A More Structured Approach To Foot & Ankle Recovery
                   </h2>
                    <div className="w-10 h-0.5 bg-blue-600 mb-6" />
                    <div className="space-y-4 text-slate-600 text-base leading-relaxed">
-                     <p><span className="text-blue-600 font-semibold">Dr. Jonathan Schutza, PT, DPT</span> is a licensed physical therapist specializing in biomechanics-driven rehabilitation for chronic foot and ankle pain.</p>
-                     <p>His approach is built around progressive loading and structured movement — not passive treatments or temporary fixes.</p>
+                     <p><span className="text-blue-600 font-semibold">Dr. Jonathan Schutza, PT, DPT</span> is a licensed physical therapist who built this system around one core belief: lasting recovery requires structure, not just symptom management.</p>
+                     <p>His approach focuses on progressive movement and guided consistency — helping people rebuild strength and confidence from home, at their own pace.</p>
                      <div className="space-y-2 mt-2">
-                       <div className="flex items-center gap-2"><span className="text-blue-600 font-bold">—</span><p className="text-slate-700 text-sm">Biomechanics-driven rehabilitation</p></div>
-                       <div className="flex items-center gap-2"><span className="text-blue-600 font-bold">—</span><p className="text-slate-700 text-sm">Progressive loading principles</p></div>
-                       <div className="flex items-center gap-2"><span className="text-blue-600 font-bold">—</span><p className="text-slate-700 text-sm">Built for guided recovery at home</p></div>
+                       <div className="flex items-center gap-2"><span className="text-blue-600 font-bold">—</span><p className="text-slate-700 text-sm">Progressive, structured recovery process</p></div>
+                       <div className="flex items-center gap-2"><span className="text-blue-600 font-bold">—</span><p className="text-slate-700 text-sm">Guided consistency over passive treatment</p></div>
+                       <div className="flex items-center gap-2"><span className="text-blue-600 font-bold">—</span><p className="text-slate-700 text-sm">Built for home recovery, not clinic visits</p></div>
                      </div>
                    </div>
                 </div>
@@ -694,11 +694,10 @@ export default function NewIndex() {
 
                   {/* Primary headline */}
                   <h2 className="font-display text-2xl md:text-4xl font-bold text-slate-900 leading-tight mb-3">
-                    60-Day Satisfaction Guarantee
+                    "Walk Pain-Free Or It's Free"
                   </h2>
 
-                  {/* Secondary support line */}
-                  <p className="text-blue-600 font-semibold text-base mb-4">"Walk Pain-Free Or It's Free"</p>
+                  <p className="text-slate-600 text-base mb-4">Our goal is meaningful progress, not pressure.</p>
 
                   <div className="w-10 h-0.5 bg-blue-600 mx-auto mb-6" />
 
@@ -711,15 +710,15 @@ export default function NewIndex() {
                   <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 text-sm text-slate-700">
                     <span className="flex items-center gap-2">
                       <CheckCircle size={16} className="text-blue-600 shrink-0" />
-                      60 full days to test the system
+                      60 full days to build consistency
                     </span>
                     <span className="flex items-center gap-2">
                       <CheckCircle size={16} className="text-blue-600 shrink-0" />
-                      Progress tracking inside the app
+                      Track improvement week by week
                     </span>
                     <span className="flex items-center gap-2">
                       <CheckCircle size={16} className="text-blue-600 shrink-0" />
-                      Full refund if the program is not right for you
+                      Try the system risk-free
                     </span>
                   </div>
 
@@ -846,7 +845,7 @@ export default function NewIndex() {
             </h2>
             <div className="w-10 h-0.5 bg-blue-600 mx-auto mb-6" />
             <p className="text-slate-600 text-base leading-relaxed mb-8 max-w-xl mx-auto">
-              Explore how The Foot Capacity System helps people approach recovery with more structure, more clarity, and less guesswork from home.
+              Understand how guided recovery, structured progression, and daily consistency work together inside The Foot Capacity System.
             </p>
             <a
               href="https://fixyourmovement.com/walkthrough"
@@ -868,12 +867,14 @@ export default function NewIndex() {
           <p className="text-slate-400 text-xs text-center md:text-left">
             © {new Date().getFullYear()} The Foot Capacity System. All rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-xs text-slate-400">
-            <a href="/privacy-policy" className="hover:text-slate-600 transition-colors">Privacy Policy</a>
-            <a href="/terms-of-service" className="hover:text-slate-600 transition-colors">Terms of Service</a>
-            <a href="/contact" className="hover:text-slate-600 transition-colors">Contact</a>
-            <a href="https://members.fixyourmovement.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Patient App</a>
-          </div>
+    <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 justify-center md:justify-end">
+          <a href="/privacy-policy" className="hover:text-slate-600 transition-colors">Privacy Policy</a>
+          <a href="/terms-of-service" className="hover:text-slate-600 transition-colors">Terms of Service</a>
+          <a href="/refund-policy" className="hover:text-slate-600 transition-colors">Refund Policy</a>
+          <a href="/eula" className="hover:text-slate-600 transition-colors">EULA</a>
+          <a href="/contact" className="hover:text-slate-600 transition-colors">Contact</a>
+          <a href="https://members.fixyourmovement.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Patient App</a>
+        </div>
         </div>
       </footer>
 
