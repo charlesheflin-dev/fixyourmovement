@@ -444,7 +444,7 @@ export default function NewIndex() {
               className="rounded-2xl overflow-hidden shadow-2xl"
             >
               <iframe
-                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8e2a6e0621ae45bb67e928d218736905/iframe?preload=true&poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F465ad095-c137-48c8-47e0-fb9792922200%2Fpublic"
+                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8e2a6e0621ae45bb67e928d218736905/iframe?preload=true&poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F7b4506b7-4b95-4594-423b-52eee844fd00%2Fpublic"
                 loading="lazy"
                 style={{
                   border: "none",
