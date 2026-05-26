@@ -299,6 +299,22 @@ export default function Walkthrough() {
                 <span className="flex items-center gap-1"><Infinity size={12} className="text-blue-500" /> Lifetime Access</span>
               </div>
 
+              {/* CTA below product card */}
+              <div className="px-8 py-8 text-center border-t border-slate-100">
+                <a
+                  href={CHECKOUT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors w-full text-center"
+                >
+                  Get Started With The Foot Capacity System →
+                </a>
+                <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500">
+                  <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> 60-Day guarantee</span>
+                  <span className="flex items-center gap-1"><Lock size={13} className="text-blue-500 inline" /> Secure checkout</span>
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
