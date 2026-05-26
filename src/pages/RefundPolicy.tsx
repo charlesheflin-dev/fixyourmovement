@@ -10,44 +10,29 @@ const RefundPolicy = () => {
                     <h1 className="font-display text-3xl md:text-4xl font-bold text-primary mb-2">
                         Refund Policy and Guarantee
                     </h1>
-                    <p className="text-muted-foreground font-body mb-10">Last updated: March 12, 2026</p>
+                    <p className="text-slate-700 text-sm font-semibold uppercase tracking-widest mb-2">Foot Capacity System</p>
+                    <p className="text-muted-foreground font-body mb-10">Last Updated: March 12, 2026</p>
 
                     <div className="space-y-8 font-body text-lg text-muted-foreground leading-relaxed">
-                        <p>
-                            We stand behind the Foot Capacity System with a 60 day satisfaction guarantee. If you are not satisfied with your results, you may request a full refund within 60 days of your original purchase, subject to the eligibility requirements below.
-                        </p>
-
                         <section>
-                            <h2 className="font-display text-xl md:text-2xl text-primary font-semibold mb-4">
-                                Eligibility Requirements
+                            <h2 className="font-display text-xl md:text-2xl text-primary font-semibold mb-1">
+                                Walk Pain Free, Or It's Free
                             </h2>
-                            <p className="mb-4">
-                                To qualify for a refund, you must demonstrate a reasonable and good faith effort to follow the program. This includes meeting all of the following minimum criteria:
-                            </p>
-                            <ul className="list-disc pl-8 space-y-2 mb-4">
-                                <li>At least 14 separate days of platform usage</li>
-                                <li>Completion of at least 2 core phases or program segments</li>
-                                <li>Submission of at least 20 total logged entries including pain scores or activity tracking</li>
-                                <li>Use of the system over a minimum span of 14 days</li>
-                            </ul>
+                            <p className="text-slate-700 text-sm font-semibold uppercase tracking-widest mb-4">30-Day Guarantee</p>
                             <p>
-                                These requirements are designed to ensure the system was meaningfully used.
+                                Try the Foot Capacity System for 30 days. If you do not feel the program is right for you, email us within 30 days of your original purchase and we'll refund your investment. No complicated forms. No hoops to jump through. We built this system because we genuinely believe people need a more structured, less overwhelming approach to recovery. We want you to feel confident giving it a real try.
                             </p>
                         </section>
 
                         <section>
                             <h2 className="font-display text-xl md:text-2xl text-primary font-semibold mb-4">
-                                How to Request a Refund
+                                Refund Request Process
                             </h2>
                             <p className="mb-4">
-                                To request a refund, contact: contact@fixyourmovement.com. You may be required to provide:
+                                To request a refund, contact: <span className="font-semibold">contact@fixyourmovement.com</span>
                             </p>
-                            <ul className="list-disc pl-8 space-y-2 mb-4">
-                                <li>A brief explanation of your experience</li>
-                                <li>Confirmation of usage based on your account activity</li>
-                            </ul>
                             <p>
-                                We may verify eligibility using internal usage data.
+                                Please include: the email address used at purchase, and a brief explanation of your experience.
                             </p>
                         </section>
 
@@ -55,38 +40,22 @@ const RefundPolicy = () => {
                             <h2 className="font-display text-xl md:text-2xl text-primary font-semibold mb-4">
                                 Important Conditions
                             </h2>
-                            <p className="mb-4">
-                                Requests must be submitted within 60 days of purchase
-                            </p>
-                            <p className="mb-4">
-                                Refunds are limited to one per customer
-                            </p>
-                            <p className="mb-4">
-                                Refunds will not be granted in cases of:
-                            </p>
                             <ul className="list-disc pl-8 space-y-2 mb-4">
-                                <li>Failure to meet minimum usage requirements</li>
-                                <li>Minimal, inconsistent, or non-existent participation</li>
-                                <li>Abuse of the guarantee</li>
-                                <li>Fraudulent or repetitive requests</li>
+                                <li>Refund requests must be submitted within 30 days of the original purchase date</li>
+                                <li>Refunds are limited to one per customer</li>
+                                <li>Access to the program may be revoked upon refund</li>
+                                <li>We reserve the right to deny refunds in cases of fraudulent activity, abuse of the refund policy, or repeated refund requests associated with multiple purchases or accounts</li>
+                                <li>This guarantee is intended to support genuine users who give the system a real attempt.</li>
                             </ul>
-                            <p>
-                                Access to the program may be revoked upon refund. This guarantee is intended for users who actively engage with the program.
-                            </p>
                         </section>
 
                         <section>
                             <h2 className="font-display text-xl md:text-2xl text-primary font-semibold mb-4">
                                 Termination
                             </h2>
-                            <p className="mb-4">
-                                We may suspend or terminate access at any time if:
+                            <p>
+                                We may suspend or terminate access to the program at any time if you violate our Terms of Service, misuse the platform or content, or your activity is harmful to the platform or other users.
                             </p>
-                            <ul className="list-disc pl-8 space-y-2 mb-4">
-                                <li>You violate these Terms</li>
-                                <li>You misuse the Services</li>
-                                <li>Your behavior is harmful to the platform or other users</li>
-                            </ul>
                         </section>
 
                         <section>
@@ -94,21 +63,24 @@ const RefundPolicy = () => {
                                 Governing Law
                             </h2>
                             <p>
-                                These Terms shall be governed by the laws of the United States and the State of Louisiana, without regard to conflict of law principles.
+                                This Refund Policy shall be governed by the laws of the State of Louisiana, without regard to conflict of law principles.
                             </p>
                         </section>
 
                         <section>
                             <h2 className="font-display text-xl md:text-2xl text-primary font-semibold mb-4">
-                                Changes to Terms
+                                Changes to This Policy
                             </h2>
                             <p>
-                                We may update these Terms at any time. Continued use constitutes acceptance.
+                                We may update this Refund Policy at any time. Continued use of the platform constitutes acceptance of any changes.
                             </p>
                         </section>
 
                         <section className="section-card p-8 md:p-10 border-t-4 border-slate-200">
-                            <p>For questions, contact: contact@fixyourmovement.com</p>
+                            <h2 className="font-display text-xl md:text-2xl text-primary font-semibold mb-4">
+                                Contact
+                            </h2>
+                            <p>For questions regarding this policy, contact: <span className="font-semibold">contact@fixyourmovement.com</span></p>
                         </section>
                     </div>
                 </div>

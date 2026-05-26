@@ -80,7 +80,7 @@ export default function Index() {
                </a>
 
                   <div className="flex flex-wrap gap-4 mt-6 text-sm text-slate-500">
-                    <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-600" />60-Day Guarantee</span>
+                    <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-600" />30-Day Guarantee</span>
                     <span className="flex items-center gap-1.5"><CheckCircle size={14} className="text-blue-600" />Guided Recovery From Home</span>
                     <span className="flex items-center gap-1.5"><CheckCircle size={14} className="text-blue-600" />Track Progress Daily</span>
                     <span className="flex items-center gap-1.5"><CheckCircle size={14} className="text-blue-600" />Lifetime Access</span>
@@ -412,11 +412,11 @@ export default function Index() {
             >
               <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Risk-Free</p>
 
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-3">
-                60-Day Satisfaction Guarantee
-              </h2>
+               <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-3">
+                 30-Day Satisfaction Guarantee
+               </h2>
 
-              <p className="text-blue-600 font-semibold text-lg mb-6">Walk Pain-Free Or It's Free</p>
+               <p className="text-blue-600 font-semibold text-lg mb-6">Walk Pain-Free Or It's Free — 30-Day Guarantee</p>
 
               <div className="w-10 h-0.5 bg-blue-600 mb-8" />
 
@@ -428,7 +428,7 @@ export default function Index() {
                   That is why we want people to explore this system without pressure. Follow the program, track your progress, and give yourself time to build consistency.
                 </p>
                 <p>
-                  If you do not feel the system is helping you make meaningful progress within 60 days, we'll refund your investment.
+                   If you do not feel the system is helping you make meaningful progress within 30 days of purchase, email us at contact@fixyourmovement.com and we'll refund your investment. No complicated forms, no hoops to jump through.
                 </p>
                 <p className="text-slate-900 font-semibold">
                   Our goal is not perfection overnight. It is helping recovery finally feel more clear, manageable, and sustainable.
@@ -436,7 +436,7 @@ export default function Index() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />60 full days to explore the system</span>
+                 <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />30 full days to explore the system</span>
                 <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />Track progress directly inside the app</span>
                 <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />Built for consistency from home</span>
                 <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />Full refund if the program is not right for you</span>
@@ -580,7 +580,7 @@ export default function Index() {
 
               <div className="flex flex-wrap gap-6 mt-8 text-sm text-slate-500">
                 <span className="flex items-center gap-2"><CheckCircle size={14} className="text-blue-600 shrink-0" />Guided from home</span>
-                <span className="flex items-center gap-2"><CheckCircle size={14} className="text-blue-600 shrink-0" />60-day guarantee</span>
+                 <span className="flex items-center gap-2"><CheckCircle size={14} className="text-blue-600 shrink-0" />30-day guarantee</span>
                 <span className="flex items-center gap-2"><CheckCircle size={14} className="text-blue-600 shrink-0" />Track progress daily</span>
                 <span className="flex items-center gap-2"><CheckCircle size={14} className="text-blue-600 shrink-0" />Lifetime access</span>
               </div>

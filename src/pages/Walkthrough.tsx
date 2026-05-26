@@ -21,6 +21,7 @@ export default function Walkthrough() {
   return (
     <div className="min-h-screen bg-white font-inter">
       <main>
+
         {/* SECTION 1 — HERO */}
         <section className="bg-white pt-20 pb-12 md:pt-28 md:pb-16">
           <div className="max-w-3xl mx-auto px-6">
@@ -46,7 +47,6 @@ export default function Walkthrough() {
                 The system was built to help people spend less time feeling stuck and more time steadily moving forward.
               </p>
 
-              {/* Symptoms list */}
               <div className="flex flex-col gap-1.5 mb-8">
                 <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Sharp pain with your first steps in the morning</span>
                 <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Heel pain that improves as you move but returns later</span>
@@ -54,7 +54,6 @@ export default function Walkthrough() {
                 <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Symptoms that improve temporarily but always come back</span>
               </div>
 
-              {/* Video */}
               <div style={{ position: "relative", paddingTop: "56.25%" }} className="rounded-2xl overflow-hidden shadow-xl mb-8">
                 <iframe
                   src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/b37100f8162e1ab91cf86c9e284447da/iframe?preload=true&poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F6ec4d8b4-8156-40b2-b196-836d95530f00%2Fpublic"
@@ -89,11 +88,9 @@ export default function Walkthrough() {
               transition={{ duration: 0.6 }}
             >
               <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">What Starts Changing</p>
-
               <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
                 What starts changing with a clearer recovery process.
               </h2>
-
               <div className="space-y-8 text-slate-600 text-lg leading-relaxed">
                 <div>
                   <p className="font-semibold text-slate-900 text-xl mb-2">Less second-guessing.</p>
@@ -116,210 +113,88 @@ export default function Walkthrough() {
           </div>
         </section>
 
-        {/* SECTION 3 — PRODUCT SUMMARY */}
-        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
-          <div className="max-w-2xl mx-auto px-6">
-            <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden">
+        {/* SECTION 2.5 — COMPARISON */}
+        <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4 text-center">See The Difference</p>
+              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-3 text-center">
+                Traditional Care vs. The Foot Capacity System
+              </h2>
+              <p className="text-slate-500 text-lg leading-relaxed mb-10 text-center">
+                Two very different approaches to recovery.<br />
+                One is built around appointments. The other is built around you.
+              </p>
 
-              {/* Header */}
-              <div className="text-center px-8 pt-10 pb-6">
-                <img src={logo} alt="FCS" className="h-10 mx-auto mb-4" />
-                <h2 className="text-3xl font-bold text-slate-900 mb-2">The Foot Capacity System</h2>
-                <p className="text-blue-600 italic text-sm max-w-md mx-auto">A structured recovery system designed to help you stop guessing and move forward with more clarity and confidence.</p>
-              </div>
-
-              {/* Phone + Charts */}
-              <div className="px-6 pb-6">
-                <div className="flex flex-col sm:flex-row gap-4">
-                  {/* Phone */}
-                  <div className="sm:w-2/5 flex flex-col items-center gap-4">
-                    <img src="/images/new-phone.jpg" alt="App screenshot" className="w-full max-w-[180px] rounded-2xl" />
-                    <img src="/images/new-phone2.jpg" alt="App screenshot 2" className="w-full max-w-[180px] rounded-2xl mt-4" />
+              <div className="relative flex flex-col md:flex-row gap-6 items-stretch">
+                <div className="flex-1 bg-white border border-slate-200 rounded-2xl shadow-sm p-7 flex flex-col">
+                  <div className="mb-5">
+                    <p className="font-bold text-slate-900 text-lg mb-0.5">Traditional Care</p>
+                    <p className="text-slate-400 text-xs font-semibold uppercase tracking-widest">Often Looks Like This</p>
                   </div>
-                  {/* Charts column */}
-                  <div className="sm:w-3/5 flex flex-col gap-4">
-
-                    {/* Phase 1 Reset Chart */}
-                    <div className="bg-white border border-slate-200 rounded-xl p-4">
-                      <p className="font-semibold text-slate-900 text-sm">Phase 1: Reset</p>
-                      <p className="text-slate-500 text-xs mb-3">May 11 – present</p>
-                      <ResponsiveContainer width="100%" height={80}>
-                        <LineChart data={[
-                          { day: "May 11", red: 7, green: 5 },
-                          { day: "May 12", red: 6, green: 5.5 },
-                          { day: "May 13", red: 6.5, green: 6 },
-                          { day: "May 14", red: 5.5, green: 6.5 },
-                          { day: "May 15", red: 6, green: 7 },
-                          { day: "May 16", red: 5, green: 7.5 },
-                          { day: "May 17", red: 5.5, green: 8 },
-                          { day: "May 18", red: 4.5, green: 8.5 },
-                          { day: "Jun 16", red: 5, green: 9 },
-                        ]}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                          <XAxis dataKey="day" tick={{ fontSize: 9 }} interval="preserveStartEnd" />
-                          <YAxis domain={[0, 10]} tick={{ fontSize: 9 }} width={20} />
-                          <Line type="monotone" dataKey="red" stroke="#ef4444" dot={false} strokeWidth={2} />
-                          <Line type="monotone" dataKey="green" stroke="#16A34A" dot={false} strokeWidth={2} />
-                        </LineChart>
-                      </ResponsiveContainer>
-                      <div className="flex justify-around mt-3 text-center">
-                        <div><p className="text-lg font-bold text-slate-900">8</p><p className="text-xs text-slate-500">Starting pain</p></div>
-                        <div><p className="text-lg font-bold text-slate-900">6</p><p className="text-xs text-slate-500">Ending pain</p></div>
-                        <div><p className="text-lg font-bold text-slate-900">10</p><p className="text-xs text-slate-500">Days logged</p></div>
+                  <div className="flex flex-col gap-3 mb-6">
+                    {[
+                      "Multiple in-person appointments each week",
+                      "Driving to and from clinics",
+                      "Waiting rooms and repeated scheduling",
+                      "Hard to maintain progress between visits",
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-3 border-b border-slate-100 pb-3 last:border-0 last:pb-0">
+                        <span className="text-slate-300 font-bold shrink-0 mt-0.5">✕</span>
+                        <p className="text-slate-600 text-base leading-snug">{item}</p>
                       </div>
-                    </div>
+                    ))}
+                  </div>
+                  <div className="mt-auto bg-slate-50 rounded-xl p-4">
+                    <p className="text-slate-500 text-sm leading-relaxed">In-person physical therapy can be effective. The challenge is that it often requires time, coordination, and consistency — things that are not always easy to maintain with a busy, unpredictable life.</p>
+                  </div>
+                </div>
 
-                    {/* FAAM */}
-                    <div className="bg-white border border-slate-200 rounded-xl p-4">
-                      <p className="font-semibold text-slate-900 text-sm">Foot Function Progress (FAAM)</p>
-                      <p className="text-slate-500 text-xs mb-3">Your Foot and Ankle Ability score at each phase — higher is better. 100% = full function.</p>
-                      <div className="flex items-center justify-between bg-slate-50 rounded-lg px-4 py-2">
-                        <span className="text-sm text-slate-700">Baseline (Onboarding)</span>
-                        <span className="text-xl font-bold text-red-500">31%</span>
+                <div className="hidden md:flex items-center justify-center shrink-0">
+                  <span className="text-slate-400 font-bold text-sm tracking-widest">VS.</span>
+                </div>
+                <div className="flex md:hidden items-center justify-center">
+                  <span className="text-slate-400 font-bold text-sm tracking-widest">VS.</span>
+                </div>
+
+                <div className="flex-1 bg-white border border-blue-200 rounded-2xl shadow-sm p-7 flex flex-col">
+                  <div className="mb-5">
+                    <p className="font-bold text-blue-600 text-lg mb-0.5">The Foot Capacity System</p>
+                    <p className="text-blue-400 text-xs font-semibold uppercase tracking-widest">Built For Real-Life Consistency</p>
+                  </div>
+                  <div className="flex flex-col gap-3 mb-6">
+                    {[
+                      "Guided directly from your phone",
+                      "Tracks pain and progress daily",
+                      "Structured 15 to 20 minute sessions",
+                      "Built to fit into your real life",
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-3 border-b border-blue-50 pb-3 last:border-0 last:pb-0">
+                        <span className="text-blue-500 font-bold shrink-0 mt-0.5">✓</span>
+                        <p className="text-slate-700 text-base leading-snug">{item}</p>
                       </div>
-                    </div>
-
-                    {/* Pain Over Time Chart */}
-                    <div className="bg-white border border-slate-200 rounded-xl p-4">
-                      <p className="font-semibold text-slate-900 text-sm">Insights</p>
-                      <p className="font-medium text-slate-700 text-xs mt-1">Pain Over Time</p>
-                      <p className="text-slate-500 text-xs mb-3">Daily pain scores from 0 (no pain) to 10 (worst)</p>
-                      <ResponsiveContainer width="100%" height={100}>
-                        <LineChart data={[
-                          { month: "May 11", pain: 8 },
-                          { month: "May 12", pain: 7 },
-                          { month: "May 13", pain: 7.5 },
-                          { month: "May 14", pain: 6 },
-                          { month: "May 15", pain: 6.5 },
-                          { month: "May 16", pain: 5.5 },
-                          { month: "May 17", pain: 6 },
-                          { month: "Jun 15", pain: 5 },
-                          { month: "Jun 16", pain: 6 },
-                        ]}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                          <XAxis dataKey="month" tick={{ fontSize: 9 }} interval="preserveStartEnd" />
-                          <YAxis domain={[0, 10]} tick={{ fontSize: 9 }} width={20} />
-                          <Line type="monotone" dataKey="pain" stroke="#16A34A" dot={{ r: 3, fill: "#16A34A" }} strokeWidth={2} />
-                        </LineChart>
-                      </ResponsiveContainer>
-                      {/* Analytics */}
-                      <div className="flex justify-around mt-3 text-center flex-wrap gap-2">
-                        <div><p className="text-base font-bold text-slate-900">30</p><p className="text-xs text-slate-500">Rehab Minutes</p></div>
-                        <div><p className="text-base font-bold text-slate-900">10</p><p className="text-xs text-slate-500">Days Logged</p></div>
-                        <div><p className="text-base font-bold text-slate-900">7</p><p className="text-xs text-slate-500">Avg Pain Score</p></div>
-                        <div><p className="text-base font-bold text-green-600">-3</p><p className="text-xs text-slate-500">Pain Change</p></div>
-                        <div><p className="text-base font-bold text-slate-900">4</p><p className="text-xs text-slate-500">Milestones</p></div>
-                      </div>
-                    </div>
-
+                    ))}
+                  </div>
+                  <div className="mt-auto bg-blue-50 rounded-xl p-4">
+                    <p className="text-slate-600 text-sm leading-relaxed">No commuting. No waiting rooms. No building your week around appointments. <span className="text-blue-600 font-semibold">Recovery on your schedule.</span></p>
                   </div>
                 </div>
               </div>
 
-              {/* What's Included */}
-              <div className="px-8 pb-6">
-                <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest text-center mb-6">What's Included</p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
-                      <Smartphone size={18} className="text-blue-600" />
-                    </div>
-                    <p className="font-semibold text-slate-900 text-sm">Full App Access</p>
-                    <p className="text-slate-500 text-xs">Complete access to the app, exercises, and all program features.</p>
-                  </div>
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
-                      <BarChart2 size={18} className="text-blue-600" />
-                    </div>
-                    <p className="font-semibold text-slate-900 text-sm">Progress Tracking</p>
-                    <p className="text-slate-500 text-xs">Track strength, mobility, and consistency with powerful visual insights.</p>
-                  </div>
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
-                      <SlidersHorizontal size={18} className="text-blue-600" />
-                    </div>
-                    <p className="font-semibold text-slate-900 text-sm">Structured Phases</p>
-                    <p className="text-slate-500 text-xs">Step-by-step phases guide you from foundation to fuller function.</p>
-                  </div>
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
-                      <Heart size={18} className="text-blue-600" />
-                    </div>
-                    <p className="font-semibold text-slate-900 text-sm">Flare-Up Support</p>
-                    <p className="text-slate-500 text-xs">Tools and guidance to help you manage setbacks and stay on track.</p>
-                  </div>
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
-                      <Infinity size={18} className="text-blue-600" />
-                    </div>
-                    <p className="font-semibold text-slate-900 text-sm">Lifetime Access</p>
-                    <p className="text-slate-500 text-xs">Use the system for as long as you need, with future updates included.</p>
-                  </div>
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center">
-                      <UserCheck size={18} className="text-blue-600" />
-                    </div>
-                    <p className="font-semibold text-slate-900 text-sm">Guided Recovery</p>
-                    <p className="text-slate-500 text-xs">Clear instructions and expert guidance every step of the way.</p>
-                  </div>
-                </div>
+              <div className="text-center mt-10">
+                <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">One Clear System.</p>
+                <p className="font-display text-2xl font-bold text-slate-900">One clear path forward.</p>
               </div>
-
-              {/* Guarantee */}
-              <div className="mx-6 mb-4 bg-blue-50 rounded-2xl p-5 flex gap-4 items-start">
-                <div className="bg-blue-600 rounded-full p-2 shrink-0">
-                  <ShieldCheck size={20} className="text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-slate-900 text-sm">60-Day Satisfaction Guarantee</p>
-                  <p className="text-slate-600 text-xs mt-1">Follow the program for 60 days. If you do not feel the system is helping you make meaningful progress, we'll refund your investment. Our goal is not pressure — it's meaningful progress.</p>
-                </div>
-              </div>
-
-              {/* Price */}
-              <div className="mx-6 mb-6 border border-slate-200 rounded-2xl p-5 flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-4xl font-bold text-blue-600">$397</p>
-                  <p className="text-blue-600 text-xs font-semibold">One-Time Payment</p>
-                  <p className="text-slate-500 text-xs">No monthly fees. No subscriptions.</p>
-                </div>
-                <div className="flex flex-col items-start gap-1">
-                  <div className="flex items-center gap-2">
-                    <Infinity size={20} className="text-slate-400" />
-                    <p className="font-semibold text-slate-900 text-sm">Lifetime Access Included</p>
-                  </div>
-                  <p className="text-slate-500 text-xs">Get lifetime access to the complete system, all updates, and everything you need to keep moving forward.</p>
-                </div>
-              </div>
-
-              {/* Trust badges */}
-              <div className="border-t border-slate-100 px-8 py-4 flex justify-around text-xs text-slate-500">
-                <span className="flex items-center gap-1"><Lock size={12} className="text-blue-500" /> Secure Checkout</span>
-                <span className="flex items-center gap-1"><Tag size={12} className="text-blue-500" /> One-Time Payment</span>
-                <span className="flex items-center gap-1"><Infinity size={12} className="text-blue-500" /> Lifetime Access</span>
-              </div>
-
-              {/* CTA below product card */}
-              <div className="px-8 py-8 text-center border-t border-slate-100">
-                <a
-                  href={CHECKOUT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors w-full text-center"
-                >
-                  Get Started With The Foot Capacity System →
-                </a>
-                <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500">
-                  <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> 60-Day guarantee</span>
-                  <span className="flex items-center gap-1"><Lock size={13} className="text-blue-500 inline" /> Secure checkout</span>
-                </div>
-              </div>
-
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        {/* SECTION 4 — HOW THE SYSTEM WORKS */}
+        {/* SECTION 3 — HOW THE SYSTEM WORKS */}
         <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
@@ -329,13 +204,11 @@ export default function Walkthrough() {
               transition={{ duration: 0.6 }}
             >
               <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">How The System Supports You</p>
-
               <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
                 A closer look at how the system helps guide recovery through both progress and setbacks.
               </h2>
 
               <div className="space-y-12 text-slate-600 text-lg leading-relaxed">
-
                 <div>
                   <p className="font-semibold text-slate-900 text-xl mb-3">A clearer recovery process.</p>
                   <p className="mb-4">Recovery happens in phases. The system gives you a clear plan for each stage — so you always know what to focus on and why. Each phase builds on the last, gradually increasing the demands on your foot as your capacity improves.</p>
@@ -404,81 +277,12 @@ export default function Walkthrough() {
                   </div>
                   <p className="text-slate-500 text-base italic">Some days will feel better than others. What matters most is the overall direction over time.</p>
                 </div>
-
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* SECTION 5 — OBJECTION CARDS */}
-        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
-          <div className="max-w-3xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">Common Concerns</p>
-
-              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-3">
-                Still have questions?
-              </h2>
-
-              <p className="text-slate-500 text-lg leading-relaxed mb-12">
-                Here are the most common concerns people have before getting started — and honest answers to each one.
-              </p>
-
-              <div className="space-y-12">
-
-                <div>
-                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">I've Already Tried Everything</p>
-                  <p className="font-semibold text-slate-900 text-xl mb-3">Most people have. The missing piece is usually structure, not effort.</p>
-                  <p className="text-slate-600 text-lg leading-relaxed">Most people who find this system have already been through physical therapy, orthotics, stretching routines, and cortisone shots. The reason those approaches often don't last is that they address symptoms without building the underlying capacity your feet actually need. This system takes a different approach — structured progressive loading that rebuilds tissue tolerance from the ground up.</p>
-                </div>
-
-                <div className="border-t border-slate-100 pt-12">
-                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">What If I Make It Worse?</p>
-                  <p className="font-semibold text-slate-900 text-xl mb-3">The system is built around graded progressions — not guesswork.</p>
-                  <p className="text-slate-600 text-lg leading-relaxed">Every phase of the program starts conservatively and builds gradually. There are built-in regressions, flare-up guidance, and decision rules for adjusting load. The goal is never to push through pain — it's to build capacity safely over time.</p>
-                </div>
-
-                <div className="border-t border-slate-100 pt-12">
-                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">I Always Start Programs And Quit</p>
-                  <p className="font-semibold text-slate-900 text-xl mb-3">That's not a willpower problem. It's a structure problem.</p>
-                  <p className="text-slate-600 text-lg leading-relaxed">Most programs fail people because they're overwhelming, unclear, or don't account for bad days. This system is designed to create early wins, reduce overwhelm, and give you a clear next step every single day — even when you don't feel like doing much.</p>
-                </div>
-
-                <div className="border-t border-slate-100 pt-12">
-                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">What If I Flare Up Again?</p>
-                  <p className="font-semibold text-slate-900 text-xl mb-3">Flare-ups are expected. They don't mean starting over.</p>
-                  <p className="text-slate-600 text-lg leading-relaxed">Setbacks are a normal and expected part of recovery. The system includes built-in flare-up support that helps you temporarily reduce load, stay consistent at a lower intensity, and build back gradually without losing your progress. A setback is not a restart.</p>
-                </div>
-
-                <div className="border-t border-slate-100 pt-12">
-                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">How Is This Different From YouTube Or Physical Therapy?</p>
-                  <p className="font-semibold text-slate-900 text-xl mb-3">Structure, progression, and daily guidance — not just exercises.</p>
-                  <p className="text-slate-600 text-lg leading-relaxed">YouTube gives you individual exercises with no context, no progression, and no way to know if what you're doing is appropriate. This system gives you a structured phase-by-phase process built by a Doctor of Physical Therapy, with progress tracking, flare-up guidance, and a clear framework for moving from pain reduction through to full function.</p>
-                </div>
-
-                <div className="border-t border-slate-100 pt-12">
-                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">Will This Work For My Diagnosis?</p>
-                  <p className="font-semibold text-slate-900 text-xl mb-3">This system was designed for chronic foot and ankle pain broadly.</p>
-                  <p className="text-slate-600 text-lg leading-relaxed">Whether you're dealing with plantar fasciitis, Achilles issues, posterior tibial tendon dysfunction, or general heel pain, the system's adaptable progressions are built around tissue-specific loading principles. If you have a recent surgical history or acute injury, check with your provider before starting.</p>
-                </div>
-
-                <div className="border-t border-slate-100 pt-12">
-                  <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">Can I Really Do This From Home?</p>
-                  <p className="font-semibold text-slate-900 text-xl mb-3">Yes. No gym, no clinic, no special equipment required.</p>
-                  <p className="text-slate-600 text-lg leading-relaxed">Everything in the system can be done at home. A few sessions may use a resistance band or small towel — nothing that requires a significant investment or a specific setup. The system was built specifically for guided home recovery.</p>
-                </div>
-
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* SECTION 6 — WHO THIS IS FOR / NOT FOR */}
+        {/* SECTION 4 — WHO THIS IS FOR / NOT FOR */}
         <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
@@ -530,42 +334,187 @@ export default function Walkthrough() {
           </div>
         </section>
 
-        {/* SECTION 7 — TESTIMONIALS */}
-        <WalkthroughTestimonialSection />
- 
-        {/* POST-TESTIMONIAL CTA */}
-        <section className="py-14 md:py-16 bg-white border-t border-slate-100">
-          <div className="max-w-3xl mx-auto px-6 text-center">
-            <p className="text-slate-600 text-lg leading-relaxed mb-8">
-              Ready to stop guessing and start building real foot capacity?
-            </p>
-            
-            <a
-              href={CHECKOUT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
-            >
-              Get Started With The Foot Capacity System →
-            </a>
-            <div className="flex justify-center gap-6 mt-5 text-sm text-slate-500">
-              <span className="flex items-center gap-1"><Tag size={13} className="text-blue-500 inline" /> One-time purchase</span>
-              <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> 60-Day guarantee</span>
-              <span className="flex items-center gap-1"><Lock size={13} className="text-blue-500 inline" /> Secure checkout</span>
+        {/* SECTION 5 — PRODUCT SUMMARY */}
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
+          <div className="max-w-2xl mx-auto px-6">
+            <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden">
+
+              <div className="text-center px-8 pt-10 pb-6">
+                <img src={logo} alt="FCS" className="h-10 mx-auto mb-4" />
+                <h2 className="text-3xl font-bold text-slate-900 mb-2">The Foot Capacity System</h2>
+                <p className="text-blue-600 italic text-sm max-w-md mx-auto">A structured recovery system designed to help you stop guessing and move forward with more clarity and confidence.</p>
+              </div>
+
+              <div className="px-6 pb-6">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="sm:w-2/5 flex flex-col items-center gap-4">
+                    <img src="/images/new-phone.jpg" alt="App screenshot" className="w-full max-w-[180px] rounded-2xl" />
+                    <img src="/images/new-phone2.jpg" alt="App screenshot 2" className="w-full max-w-[180px] rounded-2xl mt-4" />
+                  </div>
+                  <div className="sm:w-3/5 flex flex-col gap-4">
+                    <div className="bg-white border border-slate-200 rounded-xl p-4">
+                      <p className="font-semibold text-slate-900 text-sm">Phase 1: Reset</p>
+                      <p className="text-slate-500 text-xs mb-3">May 11 – present</p>
+                      <ResponsiveContainer width="100%" height={80}>
+                        <LineChart data={[
+                          { day: "May 11", red: 7, green: 5 },
+                          { day: "May 12", red: 6, green: 5.5 },
+                          { day: "May 13", red: 6.5, green: 6 },
+                          { day: "May 14", red: 5.5, green: 6.5 },
+                          { day: "May 15", red: 6, green: 7 },
+                          { day: "May 16", red: 5, green: 7.5 },
+                          { day: "May 17", red: 5.5, green: 8 },
+                          { day: "May 18", red: 4.5, green: 8.5 },
+                          { day: "Jun 16", red: 5, green: 9 },
+                        ]}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                          <XAxis dataKey="day" tick={{ fontSize: 9 }} interval="preserveStartEnd" />
+                          <YAxis domain={[0, 10]} tick={{ fontSize: 9 }} width={20} />
+                          <Line type="monotone" dataKey="red" stroke="#ef4444" dot={false} strokeWidth={2} />
+                          <Line type="monotone" dataKey="green" stroke="#16A34A" dot={false} strokeWidth={2} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                      <div className="flex justify-around mt-3 text-center">
+                        <div><p className="text-lg font-bold text-slate-900">8</p><p className="text-xs text-slate-500">Starting pain</p></div>
+                        <div><p className="text-lg font-bold text-slate-900">6</p><p className="text-xs text-slate-500">Ending pain</p></div>
+                        <div><p className="text-lg font-bold text-slate-900">10</p><p className="text-xs text-slate-500">Days logged</p></div>
+                      </div>
+                    </div>
+
+                    <div className="bg-white border border-slate-200 rounded-xl p-4">
+                      <p className="font-semibold text-slate-900 text-sm">Foot Function Progress (FAAM)</p>
+                      <p className="text-slate-500 text-xs mb-3">Your Foot and Ankle Ability score at each phase — higher is better. 100% = full function.</p>
+                      <div className="flex items-center justify-between bg-slate-50 rounded-lg px-4 py-2">
+                        <span className="text-sm text-slate-700">Baseline (Onboarding)</span>
+                        <span className="text-xl font-bold text-red-500">31%</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-white border border-slate-200 rounded-xl p-4">
+                      <p className="font-semibold text-slate-900 text-sm">Insights</p>
+                      <p className="font-medium text-slate-700 text-xs mt-1">Pain Over Time</p>
+                      <p className="text-slate-500 text-xs mb-3">Daily pain scores from 0 (no pain) to 10 (worst)</p>
+                      <ResponsiveContainer width="100%" height={100}>
+                        <LineChart data={[
+                          { month: "May 11", pain: 8 },
+                          { month: "May 12", pain: 7 },
+                          { month: "May 13", pain: 7.5 },
+                          { month: "May 14", pain: 6 },
+                          { month: "May 15", pain: 6.5 },
+                          { month: "May 16", pain: 5.5 },
+                          { month: "May 17", pain: 6 },
+                          { month: "Jun 15", pain: 5 },
+                          { month: "Jun 16", pain: 6 },
+                        ]}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                          <XAxis dataKey="month" tick={{ fontSize: 9 }} interval="preserveStartEnd" />
+                          <YAxis domain={[0, 10]} tick={{ fontSize: 9 }} width={20} />
+                          <Line type="monotone" dataKey="pain" stroke="#16A34A" dot={{ r: 3, fill: "#16A34A" }} strokeWidth={2} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                      <div className="flex justify-around mt-3 text-center flex-wrap gap-2">
+                        <div><p className="text-base font-bold text-slate-900">30</p><p className="text-xs text-slate-500">Rehab Minutes</p></div>
+                        <div><p className="text-base font-bold text-slate-900">10</p><p className="text-xs text-slate-500">Days Logged</p></div>
+                        <div><p className="text-base font-bold text-slate-900">7</p><p className="text-xs text-slate-500">Avg Pain Score</p></div>
+                        <div><p className="text-base font-bold text-green-600">-3</p><p className="text-xs text-slate-500">Pain Change</p></div>
+                        <div><p className="text-base font-bold text-slate-900">4</p><p className="text-xs text-slate-500">Milestones</p></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="px-8 pb-6">
+                <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest text-center mb-6">What's Included</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                  <div className="flex flex-col items-start gap-2">
+                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center"><Smartphone size={18} className="text-blue-600" /></div>
+                    <p className="font-semibold text-slate-900 text-sm">Full App Access</p>
+                    <p className="text-slate-500 text-xs">Complete access to the app, exercises, and all program features.</p>
+                  </div>
+                  <div className="flex flex-col items-start gap-2">
+                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center"><BarChart2 size={18} className="text-blue-600" /></div>
+                    <p className="font-semibold text-slate-900 text-sm">Progress Tracking</p>
+                    <p className="text-slate-500 text-xs">Track strength, mobility, and consistency with powerful visual insights.</p>
+                  </div>
+                  <div className="flex flex-col items-start gap-2">
+                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center"><SlidersHorizontal size={18} className="text-blue-600" /></div>
+                    <p className="font-semibold text-slate-900 text-sm">Structured Phases</p>
+                    <p className="text-slate-500 text-xs">Step-by-step phases guide you from foundation to fuller function.</p>
+                  </div>
+                  <div className="flex flex-col items-start gap-2">
+                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center"><Heart size={18} className="text-blue-600" /></div>
+                    <p className="font-semibold text-slate-900 text-sm">Flare-Up Support</p>
+                    <p className="text-slate-500 text-xs">Tools and guidance to help you manage setbacks and stay on track.</p>
+                  </div>
+                  <div className="flex flex-col items-start gap-2">
+                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center"><Infinity size={18} className="text-blue-600" /></div>
+                    <p className="font-semibold text-slate-900 text-sm">Lifetime Access</p>
+                    <p className="text-slate-500 text-xs">Use the system for as long as you need, with future updates included.</p>
+                  </div>
+                  <div className="flex flex-col items-start gap-2">
+                    <div className="bg-blue-50 rounded-xl p-2 w-10 h-10 flex items-center justify-center"><UserCheck size={18} className="text-blue-600" /></div>
+                    <p className="font-semibold text-slate-900 text-sm">Guided Recovery</p>
+                    <p className="text-slate-500 text-xs">Clear instructions and expert guidance every step of the way.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mx-6 mb-4 bg-blue-50 rounded-2xl p-5 flex gap-4 items-start">
+                <div className="bg-blue-600 rounded-full p-2 shrink-0"><ShieldCheck size={20} className="text-white" /></div>
+                <div>
+                   <p className="font-semibold text-slate-900 text-sm">30-Day Satisfaction Guarantee</p>
+                  <p className="text-slate-600 text-xs mt-1">Try the full system for 30 days. If you don't feel it's right for you, email us at contact@fixyourmovement.com and we'll refund your investment. No complicated forms, no hoops to jump through.</p>
+                </div>
+              </div>
+
+              <div className="mx-6 mb-6 border border-slate-200 rounded-2xl p-5 flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-4xl font-bold text-blue-600">$397</p>
+                  <p className="text-blue-600 text-xs font-semibold">One-Time Payment</p>
+                  <p className="text-slate-500 text-xs">No monthly fees. No subscriptions.</p>
+                </div>
+                <div className="flex flex-col items-start gap-1">
+                  <div className="flex items-center gap-2">
+                    <Infinity size={20} className="text-slate-400" />
+                    <p className="font-semibold text-slate-900 text-sm">Lifetime Access Included</p>
+                  </div>
+                  <p className="text-slate-500 text-xs">Get lifetime access to the complete system, all updates, and everything you need to keep moving forward.</p>
+                </div>
+              </div>
+
+              <div className="border-t border-slate-100 px-8 py-4 flex justify-around text-xs text-slate-500">
+                <span className="flex items-center gap-1"><Lock size={12} className="text-blue-500" /> Secure Checkout</span>
+                <span className="flex items-center gap-1"><Tag size={12} className="text-blue-500" /> One-Time Payment</span>
+                <span className="flex items-center gap-1"><Infinity size={12} className="text-blue-500" /> Lifetime Access</span>
+              </div>
+
+              <div className="px-8 py-8 text-center border-t border-slate-100">
+                <a
+                  href={CHECKOUT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors w-full text-center"
+                >
+                  Get Started With The Foot Capacity System →
+                </a>
+                <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500">
+                   <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> 30-Day guarantee</span>
+                  <span className="flex items-center gap-1"><Lock size={13} className="text-blue-500 inline" /> Secure checkout</span>
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
 
-        {/* SECTION 8 — FAQ */}
+        {/* SECTION 6 — FAQ */}
         <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
-
             <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">Common Questions</p>
-
             <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-3">
               Questions people ask before getting started.
             </h2>
-
             <p className="text-slate-600 text-lg leading-relaxed mb-4">
               Most people are not wondering whether recovery matters. They're wondering whether they can finally stay consistent long enough to make meaningful progress without constantly second-guessing themselves.
             </p>
@@ -573,8 +522,7 @@ export default function Walkthrough() {
               Below are some of the most common questions people ask before starting.
             </p>
 
-            <Accordion type="single" collapsible defaultValue="faq-cat-1" className="space-y-3">
-
+            <Accordion type="single" collapsible className="space-y-3">
               <AccordionItem value="faq-cat-1" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">
                   Will this actually work if I've tried everything else and nothing has helped?
@@ -644,7 +592,7 @@ export default function Walkthrough() {
                   What if I buy this and it doesn't work for me?
                 </AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">
-                  The system comes with a 60-day guarantee. If you follow the structure and genuinely don't feel it's moving you in the right direction, reach out and we will make it right. The goal is for this to work for you — and if it doesn't, you shouldn't have to pay for it.
+                   The system comes with a 30-day guarantee. Try it, and if you don't feel it's right for you, email us at contact@fixyourmovement.com within 30 days of purchase and we'll refund your investment. No complicated forms, no hoops to jump through.
                 </AccordionContent>
               </AccordionItem>
 
@@ -679,12 +627,14 @@ export default function Walkthrough() {
                   This system gives you structured daily guidance, progress tracking, flare-up support, and a clear plan every single day — built by a Doctor of Physical Therapy who specializes in exactly this condition. It is not a replacement for hands-on care when that is needed. But for people who need structure, consistency, and expert guidance they can follow from home, it delivers more day-to-day support than most in-person programs do.
                 </AccordionContent>
               </AccordionItem>
-
             </Accordion>
           </div>
         </section>
 
-        {/* SECTION 9 — FINAL CTA */}
+        {/* SECTION 7 — TESTIMONIALS */}
+        <WalkthroughTestimonialSection />
+
+        {/* SECTION 8 — FINAL CTA */}
         <section className="py-16 md:py-24 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
@@ -696,11 +646,9 @@ export default function Walkthrough() {
               <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-6">
                 A more supported way to move through recovery.
               </h2>
-
               <p className="text-slate-600 text-xl leading-relaxed mb-10">
                 Access the complete system, app, and tools designed to help recovery feel less overwhelming and easier to manage over time.
               </p>
-
               <a
                 href={CHECKOUT_URL}
                 target="_blank"
@@ -709,18 +657,17 @@ export default function Walkthrough() {
               >
                 Get Started With The Foot Capacity System →
               </a>
-
               <div className="flex flex-wrap gap-6 mt-8 text-sm text-slate-500">
                 <span className="flex items-center gap-2"><Tag size={13} className="text-blue-500 shrink-0" />One-time purchase</span>
-                <span className="flex items-center gap-2"><ShieldCheck size={13} className="text-blue-500 shrink-0" />Lifetime access included</span>
+                <span className="flex items-center gap-2"><ShieldCheck size={13} className="text-blue-500 shrink-0" />30-Day guarantee</span>
                 <span className="flex items-center gap-2"><Lock size={13} className="text-blue-500 shrink-0" />Secure checkout</span>
               </div>
             </motion.div>
           </div>
         </section>
+
       </main>
 
-      {/* FOOTER */}
       <footer className="bg-white border-t border-slate-200 py-8">
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-slate-400 text-xs text-center md:text-left">
