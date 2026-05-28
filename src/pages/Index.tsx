@@ -1,10 +1,25 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CheckCircle, ShieldCheck } from "lucide-react";
 
 export default function Index() {
   const [showStickyCTA, setShowStickyCTA] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [showSubscribedModal, setShowSubscribedModal] = useState(
+    searchParams.get("subscribed") === "true"
+  );
+
+  useEffect(() => {
+    if (showSubscribedModal) {
+      const timer = setTimeout(() => {
+        setShowSubscribedModal(false);
+        setSearchParams({});
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSubscribedModal]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +48,7 @@ export default function Index() {
               className="block md:hidden w-full h-full object-cover"
               loading="eager"
             />
-            <style>{`.hero-img-desktop { filter: grayscale(20%) saturate(70%) brightness(1.02); opacity: 0.32; }`}</style>
+            <style>{`.hero-img-desktop { filter: grayscale(20%) saturate(70%) brightness(1.02); opacity: 0.32; } @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }`}</style>
             <div
               className="absolute inset-0"
               style={{ background: "linear-gradient(to right, rgba(245,248,252,0.96) 0%, rgba(240,244,250,0.88) 55%, rgba(232,238,247,0.78) 100%)" }}
@@ -621,6 +636,25 @@ export default function Index() {
            See How The Full System Works →
          </a>
       </div>
+
+      {/* SUBSCRIBED MODAL */}
+      {showSubscribedModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-6">
+          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" />
+          <div
+            className="relative bg-white rounded-2xl shadow-2xl px-10 py-10 max-w-sm w-full text-center"
+            style={{ animation: "fadeUp 0.4s ease-out" }}
+          >
+            <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">You're confirmed</p>
+            <h2 className="font-display text-2xl font-bold text-slate-900 mb-2">Subscription confirmed.</h2>
+            <p className="text-slate-500 text-base leading-relaxed">Thank you for subscribing. Check your inbox — your first email is on its way.</p>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
