@@ -122,7 +122,51 @@ export default function Index() {
           </div>
         </section>
 
-        {/* SECTION 2 — THE PROBLEM */}
+        {/* SECTION 2 — VSL */}
+        <section className="py-16 md:py-20 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Watch The Overview</p>
+
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
+                Why Plantar Fasciitis Keeps Coming Back
+              </h2>
+
+              <p className="text-slate-500 text-lg leading-relaxed mb-8">
+                Discover the real reasons your heel pain returns — and the structured approach that helps you break the cycle for good.
+              </p>
+
+              <div style={{ position: "relative", paddingTop: "56.25%" }} className="rounded-2xl overflow-hidden shadow-xl mb-8">
+                <iframe
+                  src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8e2a6e0621ae45bb67e928d218736905/iframe?preload=true&poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F7b4506b7-4b95-4594-423b-52eee844fd00%2Fpublic"
+                  loading="lazy"
+                  style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
+                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen={true}
+                />
+              </div>
+
+              <div className="text-center">
+                <a
+                  href="/walkthrough"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
+                >
+                  See How The Full System Works →
+                </a>
+                <p className="text-slate-400 text-sm mt-3">No clinic visits required. No commitment.</p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* SECTION 3 — THE PROBLEM */}
         <section className="py-16 md:py-20 bg-white">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
@@ -308,50 +352,6 @@ export default function Index() {
               </div>
 
               <p className="text-slate-400 text-xs">Results vary. These are real experiences from people who followed the system and stayed consistent.</p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* SECTION 6 — VSL */}
-        <section className="py-16 md:py-20 bg-white border-t border-slate-100">
-          <div className="max-w-3xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Watch The Overview</p>
-
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
-                Why Plantar Fasciitis Keeps Coming Back
-              </h2>
-
-              <p className="text-slate-500 text-lg leading-relaxed mb-8">
-                Discover the real reasons your heel pain returns — and the structured approach that helps you break the cycle for good.
-              </p>
-
-              <div style={{ position: "relative", paddingTop: "56.25%" }} className="rounded-2xl overflow-hidden shadow-xl mb-8">
-                <iframe
-                  src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8e2a6e0621ae45bb67e928d218736905/iframe?preload=true&poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F7b4506b7-4b95-4594-423b-52eee844fd00%2Fpublic"
-                  loading="lazy"
-                  style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
-                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-                  allowFullScreen={true}
-                />
-              </div>
-
-              <div className="text-center">
-                <a
-                  href="/walkthrough"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
-                >
-                  See How The Full System Works →
-                </a>
-                <p className="text-slate-400 text-sm mt-3">No clinic visits required. No commitment.</p>
-              </div>
             </motion.div>
           </div>
         </section>
@@ -602,8 +602,6 @@ export default function Index() {
             </motion.div>
           </div>
         </section>
-      </main>
-
         {/* SECTION 11 — EMAIL OPT-IN */}
         <section className="py-16 md:py-20 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
@@ -657,7 +655,7 @@ export default function Index() {
                   type="submit"
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-base transition-colors whitespace-nowrap"
                 >
-                  Send Me The Guide
+                  Join The Newsletter
                 </button>
               </form>
 
@@ -668,6 +666,7 @@ export default function Index() {
             </motion.div>
           </div>
         </section>
+      </main>
 
       {/* FOOTER */}
       <footer className="bg-white border-t border-slate-200 py-8">
