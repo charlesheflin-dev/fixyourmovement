@@ -604,6 +604,71 @@ export default function Index() {
         </section>
       </main>
 
+        {/* SECTION 11 — EMAIL OPT-IN */}
+        <section className="py-16 md:py-20 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Free Recovery Guide</p>
+
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
+                Not ready yet? That's okay.
+              </h2>
+
+              <p className="text-slate-600 text-lg leading-relaxed mb-10">
+                Get the free Flare-Up Guide delivered to your inbox — practical guidance on what to do when pain spikes, so setbacks don't turn into full restarts.
+              </p>
+
+              <form
+                method="post"
+                acceptCharset="UTF-8"
+                action="https://www.aweber.com/scripts/addlead.pl"
+                className="flex flex-col sm:flex-row gap-3 mb-4"
+              >
+                <input type="hidden" name="meta_web_form_id" value="356574860" />
+                <input type="hidden" name="meta_split_id" value="" />
+                <input type="hidden" name="listname" value="awlist6958674" />
+                <input type="hidden" name="redirect" value="https://fixyourmovement.com/email-confirmation" />
+                <input type="hidden" name="meta_redirect_onlist" value="https://www.aweber.com/thankyou-coi.htm?m=text" />
+                <input type="hidden" name="meta_adtracking" value="Homepage_Optin" />
+                <input type="hidden" name="meta_message" value="1" />
+                <input type="hidden" name="meta_required" value="name,email" />
+                <input type="hidden" name="meta_tooltip" value="" />
+
+                <input
+                  id="awf_field-118710031"
+                  type="text"
+                  name="name"
+                  placeholder="First name"
+                  className="flex-1 px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-base placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                />
+                <input
+                  id="awf_field-118710032"
+                  type="email"
+                  name="email"
+                  placeholder="Your email address"
+                  className="flex-1 px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-base placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                />
+                <button
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-base transition-colors whitespace-nowrap"
+                >
+                  Send Me The Guide
+                </button>
+              </form>
+
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={13} className="text-blue-500 shrink-0" />
+                <p className="text-slate-400 text-xs">Free. No spam. Unsubscribe any time.</p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
       {/* FOOTER */}
       <footer className="bg-white border-t border-slate-200 py-8">
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
