@@ -161,10 +161,13 @@ export default function FCSNewsletterJoin() {
       <footer className="px-6 py-6 border-t border-slate-100">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-400">
           <p>© {new Date().getFullYear()} The Foot Capacity System. All rights reserved.</p>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4 justify-center md:justify-end">
             <a href="/privacy-policy" className="hover:text-slate-600 transition-colors">Privacy Policy</a>
+            <a href="/terms-of-service" className="hover:text-slate-600 transition-colors">Terms of Service</a>
             <a href="/refund-policy" className="hover:text-slate-600 transition-colors">Refund Policy</a>
+            <a href="/eula" className="hover:text-slate-600 transition-colors">EULA</a>
             <a href="/contact" className="hover:text-slate-600 transition-colors">Contact</a>
+            <a href="https://members.fixyourmovement.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Patient App</a>
           </div>
         </div>
       </footer>
