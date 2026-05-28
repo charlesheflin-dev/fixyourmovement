@@ -65,8 +65,8 @@ export default function Walkthrough() {
               </div>
 
               <div className="text-center">
-                <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors">
-                  Get Started With The Foot Capacity System →
+                <a href="#product-summary" className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors">
+                  See What's Included →
                 </a>
                 <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500">
                   <span className="flex items-center gap-1"><Tag size={13} className="text-blue-500 inline" /> One-time purchase</span>
@@ -335,7 +335,7 @@ export default function Walkthrough() {
         </section>
 
         {/* SECTION 5 — PRODUCT SUMMARY */}
-        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
+        <section id="product-summary" className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-2xl mx-auto px-6">
             <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden">
 
