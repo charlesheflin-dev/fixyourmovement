@@ -20,7 +20,7 @@ import Index_archive from "./pages/Index_archive_2026_05_25";
 import Walkthrough_archive from "./pages/Walkthrough_archive_2026_05_25";
 import CookieConsent from "./components/CookieConsent.tsx";
 import EmailConfirmation from "./pages/EmailConfirmation";
-import FlareUpGuide from "./pages/FlareUpGuide";
+import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
 
 const queryClient = new QueryClient();
 
@@ -59,7 +59,7 @@ const App = () => (
                   <Route path="/oldindex" element={<Index_archive />} />
                   <Route path="/oldwalkthrough" element={<Walkthrough_archive />} />
                 <Route path="/email-confirmation" element={<EmailConfirmation />} />
-                <Route path="/lp/flare-up-guide" element={<FlareUpGuide />} />
+                <Route path="/lp/newsletter" element={<FCSNewsletterJoin />} />
                 <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
