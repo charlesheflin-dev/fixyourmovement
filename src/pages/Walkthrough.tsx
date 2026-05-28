@@ -494,6 +494,7 @@ export default function Walkthrough() {
                   href={CHECKOUT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => window.gtag?.('event', 'checkout_click', { event_category: 'conversion', event_label: 'walkthrough_cta' })}
                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors w-full text-center"
                 >
                   Get Started With The Foot Capacity System →
@@ -653,6 +654,7 @@ export default function Walkthrough() {
                 href={CHECKOUT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => window.gtag?.('event', 'checkout_click', { event_category: 'conversion', event_label: 'walkthrough_cta' })}
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
               >
                 Get Started With The Foot Capacity System →
