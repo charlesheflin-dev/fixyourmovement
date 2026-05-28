@@ -78,9 +78,7 @@ export default function EmailConfirmation() {
           <p className="text-slate-400 text-sm mb-3">While you wait —</p>
           
           <a
-            href="/walkthrough"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/"
             className="inline-flex items-center gap-2 text-blue-600 font-semibold text-base hover:underline"
           >
             See how the full system works <ArrowRight size={16} />
