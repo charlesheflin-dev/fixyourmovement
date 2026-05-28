@@ -613,14 +613,14 @@ export default function Index() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Free Recovery Guide</p>
+              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Free Newsletter</p>
 
               <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
                 Not ready yet? That's okay.
               </h2>
 
               <p className="text-slate-600 text-lg leading-relaxed mb-10">
-                Get the free Flare-Up Guide delivered to your inbox — practical guidance on what to do when pain spikes, so setbacks don't turn into full restarts.
+                Join people working through chronic foot and heel pain who want clearer guidance, more consistency, and less second-guessing. Practical content from Dr. Jonathan Schutza, PT, DPT — delivered to your inbox. Free, no spam, unsubscribe any time.
               </p>
 
               <form
