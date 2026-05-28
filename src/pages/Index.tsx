@@ -16,7 +16,7 @@ export default function Index() {
       const timer = setTimeout(() => {
         setShowSubscribedModal(false);
         setSearchParams({});
-      }, 4000);
+      }, 8000);
       return () => clearTimeout(timer);
     }
   }, [showSubscribedModal]);
@@ -85,14 +85,14 @@ export default function Index() {
                     <span className="flex items-center gap-2 text-slate-500 text-sm"><span className="text-blue-600 font-bold shrink-0">—</span>Symptoms that improve temporarily but always come back</span>
                   </div>
 
-               <a
-                 href="/walkthrough"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
-               >
-                 See How The Full System Works →
-               </a>
+                  <a
+                    href="/walkthrough"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
+                  >
+                    See How The Full System Works →
+                  </a>
 
                   <div className="flex flex-wrap gap-4 mt-6 text-sm text-slate-500">
                     <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-600" />30-Day Guarantee</span>
@@ -244,16 +244,16 @@ export default function Index() {
                 </p>
               </div>
 
-               <div className="mt-10">
-                 <a
-                   href="/walkthrough"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
-                 >
-                   See How The Full System Works →
-                 </a>
-               </div>
+              <div className="mt-10">
+                <a
+                  href="/walkthrough"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
+                >
+                  See How The Full System Works →
+                </a>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -341,17 +341,17 @@ export default function Index() {
                 />
               </div>
 
-               <div className="text-center">
-                 <a
-                   href="/walkthrough"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
-                 >
-                   See How The Full System Works →
-                 </a>
-                 <p className="text-slate-400 text-sm mt-3">No clinic visits required. No commitment.</p>
-               </div>
+              <div className="text-center">
+                <a
+                  href="/walkthrough"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
+                >
+                  See How The Full System Works →
+                </a>
+                <p className="text-slate-400 text-sm mt-3">No clinic visits required. No commitment.</p>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -366,14 +366,14 @@ export default function Index() {
               transition={{ duration: 0.6 }}
             >
               <div className="flex flex-col md:flex-row md:items-start gap-10">
-              <div className="shrink-0 mt-8 md:mt-10">
-                <img
-                  src="/images/dr-jonathan-schutza-headshot.png"
-                  alt="Dr. Jonathan Schutza, PT, DPT"
-                  className="w-32 h-32 rounded-full object-cover border-4 border-slate-100 shadow-sm"
-                  loading="lazy"
-                />
-              </div>
+                <div className="shrink-0 mt-8 md:mt-10">
+                  <img
+                    src="/images/dr-jonathan-schutza-headshot.png"
+                    alt="Dr. Jonathan Schutza, PT, DPT"
+                    className="w-32 h-32 rounded-full object-cover border-4 border-slate-100 shadow-sm"
+                    loading="lazy"
+                  />
+                </div>
 
                 <div className="max-w-[88%]">
                   <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Built By A Physical Therapist</p>
@@ -402,11 +402,11 @@ export default function Index() {
                   </p>
                   <div className="flex gap-3 mt-6">
                     <a href="https://www.instagram.com/dr.schutza.pt/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-100 transition-colors">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
                       Instagram
                     </a>
                     <a href="https://www.facebook.com/share/18vGC5rzP8/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-100 transition-colors">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
                       Facebook
                     </a>
                   </div>
@@ -427,11 +427,11 @@ export default function Index() {
             >
               <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-6">Risk-Free</p>
 
-               <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-3">
-                 30-Day Satisfaction Guarantee
-               </h2>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-3">
+                30-Day Satisfaction Guarantee
+              </h2>
 
-               <p className="text-blue-600 font-semibold text-lg mb-6">Walk Pain-Free Or It's Free — 30-Day Guarantee</p>
+              <p className="text-blue-600 font-semibold text-lg mb-6">Walk Pain-Free Or It's Free — 30-Day Guarantee</p>
 
               <div className="w-10 h-0.5 bg-blue-600 mb-8" />
 
@@ -443,7 +443,7 @@ export default function Index() {
                   That is why we want people to explore this system without pressure. Follow the program, track your progress, and give yourself time to build consistency.
                 </p>
                 <p>
-                   If you do not feel the system is helping you make meaningful progress within 30 days of purchase, email us at contact@fixyourmovement.com and we'll refund your investment. No complicated forms, no hoops to jump through.
+                  If you do not feel the system is helping you make meaningful progress within 30 days of purchase, email us at contact@fixyourmovement.com and we'll refund your investment. No complicated forms, no hoops to jump through.
                 </p>
                 <p className="text-slate-900 font-semibold">
                   Our goal is not perfection overnight. It is helping recovery finally feel more clear, manageable, and sustainable.
@@ -451,7 +451,7 @@ export default function Index() {
               </div>
 
               <div className="flex flex-col gap-3">
-                 <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />30 full days to explore the system</span>
+                <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />30 full days to explore the system</span>
                 <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />Track progress directly inside the app</span>
                 <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />Built for consistency from home</span>
                 <span className="flex items-center gap-3 text-slate-600 text-base"><CheckCircle size={16} className="text-blue-600 shrink-0" />Full refund if the program is not right for you</span>
@@ -584,18 +584,18 @@ export default function Index() {
                 Understand how guided recovery, structured progression, and daily consistency work together — and whether this system is the right fit for where you are right now.
               </p>
 
-                <a
-                   href="/walkthrough"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
-                 >
-                   See How The Full System Works →
-                 </a>
+              <a
+                href="/walkthrough"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
+              >
+                See How The Full System Works →
+              </a>
 
               <div className="flex flex-wrap gap-6 mt-8 text-sm text-slate-500">
                 <span className="flex items-center gap-2"><CheckCircle size={14} className="text-blue-600 shrink-0" />Guided from home</span>
-                 <span className="flex items-center gap-2"><CheckCircle size={14} className="text-blue-600 shrink-0" />30-day guarantee</span>
+                <span className="flex items-center gap-2"><CheckCircle size={14} className="text-blue-600 shrink-0" />30-day guarantee</span>
                 <span className="flex items-center gap-2"><CheckCircle size={14} className="text-blue-600 shrink-0" />Track progress daily</span>
                 <span className="flex items-center gap-2"><CheckCircle size={14} className="text-blue-600 shrink-0" />Lifetime access</span>
               </div>
@@ -623,18 +623,17 @@ export default function Index() {
 
       {/* STICKY MOBILE CTA */}
       <div
-        className={`fixed bottom-0 left-0 right-0 z-50 md:hidden bg-blue-600 text-white px-4 py-3 flex items-center justify-center shadow-lg transition-transform duration-300 ${
-          showStickyCTA ? "translate-y-0" : "translate-y-full"
-        }`}
+        className={`fixed bottom-0 left-0 right-0 z-50 md:hidden bg-blue-600 text-white px-4 py-3 flex items-center justify-center shadow-lg transition-transform duration-300 ${showStickyCTA ? "translate-y-0" : "translate-y-full"
+          }`}
       >
-         <a
-           href="/walkthrough"
-           target="_blank"
-           rel="noopener noreferrer"
-           className="font-semibold text-base text-white text-center w-full"
-         >
-           See How The Full System Works →
-         </a>
+        <a
+          href="/walkthrough"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-base text-white text-center w-full"
+        >
+          See How The Full System Works →
+        </a>
       </div>
 
       {/* SUBSCRIBED MODAL */}
@@ -646,7 +645,7 @@ export default function Index() {
             style={{ animation: "fadeUp 0.4s ease-out" }}
           >
             <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
             </div>
             <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">You're confirmed</p>
             <h2 className="font-display text-2xl font-bold text-slate-900 mb-2">Subscription confirmed.</h2>
