@@ -121,8 +121,9 @@ async function applyTag(accessToken, subscriberUrl, archetype) {
     body: formBody.toString(),
   });
 
+  const updateResponseText = await updateResponse.text();
   if (!updateResponse.ok) {
-    throw new Error(`Failed to apply tag: ${updateResponse.status}`);
+    throw new Error(`Failed to apply tag: ${updateResponse.status} — ${updateResponseText}`);
   }
 
   return true;
