@@ -110,7 +110,7 @@ async function applyTag(accessToken, subscriberUrl, archetype) {
   }
 
   const formBody = new URLSearchParams();
-  formBody.append("tags", existingTags.join(","));
+  formBody.append("tags", JSON.stringify(existingTags));
 
   const updateResponse = await fetch(fullUrl, {
     method: "PATCH",
