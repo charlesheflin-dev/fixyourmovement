@@ -9,10 +9,10 @@ export default function EmailConfirmation() {
       {/* HEADER */}
       <header className="px-6 py-5 border-b border-slate-100">
         <div className="max-w-3xl mx-auto">
-          <div className="flex items-center gap-3">
+          <a href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <img src={logo} alt="FCS" className="h-8 w-auto" />
             <span className="text-slate-900 font-bold text-base leading-tight tracking-tight">The Foot Capacity System</span>
-          </div>
+          </a>
         </div>
       </header>
 
