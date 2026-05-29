@@ -102,15 +102,8 @@ async function applyTag(accessToken, subscriberUrl, archetype) {
     throw new Error(`Failed to get subscriber: ${getResponse.status}`);
   }
 
-  const subscriber = await getResponse.json();
-  const existingTags = subscriber.tags || [];
-
-  if (!existingTags.includes(archetype)) {
-    existingTags.push(archetype);
-  }
-
   const formBody = new URLSearchParams();
-  formBody.append("tags", JSON.stringify(existingTags));
+  formBody.append("tags", JSON.stringify({ add: [archetype], remove: [] }));
 
   const updateResponse = await fetch(fullUrl, {
     method: "PATCH",
