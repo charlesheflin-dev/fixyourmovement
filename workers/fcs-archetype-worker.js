@@ -92,8 +92,9 @@ async function findSubscriber(accessToken, accountId, listId, email) {
   return data.entries && data.entries.length > 0 ? data.entries[0] : null;
 }
 
-async function applyTag(accessToken, listId, subscriberUrl, archetype) {
-  const getResponse = await fetch(subscriberUrl, {
+async function applyTag(accessToken, subscriberUrl, archetype) {
+  const fullUrl = subscriberUrl.startsWith("http") ? subscriberUrl : `https://api.aweber.com${subscriberUrl}`;
+  const getResponse = await fetch(fullUrl, {
     headers: { "Authorization": `Bearer ${accessToken}` },
   });
 
@@ -108,7 +109,7 @@ async function applyTag(accessToken, listId, subscriberUrl, archetype) {
     existingTags.push(archetype);
   }
 
-  const updateResponse = await fetch(subscriberUrl, {
+  const updateResponse = await fetch(fullUrl, {
     method: "PATCH",
     headers: {
       "Authorization": `Bearer ${accessToken}`,

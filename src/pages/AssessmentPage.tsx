@@ -72,7 +72,7 @@ export default function AssessmentPage() {
       const res = await fetch(WORKER_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, answers }),
+        body: JSON.stringify({ email: email.replace(/ /g, "+"), answers }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
