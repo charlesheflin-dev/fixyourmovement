@@ -21,6 +21,7 @@ import Walkthrough_archive from "./pages/Walkthrough_archive_2026_05_25";
 import CookieConsent from "./components/CookieConsent.tsx";
 import EmailConfirmation from "./pages/EmailConfirmation";
 import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
+import AssessmentPage from "./pages/AssessmentPage";
 
 const queryClient = new QueryClient();
 
@@ -59,8 +60,9 @@ const App = () => (
                   <Route path="/oldindex" element={<Index_archive />} />
                   <Route path="/oldwalkthrough" element={<Walkthrough_archive />} />
                 <Route path="/email-confirmation" element={<EmailConfirmation />} />
-                <Route path="/lp/newsletter" element={<FCSNewsletterJoin />} />
-                <Route path="*" element={<NotFound />} />
+                 <Route path="/lp/newsletter" element={<FCSNewsletterJoin />} />
+                 <Route path="/assessment-preview" element={<AssessmentPage />} />
+                 <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
     </TooltipProvider>
