@@ -57,8 +57,23 @@ async function refreshAccessToken(env) {
   return data.access_token;
 }
 
-async function findSubscriber(accessToken, listId, email) {
-  const url = `${AWEBER_API_BASE}/accounts/1/lists/${listId}/subscribers?ws.op=find&email=${encodeURIComponent(email)}`;
+async function getAccountId(accessToken) {
+  const response = await fetch(`${AWEBER_API_BASE}/accounts`, {
+    headers: { "Authorization": `Bearer ${accessToken}` },
+  });
+  const responseText = await response.text();
+  if (!response.ok) {
+    throw new Error(`Account lookup failed: ${response.status} — ${responseText}`);
+  }
+  const data = JSON.parse(responseText);
+  if (!data.entries || data.entries.length === 0) {
+    throw new Error("No AWeber accounts found");
+  }
+  return data.entries[0].id;
+}
+
+async function findSubscriber(accessToken, accountId, listId, email) {
+  const url = `${AWEBER_API_BASE}/accounts/${accountId}/lists/${listId}/subscribers?ws.op=find&email=${encodeURIComponent(email)}`;
 
   const response = await fetch(url, {
     headers: {
@@ -147,8 +162,9 @@ export default {
 
       const archetype = determineArchetype(answers);
       const accessToken = await refreshAccessToken(env);
+      const accountId = await getAccountId(accessToken);
       const listId = env.AWEBER_LIST_ID.replace("awlist", "");
-      const subscriber = await findSubscriber(accessToken, listId, email);
+      const subscriber = await findSubscriber(accessToken, accountId, listId, email);
 
       if (!subscriber) {
         return new Response(
@@ -166,7 +182,7 @@ export default {
         );
       }
 
-      await applyTag(accessToken, listId, subscriber.self_link, archetype);
+      await applyTag(accessToken, subscriber.self_link, archetype);
 
       return new Response(JSON.stringify({ success: true, archetype }), {
         status: 200,
