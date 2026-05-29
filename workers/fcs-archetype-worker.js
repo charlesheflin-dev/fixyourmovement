@@ -109,13 +109,16 @@ async function applyTag(accessToken, subscriberUrl, archetype) {
     existingTags.push(archetype);
   }
 
+  const formBody = new URLSearchParams();
+  formBody.append("tags", existingTags.join(","));
+
   const updateResponse = await fetch(fullUrl, {
     method: "PATCH",
     headers: {
       "Authorization": `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: JSON.stringify({ tags: existingTags }),
+    body: formBody.toString(),
   });
 
   if (!updateResponse.ok) {
