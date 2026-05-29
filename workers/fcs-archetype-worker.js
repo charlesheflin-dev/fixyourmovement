@@ -92,18 +92,23 @@ async function findSubscriber(accessToken, accountId, listId, email) {
   return data.entries && data.entries.length > 0 ? data.entries[0] : null;
 }
 
+const ALL_ARCHETYPE_TAGS = [
+  "archetype_frustrated_fix_seeker",
+  "archetype_active_person",
+  "archetype_discouraged_chronic",
+  "archetype_newly_concerned",
+];
+
 async function applyTag(accessToken, subscriberUrl, archetype) {
   const fullUrl = subscriberUrl.startsWith("http") ? subscriberUrl : `https://api.aweber.com${subscriberUrl}`;
-  const getResponse = await fetch(fullUrl, {
-    headers: { "Authorization": `Bearer ${accessToken}` },
-  });
 
-  if (!getResponse.ok) {
-    throw new Error(`Failed to get subscriber: ${getResponse.status}`);
-  }
+  // Remove all archetype tags, then add the new one.
+  // AWeber lowercases tags on apply, so we match that here.
+  const archetypeLower = archetype.toLowerCase();
+  const tagsToRemove = ALL_ARCHETYPE_TAGS.filter(t => t !== archetypeLower);
 
   const formBody = new URLSearchParams();
-  formBody.append("tags", JSON.stringify({ add: [archetype], remove: [] }));
+  formBody.append("tags", JSON.stringify({ add: [archetypeLower], remove: tagsToRemove }));
 
   const updateResponse = await fetch(fullUrl, {
     method: "PATCH",
