@@ -24,6 +24,9 @@ import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
 import Assessment from "./pages/Assessment";
 import AssessmentPage from "./pages/AssessmentPage";
 import StartFrustrated from "./pages/StartFrustrated";
+import StartActive from "./pages/StartActive";
+import StartChronic from "./pages/StartChronic";
+import StartNew from "./pages/StartNew";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +69,9 @@ const App = () => (
                   <Route path="/assessment-preview" element={<AssessmentPage />} />
                    <Route path="/assessment" element={<Assessment />} />
                    <Route path="/start/frustrated" element={<StartFrustrated />} />
+                  <Route path="/start/active" element={<StartActive />} />
+                  <Route path="/start/chronic" element={<StartChronic />} />
+                  <Route path="/start/new" element={<StartNew />} />
                    <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
