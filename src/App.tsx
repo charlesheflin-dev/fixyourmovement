@@ -23,6 +23,7 @@ import EmailConfirmation from "./pages/EmailConfirmation";
 import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
 import Assessment from "./pages/Assessment";
 import AssessmentPage from "./pages/AssessmentPage";
+import StartFrustrated from "./pages/StartFrustrated";
 
 const queryClient = new QueryClient();
 
@@ -63,8 +64,9 @@ const App = () => (
                 <Route path="/email-confirmation" element={<EmailConfirmation />} />
                   <Route path="/lp/newsletter" element={<FCSNewsletterJoin />} />
                   <Route path="/assessment-preview" element={<AssessmentPage />} />
-                  <Route path="/assessment" element={<Assessment />} />
-                  <Route path="*" element={<NotFound />} />
+                   <Route path="/assessment" element={<Assessment />} />
+                   <Route path="/start/frustrated" element={<StartFrustrated />} />
+                   <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
     </TooltipProvider>
