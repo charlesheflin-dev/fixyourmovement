@@ -92,23 +92,18 @@ async function findSubscriber(accessToken, accountId, listId, email) {
   return data.entries && data.entries.length > 0 ? data.entries[0] : null;
 }
 
-const ALL_ARCHETYPE_TAGS = [
-  "archetype_frustrated_fix_seeker",
-  "archetype_active_person",
-  "archetype_discouraged_chronic",
-  "archetype_newly_concerned",
-];
-
 async function applyTag(accessToken, subscriberUrl, archetype) {
   const fullUrl = subscriberUrl.startsWith("http") ? subscriberUrl : `https://api.aweber.com${subscriberUrl}`;
+  const getResponse = await fetch(fullUrl, {
+    headers: { "Authorization": `Bearer ${accessToken}` },
+  });
 
-  // Remove all archetype tags, then add the new one.
-  // AWeber lowercases tags on apply, so we match that here.
-  const archetypeLower = archetype.toLowerCase();
-  const tagsToRemove = ALL_ARCHETYPE_TAGS.filter(t => t !== archetypeLower);
+  if (!getResponse.ok) {
+    throw new Error(`Failed to get subscriber: ${getResponse.status}`);
+  }
 
   const formBody = new URLSearchParams();
-  formBody.append("tags", JSON.stringify({ add: [archetypeLower], remove: tagsToRemove }));
+  formBody.append("tags", JSON.stringify({ add: [archetype], remove: [] }));
 
   const updateResponse = await fetch(fullUrl, {
     method: "PATCH",
@@ -151,9 +146,89 @@ export default {
 
     try {
       const body = await request.json();
-      const { email, answers } = body;
+      const { email, answers, faam_tag, faam_score } = body;
 
-      if (!email || !answers) {
+      if (!email) {
+        return new Response(JSON.stringify({ error: "Missing email" }), {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+          },
+        });
+      }
+
+      // ── FAAM tag branch ──────────────────────────────────────────────────────
+      // When the assessment page sends faam_tag (after FAAM completion),
+      // we apply the score band tag to the subscriber.
+      // Valid tags: faam_low | faam_moderate | faam_high
+      if (faam_tag) {
+        const VALID_FAAM_TAGS = ["faam_low", "faam_moderate", "faam_high"];
+        if (!VALID_FAAM_TAGS.includes(faam_tag)) {
+          return new Response(JSON.stringify({ error: "Invalid faam_tag value" }), {
+            status: 400,
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+            },
+          });
+        }
+
+        const accessToken = await refreshAccessToken(env);
+        const accountId = await getAccountId(accessToken);
+        const listId = env.AWEBER_LIST_ID.replace("awlist", "");
+        const subscriber = await findSubscriber(accessToken, accountId, listId, email);
+
+        if (!subscriber) {
+          return new Response(
+            JSON.stringify({ error: "Subscriber not found for FAAM tag application." }),
+            {
+              status: 404,
+              headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+              },
+            }
+          );
+        }
+
+        // Remove other FAAM band tags, apply the new one
+        const ALL_FAAM_TAGS = ["faam_low", "faam_moderate", "faam_high"];
+        const tagsToRemove = ALL_FAAM_TAGS.filter(t => t !== faam_tag);
+        const fullUrl = subscriber.self_link.startsWith("http")
+          ? subscriber.self_link
+          : `https://api.aweber.com${subscriber.self_link}`;
+        const formBody = new URLSearchParams();
+        formBody.append("tags", JSON.stringify({ add: [faam_tag], remove: tagsToRemove }));
+
+        const updateResponse = await fetch(fullUrl, {
+          method: "PATCH",
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: formBody.toString(),
+        });
+
+        if (!updateResponse.ok) {
+          const text = await updateResponse.text();
+          throw new Error(`Failed to apply FAAM tag: ${updateResponse.status} — ${text}`);
+        }
+
+        return new Response(
+          JSON.stringify({ success: true, faam_tag, faam_score: faam_score ?? null }),
+          {
+            status: 200,
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+            },
+          }
+        );
+      }
+
+      // ── Archetype tag branch (original flow) ────────────────────────────────
+      if (!answers) {
         return new Response(JSON.stringify({ error: "Missing email or answers" }), {
           status: 400,
           headers: {
