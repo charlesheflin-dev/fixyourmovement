@@ -14,7 +14,7 @@ interface Answers {
   q5: string;
 }
 
-type Step = "hook" | "faam" | "results";
+type Step = "hook" | "profile" | "faam" | "results";
 
 // ─── FAAM Questions (21 — ADL subscale, verbatim from clinical instrument) ─────
 const FAAM_QUESTIONS: { id: string; text: string }[] = [
@@ -311,7 +311,7 @@ export default function Assessment() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
       setArchetypeKey(data.archetype as string);
-      setStep("faam");
+      setStep("profile");
     } catch (err: unknown) {
       setHookError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
@@ -513,6 +513,89 @@ export default function Assessment() {
             )}
           </>
         )}
+
+        {/* ══════════════════════════════════════════════════
+            STEP 1b — RECOVERY PROFILE INTERSTITIAL
+        ══════════════════════════════════════════════════ */}
+        {step === "profile" && (() => {
+          const profileContent: Record<string, { headline: string; label: string; body: string[] }> = {
+            Archetype_Frustrated_Fix_Seeker: {
+              label: "Recovery Profile #1",
+              headline: "Feeling Like Nothing Has Worked",
+              body: [
+                "Based on your answers, it sounds like you've been dealing with this for a while.",
+                "You've probably tried a lot already. Different treatments. Different exercises. Different advice. Maybe some things helped for a bit, but nothing seemed to stick.",
+                "If that sounds familiar, you're not alone.",
+                "One thing I've learned is that most people in this situation aren't lacking effort. They're often missing a clear plan and a way to understand what their foot can handle right now.",
+                "Before we talk about what comes next, let's get a better picture of where you're starting from.",
+              ],
+            },
+            Archetype_Active_Person: {
+              label: "Recovery Profile #2",
+              headline: "Staying Active While Recovering",
+              body: [
+                "Based on your answers, it sounds like your biggest concern is staying active.",
+                "You enjoy moving. Whether that's running, the gym, hiking, sports, or just keeping up with life, you don't want recovery to mean sitting on the sidelines.",
+                "That's completely understandable.",
+                "The good news is that recovery and activity don't always have to be opposites.",
+                "A big part of recovery is learning what your foot can tolerate right now and building from there.",
+                "Let's take a look at where you're starting today.",
+              ],
+            },
+            Archetype_Discouraged_Chronic: {
+              label: "Recovery Profile #3",
+              headline: "Learning To Trust Your Body Again",
+              body: [
+                "Based on your answers, it sounds like this has been affecting more than just your foot.",
+                "You may be wondering if things will ever feel normal again. Maybe you've started questioning what your body can handle or whether you're making the right decisions.",
+                "Those feelings are more common than you think.",
+                "Many people who recover go through a period where they feel stuck, frustrated, or unsure of what to do next.",
+                "Recovery isn't always about finding the perfect treatment. Sometimes it's about rebuilding confidence and learning to trust your body again.",
+                "Let's start by seeing where things stand today.",
+              ],
+            },
+            Archetype_Newly_Concerned: {
+              label: "Recovery Profile #4",
+              headline: "Getting Ahead Of the Problem Early",
+              body: [
+                "Based on your answers, it sounds like you're still trying to figure out what's going on.",
+                "That's actually a great place to be.",
+                "Many people wait until things become much more painful or disruptive before they start looking for answers.",
+                "The fact that you're paying attention now gives you an opportunity to get ahead of it.",
+                "The goal isn't to panic. The goal is to understand what's happening and make smart decisions moving forward.",
+                "Let's get a clearer picture of where things stand today.",
+              ],
+            },
+          };
+
+          const profile = profileContent[archetypeKey] ?? profileContent["Archetype_Frustrated_Fix_Seeker"];
+
+          return (
+            <div className="max-w-xl mx-auto">
+              <p className="text-blue-600 text-sm font-semibold uppercase tracking-wide mb-2">{profile.label}</p>
+              <h1 className="text-3xl font-bold text-slate-900 leading-tight mb-8">{profile.headline}</h1>
+
+              <div className="space-y-5 mb-10">
+                {profile.body.map((para, i) => (
+                  <p key={i} className="text-slate-700 text-base leading-relaxed">{para}</p>
+                ))}
+              </div>
+
+              <div className="border-t border-slate-100 pt-8">
+                <button
+                  type="button"
+                  onClick={() => setStep("faam")}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base py-4 rounded-lg transition-colors mb-4"
+                >
+                  Continue To Your Foot Capacity Assessment →
+                </button>
+                <p className="text-center text-slate-500 text-sm leading-relaxed">
+                  The next assessment takes about 2 to 3 minutes and helps establish your starting point. Your results will help personalize the guidance you receive moving forward.
+                </p>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* ══════════════════════════════════════════════════
             STEP 2 — FAAM QUESTIONNAIRE
