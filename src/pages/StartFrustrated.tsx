@@ -251,7 +251,7 @@ export default function StartFrustrated() {
                       rel="noopener noreferrer"
                       className="hover:opacity-80 transition-opacity"
                     >
-                      <img src="/images/follow-on-instagram.png" alt="Follow on Instagram" className="h-9 rounded-lg" loading="lazy" />
+                      <img src="/images/follow-on-instagram.png" alt="Follow on Instagram" className="h-10 w-auto rounded-lg" loading="lazy" />
                     </a>
                     <a
                       href="https://www.facebook.com/share/18vGC5rzP8/?mibextid=wwXIfr"
@@ -259,7 +259,7 @@ export default function StartFrustrated() {
                       rel="noopener noreferrer"
                       className="hover:opacity-80 transition-opacity"
                     >
-                      <img src="/images/follow-on-facebook.png" alt="Follow on Facebook" className="h-9 rounded-lg" loading="lazy" />
+                      <img src="/images/follow-on-facebook.png" alt="Follow on Facebook" className="h-10 w-auto rounded-lg" loading="lazy" />
                     </a>
                   </div>
                 </div>
