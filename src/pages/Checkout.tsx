@@ -59,7 +59,7 @@ export default function Checkout() {
                 <div>
                   <p className="text-slate-900 font-bold text-base mb-1">Pay Monthly</p>
                   <p className="text-slate-500 text-sm leading-relaxed">
-                    3 monthly payments. First charge today, then at 30 and 60 days.
+                    <span className="underline">Only 3 monthly payments.</span> First charge today, then at 30 and 60 days.
                   </p>
                 </div>
               </div>
