@@ -64,20 +64,16 @@ export default function Checkout() {
                   )}
                 </div>
                 <div>
-                  <p className="text-slate-900 font-bold text-base mb-1">3-Month Payment Plan</p>
+                  <p className="text-slate-900 font-bold text-base mb-1">Pay Monthly</p>
                   <p className="text-slate-500 text-sm leading-relaxed">
-                    Split your investment into 3 easy monthly payments. Full access from day one.
+                    3 monthly payments. First charge today, then at 30 and 60 days.
                   </p>
                 </div>
               </div>
               <div className="text-right shrink-0">
                 <p className="text-slate-900 font-bold text-2xl leading-none">$157</p>
-                <p className="text-slate-500 text-xs mt-1">per month × 3</p>
+                <p className="text-slate-500 text-xs mt-1">per month</p>
               </div>
-            </div>
-
-            <div className={`mt-4 pt-4 border-t ${selected === "monthly" ? "border-blue-200" : "border-slate-100"}`}>
-              <p className="text-slate-500 text-xs">Total: $471 &nbsp;·&nbsp; Billed monthly for 3 months</p>
             </div>
           </button>
 
@@ -103,13 +99,13 @@ export default function Checkout() {
                 </div>
                 <div>
                   <p className="text-slate-900 font-bold text-base mb-1">
-                    One-Time Payment
+                    Pay In Full
                     <span className="ml-2 inline-block bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">
                       Save $74
                     </span>
                   </p>
                   <p className="text-slate-500 text-sm leading-relaxed">
-                    Pay once and save 16% compared to the monthly plan. Full lifetime access included.
+                    One payment. Save $74 compared to the monthly plan.
                   </p>
                 </div>
               </div>
@@ -117,10 +113,6 @@ export default function Checkout() {
                 <p className="text-slate-900 font-bold text-2xl leading-none">$397</p>
                 <p className="text-slate-500 text-xs mt-1">one time</p>
               </div>
-            </div>
-
-            <div className={`mt-4 pt-4 border-t ${selected === "onetime" ? "border-blue-200" : "border-slate-100"}`}>
-              <p className="text-slate-500 text-xs">Total: $397 &nbsp;·&nbsp; Single payment, lifetime access</p>
             </div>
           </button>
 
@@ -145,30 +137,6 @@ export default function Checkout() {
           <span>🛡️ 30-Day Guarantee</span>
           <span>🔒 Secure Checkout</span>
           <span>♾️ Lifetime Access</span>
-        </div>
-
-        {/* What's included */}
-        <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6">
-          <p className="text-slate-500 text-xs font-semibold uppercase tracking-widest mb-4">Both Plans Include</p>
-          <ul className="space-y-3">
-            {[
-              "Full 12-week Foot Capacity System",
-              "Guided daily recovery sessions",
-              "Progress tracking tools",
-              "Flare-up support and guidance",
-              "Lifetime access to all content",
-              "30-day satisfaction guarantee",
-            ].map((item) => (
-              <li key={item} className="flex items-center gap-3 text-sm text-slate-700">
-                <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
-                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                {item}
-              </li>
-            ))}
-          </ul>
         </div>
 
         {/* Secondary link */}
