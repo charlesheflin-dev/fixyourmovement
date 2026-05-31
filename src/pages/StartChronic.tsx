@@ -61,10 +61,10 @@ export default function StartChronic() {
                 <span className="text-blue-600">Does Not Determine Whether You Can Recover.</span>
               </h1>
               <p className="text-slate-600 text-lg leading-relaxed mb-3">
-                Most people dealing with chronic foot pain have been told — or have quietly started to believe — that this is just how it is now. That after months or years of trying things, maybe the window has closed.
+                Most people dealing with chronic foot pain haven't just lost confidence in treatments. They've started losing confidence in their own body. After months or years of setbacks, it's easy to wonder whether things will ever truly change.
               </p>
               <p className="text-slate-500 text-base italic leading-relaxed mb-8">
-                It hasn't. Duration of pain doesn't determine outcome. Consistency with the right process does — and that's exactly what this system is built around.
+                It hasn't. Recovery doesn't become impossible because pain has lasted longer. What matters is having a process you can trust and stay consistent with — even when progress comes in stages.
               </p>
               <div className="flex flex-col gap-1.5 mb-10">
                 {[
@@ -95,7 +95,7 @@ export default function StartChronic() {
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">Why Chronic Pain Feels Different</p>
               <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
-                The longer pain persists, the harder it becomes to trust that recovery is still possible.
+                Chronic Pain Doesn't Just Affect Your Foot. It Affects Your Confidence.
               </h2>
               <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
                 <p>
