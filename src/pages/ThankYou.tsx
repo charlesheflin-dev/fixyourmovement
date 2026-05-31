@@ -59,7 +59,7 @@ const ThankYou = () => {
                             className="block"
                         >
                             <Button size="lg" className="cta-button text-base w-full box-border">
-                                Login to Access the Install Instructions
+                            Login for Install Steps
                                 <ExternalLink className="ml-2 w-4 h-4 flex-shrink-0" />
                             </Button>
                         </a>
