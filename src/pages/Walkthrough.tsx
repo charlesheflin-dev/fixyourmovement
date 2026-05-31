@@ -15,7 +15,7 @@ const painData = [
   { month: "Oct", pain: 2, trend: 2.5 },
 ];
 
-const CHECKOUT_URL = "https://whop.com/checkout/plan_f7hnKFT1vq0zb";
+const CHECKOUT_URL = "/checkout";
 
 export default function Walkthrough() {
   return (
@@ -69,8 +69,8 @@ export default function Walkthrough() {
                   See What's Included →
                 </a>
                 <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500">
-                  <span className="flex items-center gap-1"><Tag size={13} className="text-blue-500 inline" /> One-time purchase</span>
-                  <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> Lifetime access</span>
+                  <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> Risk Free 30-Day Guarantee</span>
+                  <span className="flex items-center gap-1"><Tag size={13} className="text-blue-500 inline" /> Flexible Payment Plans</span>
                   <span className="flex items-center gap-1"><Lock size={13} className="text-blue-500 inline" /> Secure checkout</span>
                 </div>
               </div>
@@ -470,9 +470,8 @@ export default function Walkthrough() {
 
               <div className="mx-6 mb-6 border border-slate-200 rounded-2xl p-5 flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-4xl font-bold text-blue-600">$397</p>
-                  <p className="text-blue-600 text-xs font-semibold">One-Time Payment</p>
-                  <p className="text-slate-500 text-xs">No monthly fees. No subscriptions.</p>
+                  <p className="text-4xl font-bold text-blue-600">$157</p>
+                  <p className="text-slate-500 text-xs mt-1">Only 3 monthly payments of $157.</p>
                 </div>
                 <div className="flex flex-col items-start gap-1">
                   <div className="flex items-center gap-2">
@@ -485,14 +484,14 @@ export default function Walkthrough() {
 
               <div className="border-t border-slate-100 px-8 py-4 flex justify-around text-xs text-slate-500">
                 <span className="flex items-center gap-1"><Lock size={12} className="text-blue-500" /> Secure Checkout</span>
-                <span className="flex items-center gap-1"><Tag size={12} className="text-blue-500" /> One-Time Payment</span>
+                <span className="flex items-center gap-1"><Tag size={12} className="text-blue-500" /> Flexible Payment Plans</span>
                 <span className="flex items-center gap-1"><Infinity size={12} className="text-blue-500" /> Lifetime Access</span>
               </div>
 
               <div className="px-8 py-8 text-center border-t border-slate-100">
                 <a
                   href={CHECKOUT_URL}
-                  target="_blank"
+                  target="_self"
                   rel="noopener noreferrer"
                   onClick={() => window.gtag?.('event', 'checkout_click', { event_category: 'conversion', event_label: 'walkthrough_cta' })}
                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors w-full text-center"
@@ -500,7 +499,7 @@ export default function Walkthrough() {
                   Get Started With The Foot Capacity System →
                 </a>
                 <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500">
-                   <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> 30-Day guarantee</span>
+                  <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> Risk Free 30-Day Guarantee</span>
                   <span className="flex items-center gap-1"><Lock size={13} className="text-blue-500 inline" /> Secure checkout</span>
                 </div>
               </div>
@@ -652,7 +651,7 @@ export default function Walkthrough() {
               </p>
               <a
                 href={CHECKOUT_URL}
-                target="_blank"
+                target="_self"
                 rel="noopener noreferrer"
                 onClick={() => window.gtag?.('event', 'checkout_click', { event_category: 'conversion', event_label: 'walkthrough_cta' })}
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
@@ -660,8 +659,8 @@ export default function Walkthrough() {
                 Get Started With The Foot Capacity System →
               </a>
               <div className="flex flex-wrap gap-6 mt-8 text-sm text-slate-500">
-                <span className="flex items-center gap-2"><Tag size={13} className="text-blue-500 shrink-0" />One-time purchase</span>
-                <span className="flex items-center gap-2"><ShieldCheck size={13} className="text-blue-500 shrink-0" />30-Day guarantee</span>
+                <span className="flex items-center gap-2"><ShieldCheck size={13} className="text-blue-500 shrink-0" />Risk Free 30-Day Guarantee</span>
+                <span className="flex items-center gap-2"><Tag size={13} className="text-blue-500 shrink-0" />Flexible Payment Plans</span>
                 <span className="flex items-center gap-2"><Lock size={13} className="text-blue-500 shrink-0" />Secure checkout</span>
               </div>
             </motion.div>
