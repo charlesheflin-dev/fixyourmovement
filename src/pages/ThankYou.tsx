@@ -47,7 +47,7 @@ const ThankYou = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="text-center"
+                        className="text-center px-4"
                     >
                         <p className="text-muted-foreground text-lg mb-6 font-body">
                             Ready to access your app and get started?
@@ -56,11 +56,11 @@ const ThankYou = () => {
                             href="https://members.fixyourmovement.com/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="block w-full sm:w-auto sm:inline-block"
+                            className="block"
                         >
-                            <Button size="lg" className="cta-button text-lg w-full sm:w-auto">
+                            <Button size="lg" className="cta-button text-base w-full box-border">
                                 Login to Access the Install Instructions
-                                <ExternalLink className="ml-2 w-5 h-5" />
+                                <ExternalLink className="ml-2 w-4 h-4 flex-shrink-0" />
                             </Button>
                         </a>
                     </motion.div>
