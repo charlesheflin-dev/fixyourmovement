@@ -56,8 +56,9 @@ const ThankYou = () => {
                             href="https://members.fixyourmovement.com/"
                             target="_blank"
                             rel="noopener noreferrer"
+                            className="block w-full sm:w-auto sm:inline-block"
                         >
-                            <Button size="lg" className="cta-button text-lg">
+                            <Button size="lg" className="cta-button text-lg w-full sm:w-auto">
                                 Login to Access the Install Instructions
                                 <ExternalLink className="ml-2 w-5 h-5" />
                             </Button>
