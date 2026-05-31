@@ -13,7 +13,7 @@ import testimonial3 from "@/assets/testimonials/3B.jpg";
 import testimonial4 from "@/assets/testimonials/4B.jpg";
 import testimonial9 from "@/assets/testimonials/9B.jpg";
 
-const CHECKOUT_URL = "https://whop.com/checkout/plan_f7hnKFT1vq0zb";
+const CHECKOUT_URL = "/checkout";
 
 const painData = [
   { month: "May", pain: 8, trend: 7.5 },
@@ -80,8 +80,8 @@ export default function StartChronic() {
                 ))}
               </div>
               <div className="flex flex-wrap gap-4 text-sm text-slate-500">
-                <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-500" /> 30-Day Guarantee</span>
-                <span className="flex items-center gap-1.5"><Tag size={14} className="text-blue-500" /> One-Time Purchase</span>
+                <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-500" /> Risk Free 30-Day Guarantee</span>
+                <span className="flex items-center gap-1.5"><Tag size={14} className="text-blue-500" /> Flexible Payment Plans</span>
                 <span className="flex items-center gap-1.5"><Infinity size={14} className="text-blue-500" /> Lifetime Access</span>
                 <span className="flex items-center gap-1.5"><CheckCircle size={14} className="text-blue-500" /> Guided From Home</span>
               </div>
@@ -168,10 +168,10 @@ export default function StartChronic() {
                   </div>
                   <div className="flex gap-4 mt-6">
                     <a href="https://www.instagram.com/dr.schutza.pt/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                      <img src="/images/follow-on-instagram.png" alt="Follow on Instagram" className="h-9 rounded-lg" loading="lazy" />
+                      <img src="/images/follow-on-instagram.png" alt="Follow on Instagram" className="h-10 w-auto rounded-lg" loading="lazy" />
                     </a>
                     <a href="https://www.facebook.com/share/18vGC5rzP8/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                      <img src="/images/follow-on-facebook.png" alt="Follow on Facebook" className="h-9 rounded-lg" loading="lazy" />
+                      <img src="/images/follow-on-facebook.png" alt="Follow on Facebook" className="h-10 w-auto rounded-lg" loading="lazy" />
                     </a>
                   </div>
                 </div>
@@ -505,9 +505,8 @@ export default function StartChronic() {
                 </div>
                 <div className="mx-6 mb-6 border border-slate-200 rounded-2xl p-5 flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-4xl font-bold text-blue-600">$397</p>
-                    <p className="text-blue-600 text-xs font-semibold">One-Time Payment</p>
-                    <p className="text-slate-500 text-xs">No monthly fees. No subscriptions.</p>
+                    <p className="text-4xl font-bold text-blue-600">$157</p>
+                    <p className="text-slate-500 text-xs mt-1">Only 3 monthly payments of $157.</p>
                   </div>
                   <div className="flex flex-col items-start gap-1">
                     <div className="flex items-center gap-2"><Infinity size={20} className="text-slate-400" /><p className="font-semibold text-slate-900 text-sm">Lifetime Access Included</p></div>
@@ -516,16 +515,16 @@ export default function StartChronic() {
                 </div>
                 <div className="border-t border-slate-100 px-8 py-4 flex justify-around text-xs text-slate-500">
                   <span className="flex items-center gap-1"><Lock size={12} className="text-blue-500" /> Secure Checkout</span>
-                  <span className="flex items-center gap-1"><Tag size={12} className="text-blue-500" /> One-Time Payment</span>
+                  <span className="flex items-center gap-1"><Tag size={12} className="text-blue-500" /> Flexible Payment Plans</span>
                   <span className="flex items-center gap-1"><Infinity size={12} className="text-blue-500" /> Lifetime Access</span>
                 </div>
                 <div className="px-8 py-8 text-center border-t border-slate-100">
-                  <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" onClick={trackCheckout}
+                  <a href={CHECKOUT_URL} target="_self" rel="noopener noreferrer" onClick={trackCheckout}
                     className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors w-full text-center">
                     Get Started With The Foot Capacity System →
                   </a>
                   <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500">
-                    <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> 30-Day guarantee</span>
+                    <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> Risk Free 30-Day Guarantee</span>
                     <span className="flex items-center gap-1"><Lock size={13} className="text-blue-500 inline" /> Secure checkout</span>
                   </div>
                 </div>
@@ -573,13 +572,12 @@ export default function StartChronic() {
               <p className="text-slate-600 text-xl leading-relaxed mb-10">
                 The Foot Capacity System gives you the structured process, daily guidance, and flare-up support to finally break the cycle — no matter how long you've been stuck in it.
               </p>
-              <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" onClick={trackCheckout}
+              <a href={CHECKOUT_URL} target="_self" rel="noopener noreferrer" onClick={trackCheckout}
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors">
                 Get Started With The Foot Capacity System →
               </a>
               <div className="flex flex-wrap gap-6 mt-8 text-sm text-slate-500">
-                <span className="flex items-center gap-2"><Tag size={13} className="text-blue-500 shrink-0" />One-time purchase</span>
-                <span className="flex items-center gap-2"><ShieldCheck size={13} className="text-blue-500 shrink-0" />30-Day guarantee</span>
+                <span className="flex items-center gap-2"><ShieldCheck size={13} className="text-blue-500 shrink-0" />Risk Free 30-Day Guarantee</span>
                 <span className="flex items-center gap-2"><Lock size={13} className="text-blue-500 shrink-0" />Secure checkout</span>
                 <span className="flex items-center gap-2"><Infinity size={13} className="text-blue-500 shrink-0" />Lifetime access</span>
               </div>
