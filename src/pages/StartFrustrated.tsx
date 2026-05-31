@@ -793,9 +793,8 @@ export default function StartFrustrated() {
                 {/* Price — visible before first checkout button */}
                 <div className="mx-6 mb-6 border border-slate-200 rounded-2xl p-5 flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-4xl font-bold text-blue-600">$157<span className="text-xl font-semibold text-slate-400">/mo</span></p>
-                    <p className="text-blue-600 text-xs font-semibold">Starting At</p>
-                    <p className="text-slate-500 text-xs">3 monthly payments. Full access from day one.</p>
+                    <p className="text-4xl font-bold text-blue-600">$157</p>
+                    <p className="text-slate-500 text-xs mt-1">Only 3 monthly payments of $157.</p>
                   </div>
                   <div className="flex flex-col items-start gap-1">
                     <div className="flex items-center gap-2">
