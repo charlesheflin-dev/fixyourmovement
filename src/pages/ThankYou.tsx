@@ -36,7 +36,7 @@ const ThankYou = () => {
                         className="video-container aspect-video max-w-3xl mx-auto mb-10"
                     >
                         <iframe
-                            src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/fc14393e8758f53eb9a7bb92fd21f071/iframe"
+                            src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/fc14393e8758f53eb9a7bb92fd21f071/iframe?poster=https%3A%2F%2Fimagedelivery.net%2FZUbdF1A6bMNaR2l0OC84jw%2F0a87b6a7-6fb2-48dc-9e26-aa5c134c0200%2Fpublic"
                             className="w-full h-full rounded-xl"
                             allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
                             allowFullScreen
