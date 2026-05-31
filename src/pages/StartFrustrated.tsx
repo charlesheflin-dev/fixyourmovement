@@ -14,7 +14,7 @@ import testimonial3 from "@/assets/testimonials/3B.jpg";
 import testimonial5 from "@/assets/testimonials/5B.jpg";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const CHECKOUT_URL = "https://whop.com/checkout/plan_f7hnKFT1vq0zb";
+const CHECKOUT_URL = "/checkout";
 
 const painData = [
   { month: "May", pain: 8, trend: 7.5 },
@@ -37,7 +37,7 @@ function CheckoutButton({ label = "Get Started With The Foot Capacity System →
   return (
     <a
       href={CHECKOUT_URL}
-      target="_blank"
+      target="_self"
       rel="noopener noreferrer"
       onClick={trackCheckout}
       className={`inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors ${className}`}
@@ -117,7 +117,7 @@ export default function StartFrustrated() {
               {/* Trust badges — no checkout link yet */}
               <div className="flex flex-wrap gap-4 text-sm text-slate-500">
                 <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-500" /> 30-Day Guarantee</span>
-                <span className="flex items-center gap-1.5"><Tag size={14} className="text-blue-500" /> One-Time Purchase</span>
+                <span className="flex items-center gap-1.5"><Tag size={14} className="text-blue-500" /> Flexible Payment Plans</span>
                 <span className="flex items-center gap-1.5"><Infinity size={14} className="text-blue-500" /> Lifetime Access</span>
                 <span className="flex items-center gap-1.5"><CheckCircle size={14} className="text-blue-500" /> Guided From Home</span>
               </div>
@@ -793,9 +793,9 @@ export default function StartFrustrated() {
                 {/* Price — visible before first checkout button */}
                 <div className="mx-6 mb-6 border border-slate-200 rounded-2xl p-5 flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-4xl font-bold text-blue-600">$397</p>
-                    <p className="text-blue-600 text-xs font-semibold">One-Time Payment</p>
-                    <p className="text-slate-500 text-xs">No monthly fees. No subscriptions.</p>
+                    <p className="text-4xl font-bold text-blue-600">$157<span className="text-xl font-semibold text-slate-400">/mo</span></p>
+                    <p className="text-blue-600 text-xs font-semibold">Starting At</p>
+                    <p className="text-slate-500 text-xs">3 monthly payments. Full access from day one.</p>
                   </div>
                   <div className="flex flex-col items-start gap-1">
                     <div className="flex items-center gap-2">
@@ -811,19 +811,19 @@ export default function StartFrustrated() {
                 {/* Trust strip */}
                 <div className="border-t border-slate-100 px-8 py-4 flex justify-around text-xs text-slate-500">
                   <span className="flex items-center gap-1"><Lock size={12} className="text-blue-500" /> Secure Checkout</span>
-                  <span className="flex items-center gap-1"><Tag size={12} className="text-blue-500" /> One-Time Payment</span>
+                  <span className="flex items-center gap-1"><Tag size={12} className="text-blue-500" /> Flexible Payment Plans</span>
                   <span className="flex items-center gap-1"><Infinity size={12} className="text-blue-500" /> Lifetime Access</span>
                 </div>
 
-                {/* FIRST CHECKOUT BUTTON — price is now visible above */}
-                <div className="px-8 py-8 text-center border-t border-slate-100">
-                  <a
-                    href={CHECKOUT_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={trackCheckout}
-                    className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors w-full text-center"
-                  >
+{/* FIRST CHECKOUT BUTTON — price is now visible above */}
+                 <div className="px-8 py-8 text-center border-t border-slate-100">
+                   <a
+                     href={CHECKOUT_URL}
+                     target="_self"
+                     rel="noopener noreferrer"
+                     onClick={trackCheckout}
+                     className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors w-full text-center"
+                   >
                     Get Started With The Foot Capacity System →
                   </a>
                   <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500">
@@ -951,32 +951,32 @@ export default function StartFrustrated() {
         </section>
 
         {/* ── SECTION 14: FINAL CTA ─────────────────────────────────────────── */}
-        {/* Second and last checkout link on the page */}
-        <section className="py-16 md:py-24 bg-white border-t border-slate-100">
-          <div className="max-w-3xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-6">
-                You've put in enough effort without the right process.
-              </h2>
-              <p className="text-slate-600 text-xl leading-relaxed mb-10">
-                The Foot Capacity System gives you the structure, daily guidance, and support that most people never got from their prior care — so you can finally move forward with clarity instead of guesswork.
-              </p>
-              <a
-                href={CHECKOUT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={trackCheckout}
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
-              >
+{/* Second and last checkout link on the page */}
+         <section className="py-16 md:py-24 bg-white border-t border-slate-100">
+           <div className="max-w-3xl mx-auto px-6">
+             <motion.div
+               initial={{ opacity: 0, y: 30 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.6 }}
+             >
+               <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-6">
+                 You've put in enough effort without the right process.
+               </h2>
+               <p className="text-slate-600 text-xl leading-relaxed mb-10">
+                 The Foot Capacity System gives you the structure, daily guidance, and support that most people never got from their prior care — so you can finally move forward with clarity instead of guesswork.
+               </p>
+               <a
+                 href={CHECKOUT_URL}
+                 target="_self"
+                 rel="noopener noreferrer"
+                 onClick={trackCheckout}
+                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
+               >
                 Get Started With The Foot Capacity System →
               </a>
               <div className="flex flex-wrap gap-6 mt-8 text-sm text-slate-500">
-                <span className="flex items-center gap-2"><Tag size={13} className="text-blue-500 shrink-0" />One-time purchase</span>
+                <span className="flex items-center gap-2"><Tag size={13} className="text-blue-500 shrink-0" />From $157/mo</span>
                 <span className="flex items-center gap-2"><ShieldCheck size={13} className="text-blue-500 shrink-0" />30-Day guarantee</span>
                 <span className="flex items-center gap-2"><Lock size={13} className="text-blue-500 shrink-0" />Secure checkout</span>
                 <span className="flex items-center gap-2"><Infinity size={13} className="text-blue-500 shrink-0" />Lifetime access</span>
