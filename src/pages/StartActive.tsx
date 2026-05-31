@@ -69,11 +69,11 @@ export default function StartActive() {
               </h1>
 
               <p className="text-slate-600 text-lg leading-relaxed mb-3">
-                Most people dealing with plantar fasciitis are told to rest. Stop running. Stop training. Wait it out. But rest alone rarely solves the underlying problem — and for active people, it creates a different kind of suffering.
+                Most people dealing with plantar fasciitis are told to rest. Stop running. Stop training. Wait it out. But for active people, movement isn't just exercise — it's part of who they are. The problem is that rest alone rarely solves the underlying issue.
               </p>
 
               <p className="text-slate-500 text-base italic leading-relaxed mb-8">
-                This system was built to help you keep moving safely while your foot capacity rebuilds — so you don't have to give up the activities that matter most to you.
+                This system was built to help you stay engaged in the activities you love while gradually rebuilding foot capacity — so recovery becomes part of your life instead of putting your life on hold.
               </p>
 
               <div className="flex flex-col gap-1.5 mb-10">
@@ -114,7 +114,7 @@ export default function StartActive() {
                 Why Rest Alone Rarely Works
               </p>
               <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
-                The problem isn't that you're too active. It's that your foot hasn't built the capacity to keep up.
+                The Goal Isn't To Stop Moving. It's To Build Capacity.
               </h2>
 
               <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
