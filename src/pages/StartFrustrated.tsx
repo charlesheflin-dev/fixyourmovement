@@ -116,7 +116,7 @@ export default function StartFrustrated() {
 
               {/* Trust badges — no checkout link yet */}
               <div className="flex flex-wrap gap-4 text-sm text-slate-500">
-                <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-500" /> 30-Day Guarantee</span>
+                <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-500" /> Risk Free 30-Day Guarantee</span>
                 <span className="flex items-center gap-1.5"><Tag size={14} className="text-blue-500" /> Flexible Payment Plans</span>
                 <span className="flex items-center gap-1.5"><Infinity size={14} className="text-blue-500" /> Lifetime Access</span>
                 <span className="flex items-center gap-1.5"><CheckCircle size={14} className="text-blue-500" /> Guided From Home</span>
@@ -826,7 +826,7 @@ export default function StartFrustrated() {
                     Get Started With The Foot Capacity System →
                   </a>
                   <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500">
-                    <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> 30-Day guarantee</span>
+                    <span className="flex items-center gap-1"><ShieldCheck size={13} className="text-blue-500 inline" /> Risk Free 30-Day Guarantee</span>
                     <span className="flex items-center gap-1"><Lock size={13} className="text-blue-500 inline" /> Secure checkout</span>
                   </div>
                 </div>
@@ -975,8 +975,7 @@ export default function StartFrustrated() {
                 Get Started With The Foot Capacity System →
               </a>
               <div className="flex flex-wrap gap-6 mt-8 text-sm text-slate-500">
-                <span className="flex items-center gap-2"><Tag size={13} className="text-blue-500 shrink-0" />From $157/mo</span>
-                <span className="flex items-center gap-2"><ShieldCheck size={13} className="text-blue-500 shrink-0" />30-Day guarantee</span>
+                <span className="flex items-center gap-2"><ShieldCheck size={13} className="text-blue-500 shrink-0" />Risk Free 30-Day Guarantee</span>
                 <span className="flex items-center gap-2"><Lock size={13} className="text-blue-500 shrink-0" />Secure checkout</span>
                 <span className="flex items-center gap-2"><Infinity size={13} className="text-blue-500 shrink-0" />Lifetime access</span>
               </div>
