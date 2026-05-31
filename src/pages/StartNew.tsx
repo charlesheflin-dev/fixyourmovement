@@ -61,10 +61,10 @@ export default function StartNew() {
                 <span className="text-blue-600">Here's What You Should Actually Be Doing.</span>
               </h1>
               <p className="text-slate-600 text-lg leading-relaxed mb-3">
-                When foot or heel pain is new, the most important thing you can do is understand what's actually happening — and start the right process before the pattern that traps most people even begins.
+                When foot or heel pain is new, you have something many people wish they had later: time. The sooner you understand what's happening and begin the right process, the easier it becomes to stay ahead of the cycle that traps so many people.
               </p>
               <p className="text-slate-500 text-base italic leading-relaxed mb-8">
-                This system was built to give you the structure, clarity, and daily guidance to get ahead of it — so you don't spend months or years trying to break a cycle you never had to enter.
+                This system was built to give you the structure, clarity, and daily guidance to take advantage of the opportunity you have right now — before foot pain starts influencing how you move, exercise, travel, and live.
               </p>
               <div className="flex flex-col gap-1.5 mb-10">
                 {[
@@ -95,7 +95,7 @@ export default function StartNew() {
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">What's Actually Happening</p>
               <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
-                Most people don't act early enough — and that's how a manageable problem becomes a chronic one.
+                The Earlier You Understand The Problem, The More Options You Usually Have.
               </h2>
               <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
                 <p>
