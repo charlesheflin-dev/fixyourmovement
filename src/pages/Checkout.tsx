@@ -13,13 +13,6 @@ export default function Checkout() {
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
 
-      {/* Header */}
-      <header className="border-b border-slate-100 py-4 px-6">
-        <a href="/" className="flex items-center gap-2 w-fit hover:opacity-80 transition-opacity">
-          <span className="text-slate-900 font-semibold text-base">The Foot Capacity System</span>
-        </a>
-      </header>
-
       <main className="max-w-2xl mx-auto px-6 py-12">
 
         {/* Heading */}
@@ -139,14 +132,7 @@ export default function Checkout() {
           <span>♾️ Lifetime Access</span>
         </div>
 
-        {/* Secondary link */}
-        <div className="text-center mt-8">
-          <a href="/" className="text-slate-400 hover:text-slate-600 text-sm transition-colors">
-            Return to fixyourmovement.com
-          </a>
-        </div>
-
-      </main>
+        </main>
     </div>
   );
 }
