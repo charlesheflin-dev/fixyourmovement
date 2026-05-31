@@ -91,11 +91,11 @@ export default function StartFrustrated() {
               </h1>
 
               <p className="text-slate-600 text-lg leading-relaxed mb-3">
-                Most people who find The Foot Capacity System have already tried stretching, orthotics, cortisone, rest, and physical therapy. They did everything they were told. The pain kept coming back.
+                Most people who find The Foot Capacity System have already tried stretching, orthotics, injections, rest, exercises, and physical therapy. They weren't lacking effort. They were following advice that never gave them a clear process to follow. The pain kept coming back.
               </p>
 
               <p className="text-slate-500 text-base italic leading-relaxed mb-8">
-                This system was built for exactly that situation — not as another thing to try, but as a structured process designed to work when other things haven't.
+                This system was built for exactly that situation — not as another treatment to add to the pile, but as a structured process that helps you stop starting over every time pain returns.
               </p>
 
               {/* Recognition bullets — archetype-specific */}
@@ -142,7 +142,7 @@ export default function StartFrustrated() {
                 Why It Keeps Happening
               </p>
               <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
-                The cycle isn't your fault. But it won't break on its own.
+                The Missing Piece Usually Isn't More Effort.
               </h2>
 
               <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
