@@ -27,6 +27,7 @@ import StartFrustrated from "./pages/StartFrustrated";
 import StartActive from "./pages/StartActive";
 import StartChronic from "./pages/StartChronic";
 import StartNew from "./pages/StartNew";
+import Checkout from "./pages/Checkout";
 
 const queryClient = new QueryClient();
 
@@ -71,8 +72,9 @@ const App = () => (
                    <Route path="/start/frustrated" element={<StartFrustrated />} />
                   <Route path="/start/active" element={<StartActive />} />
                   <Route path="/start/chronic" element={<StartChronic />} />
-                  <Route path="/start/new" element={<StartNew />} />
-                   <Route path="*" element={<NotFound />} />
+                   <Route path="/start/new" element={<StartNew />} />
+                   <Route path="/checkout" element={<Checkout />} />
+                    <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
     </TooltipProvider>
