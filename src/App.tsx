@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -67,7 +67,7 @@ const App = () => (
                   <Route path="/oldindex" element={<Index_archive />} />
                   <Route path="/oldwalkthrough" element={<Walkthrough_archive />} />
                 <Route path="/email-confirmation" element={<EmailConfirmation />} />
-                  <Route path="/lp/newsletter" element={<FCSNewsletterJoin />} />
+                  <Route path="/lp/newsletter" element={<Navigate to="/lp/take-assessment" replace />} />
                    <Route path="/lp/take-assessment" element={<TakeAssessment />} />
                   <Route path="/assessment-preview" element={<AssessmentPage />} />
                    <Route path="/assessment" element={<Assessment />} />
