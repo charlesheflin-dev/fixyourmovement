@@ -9,10 +9,10 @@ export default function TakeAssessment() {
       {/* HEADER */}
       <header className="px-6 py-5 border-b border-slate-100">
         <div className="max-w-5xl mx-auto">
-          <a href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <div className="flex items-center gap-3">
             <img src={logo} alt="FCS" className="h-8 w-auto" />
             <span className="text-slate-900 font-bold text-base leading-tight tracking-tight">The Foot Capacity System</span>
-          </a>
+          </div>
         </div>
       </header>
 
@@ -28,44 +28,33 @@ export default function TakeAssessment() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="lg:w-1/2 mb-10 lg:mb-0"
             >
-              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-5">Free · Takes 3 Minutes</p>
+              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-5">Free Assessment</p>
 
               <h1 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-snug mb-5">
-                Find Out What's Most Likely Holding Back Your Recovery
+                Get Clarity.<br />Know What's Next.<br />Take the Assessment.
               </h1>
 
-              <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                Answer a few questions about your symptoms, activity level, and recovery history. In less than 3 minutes, you'll receive personalized feedback designed to help you better understand where you are in the recovery process and what to focus on next.
+              <p className="text-slate-600 text-lg leading-relaxed mb-4">
+                This short assessment helps identify what's most likely contributing to your foot or heel pain and what to focus on first.
               </p>
 
-              {/* What you'll get */}
+              <p className="text-slate-600 text-lg leading-relaxed mb-8">
+                In about 3 minutes, you'll get personalized insights so you can stop guessing and start making progress.
+              </p>
+
+              {/* Benefit bullets */}
               <div className="space-y-4 mb-8">
                 {[
-                  { label: "Understand where you are in the recovery process", desc: "" },
-                  { label: "Learn what may be slowing your progress", desc: "" },
-                  { label: "Discover what to focus on next", desc: "" },
-                  { label: "Receive guidance matched to your situation", desc: "" },
+                  "See where you are in your recovery right now",
+                  "Understand what may be holding you back",
+                  "Get personalized insights based on your responses",
+                  "Receive guidance tailored to your situation",
                 ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <CheckCircle size={17} className="text-blue-600 shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-slate-900 font-semibold text-sm">{item.label}</p>
-                      {item.desc && <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>}
-                    </div>
+                  <div key={i} className="flex items-center gap-3">
+                    <CheckCircle size={17} className="text-blue-600 shrink-0" />
+                    <p className="text-slate-700 text-base">{item}</p>
                   </div>
                 ))}
-              </div>
-
-              {/* Doctor quote */}
-              <div className="flex items-center gap-4 pt-6 border-t border-slate-100">
-                <img
-                  src="/images/dr-jonathan-schutza-headshot.png"
-                  alt="Dr. Jonathan Schutza"
-                  className="w-12 h-12 rounded-full object-cover border-2 border-slate-100 shadow-sm shrink-0"
-                />
-                <p className="text-slate-500 text-sm leading-relaxed italic">
-                  "Most people aren't lacking effort. They're lacking a system they can stay consistent with long enough to move forward." — <span className="text-slate-900 font-semibold not-italic">Dr. Jonathan Schutza, PT, DPT</span>
-                </p>
               </div>
             </motion.div>
 
@@ -83,10 +72,10 @@ export default function TakeAssessment() {
                   <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
                     <ClipboardList size={18} className="text-blue-600" />
                   </div>
-                  <p className="text-slate-900 font-bold text-xl">Start your assessment</p>
+                  <p className="text-slate-900 font-bold text-xl">Start The Assessment</p>
                 </div>
                 <p className="text-slate-500 text-sm leading-relaxed mb-7">
-                  Enter your details below. You'll receive a confirmation email with your assessment link.
+                  Enter your name and email to access the Foot Capacity Assessment. The assessment takes approximately 3 minutes to complete.
                 </p>
 
                 {/* AWeber form */}
@@ -146,26 +135,42 @@ export default function TakeAssessment() {
                   {/* Trust */}
                   <div className="flex items-center justify-center gap-2 pt-1">
                     <ShieldCheck size={13} className="text-blue-500 shrink-0" />
-                    <p className="text-slate-400 text-xs">No cost. No obligation. Assessment takes approximately 3 minutes.</p>
+                    <p className="text-slate-400 text-xs text-center">No spam. No obligation. Assessment access delivered instantly.</p>
                   </div>
 
                 </form>
               </div>
+            </motion.div>
 
-              {/* Below form reassurance */}
-              <div className="mt-6 bg-slate-50 rounded-xl p-5 border border-slate-100">
-                <p className="text-slate-500 text-sm leading-relaxed text-center">
-                  After confirming your email you'll be taken directly to the assessment. Personalized feedback provided after completion.
+          </div>
+
+          {/* DR. JONATHAN SECTION */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+            className="mt-16 pt-12 border-t border-slate-100"
+          >
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 max-w-2xl mx-auto">
+              <img
+                src="/images/dr-jonathan-schutza-headshot.png"
+                alt="Dr. Jonathan Schutza"
+                className="w-20 h-20 rounded-full object-cover border-2 border-slate-100 shadow-sm shrink-0"
+              />
+              <div>
+                <p className="text-slate-900 font-semibold text-base mb-1 text-center sm:text-left">Dr. Jonathan Schutza, PT, DPT</p>
+                <p className="text-slate-500 text-sm leading-relaxed text-center sm:text-left">
+                  Helping people overcome foot and heel pain through a clear process, practical guidance, and proven strategies that build lasting change.
                 </p>
               </div>
+            </div>
+          </motion.div>
 
-            </motion.div>
-          </div>
         </div>
       </main>
 
       {/* FOOTER */}
-      <footer className="px-6 py-6 border-t border-slate-100">
+      <footer className="px-6 py-6 border-t border-slate-100 mt-12">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-400">
           <p>© {new Date().getFullYear()} The Foot Capacity System. All rights reserved.</p>
           <div className="flex flex-wrap gap-4 justify-center md:justify-end">
