@@ -21,6 +21,7 @@ import Walkthrough_archive from "./pages/Walkthrough_archive_2026_05_25";
 import CookieConsent from "./components/CookieConsent.tsx";
 import EmailConfirmation from "./pages/EmailConfirmation";
 import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
+import TakeAssessment from "./pages/TakeAssessment";
 import Assessment from "./pages/Assessment";
 import AssessmentPage from "./pages/AssessmentPage";
 import StartFrustrated from "./pages/StartFrustrated";
@@ -67,6 +68,7 @@ const App = () => (
                   <Route path="/oldwalkthrough" element={<Walkthrough_archive />} />
                 <Route path="/email-confirmation" element={<EmailConfirmation />} />
                   <Route path="/lp/newsletter" element={<FCSNewsletterJoin />} />
+                   <Route path="/lp/take-assessment" element={<TakeAssessment />} />
                   <Route path="/assessment-preview" element={<AssessmentPage />} />
                    <Route path="/assessment" element={<Assessment />} />
                    <Route path="/start/frustrated" element={<StartFrustrated />} />
