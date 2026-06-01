@@ -113,7 +113,7 @@ export default function Walkthrough() {
           </div>
         </section>
 
-        {/* SECTION 2.5 — COMPARISON */}
+        {/* SECTION 3 — COMPARISON */}
         <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
@@ -194,7 +194,7 @@ export default function Walkthrough() {
           </div>
         </section>
 
-        {/* SECTION 3 — HOW THE SYSTEM WORKS */}
+        {/* SECTION 4 — HOW THE SYSTEM WORKS */}
         <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
@@ -282,59 +282,10 @@ export default function Walkthrough() {
           </div>
         </section>
 
-        {/* SECTION 4 — WHO THIS IS FOR / NOT FOR */}
-        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
-          <div className="max-w-3xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-3">
-                Is this system right for you?
-              </h2>
-              <p className="text-slate-500 text-lg leading-relaxed mb-12">
-                This system was built for a specific kind of person. Here's how to know if that's you.
-              </p>
+        {/* SECTION 5 — TESTIMONIALS */}
+        <WalkthroughTestimonialSection />
 
-              <div className="space-y-4 mb-12">
-                <p className="text-blue-600 text-sm font-semibold uppercase tracking-widest mb-4">This is for you if...</p>
-                {[
-                  "You've been dealing with foot or ankle pain that keeps coming back despite trying other approaches.",
-                  "You're frustrated with conflicting advice and want one clear, structured process to follow.",
-                  "You want guided recovery you can do from home without needing clinic visits.",
-                  "You're tired of restarting and want a system that accounts for setbacks and flare-ups.",
-                  "You want to track your progress and actually see whether things are improving over time.",
-                  "You're willing to follow a structured process consistently over time."
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <CheckCircle size={18} className="text-blue-600 shrink-0 mt-1" />
-                    <p className="text-slate-700 text-lg leading-relaxed">{item}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="border-t border-slate-100 pt-10 space-y-4">
-                <p className="text-slate-400 text-sm font-semibold uppercase tracking-widest mb-4">This is not for you if...</p>
-                {[
-                  "You're looking for an overnight fix or a passive solution that requires no effort.",
-                  "You're unwilling to follow a structured program consistently over time.",
-                  "You need emergency or acute medical care — this system is not a substitute for urgent treatment.",
-                  "You're expecting results without tracking or engaging with the daily guidance.",
-                  "You want someone to do the work for you — this system guides you, but you have to show up."
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <span className="text-slate-300 font-bold shrink-0 mt-1 text-lg">—</span>
-                    <p className="text-slate-400 text-lg leading-relaxed">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* SECTION 5 — PRODUCT SUMMARY */}
+        {/* SECTION 6 — PRODUCT SUMMARY */}
         <section id="product-summary" className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-2xl mx-auto px-6">
             <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden">
@@ -352,6 +303,7 @@ export default function Walkthrough() {
                     <img src="/images/new-phone2.jpg" alt="App screenshot 2" className="w-full max-w-[180px] rounded-2xl mt-4" />
                   </div>
                   <div className="sm:w-3/5 flex flex-col gap-4">
+                    {/* Phase charts and insights remain unchanged */}
                     <div className="bg-white border border-slate-200 rounded-xl p-4">
                       <p className="font-semibold text-slate-900 text-sm">Phase 1: Reset</p>
                       <p className="text-slate-500 text-xs mb-3">May 11 – present</p>
@@ -531,7 +483,59 @@ export default function Walkthrough() {
           </div>
         </section>
 
-        {/* SECTION 6 — FAQ */}
+        {/* SECTION 7 — WHO THIS IS FOR / NOT FOR */}
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-3">
+                Is this system right for you?
+              </h2>
+              <p className="text-slate-500 text-lg leading-relaxed mb-12">
+                This system was built for a specific kind of person. Here's how to know if that's you.
+              </p>
+
+              <div className="space-y-4 mb-12">
+                <p className="text-blue-600 text-sm font-semibold uppercase tracking-widest mb-4">This is for you if...</p>
+                {[
+                  "You've been dealing with foot or ankle pain that keeps coming back despite trying other approaches.",
+                  "You're frustrated with conflicting advice and want one clear, structured process to follow.",
+                  "You want guided recovery you can do from home without needing clinic visits.",
+                  "You're tired of restarting and want a system that accounts for setbacks and flare-ups.",
+                  "You want to track your progress and actually see whether things are improving over time.",
+                  "You're willing to follow a structured process consistently over time."
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <CheckCircle size={18} className="text-blue-600 shrink-0 mt-1" />
+                    <p className="text-slate-700 text-lg leading-relaxed">{item}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-t border-slate-100 pt-10 space-y-4">
+                <p className="text-slate-400 text-sm font-semibold uppercase tracking-widest mb-4">This is not for you if...</p>
+                {[
+                  "You're looking for an overnight fix or a passive solution that requires no effort.",
+                  "You're unwilling to follow a structured program consistently over time.",
+                  "You need emergency or acute medical care — this system is not a substitute for urgent treatment.",
+                  "You're expecting results without tracking or engaging with the daily guidance.",
+                  "You want someone to do the work for you — this system guides you, but you have to show up."
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <span className="text-slate-300 font-bold shrink-0 mt-1 text-lg">—</span>
+                    <p className="text-slate-400 text-lg leading-relaxed">{item}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* SECTION 8 — FAQ */}
         <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">Common Questions</p>
@@ -615,7 +619,7 @@ export default function Walkthrough() {
                   What if I buy this and it doesn't work for me?
                 </AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">
-                   The system comes with a 30-day guarantee. Try it, and if you don't feel it's right for you, email us at contact@fixyourmovement.com within 30 days of purchase and we'll refund your investment. No complicated forms, no hoops to jump through.
+                  The system comes with a 30-day guarantee. Try it, and if you don't feel it's right for you, email us at contact@fixyourmovement.com within 30 days of purchase and we'll refund your investment. No complicated forms, no hoops to jump through.
                 </AccordionContent>
               </AccordionItem>
 
@@ -654,10 +658,7 @@ export default function Walkthrough() {
           </div>
         </section>
 
-        {/* SECTION 7 — TESTIMONIALS */}
-        <WalkthroughTestimonialSection />
-
-        {/* SECTION 8 — FINAL CTA */}
+        {/* SECTION 9 — FINAL CTA */}
         <section className="py-16 md:py-24 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div
@@ -672,6 +673,7 @@ export default function Walkthrough() {
               <p className="text-slate-600 text-xl leading-relaxed mb-10">
                 Access the complete system, app, and tools designed to help recovery feel less overwhelming and easier to manage over time.
               </p>
+              
               <a
                 href={CHECKOUT_URL}
                 target="_self"
