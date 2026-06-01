@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import logo from "@/assets/logo.png";
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
@@ -46,10 +47,6 @@ const SCALE_COLORS = ["#2563EB", "#0D9488", "#D97706", "#EA580C", "#DC2626"];
 const QUESTIONS_PER_PAGE = 7;
 
 // ─── Scoring helpers ────────────────────────────────────────────────────────────
-// Stored values: 4 = No difficulty, 0 = Unable to do
-// Display values: 0 = No difficulty, 4 = Unable to do
-// Conversion: stored = 4 - displayValue
-// ADL score = (sum of stored values / 84) * 100
 function calculateFaamScore(responses: Record<string, number>): number {
   const sum = FAAM_QUESTIONS.reduce((acc, q) => acc + (responses[q.id] ?? 0), 0);
   return Math.round((sum / 84) * 100);
@@ -186,14 +183,7 @@ function FaamGauge({ score }: { score: number }) {
     <div className="flex flex-col items-center">
       <div className="relative" style={{ width: 160, height: 160 }}>
         <svg width="160" height="160" viewBox="0 0 120 120">
-          {/* Background track */}
-          <circle
-            cx="60" cy="60" r="54"
-            fill="none"
-            stroke="#E2E8F0"
-            strokeWidth="10"
-          />
-          {/* Score arc */}
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#E2E8F0" strokeWidth="10" />
           <circle
             cx="60" cy="60" r="54"
             fill="none"
@@ -206,15 +196,11 @@ function FaamGauge({ score }: { score: number }) {
             style={{ transition: "stroke-dashoffset 1s ease-out" }}
           />
         </svg>
-        {/* Score label in center */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-4xl font-bold" style={{ color: band.color, lineHeight: 1 }}>
-            {score}
-          </span>
+          <span className="text-4xl font-bold" style={{ color: band.color, lineHeight: 1 }}>{score}</span>
           <span className="text-xs font-semibold text-slate-500 mt-0.5">/ 100</span>
         </div>
       </div>
-      {/* Band label */}
       <div
         className="mt-3 px-4 py-1.5 rounded-full text-sm font-semibold"
         style={{ color: band.color, backgroundColor: band.bg, border: `1px solid ${band.border}` }}
@@ -225,7 +211,7 @@ function FaamGauge({ score }: { score: number }) {
   );
 }
 
-// ─── Score bar (visual breakdown) ──────────────────────────────────────────────
+// ─── Score bar ──────────────────────────────────────────────────────────────────
 function ScoreBar({ score }: { score: number }) {
   const band = getFaamBand(score);
   return (
@@ -237,17 +223,15 @@ function ScoreBar({ score }: { score: number }) {
         <span>100%</span>
       </div>
       <div className="relative h-3 bg-slate-100 rounded-full overflow-hidden">
-        {/* Zone markers */}
         <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-red-100" />
-        <div className="absolute top-0 bottom-0" style={{ left: "50%", width: "30%" }} className="bg-amber-100" />
-        <div className="absolute top-0 bottom-0" style={{ left: "80%", right: 0 }} className="bg-green-100" />
-        {/* Score fill */}
+        <div className="absolute top-0 bottom-0" style={{ left: "50%", width: "30%", backgroundColor: "#FEF3C7" }} />
+        <div className="absolute top-0 bottom-0" style={{ left: "80%", right: 0, backgroundColor: "#DCFCE7" }} />
         <div
           className="absolute top-0 left-0 bottom-0 rounded-full transition-all duration-1000"
           style={{ width: `${score}%`, backgroundColor: band.color }}
         />
       </div>
-      <div className="flex justify-between text-xs mt-1.5" style={{ color: "var(--slate-400, #94a3b8)" }}>
+      <div className="flex justify-between text-xs mt-1.5">
         <span className="text-red-500 font-medium">Significant</span>
         <span className="text-amber-500 font-medium">Moderate</span>
         <span className="text-green-500 font-medium">Mild</span>
@@ -261,34 +245,28 @@ export default function Assessment() {
   const [email, setEmail] = useState<string>("");
   const [step, setStep] = useState<Step>("hook");
 
-  // HOOK state
   const [answers, setAnswers] = useState<Answers>({ q1: "", q2: [], q3: "", q4: "", q5: "" });
   const [hookLoading, setHookLoading] = useState(false);
   const [hookError, setHookError] = useState<string>("");
   const [archetypeKey, setArchetypeKey] = useState<string>("");
 
-  // FAAM state
   const [faamPage, setFaamPage] = useState(0);
   const [faamResponses, setFaamResponses] = useState<Record<string, number>>({});
   const [faamLoading, setFaamLoading] = useState(false);
   const [faamError, setFaamError] = useState<string>("");
 
-  // Results state
   const [faamScore, setFaamScore] = useState<number>(0);
 
-  // Read email from URL param
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const emailParam = params.get("email");
     if (emailParam) setEmail(decodeURIComponent(emailParam));
   }, []);
 
-  // Scroll to top on step change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [step, faamPage]);
 
-  // ─── HOOK helpers ─────────────────────────────────────────────────────────────
   const hookAllAnswered = answers.q1 !== "" && answers.q3 !== "" && answers.q4 !== "" && answers.q5 !== "";
 
   const handleQ2Toggle = (value: Q2Value) => {
@@ -319,7 +297,6 @@ export default function Assessment() {
     }
   };
 
-  // ─── FAAM helpers ─────────────────────────────────────────────────────────────
   const pageQuestions = FAAM_QUESTIONS.slice(faamPage * QUESTIONS_PER_PAGE, (faamPage + 1) * QUESTIONS_PER_PAGE);
   const startIdx = faamPage * QUESTIONS_PER_PAGE;
   const isLastPage = faamPage === 2;
@@ -333,8 +310,6 @@ export default function Assessment() {
     try {
       const score = calculateFaamScore(faamResponses);
       setFaamScore(score);
-
-      // Apply FAAM band tag via Worker
       const band = getFaamBand(score);
       try {
         await fetch(WORKER_URL, {
@@ -347,9 +322,8 @@ export default function Assessment() {
           }),
         });
       } catch {
-        // Non-fatal — FAAM email tag application failed silently
+        // Non-fatal
       }
-
       setStep("results");
     } catch (err: unknown) {
       setFaamError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
@@ -358,11 +332,9 @@ export default function Assessment() {
     }
   };
 
-  // ─── Derived display data ─────────────────────────────────────────────────────
   const archetype = archetypeResults[archetypeKey] ?? null;
   const faamBand = getFaamBand(faamScore);
 
-  // ─── Question option lists ────────────────────────────────────────────────────
   const q1Options = [
     { label: "A few weeks", value: "few_weeks" },
     { label: "A few months", value: "few_months" },
@@ -398,34 +370,34 @@ export default function Assessment() {
     { label: "Understanding what's happening and getting ahead of it before it becomes a bigger problem", value: "get_ahead" },
   ];
 
-  // ─── Render ───────────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
 
-      {/* Header */}
-      <header className="border-b border-slate-100 py-4 px-6">
-        <a href="/" className="flex items-center gap-2 w-fit hover:opacity-80 transition-opacity">
-          <span className="text-slate-900 font-semibold text-base">The Foot Capacity System</span>
-        </a>
+      {/* Header — updated with logo */}
+      <header className="border-b border-slate-100 py-4 px-6 bg-white">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="FCS" className="h-8 w-auto" />
+            <span className="text-slate-900 font-bold text-base leading-tight tracking-tight">The Foot Capacity System</span>
+          </div>
+        </div>
       </header>
 
-      {/* Step indicator — shown on hook and faam steps */}
+      {/* Step indicator */}
       {step !== "results" && (
         <div className="border-b border-slate-100 bg-slate-50 px-6 py-3">
           <div className="max-w-2xl mx-auto flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${step === "hook" ? "bg-blue-600 text-white" : "bg-blue-600 text-white"
-                }`}>
+              <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold bg-blue-600 text-white">
                 {step === "hook" ? "1" : "✓"}
               </div>
               <span className={`text-sm font-medium ${step === "hook" ? "text-slate-900" : "text-blue-600"}`}>
-                Recovery Profile
+                Recovery Assessment
               </span>
             </div>
             <div className="flex-1 h-px bg-slate-200" />
             <div className="flex items-center gap-2">
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${step === "faam" ? "bg-blue-600 text-white" : "bg-slate-200 text-slate-500"
-                }`}>
+              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${step === "faam" ? "bg-blue-600 text-white" : "bg-slate-200 text-slate-500"}`}>
                 2
               </div>
               <span className={`text-sm font-medium ${step === "faam" ? "text-slate-900" : "text-slate-400"}`}>
@@ -444,18 +416,14 @@ export default function Assessment() {
         {step === "hook" && (
           <>
             <div className="mb-10">
-              <p className="text-blue-600 text-sm font-medium uppercase tracking-wide mb-2">Step 1 of 2</p>
-              <h1 className="text-3xl font-bold text-slate-900 leading-tight mb-3">
-                What kind of recovery journey are you on?
+              <p className="text-blue-600 text-sm font-medium uppercase tracking-wide mb-4">Step 1 of 2</p>
+              <h1 className="text-3xl font-bold text-slate-900 leading-tight mb-5">
+                Tell Us About Your Situation
               </h1>
-              <p className="text-slate-600 text-base leading-relaxed">
-                Answer five short questions. We'll use your answers to personalize what you receive — then we'll measure your foot and ankle function.
+              <p className="text-slate-600 text-base leading-relaxed mb-3">
+                Answer five quick questions about your symptoms and recovery history. We'll use your responses to better understand your situation before moving into the functional assessment.
               </p>
-              {!email && (
-                <p className="mt-4 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">
-                  Please confirm your email before completing this assessment.
-                </p>
-              )}
+              <p className="text-slate-400 text-sm">⏱ Takes approximately 3 minutes</p>
             </div>
 
             {/* Q1 */}
@@ -574,13 +542,11 @@ export default function Assessment() {
             <div className="max-w-xl mx-auto">
               <p className="text-blue-600 text-sm font-semibold uppercase tracking-wide mb-2">{profile.label}</p>
               <h1 className="text-3xl font-bold text-slate-900 leading-tight mb-8">{profile.headline}</h1>
-
               <div className="space-y-5 mb-10">
                 {profile.body.map((para, i) => (
                   <p key={i} className="text-slate-700 text-base leading-relaxed">{para}</p>
                 ))}
               </div>
-
               <div className="border-t border-slate-100 pt-8">
                 <button
                   type="button"
@@ -647,10 +613,7 @@ export default function Assessment() {
                     {p < faamPage ? "✓" : p + 1}
                   </div>
                   {p < 2 && (
-                    <div
-                      className="h-0.5 w-12"
-                      style={{ background: p < faamPage ? "#2563EB" : "#E2E8F0" }}
-                    />
+                    <div className="h-0.5 w-12" style={{ background: p < faamPage ? "#2563EB" : "#E2E8F0" }} />
                   )}
                 </div>
               ))}
@@ -692,7 +655,6 @@ export default function Assessment() {
               ))}
             </div>
 
-            {/* Completion message on last page */}
             {isLastPage && totalAnswered === 21 && (
               <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-3 flex items-center gap-3 mb-4">
                 <div className="w-7 h-7 rounded-full bg-green-600 flex items-center justify-center text-white text-xs font-bold shrink-0">✓</div>
@@ -707,7 +669,6 @@ export default function Assessment() {
               <p className="text-red-600 text-sm mb-4 bg-red-50 border border-red-200 rounded-lg px-4 py-3">{faamError}</p>
             )}
 
-            {/* Bottom bar */}
             <div className="flex items-center justify-between gap-4 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 mb-4">
               <p className="text-xs text-slate-500">
                 Answered<br />
@@ -715,13 +676,7 @@ export default function Assessment() {
               </p>
               <button
                 type="button"
-                onClick={() => {
-                  if (isLastPage) {
-                    handleFaamSubmit();
-                  } else {
-                    setFaamPage((p) => p + 1);
-                  }
-                }}
+                onClick={() => { if (isLastPage) { handleFaamSubmit(); } else { setFaamPage((p) => p + 1); } }}
                 disabled={faamLoading || !pageAnswered}
                 className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-semibold text-sm px-6 py-2.5 rounded-lg transition-colors"
               >
@@ -731,13 +686,7 @@ export default function Assessment() {
 
             <button
               type="button"
-              onClick={() => {
-                if (faamPage === 0) {
-                  setStep("hook");
-                } else {
-                  setFaamPage((p) => p - 1);
-                }
-              }}
+              onClick={() => { if (faamPage === 0) { setStep("hook"); } else { setFaamPage((p) => p - 1); } }}
               disabled={faamLoading}
               className="w-full text-slate-500 hover:text-slate-700 text-sm py-2 transition-colors"
             >
@@ -755,8 +704,6 @@ export default function Assessment() {
         ══════════════════════════════════════════════════ */}
         {step === "results" && archetype && (
           <div>
-
-            {/* Header */}
             <div className="text-center mb-10">
               <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-blue-50 mb-5">
                 <svg className="w-7 h-7 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -764,49 +711,33 @@ export default function Assessment() {
                 </svg>
               </div>
               <p className="text-blue-600 text-sm font-semibold uppercase tracking-wide mb-2">Your Assessment Results</p>
-              <h1 className="text-3xl font-bold text-slate-900 leading-tight">
-                {archetype.name}
-              </h1>
+              <h1 className="text-3xl font-bold text-slate-900 leading-tight">{archetype.name}</h1>
             </div>
 
-            {/* ── FAAM Score Card ── */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-md p-8 mb-6">
               <p className="text-slate-500 text-xs font-semibold uppercase tracking-widest text-center mb-6">
                 Foot & Ankle Ability Measure (FAAM)
               </p>
-
-              {/* Gauge */}
               <div className="flex justify-center mb-6">
                 <FaamGauge score={faamScore} />
               </div>
-
-              {/* Score bar */}
               <div className="mb-6">
                 <ScoreBar score={faamScore} />
               </div>
-
-              {/* Score interpretation */}
-              <div
-                className="rounded-xl p-5"
-                style={{ backgroundColor: faamBand.bg, border: `1px solid ${faamBand.border}` }}
-              >
-                <p className="font-semibold text-sm mb-1" style={{ color: faamBand.color }}>
-                  What this means for you
-                </p>
+              <div className="rounded-xl p-5" style={{ backgroundColor: faamBand.bg, border: `1px solid ${faamBand.border}` }}>
+                <p className="font-semibold text-sm mb-1" style={{ color: faamBand.color }}>What this means for you</p>
                 <p className="text-slate-700 text-sm leading-relaxed">
                   {archetype.faamFraming(faamScore, faamBand.tag)}
                 </p>
               </div>
             </div>
 
-            {/* ── Recovery Profile Card ── */}
             <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 mb-6">
               <p className="text-slate-500 text-xs font-semibold uppercase tracking-widest mb-3">Your Recovery Profile</p>
               <h2 className="text-xl font-bold text-slate-900 mb-3">{archetype.name}</h2>
               <p className="text-slate-600 text-sm leading-relaxed">{archetype.description}</p>
             </div>
 
-            {/* ── Email confirmation ── */}
             <div className="bg-blue-50 rounded-xl border border-blue-100 px-5 py-4 mb-8 flex items-start gap-3">
               <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shrink-0 mt-0.5">
                 <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -821,7 +752,6 @@ export default function Assessment() {
               </div>
             </div>
 
-            {/* ── Primary CTA ── */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-4">
               <p className="text-slate-900 font-bold text-lg mb-2">Ready to start changing this score?</p>
               <p className="text-slate-600 text-sm leading-relaxed mb-5">
@@ -840,7 +770,6 @@ export default function Assessment() {
               </div>
             </div>
 
-            {/* ── Secondary link ── */}
             <div className="text-center">
               <a href="/" className="text-slate-400 hover:text-slate-600 text-sm transition-colors">
                 Return to fixyourmovement.com
