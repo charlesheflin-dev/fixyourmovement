@@ -777,21 +777,8 @@ export default function StartFrustrated() {
                   </div>
                 </div>
 
-                {/* Guarantee */}
-                <div className="mx-6 mb-4 bg-blue-50 rounded-2xl p-5 flex gap-4 items-start">
-                  <div className="bg-blue-600 rounded-full p-2 shrink-0">
-                    <ShieldCheck size={20} className="text-white" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-slate-900 text-sm">30-Day Satisfaction Guarantee</p>
-                    <p className="text-slate-600 text-xs mt-1">
-                      Try the full system for 30 days. If you don't feel it's right for you, email us at contact@fixyourmovement.com and we'll refund your investment. No complicated forms, no hoops to jump through.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Price — visible before first checkout button */}
-                <div className="mx-6 mb-6 border border-slate-200 rounded-2xl p-5 flex items-center justify-between gap-4">
+                {/* Price */}
+                <div className="mx-6 mb-4 border border-slate-200 rounded-2xl p-5 flex items-center justify-between gap-4">
                   <div>
                     <p className="text-4xl font-bold text-blue-600">$157</p>
                     <p className="text-slate-500 text-xs mt-1">Only 3 monthly payments of $157.</p>
@@ -804,6 +791,38 @@ export default function StartFrustrated() {
                     <p className="text-slate-500 text-xs">
                       Get lifetime access to the complete system, all updates, and everything you need to keep moving forward.
                     </p>
+                  </div>
+                </div>
+
+                {/* Guarantee card */}
+                <div className="mx-6 mb-4 border border-blue-200 rounded-2xl overflow-hidden">
+                  <div className="bg-blue-600 px-6 py-4 flex items-center gap-3">
+                    <ShieldCheck size={22} className="text-white shrink-0" />
+                    <div>
+                      <p className="text-white font-bold text-sm">30-Day Satisfaction Guarantee</p>
+                      <p className="text-blue-200 text-xs">Walk Pain-Free Or It's Free</p>
+                    </div>
+                  </div>
+                  <div className="bg-white px-6 py-5">
+                    <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                      Recovery can feel frustrating when you've already invested time, money, and energy into things that never fully solved the problem. That is why we want people to explore this system without pressure. Follow the program, track your progress, and give yourself time to build consistency.
+                    </p>
+                    <p className="text-slate-600 text-sm leading-relaxed mb-5">
+                      If you do not feel the system is helping you make meaningful progress within 30 days of purchase, email us at <span className="text-blue-600 font-medium">contact@fixyourmovement.com</span> and we'll refund your investment. No complicated forms, no hoops to jump through.
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {[
+                        "30 full days to explore the system",
+                        "Track progress directly inside the app",
+                        "Built for consistency from home",
+                        "Full refund if the program is not right for you",
+                      ].map((item) => (
+                        <div key={item} className="flex items-start gap-2">
+                          <CheckCircle size={14} className="text-blue-600 shrink-0 mt-0.5" />
+                          <p className="text-slate-700 text-xs leading-snug">{item}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
