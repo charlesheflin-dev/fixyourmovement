@@ -151,6 +151,87 @@ export default function StartNew() {
           </div>
         </section>
 
+        {/* ── SECTION 3.5: COMPARISON ──────────────────────────────────────── */}
+        <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4 text-center">See The Difference</p>
+              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-3 text-center">
+                Traditional Care vs. The Foot Capacity System
+              </h2>
+              <p className="text-slate-500 text-lg leading-relaxed mb-10 text-center">
+                Two very different approaches to recovery.<br />
+                One is built around appointments. The other is built around you.
+              </p>
+
+              <div className="relative flex flex-col md:flex-row gap-6 items-stretch">
+                <div className="flex-1 bg-white border border-slate-200 rounded-2xl shadow-sm p-7 flex flex-col">
+                  <div className="mb-5">
+                    <p className="font-bold text-slate-900 text-lg mb-0.5">Traditional Care</p>
+                    <p className="text-slate-400 text-xs font-semibold uppercase tracking-widest">Often Looks Like This</p>
+                  </div>
+                  <div className="flex flex-col gap-3 mb-6">
+                    {[
+                      "Multiple in-person appointments each week",
+                      "Driving to and from clinics",
+                      "Waiting rooms and repeated scheduling",
+                      "Hard to maintain progress between visits",
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-3 border-b border-slate-100 pb-3 last:border-0 last:pb-0">
+                        <span className="text-slate-300 font-bold shrink-0 mt-0.5">✕</span>
+                        <p className="text-slate-600 text-base leading-snug">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-auto bg-slate-50 rounded-xl p-4">
+                    <p className="text-slate-500 text-sm leading-relaxed">In-person physical therapy can be effective. The challenge is that it often requires time, coordination, and consistency — things that are not always easy to maintain with a busy, unpredictable life.</p>
+                  </div>
+                </div>
+
+                <div className="hidden md:flex items-center justify-center shrink-0">
+                  <span className="text-slate-400 font-bold text-sm tracking-widest">VS.</span>
+                </div>
+                <div className="flex md:hidden items-center justify-center">
+                  <span className="text-slate-400 font-bold text-sm tracking-widest">VS.</span>
+                </div>
+
+                <div className="flex-1 bg-white border border-blue-200 rounded-2xl shadow-sm p-7 flex flex-col">
+                  <div className="mb-5">
+                    <p className="font-bold text-blue-600 text-lg mb-0.5">The Foot Capacity System</p>
+                    <p className="text-blue-400 text-xs font-semibold uppercase tracking-widest">Built For Real-Life Consistency</p>
+                  </div>
+                  <div className="flex flex-col gap-3 mb-6">
+                    {[
+                      "Guided directly from your phone",
+                      "Tracks pain and progress daily",
+                      "Structured 15 to 20 minute sessions",
+                      "Built to fit into your real life",
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-3 border-b border-blue-50 pb-3 last:border-0 last:pb-0">
+                        <span className="text-blue-500 font-bold shrink-0 mt-0.5">✓</span>
+                        <p className="text-slate-700 text-base leading-snug">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-auto bg-blue-50 rounded-xl p-4">
+                    <p className="text-slate-600 text-sm leading-relaxed">No commuting. No waiting rooms. No building your week around appointments. <span className="text-blue-600 font-semibold">Recovery on your schedule.</span></p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center mt-10">
+                <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">One Clear System.</p>
+                <p className="font-display text-2xl font-bold text-slate-900">One clear path forward.</p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* ── SECTION 4: DOCTOR CREDIBILITY ────────────────────────────────── */}
         <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
