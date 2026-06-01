@@ -28,43 +28,43 @@ export default function TakeAssessment() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="lg:w-1/2 mb-10 lg:mb-0"
             >
-              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-5">Free Assessment</p>
+              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-5">Free · Takes 3 Minutes</p>
 
               <h1 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-snug mb-5">
-                Find out exactly where your foot recovery stands — and what to do next.
+                Find Out What's Most Likely Holding Back Your Recovery
               </h1>
 
               <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                The Foot Capacity Assessment takes 2–3 minutes and gives you a real functional score so you can stop guessing and start moving forward with clarity and confidence.
+                Answer a few questions about your symptoms, activity level, and recovery history. In less than 3 minutes, you'll receive personalized feedback designed to help you better understand where you are in the recovery process and what to focus on next.
               </p>
 
               {/* What you'll get */}
               <div className="space-y-4 mb-8">
                 {[
-                  { label: "Your FAAM score", desc: "A clinically validated measure of how foot pain is affecting your daily function — calculated instantly." },
-                  { label: "Your recovery profile", desc: "Understand which stage of recovery you're in and what that means for your next steps." },
-                  { label: "A personalized starting point", desc: "Stop guessing what to do. Get a clear direction based on where you actually are right now." },
-                  { label: "Guidance from Dr. Jonathan", desc: "Follow-up emails from Dr. Jonathan Schutza, PT, DPT tailored to your specific recovery profile." },
+                  { label: "Understand where you are in the recovery process", desc: "" },
+                  { label: "Learn what may be slowing your progress", desc: "" },
+                  { label: "Discover what to focus on next", desc: "" },
+                  { label: "Receive guidance matched to your situation", desc: "" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <CheckCircle size={17} className="text-blue-600 shrink-0 mt-0.5" />
                     <div>
                       <p className="text-slate-900 font-semibold text-sm">{item.label}</p>
-                      <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                      {item.desc && <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>}
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* Doctor credibility */}
+              {/* Doctor quote */}
               <div className="flex items-center gap-4 pt-6 border-t border-slate-100">
                 <img
                   src="/images/dr-jonathan-schutza-headshot.png"
                   alt="Dr. Jonathan Schutza"
                   className="w-12 h-12 rounded-full object-cover border-2 border-slate-100 shadow-sm shrink-0"
                 />
-                <p className="text-slate-500 text-sm leading-relaxed">
-                  Developed by <span className="text-slate-900 font-semibold">Dr. Jonathan Schutza, PT, DPT</span> — physical therapist specializing in chronic foot and ankle recovery.
+                <p className="text-slate-500 text-sm leading-relaxed italic">
+                  "Most people aren't lacking effort. They're lacking a system they can stay consistent with long enough to move forward." — <span className="text-slate-900 font-semibold not-italic">Dr. Jonathan Schutza, PT, DPT</span>
                 </p>
               </div>
             </motion.div>
@@ -140,13 +140,13 @@ export default function TakeAssessment() {
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors flex items-center justify-center gap-2"
                   >
-                    Start The Assessment <ArrowRight size={18} />
+                    Begin Assessment <ArrowRight size={18} />
                   </button>
 
                   {/* Trust */}
                   <div className="flex items-center justify-center gap-2 pt-1">
                     <ShieldCheck size={13} className="text-blue-500 shrink-0" />
-                    <p className="text-slate-400 text-xs">Free. No spam. Unsubscribe any time.</p>
+                    <p className="text-slate-400 text-xs">No cost. No obligation. Assessment takes approximately 3 minutes.</p>
                   </div>
 
                 </form>
@@ -155,7 +155,7 @@ export default function TakeAssessment() {
               {/* Below form reassurance */}
               <div className="mt-6 bg-slate-50 rounded-xl p-5 border border-slate-100">
                 <p className="text-slate-500 text-sm leading-relaxed text-center">
-                  After confirming your email you'll be taken directly to the assessment. The full HOOK + FAAM questionnaire takes <span className="text-slate-700 font-semibold">2–3 minutes</span> to complete.
+                  After confirming your email you'll be taken directly to the assessment. Personalized feedback provided after completion.
                 </p>
               </div>
 
