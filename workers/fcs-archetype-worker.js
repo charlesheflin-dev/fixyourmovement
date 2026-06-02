@@ -158,6 +158,24 @@ export default {
         });
       }
 
+      // ── Checkout visited tag branch ──────────────────────────────────────────
+      if (body.checkout_tag === "checkout_visited") {
+        const accessToken = await refreshAccessToken(env);
+        const accountId = await getAccountId(accessToken);
+        const listId = env.AWEBER_LIST_ID.replace("awlist", "");
+        const subscriber = await findSubscriber(accessToken, accountId, listId, email);
+        if (subscriber) {
+          await applyTag(accessToken, subscriber.self_link, "checkout_visited");
+        }
+        return new Response(JSON.stringify({ success: true }), {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+          },
+        });
+      }
+
       // ── FAAM tag branch ──────────────────────────────────────────────────────
       // When the assessment page sends faam_tag (after FAAM completion),
       // we apply the score band tag to the subscriber.

@@ -260,7 +260,11 @@ export default function Assessment() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const emailParam = params.get("email");
-    if (emailParam) setEmail(decodeURIComponent(emailParam));
+    if (emailParam) {
+      const decoded = decodeURIComponent(emailParam);
+      setEmail(decoded);
+      document.cookie = `fcs_email=${encodeURIComponent(decoded)}; expires=Fri, 31 Dec 2099 23:59:59 GMT; path=/; SameSite=Lax`;
+    }
   }, []);
 
   useEffect(() => {

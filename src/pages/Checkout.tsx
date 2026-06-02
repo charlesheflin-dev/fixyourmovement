@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
+const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
 const MONTHLY_URL = "https://whop.com/checkout/plan_gbAoZNeVlXmgH";
 const ONETIME_URL = "https://whop.com/checkout/plan_f7hnKFT1vq0zb";
 
@@ -7,6 +8,20 @@ type Plan = "monthly" | "onetime";
 
 export default function Checkout() {
   const [selected, setSelected] = useState<Plan>("monthly");
+
+  useEffect(() => {
+    try {
+      const match = document.cookie.split("; ").find((c) => c.startsWith("fcs_email="));
+      if (!match) return;
+      const email = decodeURIComponent(match.split("=")[1]);
+      if (!email) return;
+      fetch(WORKER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, checkout_tag: "checkout_visited" }),
+      }).catch(() => {});
+    } catch {}
+  }, []);
 
   const checkoutUrl = selected === "monthly" ? MONTHLY_URL : ONETIME_URL;
 
