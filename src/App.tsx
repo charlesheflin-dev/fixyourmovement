@@ -19,6 +19,7 @@ import NewWalkthrough from "./pages/NewWalkthrough.tsx";
 import Index_archive from "./pages/Index_archive_2026_05_25";
 import Walkthrough_archive from "./pages/Walkthrough_archive_2026_05_25";
 import CookieConsent from "./components/CookieConsent.tsx";
+import ExitPopup from "./components/ExitPopup.tsx";
 import EmailConfirmation from "./pages/EmailConfirmation";
 import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
 import TakeAssessment from "./pages/TakeAssessment";
@@ -51,6 +52,7 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <CookieConsent />
+        <ExitPopup />
          <Routes>
            <Route path="/" element={<Index />} />
            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
