@@ -11,7 +11,7 @@ export default function AssessmentCTA() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-4">
-            Free Assessment
+            Free Assessment — No Cost, No Obligation
           </p>
 
           <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
@@ -19,7 +19,7 @@ export default function AssessmentCTA() {
           </h2>
 
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            Take the free Foot Capacity Assessment — a short, structured tool that helps identify what may be contributing to your foot pain and what to focus on first. Takes about 3 minutes.
+            Take the free Foot Capacity Assessment — a short, structured tool that helps identify what may be contributing to your foot pain and what to focus on first. 100% free. Takes about 3 minutes.
           </p>
 
           {/* Benefits strip */}

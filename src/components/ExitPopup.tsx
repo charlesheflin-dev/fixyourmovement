@@ -63,7 +63,7 @@ export default function ExitPopup() {
             ✕
           </button>
           <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#7fa8d4" }}>
-            Before you go
+            Before you go — 100% free
           </p>
           <p className="text-white text-xl font-bold leading-snug mb-1">
             The next step isn't more guessing.
