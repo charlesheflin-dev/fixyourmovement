@@ -373,12 +373,12 @@ export default function Results() {
                     <p className="text-4xl font-bold text-slate-900">$157<span className="text-lg font-normal text-slate-400">/mo</span></p>
                     <p className="text-slate-500 text-sm mt-1">Only 3 monthly payments of $157</p>
                   </div>
-                  
+                  <a
                     href={CHECKOUT_URL}
                     onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_page_cta" })}
                     className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-base transition-colors text-center whitespace-nowrap"
                   >
-                    Get Started →
+                    Get Started &#8594;
                   </a>
                 </div>
 
@@ -447,12 +447,12 @@ export default function Results() {
               <p className="text-slate-600 text-lg leading-relaxed mb-8 max-w-xl mx-auto">
                 Everything you need to rebuild foot capacity, manage flare-ups, and stop starting over — structured, guided, and built specifically for your situation.
               </p>
-              
+              <a
                 href={CHECKOUT_URL}
                 onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_page_final_cta" })}
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
               >
-                Get Started With The Foot Capacity System →
+                Get Started With The Foot Capacity System &#8594;
               </a>
               <p className="text-slate-400 text-sm mt-4">30-Day Guarantee · Flexible Payment Plans · Lifetime Access</p>
             </motion.div>
