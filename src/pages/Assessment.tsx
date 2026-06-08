@@ -3,6 +3,7 @@ import logo from "@/assets/logo.png";
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
+const SAVE_ASSESSMENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/save-assessment";
 
 // ─── Types ──────────────────────────────────────────────────────────────────────
 type Q2Value = "stretching" | "shoes_orthotics" | "rest" | "physical_therapy" | "injections" | "nothing";
@@ -323,6 +324,23 @@ export default function Assessment() {
             email: email.replace(/ /g, "+"),
             faam_tag: band.tag,
             faam_score: score,
+          }),
+        });
+      } catch {
+        // Non-fatal
+      }
+      // Save full assessment data to Supabase — non-fatal
+      try {
+        await fetch(SAVE_ASSESSMENT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email.replace(/ /g, "+"),
+            archetype: archetypeKey,
+            faam_score: score,
+            faam_band: band.tag,
+            faam_responses: faamResponses,
+            hook_answers: answers,
           }),
         });
       } catch {
