@@ -30,6 +30,7 @@ import StartActive from "./pages/StartActive";
 import StartChronic from "./pages/StartChronic";
 import StartNew from "./pages/StartNew";
 import Checkout from "./pages/Checkout";
+import Results from "./pages/Results";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +79,7 @@ const App = () => (
                   <Route path="/start/chronic" element={<StartChronic />} />
                    <Route path="/start/new" element={<StartNew />} />
                    <Route path="/checkout" element={<Checkout />} />
+                   <Route path="/results/:userId" element={<Results />} />
                     <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
