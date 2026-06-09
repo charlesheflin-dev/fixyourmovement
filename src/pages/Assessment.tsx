@@ -4,6 +4,7 @@ import logo from "@/assets/logo.png";
 // ─── Constants ─────────────────────────────────────────────────────────────────
 const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
 const SAVE_ASSESSMENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/save-assessment";
+const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
 
 // ─── Types ──────────────────────────────────────────────────────────────────────
 type Q2Value = "stretching" | "shoes_orthotics" | "rest" | "physical_therapy" | "injections" | "nothing";
@@ -342,6 +343,16 @@ export default function Assessment() {
             faam_responses: faamResponses,
             hook_answers: answers,
           }),
+        });
+      } catch {
+        // Non-fatal
+      }
+      // Create trial profile — non-fatal, must run after save-assessment
+      try {
+        await fetch(CREATE_TRIAL_PROFILE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email.replace(/ /g, "+") }),
         });
       } catch {
         // Non-fatal
