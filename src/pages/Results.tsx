@@ -508,7 +508,7 @@ export default function Results() {
                 </div>
 
                 {/* What this means */}
-                <div className="rounded-xl p-5 border" style={{ backgroundColor: getFaamBandColor(data!.faamBand) + "12", borderColor: getFaamBandColor(data!.faamBand) + "40" }}>
+                <div className="rounded-xl p-5 border mb-6" style={{ backgroundColor: getFaamBandColor(data!.faamBand) + "12", borderColor: getFaamBandColor(data!.faamBand) + "40" }}>
                   <p className="font-semibold text-sm mb-1" style={{ color: getFaamBandColor(data!.faamBand) }}>What this means for your recovery</p>
                   <p className="text-slate-700 text-sm leading-relaxed">
                     {data!.faamBand === "faam_high" && "Your foot is managing day-to-day, but with compensation. People starting at your score typically reach full functional capacity by the end of Phase 2. The goal is removing the compensation — not just maintaining."}
@@ -516,6 +516,68 @@ export default function Results() {
                     {(data!.faamBand === "faam_low" || data!.faamBand === null) && "Significant limitation is where most people feel stuck — but it's also where structured progressive loading makes the most dramatic difference. This score is a starting point, not a ceiling."}
                   </p>
                 </div>
+
+                {/* FAAM checkpoint timeline */}
+                {(() => {
+                  const current = data!.faamScore ?? 0;
+                  const target = 92;
+                  const gap = Math.max(0, target - current);
+                  const p2 = Math.min(99, Math.round(current + gap * 0.33));
+                  const p3 = Math.min(99, Math.round(current + gap * 0.66));
+                  const grad = Math.min(99, Math.round(current + gap));
+                  const checkpoints = [
+                    { label: "Now", sublabel: "Baseline", score: current, week: "Today", done: true },
+                    { label: "Phase 2", sublabel: "Week 5", score: p2, week: "Reassessment", done: false },
+                    { label: "Phase 3", sublabel: "Week 9", score: p3, week: "Reassessment", done: false },
+                    { label: "Graduation", sublabel: "Week 12", score: grad, week: "Final Assessment", done: false },
+                  ];
+                  return (
+                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                      <p className="text-slate-800 text-sm font-semibold mb-1">Your FAAM Trajectory</p>
+                      <p className="text-slate-500 text-xs leading-relaxed mb-6">
+                        You will retake the FAAM assessment at the start of each new phase and again at graduation. Here is where your score is projected to land based on your current baseline.
+                      </p>
+
+                      {/* Track */}
+                      <div className="relative">
+                        {/* Connecting line */}
+                        <div className="absolute top-5 left-[12.5%] right-[12.5%] h-0.5 bg-slate-200" />
+                        <div
+                          className="absolute top-5 left-[12.5%] h-0.5 bg-blue-400"
+                          style={{ width: "0%" }}
+                        />
+
+                        {/* Nodes */}
+                        <div className="grid grid-cols-4 gap-1 relative">
+                          {checkpoints.map((cp, i) => (
+                            <div key={i} className="flex flex-col items-center">
+                              {/* Node */}
+                              <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold mb-2 border-2 z-10 ${
+                                i === 0
+                                  ? "bg-blue-600 border-blue-600 text-white"
+                                  : "bg-white border-slate-200 text-slate-400"
+                              }`}>
+                                {i === 0 ? `${cp.score}%` : `~${cp.score}%`}
+                              </div>
+                              {/* Label */}
+                              <p className={`text-[11px] font-semibold text-center leading-tight mb-0.5 ${i === 0 ? "text-blue-600" : "text-slate-500"}`}>
+                                {cp.label}
+                              </p>
+                              <p className="text-[10px] text-slate-400 text-center leading-tight">{cp.sublabel}</p>
+                              <p className={`text-[10px] text-center mt-1 leading-tight ${i === 0 ? "text-blue-500 font-medium" : "text-slate-300"}`}>
+                                {cp.week}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <p className="text-slate-400 text-xs mt-5 leading-relaxed">
+                        Projections are based on typical outcomes for patients starting at your FAAM score. Individual results vary based on consistency and starting condition.
+                      </p>
+                    </div>
+                  );
+                })()}
               </motion.div>
             </div>
           </section>
