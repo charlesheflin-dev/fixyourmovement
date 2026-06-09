@@ -633,14 +633,6 @@ export default function Results() {
                 })}
               </div>
 
-              {hasAppData && (
-                <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl px-5 py-4">
-                  <p className="text-amber-800 text-sm font-semibold mb-1">Your trial ends after Day 7.</p>
-                  <p className="text-amber-700 text-sm leading-relaxed">
-                    Upgrade now to keep your progress, unlock the full phase progression, and continue building on the results you've already created.
-                  </p>
-                </div>
-              )}
             </motion.div>
           </div>
         </section>
