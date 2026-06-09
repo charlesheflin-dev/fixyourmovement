@@ -785,13 +785,35 @@ export default function Assessment() {
               </div>
             </div>
 
+            <div className="bg-blue-50 rounded-xl border border-blue-100 px-5 py-6 mb-6 text-center">
+              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">Install The App</p>
+              <p className="text-slate-900 font-bold text-base mb-1">Track your recovery from your phone</p>
+              <p className="text-slate-500 text-sm leading-relaxed mb-4">A 7-day free trial is on its way to your inbox. Install the app to get started.</p>
+              {window.innerWidth < 768 ? (
+                <a
+                  href="https://app.fixyourmovement.com/install"
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl text-sm transition-colors"
+                >
+                  Install the App &#8594;
+                </a>
+              ) : (
+                <div className="flex flex-col items-center gap-3">
+                  <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://app.fixyourmovement.com/install"
+                    alt="QR code to install the app"
+                    className="w-36 h-36 rounded-xl border border-blue-200 shadow-sm"
+                  />
+                  <p className="text-slate-500 text-xs">Scan with your phone to install the app</p>
+                </div>
+              )}
+            </div>
+
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-4">
               <p className="text-slate-900 font-bold text-lg mb-2">Ready to start changing this score?</p>
               <p className="text-slate-600 text-sm leading-relaxed mb-5">
                 The Foot Capacity System is a structured 12-week home recovery program designed to rebuild foot strength and break the cycle of plantar fasciitis — built specifically for people in your situation.
               </p>
-              <a
-                href={archetype.salesUrl}
+              <a href={archetype.salesUrl}
                 className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base py-4 rounded-xl text-center transition-colors"
               >
                 See How The Full System Works →

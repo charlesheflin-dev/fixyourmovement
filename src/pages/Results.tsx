@@ -481,36 +481,6 @@ export default function Results() {
           </section>
         )}
 
-        {/* ── APP INSTALL CTA ── */}
-        <section className="py-8 md:py-10 bg-blue-50 border-t border-blue-100">
-          <div className="max-w-3xl mx-auto px-6">
-            <div className="flex flex-col items-center text-center gap-4">
-              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em]">Install The App</p>
-              <h2 className="font-display text-xl md:text-2xl font-bold text-slate-900 leading-snug">
-                Track your recovery from your phone
-              </h2>
-              {isMobile ? (
-                
-                <a
-                  href={INSTALL_URL}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-base transition-colors"
-                >
-                  Install the App &#8594;
-                </a>
-              ) : (
-                <div className="flex flex-col items-center gap-3">
-                  <img
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://app.fixyourmovement.com/install"
-                    alt="QR code to install the app"
-                    className="w-40 h-40 rounded-xl border border-blue-200 shadow-sm"
-                  />
-                  <p className="text-slate-500 text-sm">Scan with your phone to install the app</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-
         {/* ── WHY IT KEEPS HAPPENING ── */}
         <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
