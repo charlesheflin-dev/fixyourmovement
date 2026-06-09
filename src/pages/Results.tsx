@@ -442,7 +442,7 @@ export default function Results() {
               <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
                 <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2">A Note From Dr. Jonathan</p>
                 <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
-                  Day 7 is not a finish line.
+                  Day 7 is not the end of Phase 1.
                 </h2>
 
                 {/* Dr. Jonathan quote block */}
@@ -458,7 +458,7 @@ export default function Results() {
                       <p className="text-slate-800 font-semibold text-sm mb-3">Dr. Jonathan Schutza, PT, DPT</p>
                       <div className="space-y-3 text-slate-700 text-sm leading-relaxed">
                         <p>"Your data shows something important: your foot is responding. Pain is down. Capacity is building. That's not luck — that's your tissue adapting to progressive load for the first time, probably in years.</p>
-                        <p>Day 7 is the end of the reset window — the phase where we calm the tissue down and establish a baseline. What comes next, Phase 2, is where the real capacity building happens. This is where the tissue actually rebuilds.</p>
+                        <p>Day 7 is not the end of Phase 1 — it's just the end of your trial window. Phase 1 runs through Week 4. You are still in the foundation-building stage, and stopping now means the tissue never gets the progressive load it needs to hold the gains you've already made.</p>
                         <p>If you stop here, the load stops. And tissue that isn't progressively loaded doesn't hold its gains. Most patients who stop at this stage — even with good early results — see their pain return within 2 to 3 weeks. Not because something went wrong. Because the protocol wasn't finished.</p>
                         <p>You've done the hardest part: you started, you logged, and your body responded. Don't let that work go to waste."</p>
                       </div>
@@ -490,7 +490,7 @@ export default function Results() {
                     <p className="text-green-700 text-xs font-bold uppercase tracking-wide mb-3">If you continue</p>
                     <div className="space-y-2">
                       {[
-                        "Phase 2 begins — capacity building accelerates",
+                        "Phase 1 continues through Week 4 — building your foundation",
                         hasPainDrop ? `Pain trend continues from ${data!.latestPain}/10 downward` : "Pain trend continues downward",
                         data?.faamScore ? `FAAM score projected ~${Math.min(99, Math.round(data.faamScore + Math.max(0, 92 - data.faamScore) * 0.66))}% by Week 9` : "FAAM score improves with each phase",
                         "12-week protocol completes as prescribed",
@@ -667,7 +667,7 @@ export default function Results() {
                   : "The protocol is ready. Continue your recovery."}
               </h2>
               <p className="text-slate-600 text-lg leading-relaxed mb-8 max-w-xl mx-auto">
-                Phase 2 is where capacity actually rebuilds. Everything you need to keep the momentum going — structured, guided, and prescribed specifically for your situation.
+                Phases 1 through 3 are where capacity actually rebuilds. Everything you need to keep the momentum going — structured, guided, and prescribed specifically for your situation.
               </p>
               <a
                 href={CHECKOUT_URL}
