@@ -4,6 +4,14 @@
 // All credentials stored as Cloudflare environment secrets
 
 const AWEBER_TOKEN_URL = "https://auth.aweber.com/oauth2/token";
+const ALLOWED_ORIGINS = [
+  "https://fixyourmovement.com",
+  "https://preview.fixyourmovement.com",
+];
+function getAllowedOrigin(request) {
+  const origin = request.headers.get("Origin") || "";
+  return ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+}
 const AWEBER_API_BASE = "https://api.aweber.com/1.0";
 
 function determineArchetype(answers) {
@@ -127,7 +135,7 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, {
         headers: {
-          "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+          "Access-Control-Allow-Origin": getAllowedOrigin(request),
           "Access-Control-Allow-Methods": "POST, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type",
         },
@@ -139,7 +147,7 @@ export default {
         status: 405,
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+          "Access-Control-Allow-Origin": getAllowedOrigin(request),
         },
       });
     }
@@ -153,7 +161,7 @@ export default {
           status: 400,
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+            "Access-Control-Allow-Origin": getAllowedOrigin(request),
           },
         });
       }
@@ -171,7 +179,7 @@ export default {
           status: 200,
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+            "Access-Control-Allow-Origin": getAllowedOrigin(request),
           },
         });
       }
@@ -187,7 +195,7 @@ export default {
             status: 400,
             headers: {
               "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+              "Access-Control-Allow-Origin": getAllowedOrigin(request),
             },
           });
         }
@@ -204,7 +212,7 @@ export default {
               status: 404,
               headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+                "Access-Control-Allow-Origin": getAllowedOrigin(request),
               },
             }
           );
@@ -239,7 +247,7 @@ export default {
             status: 200,
             headers: {
               "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+              "Access-Control-Allow-Origin": getAllowedOrigin(request),
             },
           }
         );
@@ -251,7 +259,7 @@ export default {
           status: 400,
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+            "Access-Control-Allow-Origin": getAllowedOrigin(request),
           },
         });
       }
@@ -272,7 +280,7 @@ export default {
             status: 404,
             headers: {
               "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+              "Access-Control-Allow-Origin": getAllowedOrigin(request),
             },
           }
         );
@@ -284,7 +292,7 @@ export default {
         status: 200,
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+          "Access-Control-Allow-Origin": getAllowedOrigin(request),
         },
       });
 
@@ -293,7 +301,7 @@ export default {
         status: 500,
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "https://fixyourmovement.com",
+          "Access-Control-Allow-Origin": getAllowedOrigin(request),
         },
       });
     }
