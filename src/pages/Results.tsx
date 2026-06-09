@@ -132,70 +132,35 @@ const PHASES = [
   { phase: 3, label: "Phase 3", sublabel: "Perform", weeks: "Weeks 9–12", description: "Return to full activity. Lock in capacity gains." },
 ];
 
-// ── LINEAR REGRESSION HELPERS ──
-function linearRegression(values: number[]): { slope: number; intercept: number } {
-  const n = values.length;
-  if (n < 2) return { slope: 0, intercept: values[0] ?? 0 };
-  const xMean = (n - 1) / 2;
-  const yMean = values.reduce((a, b) => a + b, 0) / n;
-  let num = 0, den = 0;
-  for (let i = 0; i < n; i++) {
-    num += (i - xMean) * (values[i] - yMean);
-    den += (i - xMean) ** 2;
-  }
-  const slope = den === 0 ? 0 : num / den;
-  return { slope, intercept: yMean - slope * xMean };
-}
+// ── CLINICAL RECOVERY CURVE ──
+function buildRecoveryCurve(
+  startingPain: number,
+  currentPain: number,
+  currentWeek: number
+): { week: number; pain: number; capacity: number; isProjected: boolean }[] {
+  const smoothstep = (t: number) => t * t * (3 - 2 * t);
+  const painFloor = 1.0;
+  const capCeiling = 9.0;
+  const capStart = Math.max(0.5, 10 - startingPain);
 
-function buildFutureCastData(
-  painTimeline: { date: string; pain: number | null; capacity: number | null }[]
-): { day: number; painActual: number | null; capacityActual: number | null; painProjected: number | null; capacityProjected: number | null }[] {
-  const TOTAL_DAYS = 84;
-  const OSCILLATION_AMPLITUDE = 0.4;
-  const OSCILLATION_PERIOD = 14;
-
-  const painVals = painTimeline.map((p) => p.pain).filter((v): v is number => v !== null);
-  const capVals = painTimeline.map((p) => p.capacity).filter((v): v is number => v !== null);
-
-  const painReg = linearRegression(painVals);
-  const capReg = linearRegression(capVals);
-
-  const actualDays = painTimeline.length;
-
-  const combined: ReturnType<typeof buildFutureCastData> = [];
-
-  // Real data points
-  for (let i = 0; i < actualDays; i++) {
-    combined.push({
-      day: i + 1,
-      painActual: painTimeline[i].pain,
-      capacityActual: painTimeline[i].capacity,
-      painProjected: null,
-      capacityProjected: null,
+  const points = [];
+  for (let w = 0; w <= 12; w++) {
+    const t = smoothstep(w / 12);
+    const pain = Math.round((startingPain - (startingPain - painFloor) * t) * 10) / 10;
+    const capacity = Math.round((capStart + (capCeiling - capStart) * t) * 10) / 10;
+    const adjustedPain = w === 0
+      ? startingPain
+      : w === currentWeek
+      ? currentPain
+      : pain;
+    points.push({
+      week: w,
+      pain: Math.max(0, Math.min(10, adjustedPain)),
+      capacity: Math.max(0, Math.min(10, capacity)),
+      isProjected: w > currentWeek,
     });
   }
-
-  // Projected data points — start from last real day
-  const lastPain = painVals[painVals.length - 1] ?? 5;
-  const lastCap = capVals[capVals.length - 1] ?? 5;
-
-  for (let i = actualDays; i < TOTAL_DAYS; i++) {
-    const stepsAhead = i - (actualDays - 1);
-    const oscillation = OSCILLATION_AMPLITUDE * Math.sin((stepsAhead / OSCILLATION_PERIOD) * 2 * Math.PI);
-
-    const rawPain = lastPain + painReg.slope * stepsAhead + oscillation;
-    const rawCap = lastCap + capReg.slope * stepsAhead - oscillation;
-
-    combined.push({
-      day: i + 1,
-      painActual: null,
-      capacityActual: null,
-      painProjected: Math.round(Math.max(0, Math.min(10, rawPain)) * 10) / 10,
-      capacityProjected: Math.round(Math.max(0, Math.min(10, rawCap)) * 10) / 10,
-    });
-  }
-
-  return combined;
+  return points;
 }
 
 export default function Results() {
@@ -233,9 +198,15 @@ export default function Results() {
   const hasCrossover = hasCapacity && lastLog?.capacity !== null && lastLog?.pain !== null
     && lastLog!.capacity! > lastLog!.pain!;
 
-  // Future cast — only shown with 3+ real data points and capacity data
-  const hasFutureCast = hasTimeline && hasCapacity && (data?.painTimeline?.length ?? 0) >= 3;
-  const futureCastData = hasFutureCast ? buildFutureCastData(data!.painTimeline) : [];
+  // Recovery curve — shown whenever we have app data with a starting pain score
+  const hasRecoveryCurve = hasAppData && data?.startingPain !== null && data?.startingPain !== undefined;
+  const recoveryCurveData = hasRecoveryCurve
+    ? buildRecoveryCurve(
+        data!.startingPain!,
+        data!.latestPain ?? data!.startingPain!,
+        Math.max(0, Math.min(12, (data!.currentWeek ?? 1) - 1))
+      )
+    : [];
 
   if (loading) {
     return (
@@ -436,56 +407,97 @@ export default function Results() {
           </section>
         )}
 
-        {/* ── FUTURE CAST CHART ── */}
-        {hasFutureCast && (
+        {/* ── RECOVERY CURVE ── */}
+        {hasRecoveryCurve && (
           <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
             <div className="max-w-3xl mx-auto px-6">
               <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2">12-Week Projection</p>
+                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2">The Full Recovery Arc</p>
                 <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-2">
-                  Where your trend leads over 12 weeks.
+                  You are already on this curve.
                 </h2>
                 <p className="text-slate-500 text-base mb-8">
-                  Based on your actual logged data, this is the projected trajectory if you continue on the same path. Solid lines are your real data. Dashed lines are the projection. Recovery is never perfectly linear — the projection reflects that.
+                  This is the clinical trajectory Dr. Jonathan designed the system around. Pain decreases as capacity builds — not in a straight line, but in a structured arc across 12 weeks. Your current position is marked.
                 </p>
 
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-4">
-                  <div className="flex flex-wrap items-center gap-5 mb-4 text-xs">
-                    <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-0.5 bg-blue-500 rounded" /> Pain (actual)</span>
-                    <span className="flex items-center gap-1.5"><span className="inline-block w-6 border-t-2 border-dashed border-blue-400" /> Pain (projected)</span>
-                    <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-0.5 bg-green-500 rounded" /> Capacity (actual)</span>
-                    <span className="flex items-center gap-1.5"><span className="inline-block w-6 border-t-2 border-dashed border-green-400" /> Capacity (projected)</span>
+                  <div className="grid grid-cols-3 gap-1 mb-3 text-center text-[10px] font-semibold uppercase tracking-wide">
+                    <div className="bg-blue-50 text-blue-600 rounded px-2 py-1">Phase 1 — Reset<br /><span className="font-normal normal-case tracking-normal">Weeks 1–4</span></div>
+                    <div className="bg-amber-50 text-amber-600 rounded px-2 py-1">Phase 2 — Restore<br /><span className="font-normal normal-case tracking-normal">Weeks 5–8</span></div>
+                    <div className="bg-green-50 text-green-600 rounded px-2 py-1">Phase 3 — Perform<br /><span className="font-normal normal-case tracking-normal">Weeks 9–12</span></div>
                   </div>
+
+                  <div className="flex items-center gap-5 mb-3 text-xs">
+                    <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-0.5 bg-blue-500 rounded" /> Pain</span>
+                    <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-0.5 bg-green-500 rounded" /> Capacity</span>
+                    <span className="flex items-center gap-1.5"><span className="inline-block w-6 border-t-2 border-dashed border-slate-300" /> Projected</span>
+                  </div>
+
                   <ResponsiveContainer width="100%" height={240}>
-                    <LineChart data={futureCastData} margin={{ top: 10, right: 10, left: -15, bottom: 5 }}>
+                    <LineChart data={recoveryCurveData} margin={{ top: 10, right: 16, left: -15, bottom: 5 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
-                      <XAxis dataKey="day" tick={{ fontSize: 10, fill: "#94A3B8" }} tickFormatter={(d) => `Day ${d}`} interval={13} />
+                      <ReferenceLine x={4} stroke="#E2E8F0" strokeWidth={1} />
+                      <ReferenceLine x={8} stroke="#E2E8F0" strokeWidth={1} />
+                      <ReferenceLine
+                        x={Math.max(0, Math.min(12, (data!.currentWeek ?? 1) - 1))}
+                        stroke="#2563EB"
+                        strokeDasharray="4 3"
+                        label={{ value: "You", position: "top", fontSize: 10, fill: "#2563EB" }}
+                      />
+                      <XAxis
+                        dataKey="week"
+                        tick={{ fontSize: 10, fill: "#94A3B8" }}
+                        tickFormatter={(w) => `Wk ${w}`}
+                        ticks={[0, 2, 4, 6, 8, 10, 12]}
+                      />
                       <YAxis domain={[0, 10]} tick={{ fontSize: 10, fill: "#94A3B8" }} />
                       <Tooltip
                         contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #E2E8F0" }}
-                        formatter={(value: number, name: string) => {
-                          const labels: Record<string, string> = {
-                            painActual: "Pain (actual)",
-                            capacityActual: "Capacity (actual)",
-                            painProjected: "Pain (projected)",
-                            capacityProjected: "Capacity (projected)",
-                          };
-                          return [`${value}/10`, labels[name] ?? name];
-                        }}
-                        labelFormatter={(label) => `Day ${label}`}
+                        formatter={(value: number, name: string) => [
+                          `${value}/10`,
+                          name === "pain" ? "Pain" : "Capacity",
+                        ]}
+                        labelFormatter={(w) => `Week ${w}`}
                       />
-                      <ReferenceLine x={data!.painTimeline.length} stroke="#CBD5E1" strokeDasharray="4 4" label={{ value: "Today", position: "top", fontSize: 10, fill: "#94A3B8" }} />
-                      <Line type="monotone" dataKey="painActual" stroke="#2563EB" strokeWidth={2.5} dot={{ r: 3, fill: "#2563EB" }} connectNulls />
-                      <Line type="monotone" dataKey="capacityActual" stroke="#16A34A" strokeWidth={2.5} dot={{ r: 3, fill: "#16A34A" }} connectNulls />
-                      <Line type="monotone" dataKey="painProjected" stroke="#93C5FD" strokeWidth={2} strokeDasharray="5 4" dot={false} connectNulls />
-                      <Line type="monotone" dataKey="capacityProjected" stroke="#86EFAC" strokeWidth={2} strokeDasharray="5 4" dot={false} connectNulls />
+                      <Line
+                        type="monotone"
+                        dataKey="pain"
+                        stroke="#2563EB"
+                        strokeWidth={2.5}
+                        dot={(props: any) => {
+                          const { cx, cy, payload } = props;
+                          const isYou = payload.week === Math.max(0, Math.min(12, (data!.currentWeek ?? 1) - 1));
+                          if (isYou) return <circle key={`pain-you-${cx}`} cx={cx} cy={cy} r={6} fill="#2563EB" stroke="#fff" strokeWidth={2} />;
+                          return <circle key={`pain-${cx}`} cx={cx} cy={cy} r={payload.isProjected ? 0 : 3} fill="#2563EB" />;
+                        }}
+                        connectNulls
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="capacity"
+                        stroke="#16A34A"
+                        strokeWidth={2.5}
+                        dot={(props: any) => {
+                          const { cx, cy, payload } = props;
+                          const isYou = payload.week === Math.max(0, Math.min(12, (data!.currentWeek ?? 1) - 1));
+                          if (isYou) return <circle key={`cap-you-${cx}`} cx={cx} cy={cy} r={6} fill="#16A34A" stroke="#fff" strokeWidth={2} />;
+                          return <circle key={`cap-${cx}`} cx={cx} cy={cy} r={payload.isProjected ? 0 : 3} fill="#16A34A" />;
+                        }}
+                        connectNulls
+                      />
                     </LineChart>
                   </ResponsiveContainer>
+
+                  <div className="flex justify-between text-xs text-slate-400 mt-2 px-1">
+                    <span>Start: {data!.startingPain}/10 pain</span>
+                    <span>Now: {data!.latestPain}/10 pain</span>
+                    <span>Goal: ~1/10 pain</span>
+                  </div>
                 </div>
 
                 <div className="bg-blue-50 rounded-xl border border-blue-200 px-5 py-4">
                   <p className="text-blue-800 text-sm leading-relaxed">
-                    <strong>This is a projection, not a guarantee.</strong> Real recovery includes setbacks — that's built into the model. What the data shows is the direction your foot is heading based on the work you've already put in. The full 12-week system gives you the structure to follow that trajectory through to completion.
+                    <strong>This is the arc the system is built around.</strong> Every patient starts somewhere different — but the progression is the same. Pain decreases as capacity grows. You are already on this curve. The full 12-week system gives you the structure to follow it through to completion.
                   </p>
                 </div>
               </motion.div>
