@@ -132,37 +132,6 @@ const PHASES = [
   { phase: 3, label: "Phase 3", sublabel: "Perform", weeks: "Weeks 9–12", description: "Return to full activity. Lock in capacity gains." },
 ];
 
-// ── CLINICAL RECOVERY CURVE ──
-function buildRecoveryCurve(
-  startingPain: number,
-  currentPain: number,
-  currentWeek: number
-): { week: number; pain: number; capacity: number; isProjected: boolean }[] {
-  const smoothstep = (t: number) => t * t * (3 - 2 * t);
-  const painFloor = 1.0;
-  const capCeiling = 9.0;
-  const capStart = Math.max(0.5, 10 - startingPain);
-
-  const points = [];
-  for (let w = 0; w <= 12; w++) {
-    const t = smoothstep(w / 12);
-    const pain = Math.round((startingPain - (startingPain - painFloor) * t) * 10) / 10;
-    const capacity = Math.round((capStart + (capCeiling - capStart) * t) * 10) / 10;
-    const adjustedPain = w === 0
-      ? startingPain
-      : w === currentWeek
-      ? currentPain
-      : pain;
-    points.push({
-      week: w,
-      pain: Math.max(0, Math.min(10, adjustedPain)),
-      capacity: Math.max(0, Math.min(10, capacity)),
-      isProjected: w > currentWeek,
-    });
-  }
-  return points;
-}
-
 export default function Results() {
   const { userId } = useParams<{ userId: string }>();
   const [data, setData] = useState<ResultsData | null>(null);
@@ -198,15 +167,12 @@ export default function Results() {
   const hasCrossover = hasCapacity && lastLog?.capacity !== null && lastLog?.pain !== null
     && lastLog!.capacity! > lastLog!.pain!;
 
-  // Recovery curve — shown whenever we have app data with a starting pain score
+  // Recovery track — shown whenever we have app data with a starting pain score
   const hasRecoveryCurve = hasAppData && data?.startingPain !== null && data?.startingPain !== undefined;
-  const recoveryCurveData = hasRecoveryCurve
-    ? buildRecoveryCurve(
-        data!.startingPain!,
-        data!.latestPain ?? data!.startingPain!,
-        Math.max(0, Math.min(12, (data!.currentWeek ?? 1) - 1))
-      )
-    : [];
+  // Position on track: starting pain 8-10 = Phase 1 entry, 5-7 = Phase 1 mid, 3-4 = Phase 2 entry, 1-2 = Phase 3
+  const trackPosition = hasRecoveryCurve
+    ? Math.min(92, Math.max(4, ((10 - data!.startingPain!) / 9) * 88 + 4))
+    : 4;
 
   if (loading) {
     return (
@@ -407,97 +373,97 @@ export default function Results() {
           </section>
         )}
 
-        {/* ── RECOVERY CURVE ── */}
+        {/* ── RECOVERY TRACK ── */}
         {hasRecoveryCurve && (
           <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
             <div className="max-w-3xl mx-auto px-6">
               <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2">The Full Recovery Arc</p>
+                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2">Your Place On The Recovery Arc</p>
                 <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-2">
-                  You are already on this curve.
+                  You entered the system here.
                 </h2>
                 <p className="text-slate-500 text-base mb-8">
-                  This is the clinical trajectory Dr. Jonathan designed the system around. Pain decreases as capacity builds — not in a straight line, but in a structured arc across 12 weeks. Your current position is marked.
+                  Every patient enters at a different pain level. The system is designed to meet you where you are and move you through the full arc — from high pain to near pain-free — across 12 structured weeks.
                 </p>
 
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-4">
-                  <div className="grid grid-cols-3 gap-1 mb-3 text-center text-[10px] font-semibold uppercase tracking-wide">
-                    <div className="bg-blue-50 text-blue-600 rounded px-2 py-1">Phase 1 — Reset<br /><span className="font-normal normal-case tracking-normal">Weeks 1–4</span></div>
-                    <div className="bg-amber-50 text-amber-600 rounded px-2 py-1">Phase 2 — Restore<br /><span className="font-normal normal-case tracking-normal">Weeks 5–8</span></div>
-                    <div className="bg-green-50 text-green-600 rounded px-2 py-1">Phase 3 — Perform<br /><span className="font-normal normal-case tracking-normal">Weeks 9–12</span></div>
+
+                  {/* Pain scale labels */}
+                  <div className="flex justify-between text-[10px] font-semibold uppercase tracking-wide text-slate-400 mb-1 px-1">
+                    <span>10/10 Pain</span>
+                    <span>5/10 Pain</span>
+                    <span>1/10 Pain</span>
                   </div>
 
-                  <div className="flex items-center gap-5 mb-3 text-xs">
-                    <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-0.5 bg-blue-500 rounded" /> Pain</span>
-                    <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-0.5 bg-green-500 rounded" /> Capacity</span>
-                    <span className="flex items-center gap-1.5"><span className="inline-block w-6 border-t-2 border-dashed border-slate-300" /> Projected</span>
+                  {/* Track */}
+                  <div className="relative h-10 rounded-full overflow-hidden mb-1" style={{ background: "linear-gradient(to right, #FEE2E2, #FEF3C7, #D1FAE5)" }}>
+                    {/* Phase zone dividers */}
+                    <div className="absolute inset-y-0 left-[33.3%] w-px bg-white/60" />
+                    <div className="absolute inset-y-0 left-[66.6%] w-px bg-white/60" />
+
+                    {/* "You entered here" marker */}
+                    <div
+                      className="absolute top-0 bottom-0 flex flex-col items-center justify-center"
+                      style={{ left: `${trackPosition}%`, transform: "translateX(-50%)" }}
+                    >
+                      <div className="w-6 h-6 rounded-full bg-blue-600 border-3 border-white shadow-lg flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-white" />
+                      </div>
+                    </div>
+
+                    {/* Goal marker */}
+                    <div className="absolute right-3 top-0 bottom-0 flex items-center">
+                      <div className="w-4 h-4 rounded-full bg-green-500 border-2 border-white shadow flex items-center justify-center">
+                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4L3.5 6L6.5 2" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      </div>
+                    </div>
                   </div>
 
-                  <ResponsiveContainer width="100%" height={240}>
-                    <LineChart data={recoveryCurveData} margin={{ top: 10, right: 16, left: -15, bottom: 5 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
-                      <ReferenceLine x={4} stroke="#E2E8F0" strokeWidth={1} />
-                      <ReferenceLine x={8} stroke="#E2E8F0" strokeWidth={1} />
-                      <ReferenceLine
-                        x={Math.max(0, Math.min(12, (data!.currentWeek ?? 1) - 1))}
-                        stroke="#2563EB"
-                        strokeDasharray="4 3"
-                        label={{ value: "You", position: "top", fontSize: 10, fill: "#2563EB" }}
-                      />
-                      <XAxis
-                        dataKey="week"
-                        tick={{ fontSize: 10, fill: "#94A3B8" }}
-                        tickFormatter={(w) => `Wk ${w}`}
-                        ticks={[0, 2, 4, 6, 8, 10, 12]}
-                      />
-                      <YAxis domain={[0, 10]} tick={{ fontSize: 10, fill: "#94A3B8" }} />
-                      <Tooltip
-                        contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #E2E8F0" }}
-                        formatter={(value: number, name: string) => [
-                          `${value}/10`,
-                          name === "pain" ? "Pain" : "Capacity",
-                        ]}
-                        labelFormatter={(w) => `Week ${w}`}
-                      />
-                      <Line
-                        type="monotone"
-                        dataKey="pain"
-                        stroke="#2563EB"
-                        strokeWidth={2.5}
-                        dot={(props: any) => {
-                          const { cx, cy, payload } = props;
-                          const isYou = payload.week === Math.max(0, Math.min(12, (data!.currentWeek ?? 1) - 1));
-                          if (isYou) return <circle key={`pain-you-${cx}`} cx={cx} cy={cy} r={6} fill="#2563EB" stroke="#fff" strokeWidth={2} />;
-                          return <circle key={`pain-${cx}`} cx={cx} cy={cy} r={payload.isProjected ? 0 : 3} fill="#2563EB" />;
-                        }}
-                        connectNulls
-                      />
-                      <Line
-                        type="monotone"
-                        dataKey="capacity"
-                        stroke="#16A34A"
-                        strokeWidth={2.5}
-                        dot={(props: any) => {
-                          const { cx, cy, payload } = props;
-                          const isYou = payload.week === Math.max(0, Math.min(12, (data!.currentWeek ?? 1) - 1));
-                          if (isYou) return <circle key={`cap-you-${cx}`} cx={cx} cy={cy} r={6} fill="#16A34A" stroke="#fff" strokeWidth={2} />;
-                          return <circle key={`cap-${cx}`} cx={cx} cy={cy} r={payload.isProjected ? 0 : 3} fill="#16A34A" />;
-                        }}
-                        connectNulls
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-
-                  <div className="flex justify-between text-xs text-slate-400 mt-2 px-1">
-                    <span>Start: {data!.startingPain}/10 pain</span>
-                    <span>Now: {data!.latestPain}/10 pain</span>
-                    <span>Goal: ~1/10 pain</span>
+                  {/* Phase labels below track */}
+                  <div className="grid grid-cols-3 gap-1 mt-2 mb-5">
+                    <div className="text-center">
+                      <p className="text-[10px] font-semibold text-red-500 uppercase tracking-wide">Phase 1</p>
+                      <p className="text-[10px] text-slate-400">Reset · Wks 1–4</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-[10px] font-semibold text-amber-500 uppercase tracking-wide">Phase 2</p>
+                      <p className="text-[10px] text-slate-400">Restore · Wks 5–8</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-[10px] font-semibold text-green-600 uppercase tracking-wide">Phase 3</p>
+                      <p className="text-[10px] text-slate-400">Perform · Wks 9–12</p>
+                    </div>
                   </div>
+
+                  {/* Stat row */}
+                  <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-100">
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-slate-900">{data!.startingPain}/10</p>
+                      <p className="text-xs text-slate-400 mt-0.5">Starting pain</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-green-600">{data!.latestPain}/10</p>
+                      <p className="text-xs text-slate-400 mt-0.5">Pain today</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-blue-600">~1/10</p>
+                      <p className="text-xs text-slate-400 mt-0.5">12-week goal</p>
+                    </div>
+                  </div>
+
+                  {hasPainDrop && (
+                    <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-center gap-2">
+                      <TrendingDown size={15} className="text-green-600 shrink-0" />
+                      <p className="text-sm text-green-700 font-medium">
+                        Already moved {data!.painDrop} points in {data!.daysLogged} days — you are on the arc.
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="bg-blue-50 rounded-xl border border-blue-200 px-5 py-4">
                   <p className="text-blue-800 text-sm leading-relaxed">
-                    <strong>This is the arc the system is built around.</strong> Every patient starts somewhere different — but the progression is the same. Pain decreases as capacity grows. You are already on this curve. The full 12-week system gives you the structure to follow it through to completion.
+                    <strong>The arc is the same for every patient.</strong> Starting pain varies — the process doesn't. Pain decreases as capacity builds, phase by phase. The full 12-week system gives you the structure to follow it all the way through.
                   </p>
                 </div>
               </motion.div>
