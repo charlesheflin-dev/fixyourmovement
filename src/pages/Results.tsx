@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { ShieldCheck, Tag, Infinity, CheckCircle } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts";
+import { ShieldCheck, Tag, Infinity, CheckCircle, TrendingDown, TrendingUp, Calendar, Activity } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const GET_RESULTS_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-results-data";
 const CHECKOUT_URL = "/checkout";
+const INSTALL_URL = "https://app.fixyourmovement.com/install";
 
 interface ResultsData {
   userId: string;
@@ -23,13 +24,13 @@ interface ResultsData {
   painTimeline: { date: string; pain: number | null; capacity: number | null }[];
 }
 
-// ─── Archetype copy ────────────────────────────────────────────────────────────
 const archetypeCopy: Record<string, {
   headline: string;
   subhead: string;
   recognitionBullets: string[];
   section2Headline: string;
   section2Body: string[];
+  upgradeHook: string;
 }> = {
   Archetype_Frustrated_Fix_Seeker: {
     headline: "You've Already Put In The Work.\nThe Problem Was Never Your Effort.",
@@ -46,6 +47,7 @@ const archetypeCopy: Record<string, {
       "None of those things build the underlying tissue capacity that your foot actually needs. So when you return to activity, the tissue isn't ready, and the symptoms return.",
       "The missing piece isn't a better exercise or a better shoe. It's a structured process that progressively loads the foot, builds tolerance over time, and gives you clear guidance through both progress and setbacks.",
     ],
+    upgradeHook: "You've already proven you'll follow through. Your data shows that. The full system gives you the complete 12-week process — so you finish what you started.",
   },
   Archetype_Active_Person: {
     headline: "You Don't Have To Choose Between\nRecovery And Staying Active.",
@@ -62,6 +64,7 @@ const archetypeCopy: Record<string, {
       "So when you return to activity, you're doing it with the same tissue tolerance you had before — or less. The pain comes back, often within days.",
       "The answer isn't less activity. It's a structured process that gradually increases your foot's ability to handle load — so you can return to what you love without constantly managing flare-ups.",
     ],
+    upgradeHook: "Your capacity is already building. The full system gives you the complete progression — all the way through Phase 3, where you return to full activity without managing every step.",
   },
   Archetype_Discouraged_Chronic: {
     headline: "You've Been Dealing With This Long Enough.\nRecovery Is Still Possible.",
@@ -78,6 +81,7 @@ const archetypeCopy: Record<string, {
       "What chronic cases usually share isn't permanent damage — it's a long period of symptom management without capacity building. The tissue has never been progressively loaded in a way that builds real tolerance.",
       "This system was built for exactly this situation. The goal is to give you a structured process you can trust and stay consistent with — even when progress comes in stages.",
     ],
+    upgradeHook: "Your data is already telling a different story than the one you've been living. The full 12-week system gives you the structure to see it through — and the guidance to stay on track when setbacks happen.",
   },
   Archetype_Newly_Concerned: {
     headline: "You're Asking The Right Questions Early.\nThat Matters.",
@@ -94,6 +98,7 @@ const archetypeCopy: Record<string, {
       "Acting now, while symptoms are still manageable, is what keeps this from becoming the kind of long-term problem others spend years trying to resolve.",
       "The goal isn't to panic. The goal is to understand what's happening and start the right process now — before the cycle that traps most people even begins.",
     ],
+    upgradeHook: "You caught this early. The full system gives you the complete process to resolve it before it becomes the kind of chronic problem others spend years trying to fix.",
   },
 };
 
@@ -113,13 +118,19 @@ function getFaamBandColor(band: string | null): string {
 }
 
 function getPhaseLabel(phase: number): string {
-  if (phase === -1) return "Phase 0.5 — Calm Mode";
+  if (phase === -1) return "Calm Mode";
   if (phase === 0) return "Maintenance";
   if (phase === 1) return "Phase 1 — Reset";
   if (phase === 2) return "Phase 2 — Restore";
   if (phase === 3) return "Phase 3 — Perform";
   return "Active Recovery";
 }
+
+const PHASES = [
+  { phase: 1, label: "Phase 1", sublabel: "Reset", weeks: "Weeks 1–4", description: "Reduce inflammation. Establish baseline capacity." },
+  { phase: 2, label: "Phase 2", sublabel: "Restore", weeks: "Weeks 5–8", description: "Build progressive load tolerance. Restore function." },
+  { phase: 3, label: "Phase 3", sublabel: "Perform", weeks: "Weeks 9–12", description: "Return to full activity. Lock in capacity gains." },
+];
 
 export default function Results() {
   const { userId } = useParams<{ userId: string }>();
@@ -145,8 +156,11 @@ export default function Results() {
 
   const copy = data?.archetype ? (archetypeCopy[data.archetype] ?? defaultCopy) : defaultCopy;
   const hasPainDrop = data?.painDrop !== null && data?.painDrop !== undefined && data.painDrop > 0;
-  const hasTimeline = data?.painTimeline && data.painTimeline.length > 3;
+  const hasTimeline = data?.painTimeline && data.painTimeline.length >= 2;
+  const hasCapacity = data?.painTimeline && data.painTimeline.some((p) => p.capacity !== null);
   const hasAppData = data && data.daysLogged > 0;
+  const currentPhase = data?.currentPhase ?? 1;
+  const activePhaseIndex = Math.max(0, Math.min(2, currentPhase - 1));
 
   if (loading) {
     return (
@@ -163,56 +177,309 @@ export default function Results() {
     <div className="min-h-screen bg-white font-inter">
 
       {/* Header */}
-      <header className="border-b border-slate-100 py-4 px-6 bg-white">
-        <div className="max-w-3xl mx-auto flex items-center gap-3">
-          <img src={logo} alt="FCS" className="h-8 w-auto" />
-          <span className="text-slate-900 font-bold text-base leading-tight tracking-tight">The Foot Capacity System</span>
+      <header className="border-b border-slate-100 py-4 px-6 bg-white sticky top-0 z-50">
+        <div className="max-w-3xl mx-auto flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="FCS" className="h-8 w-auto" />
+            <span className="text-slate-900 font-bold text-base leading-tight tracking-tight">The Foot Capacity System</span>
+          </div>
+          
+          <a
+            href={CHECKOUT_URL}
+            onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_sticky_header" })}
+            className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-lg text-sm transition-colors whitespace-nowrap"
+          >
+            Upgrade Now &#8594;
+          </a>
         </div>
       </header>
 
       <main>
 
-        {/* ── HERO ── */}
-        <section className="bg-white pt-16 pb-10 md:pt-24 md:pb-14">
-          <div className="max-w-3xl mx-auto px-6">
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-
-              <div className="flex items-center gap-3.5 mb-8">
-                <img src={logo} alt="FCS" className="h-[34px] md:h-[42px] w-auto shrink-0" />
-                <span className="text-slate-900 font-bold text-base md:text-lg leading-tight tracking-tight">The Foot Capacity System</span>
-              </div>
-
-              {data?.displayName && (
-                <p className="text-blue-600 text-sm font-semibold uppercase tracking-widest mb-3">
-                  Personalized for {data.displayName}
+        {/* ── DATA HERO — shown when patient has app data ── */}
+        {hasAppData && hasPainDrop && (
+          <section className="bg-gradient-to-b from-blue-600 to-blue-700 pt-12 pb-14 md:pt-16 md:pb-18">
+            <div className="max-w-3xl mx-auto px-6">
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+                {data?.displayName && (
+                  <p className="text-blue-200 text-sm font-semibold uppercase tracking-widest mb-3">
+                    Results for {data.displayName}
+                  </p>
+                )}
+                <h1 className="font-display text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
+                  Your pain dropped {data!.painDrop} points<br />
+                  <span className="text-blue-200">in {data!.daysLogged} days.</span>
+                </h1>
+                <p className="text-blue-100 text-lg leading-relaxed mb-8 max-w-xl">
+                  From {data!.startingPain}/10 to {data!.latestPain}/10. That's not temporary relief — that's your foot capacity rebuilding. Here's your full picture.
                 </p>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center border border-white/20">
+                    <p className="text-3xl font-bold text-white mb-0.5">{data!.startingPain}/10</p>
+                    <p className="text-blue-200 text-xs font-medium uppercase tracking-wide">Starting Pain</p>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center border border-white/20">
+                    <p className="text-3xl font-bold text-green-300 mb-0.5">{data!.latestPain}/10</p>
+                    <p className="text-blue-200 text-xs font-medium uppercase tracking-wide">Pain Today</p>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center border border-white/20">
+                    <p className="text-3xl font-bold text-green-300 mb-0.5">&#8722;{data!.painDrop}</p>
+                    <p className="text-blue-200 text-xs font-medium uppercase tracking-wide">Pain Drop</p>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center border border-white/20">
+                    <p className="text-3xl font-bold text-white mb-0.5">{data!.daysLogged}</p>
+                    <p className="text-blue-200 text-xs font-medium uppercase tracking-wide">Days Logged</p>
+                  </div>
+                </div>
+
+                
+                <a
+                  href={CHECKOUT_URL}
+                  onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_hero_cta" })}
+                  className="inline-block bg-white text-blue-600 hover:bg-blue-50 font-bold px-8 py-4 rounded-xl text-base transition-colors shadow-lg"
+                >
+                  Unlock the Full 12-Week System &#8594;
+                </a>
+                <p className="text-blue-200 text-sm mt-3">30-Day Guarantee · 10-15 min/day · Guided from home</p>
+              </motion.div>
+            </div>
+          </section>
+        )}
+
+        {/* ── STANDARD HERO — shown when no pain drop data yet ── */}
+        {(!hasAppData || !hasPainDrop) && (
+          <section className="bg-white pt-14 pb-10 md:pt-20 md:pb-14">
+            <div className="max-w-3xl mx-auto px-6">
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+                <div className="flex items-center gap-3.5 mb-8">
+                  <img src={logo} alt="FCS" className="h-[34px] md:h-[42px] w-auto shrink-0" />
+                  <span className="text-slate-900 font-bold text-base md:text-lg leading-tight tracking-tight">The Foot Capacity System</span>
+                </div>
+                {data?.displayName && (
+                  <p className="text-blue-600 text-sm font-semibold uppercase tracking-widest mb-3">
+                    Personalized for {data.displayName}
+                  </p>
+                )}
+                <h1 className="font-display text-3xl md:text-[2.75rem] font-bold text-slate-900 leading-snug mb-5 whitespace-pre-line">
+                  {copy.headline.split("\n")[0]}<br />
+                  <span className="text-blue-600">{copy.headline.split("\n")[1]}</span>
+                </h1>
+                <p className="text-slate-600 text-lg leading-relaxed mb-8">{copy.subhead}</p>
+                <div className="flex flex-col gap-1.5 mb-10">
+                  {copy.recognitionBullets.map((item, i) => (
+                    <span key={i} className="flex items-center gap-2 text-slate-500 text-sm">
+                      <span className="text-blue-600 font-bold shrink-0">—</span>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-4 text-sm text-slate-500">
+                  <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-500" /> Risk Free 30-Day Guarantee</span>
+                  <span className="flex items-center gap-1.5"><Tag size={14} className="text-blue-500" /> Flexible Payment Plans</span>
+                  <span className="flex items-center gap-1.5"><Infinity size={14} className="text-blue-500" /> Lifetime Access</span>
+                  <span className="flex items-center gap-1.5"><CheckCircle size={14} className="text-blue-500" /> Guided From Home</span>
+                </div>
+              </motion.div>
+            </div>
+          </section>
+        )}
+
+        {/* ── PAIN + CAPACITY CHART ── */}
+        {hasTimeline && (
+          <section className="py-10 md:py-14 bg-white border-t border-slate-100">
+            <div className="max-w-3xl mx-auto px-6">
+              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2">Your Progress Chart</p>
+                <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-2">
+                  {hasPainDrop ? "Pain going down. Capacity going up." : "Your recovery trajectory."}
+                </h2>
+                <p className="text-slate-500 text-base mb-8">
+                  {hasPainDrop
+                    ? "This is what structured progressive loading looks like. Pain and capacity move in opposite directions — that's the signal that your foot is actually rebuilding."
+                    : "Every day logged is data. Here's your trend so far."}
+                </p>
+
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-4">
+                  {hasCapacity && (
+                    <div className="flex items-center gap-5 mb-4 text-xs">
+                      <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-0.5 bg-blue-500 rounded" /> Pain Score</span>
+                      <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-0.5 bg-green-500 rounded" /> Capacity Score</span>
+                    </div>
+                  )}
+                  <ResponsiveContainer width="100%" height={220}>
+                    <LineChart data={data!.painTimeline} margin={{ top: 10, right: 10, left: -15, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
+                      <XAxis dataKey="date" tick={{ fontSize: 10, fill: "#94A3B8" }} tickFormatter={(d) => d.slice(5)} />
+                      <YAxis domain={[0, 10]} tick={{ fontSize: 10, fill: "#94A3B8" }} />
+                      <Tooltip
+                        contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #E2E8F0" }}
+                        formatter={(value: number, name: string) => [
+                          `${value}/10`,
+                          name === "pain" ? "Pain" : "Capacity",
+                        ]}
+                        labelFormatter={(label) => `Date: ${label}`}
+                      />
+                      <Line type="monotone" dataKey="pain" stroke="#2563EB" strokeWidth={2.5} dot={{ r: 3, fill: "#2563EB" }} connectNulls />
+                      {hasCapacity && (
+                        <Line type="monotone" dataKey="capacity" stroke="#16A34A" strokeWidth={2.5} dot={{ r: 3, fill: "#16A34A" }} connectNulls />
+                      )}
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {hasPainDrop && (
+                  <div className="bg-green-50 rounded-xl border border-green-200 px-5 py-4 flex items-start gap-3">
+                    <TrendingDown size={18} className="text-green-600 shrink-0 mt-0.5" />
+                    <p className="text-green-800 text-sm leading-relaxed">
+                      <strong>Pain dropped {data!.painDrop} points</strong> from {data!.startingPain}/10 to {data!.latestPain}/10 in {data!.daysLogged} days. This is not a coincidence — it's the result of your foot's tissue capacity beginning to rebuild under structured progressive loading.
+                    </p>
+                  </div>
+                )}
+              </motion.div>
+            </div>
+          </section>
+        )}
+
+        {/* ── FAAM SCORE ── */}
+        {data?.faamScore !== null && (
+          <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
+            <div className="max-w-3xl mx-auto px-6">
+              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2">Clinical Baseline</p>
+                <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
+                  Your FAAM Score: <span style={{ color: getFaamBandColor(data!.faamBand) }}>{data!.faamScore}% — {getFaamBandLabel(data!.faamBand)}</span>
+                </h2>
+
+                {/* Score bar */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-6">
+                  <div className="flex justify-between text-xs text-slate-400 mb-2">
+                    <span>0%</span><span>50%</span><span>80%</span><span>100%</span>
+                  </div>
+                  <div className="relative h-4 bg-slate-100 rounded-full overflow-hidden mb-2">
+                    <div className="absolute inset-0 flex">
+                      <div className="w-1/2 bg-red-100" />
+                      <div className="w-[30%] bg-amber-100" />
+                      <div className="flex-1 bg-green-100" />
+                    </div>
+                    <div
+                      className="absolute top-0 left-0 bottom-0 rounded-full transition-all duration-1000"
+                      style={{ width: `${data!.faamScore}%`, backgroundColor: getFaamBandColor(data!.faamBand) }}
+                    />
+                    <div className="absolute top-1/2 -translate-y-1/2" style={{ left: `calc(${data!.faamScore}% - 8px)` }}>
+                      <div className="w-4 h-4 rounded-full bg-white border-2 shadow-sm" style={{ borderColor: getFaamBandColor(data!.faamBand) }} />
+                    </div>
+                  </div>
+                  <div className="flex justify-between text-xs mt-1">
+                    <span className="text-red-500 font-medium">Significant</span>
+                    <span className="text-amber-500 font-medium">Moderate</span>
+                    <span className="text-green-500 font-medium">Mild</span>
+                  </div>
+                </div>
+
+                {/* What this means */}
+                <div className="rounded-xl p-5 border" style={{ backgroundColor: getFaamBandColor(data!.faamBand) + "12", borderColor: getFaamBandColor(data!.faamBand) + "40" }}>
+                  <p className="font-semibold text-sm mb-1" style={{ color: getFaamBandColor(data!.faamBand) }}>What this means for your recovery</p>
+                  <p className="text-slate-700 text-sm leading-relaxed">
+                    {data!.faamBand === "faam_high" && "Your foot is managing day-to-day, but with compensation. People starting at your score typically reach full functional capacity by the end of Phase 2. The goal is removing the compensation — not just maintaining."}
+                    {data!.faamBand === "faam_moderate" && "Moderate limitation means your foot is working harder than it should to get through daily activities. People in your range typically see significant FAAM improvement by Week 6–8. The process directly targets this."}
+                    {(data!.faamBand === "faam_low" || data!.faamBand === null) && "Significant limitation is where most people feel stuck — but it's also where structured progressive loading makes the most dramatic difference. This score is a starting point, not a ceiling."}
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+          </section>
+        )}
+
+        {/* ── PHASE MAP ── */}
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6">
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2">Your Recovery Roadmap</p>
+              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-2">
+                {hasAppData ? `You're in ${getPhaseLabel(currentPhase)}. Here's what comes next.` : "12 weeks. Three phases. One clear process."}
+              </h2>
+              <p className="text-slate-500 text-base mb-8">
+                Most treatments don't have phases. They have exercises. This system has a structured progression — each phase builds on the last.
+              </p>
+
+              <div className="space-y-4">
+                {PHASES.map((p, i) => {
+                  const isActive = hasAppData && p.phase === Math.max(1, Math.min(3, currentPhase));
+                  const isComplete = hasAppData && currentPhase > p.phase;
+                  return (
+                    <div
+                      key={p.phase}
+                      className={`rounded-2xl border p-5 transition-all ${
+                        isActive
+                          ? "border-blue-400 bg-blue-50 shadow-sm"
+                          : isComplete
+                          ? "border-green-200 bg-green-50"
+                          : "border-slate-200 bg-white"
+                      }`}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
+                          isComplete ? "bg-green-500 text-white" : isActive ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-400"
+                        }`}>
+                          {isComplete ? "✓" : p.phase}
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <p className={`font-bold text-base ${isActive ? "text-blue-900" : isComplete ? "text-green-800" : "text-slate-700"}`}>
+                              {p.label} — {p.sublabel}
+                            </p>
+                            {isActive && <span className="text-[11px] font-semibold bg-blue-600 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">You are here</span>}
+                            {isComplete && <span className="text-[11px] font-semibold bg-green-500 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">Complete</span>}
+                          </div>
+                          <p className={`text-xs mb-1 font-medium ${isActive ? "text-blue-600" : "text-slate-400"}`}>{p.weeks}</p>
+                          <p className={`text-sm leading-relaxed ${isActive ? "text-blue-800" : isComplete ? "text-green-700" : "text-slate-500"}`}>{p.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {hasAppData && (
+                <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl px-5 py-4">
+                  <p className="text-amber-800 text-sm font-semibold mb-1">Your trial ends after Day 7.</p>
+                  <p className="text-amber-700 text-sm leading-relaxed">
+                    Upgrade now to keep your progress, unlock the full phase progression, and continue building on the results you've already created.
+                  </p>
+                </div>
               )}
-
-              <h1 className="font-display text-3xl md:text-[2.75rem] font-bold text-slate-900 leading-snug mb-5 whitespace-pre-line">
-                {copy.headline.split("\n")[0]}<br />
-                <span className="text-blue-600">{copy.headline.split("\n")[1]}</span>
-              </h1>
-
-              <p className="text-slate-600 text-lg leading-relaxed mb-8">{copy.subhead}</p>
-
-              <div className="flex flex-col gap-1.5 mb-10">
-                {copy.recognitionBullets.map((item, i) => (
-                  <span key={i} className="flex items-center gap-2 text-slate-500 text-sm">
-                    <span className="text-blue-600 font-bold shrink-0">—</span>
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex flex-wrap gap-4 text-sm text-slate-500">
-                <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-blue-500" /> Risk Free 30-Day Guarantee</span>
-                <span className="flex items-center gap-1.5"><Tag size={14} className="text-blue-500" /> Flexible Payment Plans</span>
-                <span className="flex items-center gap-1.5"><Infinity size={14} className="text-blue-500" /> Lifetime Access</span>
-                <span className="flex items-center gap-1.5"><CheckCircle size={14} className="text-blue-500" /> Guided From Home</span>
-              </div>
             </motion.div>
           </div>
         </section>
+
+        {/* ── UPGRADE CTA — data-driven ── */}
+        {hasAppData && (
+          <section className="py-10 md:py-14 bg-blue-600 border-t border-blue-700">
+            <div className="max-w-3xl mx-auto px-6 text-center">
+              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+                <p className="text-blue-200 text-[14px] font-semibold uppercase tracking-[0.08em] mb-3">Don't Stop Here</p>
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-white leading-snug mb-4">
+                  {hasPainDrop
+                    ? `You dropped ${data!.painDrop} points in ${data!.daysLogged} days. Imagine 12 weeks.`
+                    : "You've started something real. Finish it."}
+                </h2>
+                <p className="text-blue-100 text-lg leading-relaxed mb-8 max-w-xl mx-auto">
+                  {copy.upgradeHook}
+                </p>
+                
+                <a
+                  href={CHECKOUT_URL}
+                  onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_data_cta" })}
+                  className="inline-block bg-white text-blue-600 hover:bg-blue-50 font-bold px-10 py-5 rounded-xl text-xl transition-colors shadow-lg mb-4"
+                >
+                  Unlock the Full System &#8594;
+                </a>
+                <p className="text-blue-200 text-sm">30-Day Guarantee · 10-15 min/day · Lifetime Access</p>
+              </motion.div>
+            </div>
+          </section>
+        )}
 
         {/* ── APP INSTALL CTA ── */}
         <section className="py-8 md:py-10 bg-blue-50 border-t border-blue-100">
@@ -223,8 +490,9 @@ export default function Results() {
                 Track your recovery from your phone
               </h2>
               {isMobile ? (
+                
                 <a
-                  href="https://app.fixyourmovement.com/install"
+                  href={INSTALL_URL}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-base transition-colors"
                 >
                   Install the App &#8594;
@@ -243,96 +511,7 @@ export default function Results() {
           </div>
         </section>
 
-        {/* ── YOUR DATA (only shown if app data exists) ── */}
-        {hasAppData && (
-          <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
-            <div className="max-w-3xl mx-auto px-6">
-              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">Your Recovery Data</p>
-                <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-8">
-                  Here's what your data shows so far.
-                </h2>
-
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                  <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center">
-                    <p className="text-3xl font-bold text-blue-600 mb-1">{data!.daysLogged}</p>
-                    <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Days Logged</p>
-                  </div>
-                  {data!.currentWeek > 0 && (
-                    <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center">
-                      <p className="text-3xl font-bold text-blue-600 mb-1">Week {data!.currentWeek}</p>
-                      <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Current Week</p>
-                    </div>
-                  )}
-                  {hasPainDrop && (
-                    <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center">
-                      <p className="text-3xl font-bold text-green-600 mb-1">−{data!.painDrop}</p>
-                      <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Pain Drop</p>
-                    </div>
-                  )}
-                  {data!.faamScore !== null && (
-                    <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center">
-                      <p className="text-3xl font-bold mb-1" style={{ color: getFaamBandColor(data!.faamBand) }}>
-                        {data!.faamScore}%
-                      </p>
-                      <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">FAAM Score</p>
-                    </div>
-                  )}
-                </div>
-
-                {hasPainDrop && (
-                  <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-6">
-                    <p className="text-slate-900 font-semibold text-base mb-1">
-                      Your pain dropped from {data!.startingPain}/10 to {data!.latestPain}/10.
-                    </p>
-                    <p className="text-slate-600 text-sm leading-relaxed">
-                      That's a {data!.painDrop} point reduction. This is what structured progressive loading does — not temporary relief, but a measurable shift in how your foot is functioning.
-                    </p>
-                  </div>
-                )}
-
-                {hasTimeline && (
-                  <div className="bg-white rounded-2xl border border-slate-200 p-6">
-                    <p className="text-slate-500 text-xs font-semibold uppercase tracking-widest mb-4">Pain Trend</p>
-                    <ResponsiveContainer width="100%" height={180}>
-                      <LineChart data={data!.painTimeline} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
-                        <XAxis dataKey="date" tick={{ fontSize: 10, fill: "#94A3B8" }} tickFormatter={(d) => d.slice(5)} />
-                        <YAxis domain={[0, 10]} tick={{ fontSize: 10, fill: "#94A3B8" }} />
-                        <Tooltip
-                          contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #E2E8F0" }}
-                          formatter={(value: number) => [`${value}/10`, "Pain"]}
-                          labelFormatter={(label) => `Date: ${label}`}
-                        />
-                        <Line type="monotone" dataKey="pain" stroke="#2563EB" strokeWidth={2} dot={false} connectNulls />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                )}
-
-              </motion.div>
-            </div>
-          </section>
-        )}
-
-        {/* ── FAAM SCORE (shown if no app data but assessment exists) ── */}
-        {!hasAppData && data?.faamScore !== null && (
-          <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
-            <div className="max-w-3xl mx-auto px-6">
-              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">Your Assessment Score</p>
-                <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
-                  Your FAAM score: <span style={{ color: getFaamBandColor(data!.faamBand) }}>{data!.faamScore}% — {getFaamBandLabel(data!.faamBand)}</span>
-                </h2>
-                <p className="text-slate-600 text-lg leading-relaxed">
-                  People who start the Foot Capacity System with a score in your range typically see meaningful improvement in their functional ability by the end of Phase 2. The score measures how your foot is actually functioning — not just how much it hurts. Improving it requires the right process, applied consistently.
-                </p>
-              </motion.div>
-            </div>
-          </section>
-        )}
-
-        {/* ── SECTION 2: SURFACE THE PAIN ── */}
+        {/* ── WHY IT KEEPS HAPPENING ── */}
         <section className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
@@ -399,7 +578,6 @@ export default function Results() {
                 The Full 12-Week System
               </h2>
 
-              {/* Price card */}
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mb-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                   <div>
@@ -407,15 +585,15 @@ export default function Results() {
                     <p className="text-4xl font-bold text-slate-900">$157<span className="text-lg font-normal text-slate-400">/mo</span></p>
                     <p className="text-slate-500 text-sm mt-1">Only 3 monthly payments of $157</p>
                   </div>
+                  
                   <a
                     href={CHECKOUT_URL}
-                    onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_page_cta" })}
+                    onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_price_card" })}
                     className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-base transition-colors text-center whitespace-nowrap"
                   >
                     Get Started &#8594;
                   </a>
                 </div>
-
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
                     "Full 12-week guided protocol",
@@ -433,7 +611,6 @@ export default function Results() {
                 </div>
               </div>
 
-              {/* Guarantee card */}
               <div className="rounded-2xl overflow-hidden border border-slate-200">
                 <div className="bg-blue-600 px-6 py-4 flex items-center gap-3">
                   <ShieldCheck size={20} className="text-white shrink-0" />
@@ -444,7 +621,9 @@ export default function Results() {
                 </div>
                 <div className="bg-white px-6 py-5">
                   <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                    Follow the system for 30 days. If you genuinely don't feel it's moving you in the right direction, reach out and we'll make it right — no complicated process, no questions designed to make it harder.
+                    {hasPainDrop
+                      ? `You already dropped ${data!.painDrop} points in ${data!.daysLogged} days. Follow the full system for 30 days. If you don't feel it's continuing to move in the right direction, reach out and we'll make it right.`
+                      : "Follow the system for 30 days. If you genuinely don't feel it's moving you in the right direction, reach out and we'll make it right — no complicated process, no questions designed to make it harder."}
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {[
@@ -476,14 +655,17 @@ export default function Results() {
           <div className="max-w-3xl mx-auto px-6 text-center">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900 leading-snug mb-4">
-                Ready to continue your recovery with the full system?
+                {hasPainDrop
+                  ? "You've already proven it works. Finish the job."
+                  : "Ready to continue your recovery with the full system?"}
               </h2>
               <p className="text-slate-600 text-lg leading-relaxed mb-8 max-w-xl mx-auto">
                 Everything you need to rebuild foot capacity, manage flare-ups, and stop starting over — structured, guided, and built specifically for your situation.
               </p>
+              
               <a
                 href={CHECKOUT_URL}
-                onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_page_final_cta" })}
+                onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_final_cta" })}
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
               >
                 Get Started With The Foot Capacity System &#8594;
@@ -498,7 +680,7 @@ export default function Results() {
       {/* Footer */}
       <footer className="py-10 border-t border-slate-100">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-muted-foreground text-base">© {new Date().getFullYear()} The Foot Capacity System by Dr. Jonathan Schutza, PT, DPT. All rights reserved.</p>
+          <p className="text-muted-foreground text-base">&#169; {new Date().getFullYear()} The Foot Capacity System by Dr. Jonathan Schutza, PT, DPT. All rights reserved.</p>
           <div className="mt-4 flex items-center justify-center gap-6 text-sm text-muted-foreground flex-wrap">
             <a href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</a>
             <a href="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</a>
