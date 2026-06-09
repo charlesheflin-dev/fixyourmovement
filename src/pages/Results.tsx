@@ -162,18 +162,6 @@ export default function Results() {
   const currentPhase = data?.currentPhase ?? 1;
   const activePhaseIndex = Math.max(0, Math.min(2, currentPhase - 1));
 
-  // Crossover detection — capacity above pain on most recent log
-  const lastLog = data?.painTimeline?.[data.painTimeline.length - 1];
-  const hasCrossover = hasCapacity && lastLog?.capacity !== null && lastLog?.pain !== null
-    && lastLog!.capacity! > lastLog!.pain!;
-
-  // Recovery track — shown whenever we have app data with a starting pain score
-  const hasRecoveryCurve = hasAppData && data?.startingPain !== null && data?.startingPain !== undefined;
-  // Position on track: starting pain 8-10 = Phase 1 entry, 5-7 = Phase 1 mid, 3-4 = Phase 2 entry, 1-2 = Phase 3
-  const trackPosition = hasRecoveryCurve
-    ? Math.min(92, Math.max(4, ((10 - data!.startingPain!) / 9) * 88 + 4))
-    : 4;
-
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -195,7 +183,6 @@ export default function Results() {
             <img src={logo} alt="FCS" className="h-8 w-auto" />
             <span className="text-slate-900 font-bold text-base leading-tight tracking-tight">The Foot Capacity System</span>
           </div>
-          
           <a
             href={CHECKOUT_URL}
             onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_sticky_header" })}
@@ -225,7 +212,6 @@ export default function Results() {
                 <p className="text-blue-100 text-lg leading-relaxed mb-8 max-w-xl">
                   From {data!.startingPain}/10 to {data!.latestPain}/10. That's not temporary relief — that's your foot capacity rebuilding. Here's your full picture.
                 </p>
-
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
                   <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center border border-white/20">
                     <p className="text-3xl font-bold text-white mb-0.5">{data!.startingPain}/10</p>
@@ -244,14 +230,12 @@ export default function Results() {
                     <p className="text-blue-200 text-xs font-medium uppercase tracking-wide">Days Logged</p>
                   </div>
                 </div>
-
-                
                 <a
                   href={CHECKOUT_URL}
                   onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_hero_cta" })}
                   className="inline-block bg-white text-blue-600 hover:bg-blue-50 font-bold px-8 py-4 rounded-xl text-base transition-colors shadow-lg"
                 >
-                  Unlock the Full 12-Week System &#8594;
+                  Continue My Protocol &#8594;
                 </a>
                 <p className="text-blue-200 text-sm mt-3">30-Day Guarantee · 10-15 min/day · Guided from home</p>
               </motion.div>
@@ -311,7 +295,6 @@ export default function Results() {
                     ? "This is what structured progressive loading looks like. Pain and capacity move in opposite directions — that's the signal that your foot is actually rebuilding."
                     : "Every day logged is data. Here's your trend so far."}
                 </p>
-
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-4">
                   {hasCapacity && (
                     <div className="flex items-center gap-5 mb-4 text-xs">
@@ -339,133 +322,14 @@ export default function Results() {
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
-
                 {hasPainDrop && (
-                  <div className="bg-green-50 rounded-xl border border-green-200 px-5 py-4 flex items-start gap-3 mb-4">
+                  <div className="bg-green-50 rounded-xl border border-green-200 px-5 py-4 flex items-start gap-3">
                     <TrendingDown size={18} className="text-green-600 shrink-0 mt-0.5" />
                     <p className="text-green-800 text-sm leading-relaxed">
                       <strong>Pain dropped {data!.painDrop} points</strong> from {data!.startingPain}/10 to {data!.latestPain}/10 in {data!.daysLogged} days. This is not a coincidence — it's the result of your foot's tissue capacity beginning to rebuild under structured progressive loading.
                     </p>
                   </div>
                 )}
-
-                {/* Capacity score explanation */}
-                {hasCapacity && (
-                  <div className="bg-slate-50 rounded-xl border border-slate-200 px-5 py-4 mb-4">
-                    <p className="text-slate-800 text-sm font-semibold mb-1">What is the Capacity Score?</p>
-                    <p className="text-slate-600 text-sm leading-relaxed">
-                      Your Capacity Score measures how much load your foot can handle — combining exercise volume, functional tolerance, and recovery quality into a single number on a 0–10 scale. As you follow the protocol, capacity builds progressively. Pain typically decreases as capacity increases. The two lines moving in opposite directions is the signal the system is working.
-                    </p>
-                  </div>
-                )}
-
-                {/* Crossover callout — only shown when capacity is currently above pain */}
-                {hasCrossover && (
-                  <div className="bg-green-50 rounded-xl border border-green-400 px-5 py-4 flex items-start gap-3">
-                    <TrendingUp size={18} className="text-green-600 shrink-0 mt-0.5" />
-                    <p className="text-green-800 text-sm leading-relaxed">
-                      <strong>Your capacity has crossed above your pain score.</strong> This is exactly what Dr. Jonathan wants to see. It means your foot's ability to handle load now exceeds your current pain level — the foundation of lasting recovery is in place.
-                    </p>
-                  </div>
-                )}
-              </motion.div>
-            </div>
-          </section>
-        )}
-
-        {/* ── RECOVERY TRACK ── */}
-        {hasRecoveryCurve && (
-          <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
-            <div className="max-w-3xl mx-auto px-6">
-              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2">Your Place On The Recovery Arc</p>
-                <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-2">
-                  You entered the system here.
-                </h2>
-                <p className="text-slate-500 text-base mb-8">
-                  Every patient enters at a different pain level. The system is designed to meet you where you are and move you through the full arc — from high pain to near pain-free — across 12 structured weeks.
-                </p>
-
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-4">
-
-                  {/* Pain scale labels */}
-                  <div className="flex justify-between text-[10px] font-semibold uppercase tracking-wide text-slate-400 mb-1 px-1">
-                    <span>10/10 Pain</span>
-                    <span>5/10 Pain</span>
-                    <span>1/10 Pain</span>
-                  </div>
-
-                  {/* Track */}
-                  <div className="relative h-10 rounded-full overflow-hidden mb-1" style={{ background: "linear-gradient(to right, #FEE2E2, #FEF3C7, #D1FAE5)" }}>
-                    {/* Phase zone dividers */}
-                    <div className="absolute inset-y-0 left-[33.3%] w-px bg-white/60" />
-                    <div className="absolute inset-y-0 left-[66.6%] w-px bg-white/60" />
-
-                    {/* "You entered here" marker */}
-                    <div
-                      className="absolute top-0 bottom-0 flex flex-col items-center justify-center"
-                      style={{ left: `${trackPosition}%`, transform: "translateX(-50%)" }}
-                    >
-                      <div className="w-6 h-6 rounded-full bg-blue-600 border-3 border-white shadow-lg flex items-center justify-center">
-                        <div className="w-2 h-2 rounded-full bg-white" />
-                      </div>
-                    </div>
-
-                    {/* Goal marker */}
-                    <div className="absolute right-3 top-0 bottom-0 flex items-center">
-                      <div className="w-4 h-4 rounded-full bg-green-500 border-2 border-white shadow flex items-center justify-center">
-                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4L3.5 6L6.5 2" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Phase labels below track */}
-                  <div className="grid grid-cols-3 gap-1 mt-2 mb-5">
-                    <div className="text-center">
-                      <p className="text-[10px] font-semibold text-red-500 uppercase tracking-wide">Phase 1</p>
-                      <p className="text-[10px] text-slate-400">Reset · Wks 1–4</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-[10px] font-semibold text-amber-500 uppercase tracking-wide">Phase 2</p>
-                      <p className="text-[10px] text-slate-400">Restore · Wks 5–8</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-[10px] font-semibold text-green-600 uppercase tracking-wide">Phase 3</p>
-                      <p className="text-[10px] text-slate-400">Perform · Wks 9–12</p>
-                    </div>
-                  </div>
-
-                  {/* Stat row */}
-                  <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-100">
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-slate-900">{data!.startingPain}/10</p>
-                      <p className="text-xs text-slate-400 mt-0.5">Starting pain</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-green-600">{data!.latestPain}/10</p>
-                      <p className="text-xs text-slate-400 mt-0.5">Pain today</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-blue-600">~1/10</p>
-                      <p className="text-xs text-slate-400 mt-0.5">12-week goal</p>
-                    </div>
-                  </div>
-
-                  {hasPainDrop && (
-                    <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-center gap-2">
-                      <TrendingDown size={15} className="text-green-600 shrink-0" />
-                      <p className="text-sm text-green-700 font-medium">
-                        Already moved {data!.painDrop} points in {data!.daysLogged} days — you are on the arc.
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                <div className="bg-blue-50 rounded-xl border border-blue-200 px-5 py-4">
-                  <p className="text-blue-800 text-sm leading-relaxed">
-                    <strong>The arc is the same for every patient.</strong> Starting pain varies — the process doesn't. Pain decreases as capacity builds, phase by phase. The full 12-week system gives you the structure to follow it all the way through.
-                  </p>
-                </div>
               </motion.div>
             </div>
           </section>
@@ -480,7 +344,6 @@ export default function Results() {
                 <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
                   Your FAAM Score: <span style={{ color: getFaamBandColor(data!.faamBand) }}>{data!.faamScore}% — {getFaamBandLabel(data!.faamBand)}</span>
                 </h2>
-
                 {/* Score bar */}
                 <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-6">
                   <div className="flex justify-between text-xs text-slate-400 mb-2">
@@ -506,9 +369,8 @@ export default function Results() {
                     <span className="text-green-500 font-medium">Mild</span>
                   </div>
                 </div>
-
                 {/* What this means */}
-                <div className="rounded-xl p-5 border mb-6" style={{ backgroundColor: getFaamBandColor(data!.faamBand) + "12", borderColor: getFaamBandColor(data!.faamBand) + "40" }}>
+                <div className="rounded-xl p-5 border" style={{ backgroundColor: getFaamBandColor(data!.faamBand) + "12", borderColor: getFaamBandColor(data!.faamBand) + "40" }}>
                   <p className="font-semibold text-sm mb-1" style={{ color: getFaamBandColor(data!.faamBand) }}>What this means for your recovery</p>
                   <p className="text-slate-700 text-sm leading-relaxed">
                     {data!.faamBand === "faam_high" && "Your foot is managing day-to-day, but with compensation. People starting at your score typically reach full functional capacity by the end of Phase 2. The goal is removing the compensation — not just maintaining."}
@@ -516,68 +378,6 @@ export default function Results() {
                     {(data!.faamBand === "faam_low" || data!.faamBand === null) && "Significant limitation is where most people feel stuck — but it's also where structured progressive loading makes the most dramatic difference. This score is a starting point, not a ceiling."}
                   </p>
                 </div>
-
-                {/* FAAM checkpoint timeline */}
-                {(() => {
-                  const current = data!.faamScore ?? 0;
-                  const target = 92;
-                  const gap = Math.max(0, target - current);
-                  const p2 = Math.min(99, Math.round(current + gap * 0.33));
-                  const p3 = Math.min(99, Math.round(current + gap * 0.66));
-                  const grad = Math.min(99, Math.round(current + gap));
-                  const checkpoints = [
-                    { label: "Now", sublabel: "Baseline", score: current, week: "Today", done: true },
-                    { label: "Phase 2", sublabel: "Week 5", score: p2, week: "Reassessment", done: false },
-                    { label: "Phase 3", sublabel: "Week 9", score: p3, week: "Reassessment", done: false },
-                    { label: "Graduation", sublabel: "Week 12", score: grad, week: "Final Assessment", done: false },
-                  ];
-                  return (
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-                      <p className="text-slate-800 text-sm font-semibold mb-1">Your FAAM Trajectory</p>
-                      <p className="text-slate-500 text-xs leading-relaxed mb-6">
-                        You will retake the FAAM assessment at the start of each new phase and again at graduation. Here is where your score is projected to land based on your current baseline.
-                      </p>
-
-                      {/* Track */}
-                      <div className="relative">
-                        {/* Connecting line */}
-                        <div className="absolute top-5 left-[12.5%] right-[12.5%] h-0.5 bg-slate-200" />
-                        <div
-                          className="absolute top-5 left-[12.5%] h-0.5 bg-blue-400"
-                          style={{ width: "0%" }}
-                        />
-
-                        {/* Nodes */}
-                        <div className="grid grid-cols-4 gap-1 relative">
-                          {checkpoints.map((cp, i) => (
-                            <div key={i} className="flex flex-col items-center">
-                              {/* Node */}
-                              <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold mb-2 border-2 z-10 ${
-                                i === 0
-                                  ? "bg-blue-600 border-blue-600 text-white"
-                                  : "bg-white border-slate-200 text-slate-400"
-                              }`}>
-                                {i === 0 ? `${cp.score}%` : `~${cp.score}%`}
-                              </div>
-                              {/* Label */}
-                              <p className={`text-[11px] font-semibold text-center leading-tight mb-0.5 ${i === 0 ? "text-blue-600" : "text-slate-500"}`}>
-                                {cp.label}
-                              </p>
-                              <p className="text-[10px] text-slate-400 text-center leading-tight">{cp.sublabel}</p>
-                              <p className={`text-[10px] text-center mt-1 leading-tight ${i === 0 ? "text-blue-500 font-medium" : "text-slate-300"}`}>
-                                {cp.week}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <p className="text-slate-400 text-xs mt-5 leading-relaxed">
-                        Projections are based on typical outcomes for patients starting at your FAAM score. Individual results vary based on consistency and starting condition.
-                      </p>
-                    </div>
-                  );
-                })()}
               </motion.div>
             </div>
           </section>
@@ -594,7 +394,6 @@ export default function Results() {
               <p className="text-slate-500 text-base mb-8">
                 Most treatments don't have phases. They have exercises. This system has a structured progression — each phase builds on the last.
               </p>
-
               <div className="space-y-4">
                 {PHASES.map((p, i) => {
                   const isActive = hasAppData && p.phase === Math.max(1, Math.min(3, currentPhase));
@@ -632,7 +431,6 @@ export default function Results() {
                   );
                 })}
               </div>
-
             </motion.div>
           </div>
         </section>
@@ -708,7 +506,7 @@ export default function Results() {
                 </div>
 
                 <div className="text-center">
-                  
+                  <a
                     href={CHECKOUT_URL}
                     onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_handoff_cta" })}
                     className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold px-10 py-5 rounded-xl text-xl transition-colors shadow-lg mb-3"
@@ -717,9 +515,7 @@ export default function Results() {
                   </a>
                   <p className="text-slate-400 text-sm">30-Day Guarantee · 10-15 min/day · Lifetime Access</p>
                 </div>
-                
-                <a
-                  </motion.div>
+              </motion.div>
             </div>
           </section>
         )}
@@ -790,7 +586,6 @@ export default function Results() {
               <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-8 text-center">
                 The Full 12-Week Recovery System
               </h2>
-
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mb-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                   <div>
@@ -798,7 +593,6 @@ export default function Results() {
                     <p className="text-4xl font-bold text-slate-900">$157<span className="text-lg font-normal text-slate-400">/mo</span></p>
                     <p className="text-slate-500 text-sm mt-1">Only 3 monthly payments of $157</p>
                   </div>
-                  
                   <a
                     href={CHECKOUT_URL}
                     onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_price_card" })}
@@ -869,19 +663,18 @@ export default function Results() {
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900 leading-snug mb-4">
                 {hasPainDrop
-                  ? "You've already proven it works. Finish the job."
-                  : "Ready to continue your recovery with the full system?"}
+                  ? "Your foot responded. Don't stop the prescription."
+                  : "The protocol is ready. Continue your recovery."}
               </h2>
               <p className="text-slate-600 text-lg leading-relaxed mb-8 max-w-xl mx-auto">
-                Everything you need to rebuild foot capacity, manage flare-ups, and stop starting over — structured, guided, and built specifically for your situation.
+                Phase 2 is where capacity actually rebuilds. Everything you need to keep the momentum going — structured, guided, and prescribed specifically for your situation.
               </p>
-              
               <a
                 href={CHECKOUT_URL}
                 onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_final_cta" })}
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
               >
-                Get Started With The Foot Capacity System &#8594;
+                Continue My Protocol &#8594;
               </a>
               <p className="text-slate-400 text-sm mt-4">30-Day Guarantee · Flexible Payment Plans · Lifetime Access</p>
             </motion.div>
