@@ -201,7 +201,7 @@ export default function Results() {
             onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_sticky_header" })}
             className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-lg text-sm transition-colors whitespace-nowrap"
           >
-            Upgrade Now &#8594;
+            Continue My Protocol &#8594;
           </a>
         </div>
       </header>
@@ -637,30 +637,89 @@ export default function Results() {
           </div>
         </section>
 
-        {/* ── UPGRADE CTA — data-driven ── */}
+        {/* ── CLINICAL HANDOFF ── */}
         {hasAppData && (
-          <section className="py-10 md:py-14 bg-blue-600 border-t border-blue-700">
-            <div className="max-w-3xl mx-auto px-6 text-center">
+          <section className="py-10 md:py-14 bg-white border-t border-slate-100">
+            <div className="max-w-3xl mx-auto px-6">
               <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-                <p className="text-blue-200 text-[14px] font-semibold uppercase tracking-[0.08em] mb-3">Don't Stop Here</p>
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-white leading-snug mb-4">
-                  {hasPainDrop
-                    ? `You dropped ${data!.painDrop} points in ${data!.daysLogged} days. Imagine 12 weeks.`
-                    : "You've started something real. Finish it."}
+                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2">A Note From Dr. Jonathan</p>
+                <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
+                  Day 7 is not a finish line.
                 </h2>
-                <p className="text-blue-100 text-lg leading-relaxed mb-8 max-w-xl mx-auto">
-                  {copy.upgradeHook}
-                </p>
+
+                {/* Dr. Jonathan quote block */}
+                <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 mb-8">
+                  <div className="flex items-start gap-4">
+                    <img
+                      src="/images/dr-jonathan-schutza-headshot.png"
+                      alt="Dr. Jonathan Schutza, PT, DPT"
+                      className="w-14 h-14 rounded-full object-cover border-2 border-white shadow shrink-0 mt-1"
+                      loading="lazy"
+                    />
+                    <div>
+                      <p className="text-slate-800 font-semibold text-sm mb-3">Dr. Jonathan Schutza, PT, DPT</p>
+                      <div className="space-y-3 text-slate-700 text-sm leading-relaxed">
+                        <p>"Your data shows something important: your foot is responding. Pain is down. Capacity is building. That's not luck — that's your tissue adapting to progressive load for the first time, probably in years.</p>
+                        <p>Day 7 is the end of the reset window — the phase where we calm the tissue down and establish a baseline. What comes next, Phase 2, is where the real capacity building happens. This is where the tissue actually rebuilds.</p>
+                        <p>If you stop here, the load stops. And tissue that isn't progressively loaded doesn't hold its gains. Most patients who stop at this stage — even with good early results — see their pain return within 2 to 3 weeks. Not because something went wrong. Because the protocol wasn't finished.</p>
+                        <p>You've done the hardest part: you started, you logged, and your body responded. Don't let that work go to waste."</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stop vs Continue cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                  <div className="rounded-2xl border border-red-200 bg-red-50 p-5">
+                    <p className="text-red-600 text-xs font-bold uppercase tracking-wide mb-3">If you stop now</p>
+                    <div className="space-y-2">
+                      {[
+                        "Progressive loading stops",
+                        "Capacity gains begin to reverse within 2–3 weeks",
+                        "Morning pain typically returns as tissue stiffens",
+                        "You restart from scratch — again",
+                        "The cycle continues",
+                      ].map((item, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <span className="text-red-400 font-bold shrink-0 mt-0.5">✕</span>
+                          <p className="text-red-700 text-sm leading-snug">{item}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-green-200 bg-green-50 p-5">
+                    <p className="text-green-700 text-xs font-bold uppercase tracking-wide mb-3">If you continue</p>
+                    <div className="space-y-2">
+                      {[
+                        "Phase 2 begins — capacity building accelerates",
+                        hasPainDrop ? `Pain trend continues from ${data!.latestPain}/10 downward` : "Pain trend continues downward",
+                        data?.faamScore ? `FAAM score projected ~${Math.min(99, Math.round(data.faamScore + Math.max(0, 92 - data.faamScore) * 0.66))}% by Week 9` : "FAAM score improves with each phase",
+                        "12-week protocol completes as prescribed",
+                        "You graduate with a maintenance plan",
+                      ].map((item, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <CheckCircle size={14} className="text-green-500 shrink-0 mt-0.5" />
+                          <p className="text-green-800 text-sm leading-snug">{item}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  
+                    href={CHECKOUT_URL}
+                    onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_handoff_cta" })}
+                    className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold px-10 py-5 rounded-xl text-xl transition-colors shadow-lg mb-3"
+                  >
+                    Continue My Protocol &#8594;
+                  </a>
+                  <p className="text-slate-400 text-sm">30-Day Guarantee · 10-15 min/day · Lifetime Access</p>
+                </div>
                 
                 <a
-                  href={CHECKOUT_URL}
-                  onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_data_cta" })}
-                  className="inline-block bg-white text-blue-600 hover:bg-blue-50 font-bold px-10 py-5 rounded-xl text-xl transition-colors shadow-lg mb-4"
-                >
-                  Unlock the Full System &#8594;
-                </a>
-                <p className="text-blue-200 text-sm">30-Day Guarantee · 10-15 min/day · Lifetime Access</p>
-              </motion.div>
+                  </motion.div>
             </div>
           </section>
         )}
@@ -727,9 +786,9 @@ export default function Results() {
         <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4 text-center">Continue Your Recovery</p>
+              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4 text-center">Continue Your Prescribed Protocol</p>
               <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-8 text-center">
-                The Full 12-Week System
+                The Full 12-Week Recovery System
               </h2>
 
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mb-6">
@@ -745,7 +804,7 @@ export default function Results() {
                     onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_price_card" })}
                     className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-base transition-colors text-center whitespace-nowrap"
                   >
-                    Get Started &#8594;
+                    Continue My Protocol &#8594;
                   </a>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
