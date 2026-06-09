@@ -94,7 +94,9 @@ Deno.serve(async (req) => {
       painTimeline: submittedLogs.map((l) => ({
         date: l.log_date,
         pain: l.morning_pain_score ?? l.pain_score,
-        capacity: l.capacity_score,
+        capacity: l.capacity_score !== null && l.capacity_score !== undefined
+          ? Math.round((l.capacity_score / 10) * 10) / 10
+          : null,
       })),
     };
 
