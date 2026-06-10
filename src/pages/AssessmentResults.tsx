@@ -320,11 +320,36 @@ export default function AssessmentResults() {
 {/* VSL video */}
 <div className="rounded-2xl overflow-hidden shadow-lg mb-6" style={{ position: "relative", paddingTop: "56.25%" }}>
   <iframe
-    src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/b37100f8162e1ab91cf86c9e284447da/iframe?poster=https%3A%2F%2Fcustomer-hene8ngxxo3eajlj.cloudflarestream.com%2Fb37100f8162e1ab91cf86c9e284447da%2Fthumbnails%2Fthumbnail.jpg"
+    id="vsl-iframe"
+    src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/b37100f8162e1ab91cf86c9e284447da/iframe"
     style={{ border: "none", position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
     allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
     allowFullScreen
   />
+  <div
+    id="vsl-poster"
+    onClick={() => {
+      const poster = document.getElementById("vsl-poster");
+      if (poster) poster.style.display = "none";
+    }}
+    style={{
+      position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+      backgroundImage: "url(https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/0a87b6a7-6fb2-48dc-9e26-aa5c134c0200/public)",
+      backgroundSize: "cover", backgroundPosition: "center",
+      cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center"
+    }}
+  >
+    <div style={{
+      width: 64, height: 64, borderRadius: "50%",
+      backgroundColor: "rgba(255,255,255,0.9)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      boxShadow: "0 4px 24px rgba(0,0,0,0.3)"
+    }}>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="#2563EB">
+        <polygon points="5,3 19,12 5,21" />
+      </svg>
+    </div>
+  </div>
 </div>
 <div style={{display:"none"}}>
               <div className="flex items-end justify-center">
