@@ -258,10 +258,21 @@ export default function AssessmentResults() {
             </div>
 
             {/* Log every day callout */}
-            <div className="bg-green-50 rounded-xl border border-green-200 px-5 py-5 mb-8">
-              <p className="text-green-800 text-sm font-bold mb-2">The one thing that predicts results.</p>
+            <div className="bg-green-50 rounded-xl border border-green-200 px-5 py-5 mb-6">
+              <p className="text-green-800 text-sm font-bold mb-2">The one thing that makes this work for you specifically.</p>
               <p className="text-green-700 text-sm leading-relaxed">
-                Patients who log every day see measurable pain reduction within 7 days. Not because the exercises are magic — because daily logging keeps the load consistent and gives you real data on what's working. The app takes 2 minutes a day. That's the whole ask. Log every day, follow the protocol, and your foot will respond.
+                A few minutes of exercises. Thirty seconds of logging your pain score after. That's the whole ask. When you log daily, the app sees where you are and surfaces the exact exercises right for your current situation — not a generic protocol, your protocol. Patients who log every day see measurable pain reduction in their first week. That's not a coincidence. It's the mechanism.
+              </p>
+            </div>
+
+            {/* Guarantee block */}
+            <div className="bg-blue-600 rounded-xl px-5 py-5 mb-6">
+              <p className="text-white text-sm font-bold mb-2">We're confident enough to let you go first.</p>
+              <p className="text-blue-100 text-sm leading-relaxed mb-3">
+                Download the full app. Follow your prescribed protocol for 7 days. Log daily. If your pain doesn't go down, you don't pay — ever. No card required to start. No commitment beyond showing up.
+              </p>
+              <p className="text-blue-200 text-xs leading-relaxed">
+                After your 7-day trial, continuing is $157/month or $397 one-time — the full Foot Capacity System. You'll see that clearly inside the app when you're ready. But right now, the only thing that matters is your first session.
               </p>
             </div>
 
@@ -270,19 +281,21 @@ export default function AssessmentResults() {
               href={INSTALL_URL}
               className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
             >
-              Download the App &#8212; Start Your Free 7-Day Trial &#8594;
+              Start Your Free 7-Day Trial &#8594;
             </a>
 
             <p className="text-center text-slate-400 text-sm mb-8">
-              No payment required to start. Your trial begins when you download.
+              No credit card. No commitment. Log daily and watch what happens.
             </p>
 
             {/* Email confirmation */}
             <div className="border-t border-slate-100 pt-6">
               <p className="text-slate-500 text-sm text-center">
-                Your personalized recovery emails are on their way to your inbox &#8212; archetype-matched guidance based on your assessment.
+                Archetype-matched recovery emails are also on their way to your inbox — daily guidance built around your profile.
               </p>
             </div>
+
+
 
           </div>
         )}
