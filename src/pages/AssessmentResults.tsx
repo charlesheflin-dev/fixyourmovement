@@ -14,15 +14,15 @@ const archetypeResults: Record<string, {
     clinicalLabel: "Pattern: High effort, low return. Multiple treatment attempts without lasting results.",
     drJonathanNote: "Your answers tell me something I see often — you've put in real effort, and that effort hasn't been rewarded. That's not a reflection of your commitment. It's a reflection of the treatments you've been given. Stretching, orthotics, rest — these manage symptoms. None of them build the underlying tissue capacity your foot actually needs. That's what's been missing. The system I'm prescribing for you is built around progressive loading — a structured process that tells your tissue, week by week, to rebuild. You don't need to try harder. You need a process that actually works.",
     prescription: [
-      "Weeks 1–4 reset the tissue and establish your baseline capacity — the foundation everything else is built on",
-      "Weeks 5–8 apply progressive load to rebuild what's been lost — this is where the cycle of setbacks ends",
-      "Weeks 9–12 lock in your capacity gains and return you to full activity without managing every step",
+      "Weeks 1-4 reset the tissue and establish your baseline capacity — the foundation everything else is built on",
+      "Weeks 5-8 apply progressive load to rebuild what's been lost — this is where the cycle of setbacks ends",
+      "Weeks 9-12 lock in your capacity gains and return you to full activity without managing every step",
     ],
   },
   Archetype_Active_Person: {
     name: "The Active Person",
     clinicalLabel: "Pattern: High activity demand, load-tolerance deficit. Pain is interfering with performance and identity.",
-    drJonathanNote: "Your answers tell me that staying active isn't optional for you — it's part of who you are. The standard advice to 'rest and stay off it' doesn't account for people like you. And here's the clinical reality: rest reduces load temporarily, but it doesn't build capacity. So every time you return to activity, you're doing it with the same tissue tolerance you had before — or less. The system I'm prescribing for you keeps you moving while progressively rebuilding your foot's ability to handle load. Recovery and activity are not opposites. We just need to do this in the right order.",
+    drJonathanNote: "Your answers tell me that staying active isn't optional for you — it's part of who you are. The standard advice to rest and stay off it doesn't account for people like you. And here's the clinical reality: rest reduces load temporarily, but it doesn't build capacity. So every time you return to activity, you're doing it with the same tissue tolerance you had before — or less. The system I'm prescribing for you keeps you moving while progressively rebuilding your foot's ability to handle load. Recovery and activity are not opposites. We just need to do this in the right order.",
     prescription: [
       "Phase 1 reduces inflammation while maintaining movement — you won't be sidelined, you'll be redirected",
       "Phase 2 progressively reloads the tissue so your foot can handle the demands you're putting on it",
@@ -98,7 +98,7 @@ export default function AssessmentResults() {
           <div className="text-center py-20">
             <p className="text-slate-500 text-base mb-4">We couldn't find your assessment results.</p>
             <a href="/lp/take-assessment" className="text-blue-600 text-sm font-medium hover:underline">
-              Take the assessment →
+              Take the assessment &#8594;
             </a>
           </div>
         )}
@@ -106,7 +106,6 @@ export default function AssessmentResults() {
         {!loading && result && (
           <div className="py-4">
 
-            {/* Dr. Jonathan header */}
             <div className="flex items-center gap-3 mb-6">
               <img
                 src="/images/dr-jonathan-schutza-headshot.png"
@@ -119,19 +118,16 @@ export default function AssessmentResults() {
               </div>
             </div>
 
-            {/* Archetype label */}
             <div className="mb-6">
               <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-1">Your Recovery Profile</p>
               <h2 className="text-2xl font-bold text-slate-900 mb-2">{result.name}</h2>
               <p className="text-slate-500 text-sm leading-relaxed italic">{result.clinicalLabel}</p>
             </div>
 
-            {/* Dr. Jonathan note */}
             <div className="bg-slate-50 rounded-xl border border-slate-200 px-5 py-5 mb-6">
               <p className="text-slate-700 text-sm leading-relaxed">"{result.drJonathanNote}"</p>
             </div>
 
-            {/* Prescription */}
             <div className="bg-white rounded-xl border border-blue-100 px-5 py-5 mb-6">
               <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-4">Your Prescribed Protocol</p>
               <div className="space-y-3">
@@ -146,7 +142,6 @@ export default function AssessmentResults() {
               </div>
             </div>
 
-            {/* Log every day callout */}
             <div className="bg-green-50 rounded-xl border border-green-200 px-5 py-5 mb-8">
               <p className="text-green-800 text-sm font-bold mb-2">The one thing that predicts results.</p>
               <p className="text-green-700 text-sm leading-relaxed">
@@ -154,23 +149,23 @@ export default function AssessmentResults() {
               </p>
             </div>
 
-            {/* Primary CTA */}
-            
+            <a
               href={INSTALL_URL}
               className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
             >
-              Download the App — Start Your Free 7-Day Trial →
+              Download the App &#8212; Start Your Free 7-Day Trial &#8594;
             </a>
+
             <p className="text-center text-slate-400 text-sm mb-8">
               No payment required to start. Your trial begins when you download.
             </p>
 
-            {/* Email confirmation */}
             <div className="border-t border-slate-100 pt-6">
               <p className="text-slate-500 text-sm text-center">
-                Your personalized recovery emails are on their way to your inbox — archetype-matched guidance based on your assessment.
+                Your personalized recovery emails are on their way to your inbox &#8212; archetype-matched guidance based on your assessment.
               </p>
             </div>
+
           </div>
         )}
       </main>
