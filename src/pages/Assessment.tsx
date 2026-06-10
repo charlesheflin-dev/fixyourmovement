@@ -5,6 +5,7 @@ import logo from "@/assets/logo.png";
 const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
 const SAVE_ASSESSMENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/save-assessment";
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
+const INSTALL_URL = "https://app.fixyourmovement.com/install";
 
 // ─── Types ──────────────────────────────────────────────────────────────────────
 type Q2Value = "stretching" | "shoes_orthotics" | "rest" | "physical_therapy" | "injections" | "nothing";
@@ -60,18 +61,61 @@ function getFaamBand(score: number): { tag: string; label: string; color: string
   return { tag: "faam_low", label: "Significant Limitation", color: "#DC2626", bg: "#FEF2F2", border: "#FCA5A5" };
 }
 
+// ─── useIsMobile hook ───────────────────────────────────────────────────────────
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
+// ─── QR Code component ──────────────────────────────────────────────────────────
+function QRCode({ url }: { url: string }) {
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-md p-4 inline-block">
+        <img
+          src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(url)}&color=1e3a5f&bgcolor=ffffff&qzone=1`}
+          alt="Scan to install the app"
+          width={160}
+          height={160}
+          className="rounded-lg"
+        />
+      </div>
+      <p className="text-slate-500 text-sm text-center">Scan with your phone camera to install the app</p>
+      <a href={url} className="text-blue-600 text-xs font-medium hover:underline">
+        Or open on your phone: app.fixyourmovement.com/install
+      </a>
+    </div>
+  );
+}
+
 // ─── Archetype data ─────────────────────────────────────────────────────────────
 const archetypeResults: Record<string, {
   name: string;
   shortName: string;
+  clinicalLabel: string;
   description: string;
+  drJonathanNote: string;
+  prescription: string[];
   faamFraming: (score: number, band: string) => string;
   salesUrl: string;
 }> = {
   Archetype_Frustrated_Fix_Seeker: {
     name: "The Frustrated Fix-Seeker",
     shortName: "Frustrated Fix-Seeker",
+    clinicalLabel: "Pattern: High effort, low return. Multiple treatment attempts without lasting results.",
     description: "You've put in the work — and you deserve answers, not more guesswork. Your emails will focus on why so many plantar fasciitis treatments fail, and what a structured approach actually looks like.",
+    drJonathanNote: "Your answers tell me something I see often — you've put in real effort, and that effort hasn't been rewarded. That's not a reflection of your commitment. It's a reflection of the treatments you've been given. Stretching, orthotics, rest — these manage symptoms. None of them build the underlying tissue capacity your foot actually needs. That's what's been missing. The system I'm prescribing for you is built around progressive loading — a structured process that tells your tissue, week by week, to rebuild. You don't need to try harder. You need a process that actually works.",
+    prescription: [
+      "Weeks 1-4 reset the tissue and establish your baseline capacity — the foundation everything else is built on",
+      "Weeks 5-8 apply progressive load to rebuild what's been lost — this is where the cycle of setbacks ends",
+      "Weeks 9-12 lock in your capacity gains and return you to full activity without managing every step",
+    ],
     faamFraming: (score, band) => {
       if (band === "faam_high") return `Your score of ${score}% shows mild functional limitation — your foot is managing, but not without compensation. For someone who has tried multiple treatments, this score reflects exactly what happens when symptoms are managed but underlying capacity is never rebuilt. The goal from here is getting that number higher by building what treatments have been missing.`;
       if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation — the kind that makes daily life feel like something you have to manage rather than just live. This is where most people end up after months of trying things that address the symptom without building the underlying tissue capacity. A structured process is what changes this number.`;
@@ -82,7 +126,14 @@ const archetypeResults: Record<string, {
   Archetype_Active_Person: {
     name: "The Active Person",
     shortName: "Active Person",
+    clinicalLabel: "Pattern: High activity demand, load-tolerance deficit. Pain is interfering with performance and identity.",
     description: "Staying active matters to you — and recovery doesn't have to mean stopping. Your emails will focus on how to keep moving safely while your foot capacity rebuilds.",
+    drJonathanNote: "Your answers tell me that staying active isn't optional for you — it's part of who you are. The standard advice to rest and stay off it doesn't account for people like you. And here's the clinical reality: rest reduces load temporarily, but it doesn't build capacity. So every time you return to activity, you're doing it with the same tissue tolerance you had before — or less. The system I'm prescribing for you keeps you moving while progressively rebuilding your foot's ability to handle load. Recovery and activity are not opposites. We just need to do this in the right order.",
+    prescription: [
+      "Phase 1 reduces inflammation while maintaining movement — you won't be sidelined, you'll be redirected",
+      "Phase 2 progressively reloads the tissue so your foot can handle the demands you're putting on it",
+      "Phase 3 returns you to full activity — running, sport, the gym — without the constant flare-up cycle",
+    ],
     faamFraming: (score, band) => {
       if (band === "faam_high") return `Your score of ${score}% shows mild functional limitation — which means you're still moving, but not freely. For someone who defines themselves by staying active, even mild limitation has a real cost. The goal isn't just maintaining what you have. It's building enough capacity that activity stops requiring constant management.`;
       if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation. This is what it looks like when your activity level is bumping up against what your foot can currently handle. The tissue isn't keeping up — and rest isn't the answer. A progressive process that builds load tolerance is what closes the gap between where you are and where you want to be.`;
@@ -93,7 +144,14 @@ const archetypeResults: Record<string, {
   Archetype_Discouraged_Chronic: {
     name: "The Discouraged Chronic Sufferer",
     shortName: "Discouraged Chronic",
+    clinicalLabel: "Pattern: Long-duration symptoms, eroded confidence, repeated failed attempts.",
     description: "You've been dealing with this long enough. Your emails will focus on why chronic pain doesn't mean permanent damage — and why recovery is still very much possible.",
+    drJonathanNote: "Your answers tell me you've been carrying this for a long time — and that the weight of it goes beyond your foot. When nothing works for months or years, you stop trusting treatments. You may have started to wonder if your foot will ever feel normal again. I want to be direct with you: duration of pain does not determine outcome. What I consistently find in chronic cases is not permanent damage — it's a long period of symptom management with no real capacity building. The tissue has never been progressively loaded in a way that builds genuine tolerance. That's what this system does. And it's built specifically for patients who've been told everything else.",
+    prescription: [
+      "Phase 1 is gentler for chronic cases — we rebuild the baseline before we load it, which is what most protocols skip",
+      "Phase 2 introduces progressive load in a way your tissue can actually absorb — no flare-up triggers, no guesswork",
+      "Phase 3 gives you the functional capacity to trust your foot again — not just manage it",
+    ],
     faamFraming: (score, band) => {
       if (band === "faam_high") return `Your score of ${score}% shows mild functional limitation — which is actually meaningful context. Despite how long you've been dealing with this, your foot is still functioning. Chronic pain changes how you move and how you think about your body, but this score tells a different story than permanent damage. There is a path forward.`;
       if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation. After dealing with this for as long as you have, this number captures exactly what chronic pain does over time — it doesn't just hurt, it erodes function. But moderate limitation is not permanent limitation. Duration of pain does not determine outcome. Consistency with the right process does.`;
@@ -104,7 +162,14 @@ const archetypeResults: Record<string, {
   Archetype_Newly_Concerned: {
     name: "The Newly Concerned",
     shortName: "Newly Concerned",
+    clinicalLabel: "Pattern: Early-stage symptoms, high awareness, strong prevention opportunity.",
     description: "You're asking the right questions early. Your emails will focus on what's actually happening with your foot and what to do now — before the cycle that traps most people even begins.",
+    drJonathanNote: "Your answers tell me you're catching this early — and that matters more than most people realize. The patients I see with the hardest recoveries are the ones who waited. They tried to rest through it, assumed it would go away, and by the time they took it seriously, the tissue had lost significant capacity. You have a real advantage right now: your foot is telling you something before the damage compounds. What I'm prescribing for you isn't a reaction — it's a structured process that builds the capacity your foot needs before it becomes the kind of chronic problem that takes years to resolve.",
+    prescription: [
+      "Phase 1 establishes your baseline capacity and gives your tissue the structured load it needs to adapt",
+      "Phase 2 builds progressive tolerance so your foot can handle the demands of your life without breaking down",
+      "Phase 3 locks in those gains — so what you build actually holds",
+    ],
     faamFraming: (score, band) => {
       if (band === "faam_high") return `Your score of ${score}% shows mild functional limitation — which is exactly where you'd expect to be at this stage. Your foot is managing well enough that daily life still works, but the limitation is real. Acting now, while you're still in this range, is what keeps this from becoming a chronic problem. The earlier the right process starts, the better the outcome.`;
       if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation — more than you might have expected given how early you're catching this. This tells you that what's happening isn't minor, and it deserves a structured response now rather than later. Starting the right process at this point is what prevents this from becoming the kind of long-term problem others spend years trying to resolve.`;
@@ -258,6 +323,8 @@ export default function Assessment() {
   const [faamError, setFaamError] = useState<string>("");
 
   const [faamScore, setFaamScore] = useState<number>(0);
+
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -736,20 +803,32 @@ export default function Assessment() {
             STEP 3 — RESULTS
         ══════════════════════════════════════════════════ */}
         {step === "results" && archetype && (
-          <div>
-            <div className="text-center mb-10">
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-blue-50 mb-5">
-                <svg className="w-7 h-7 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
+          <div className="py-4">
+
+            {/* Dr. Jonathan header */}
+            <div className="flex items-center gap-3 mb-6">
+              <img
+                src="/images/dr-jonathan-schutza-headshot.png"
+                alt="Dr. Jonathan Schutza, PT, DPT"
+                className="w-12 h-12 rounded-full object-cover border-2 border-slate-100 shadow-sm shrink-0"
+              />
+              <div>
+                <p className="text-slate-900 font-semibold text-sm">Dr. Jonathan Schutza, PT, DPT</p>
+                <p className="text-slate-400 text-xs">Your Assessment Results</p>
               </div>
-              <p className="text-blue-600 text-sm font-semibold uppercase tracking-wide mb-2">Your Assessment Results</p>
-              <h1 className="text-3xl font-bold text-slate-900 leading-tight">{archetype.name}</h1>
             </div>
 
+            {/* Archetype label */}
+            <div className="mb-6">
+              <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-1">Your Recovery Profile</p>
+              <h2 className="text-2xl font-bold text-slate-900 mb-2">{archetype.name}</h2>
+              <p className="text-slate-500 text-sm leading-relaxed italic">{archetype.clinicalLabel}</p>
+            </div>
+
+            {/* FAAM Score */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-md p-8 mb-6">
               <p className="text-slate-500 text-xs font-semibold uppercase tracking-widest text-center mb-6">
-                Foot & Ankle Ability Measure (FAAM)
+                Foot and Ankle Ability Measure (FAAM)
               </p>
               <div className="flex justify-center mb-6">
                 <FaamGauge score={faamScore} />
@@ -765,71 +844,116 @@ export default function Assessment() {
               </div>
             </div>
 
-            <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 mb-6">
-              <p className="text-slate-500 text-xs font-semibold uppercase tracking-widest mb-3">Your Recovery Profile</p>
-              <h2 className="text-xl font-bold text-slate-900 mb-3">{archetype.name}</h2>
-              <p className="text-slate-600 text-sm leading-relaxed">{archetype.description}</p>
-            </div>
-
-            <div className="bg-blue-50 rounded-xl border border-blue-100 px-5 py-4 mb-8 flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-blue-900 font-semibold text-sm">Your results are on their way.</p>
-                <p className="text-blue-700 text-xs leading-relaxed mt-0.5">
-                  We've sent a full copy of your FAAM results and recovery profile to your inbox. Check for an email from Dr. Jonathan Schutza.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-blue-50 rounded-xl border border-blue-100 px-5 py-6 mb-6 text-center">
-              <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">Install The App</p>
-              <p className="text-slate-900 font-bold text-base mb-1">Track your recovery from your phone</p>
-              <p className="text-slate-500 text-sm leading-relaxed mb-4">A 7-day free trial is on its way to your inbox. Install the app to get started.</p>
-              {window.innerWidth < 768 ? (
-                <a
-                  href="https://app.fixyourmovement.com/install"
-                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl text-sm transition-colors"
-                >
-                  Install the App &#8594;
-                </a>
-              ) : (
-                <div className="flex flex-col items-center gap-3">
-                  <img
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://app.fixyourmovement.com/install"
-                    alt="QR code to install the app"
-                    className="w-36 h-36 rounded-xl border border-blue-200 shadow-sm"
-                  />
-                  <p className="text-slate-500 text-xs">Scan with your phone to install the app</p>
+            {/* Dr. Jonathan note */}
+            <div className="bg-slate-50 rounded-xl border border-slate-200 px-5 py-5 mb-6">
+              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-200">
+                <img
+                  src="/images/dr-jonathan-schutza-headshot.png"
+                  alt="Dr. Jonathan Schutza, PT, DPT"
+                  className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm shrink-0"
+                />
+                <div>
+                  <p className="text-slate-900 font-semibold text-sm">Dr. Jonathan Schutza, PT, DPT</p>
+                  <p className="text-slate-400 text-xs">Personal note based on your assessment</p>
                 </div>
-              )}
+              </div>
+              <p className="text-slate-700 text-sm leading-relaxed italic">"{archetype.drJonathanNote}"</p>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-4">
-              <p className="text-slate-900 font-bold text-lg mb-2">Ready to start changing this score?</p>
-              <p className="text-slate-600 text-sm leading-relaxed mb-5">
-                The Foot Capacity System is a structured 12-week home recovery program designed to rebuild foot strength and break the cycle of plantar fasciitis — built specifically for people in your situation.
-              </p>
-              <a href={archetype.salesUrl}
-                className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base py-4 rounded-xl text-center transition-colors"
-              >
-                See How The Full System Works →
-              </a>
-              <div className="flex justify-center gap-5 mt-4 text-xs text-slate-400">
-                <span>🛡️ 30-Day Guarantee</span>
-                <span>🔒 Secure Checkout</span>
-                <span>♾️ Lifetime Access</span>
+            {/* Prescription */}
+            <div className="bg-white rounded-xl border border-blue-100 px-5 py-5 mb-6">
+              <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-4">Your Prescribed Protocol</p>
+              <div className="space-y-3">
+                {archetype.prescription.map((item, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                      {i + 1}
+                    </div>
+                    <p className="text-slate-700 text-sm leading-relaxed">{item}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="text-center">
-              <a href="/" className="text-slate-400 hover:text-slate-600 text-sm transition-colors">
-                Return to fixyourmovement.com
-              </a>
+            {/* Log every day callout */}
+            <div className="bg-green-50 rounded-xl border border-green-200 px-5 py-5 mb-6">
+              <p className="text-green-800 text-sm font-bold mb-2">The one thing that makes this work for you specifically.</p>
+              <p className="text-green-700 text-sm leading-relaxed">
+                A few minutes of exercises. Thirty seconds of logging your pain score after. That's the whole ask. When you log daily, the app sees where you are and surfaces the exact exercises right for your current situation — not a generic protocol, your protocol. Patients who log every day see measurable pain reduction in their first week. That's not a coincidence. It's the mechanism.
+              </p>
             </div>
+
+            {/* VSL video */}
+            <div className="rounded-2xl overflow-hidden shadow-lg mb-6" style={{ position: "relative", paddingTop: "56.25%" }}>
+              <iframe
+                id="vsl-iframe"
+                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/b37100f8162e1ab91cf86c9e284447da/iframe"
+                style={{ border: "none", position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+              <div
+                id="vsl-poster"
+                onClick={() => {
+                  const poster = document.getElementById("vsl-poster");
+                  if (poster) poster.style.display = "none";
+                }}
+                style={{
+                  position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+                  backgroundImage: "url(https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/0a87b6a7-6fb2-48dc-9e26-aa5c134c0200/public)",
+                  backgroundSize: "cover", backgroundPosition: "center",
+                  cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center"
+                }}
+              >
+                <div style={{
+                  width: 64, height: 64, borderRadius: "50%",
+                  backgroundColor: "rgba(255,255,255,0.9)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: "0 4px 24px rgba(0,0,0,0.3)"
+                }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="#2563EB">
+                    <polygon points="5,3 19,12 5,21" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Guarantee block */}
+            <div className="bg-blue-600 rounded-xl px-5 py-5 mb-6">
+              <p className="text-white text-sm font-bold mb-2">We're confident enough to let you go first.</p>
+              <p className="text-blue-100 text-sm leading-relaxed mb-3">
+                Download the full app. Follow your prescribed protocol for 7 days. Log daily. If your pain doesn't go down, you don't pay — ever. No card required to start. No commitment beyond showing up.
+              </p>
+              <p className="text-blue-200 text-xs leading-relaxed">
+                After your 7-day trial, continuing is $397 one-time or $157/month for 3 months — the full Foot Capacity System. You'll see that clearly inside the app when you're ready. But right now, the only thing that matters is your first session.
+              </p>
+            </div>
+
+            {/* Primary CTA */}
+            {isMobile ? (
+              <a
+                href={INSTALL_URL}
+                className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
+              >
+                Download the App &#8594;
+              </a>
+            ) : (
+              <div className="mb-3">
+                <QRCode url={INSTALL_URL} />
+              </div>
+            )}
+
+            <p className="text-center text-slate-400 text-sm mb-8">
+              No credit card. No commitment. Log daily and watch what happens.
+            </p>
+
+            {/* Email confirmation */}
+            <div className="border-t border-slate-100 pt-6">
+              <p className="text-slate-500 text-sm text-center">
+                Archetype-matched recovery emails are also on their way to your inbox — daily guidance built around your profile.
+              </p>
+            </div>
+
           </div>
         )}
 
