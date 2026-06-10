@@ -166,14 +166,14 @@ export default {
         });
       }
 
-      // ── Checkout visited tag branch ──────────────────────────────────────────
-      if (body.checkout_tag === "checkout_visited") {
+      const VALID_CHECKOUT_TAGS = ["checkout_visited", "trial_accepted"];
+      if (body.checkout_tag && VALID_CHECKOUT_TAGS.includes(body.checkout_tag)) {
         const accessToken = await refreshAccessToken(env);
         const accountId = await getAccountId(accessToken);
         const listId = env.AWEBER_LIST_ID.replace("awlist", "");
         const subscriber = await findSubscriber(accessToken, accountId, listId, email);
         if (subscriber) {
-          await applyTag(accessToken, subscriber.self_link, "checkout_visited");
+          await applyTag(accessToken, subscriber.self_link, body.checkout_tag);
         }
         return new Response(JSON.stringify({ success: true }), {
           status: 200,
