@@ -300,8 +300,8 @@ export default function AssessmentResults() {
               </div>
             </div>
 
-            {/* App mockup accent */}
-            <div className="flex justify-center mb-6">
+            {/* Log every day callout - app mockup removed */}
+            <div style={{display:"none"}}>
               <img
                 src="/images/app-mockup-t2.png"
                 alt="Foot Capacity App"
@@ -317,8 +317,16 @@ export default function AssessmentResults() {
               </p>
             </div>
 
-            {/* App screenshots strip */}
-            <div className="grid grid-cols-3 gap-2 mb-6 -mx-2">
+{/* VSL video */}
+<div className="rounded-2xl overflow-hidden shadow-lg mb-6" style={{ position: "relative", paddingTop: "56.25%" }}>
+  <iframe
+    src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/b37100f8162e1ab91cf86c9e284447da/iframe?poster=https%3A%2F%2Fcustomer-hene8ngxxo3eajlj.cloudflarestream.com%2Fb37100f8162e1ab91cf86c9e284447da%2Fthumbnails%2Fthumbnail.jpg"
+    style={{ border: "none", position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+    allowFullScreen
+  />
+</div>
+<div style={{display:"none"}}>
               <div className="flex items-end justify-center">
                 <img
                   src="/images/3-phones.png"
