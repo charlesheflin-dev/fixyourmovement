@@ -272,7 +272,7 @@ export default function AssessmentResults() {
                 Download the full app. Follow your prescribed protocol for 7 days. Log daily. If your pain doesn't go down, you don't pay — ever. No card required to start. No commitment beyond showing up.
               </p>
               <p className="text-blue-200 text-xs leading-relaxed">
-                After your 7-day trial, continuing is $157/month or $397 one-time — the full Foot Capacity System. You'll see that clearly inside the app when you're ready. But right now, the only thing that matters is your first session.
+                After your 7-day trial, continuing is $397 one-time or $157/month for 3 months — the full Foot Capacity System. You'll see that clearly inside the app when you're ready. But right now, the only thing that matters is your first session.
               </p>
             </div>
 
