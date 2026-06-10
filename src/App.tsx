@@ -31,6 +31,7 @@ import StartChronic from "./pages/StartChronic";
 import StartNew from "./pages/StartNew";
 import Checkout from "./pages/Checkout";
 import Results from "./pages/Results";
+import AssessmentResults from "./pages/AssessmentResults";
 
 const queryClient = new QueryClient();
 
@@ -80,6 +81,7 @@ const App = () => (
                    <Route path="/start/new" element={<StartNew />} />
                    <Route path="/checkout" element={<Checkout />} />
                    <Route path="/results/:userId" element={<Results />} />
+                   <Route path="/assessment-results" element={<AssessmentResults />} />
                     <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
