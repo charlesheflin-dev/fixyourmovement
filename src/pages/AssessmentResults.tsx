@@ -3,11 +3,82 @@ import { useEffect, useState } from "react";
 const GET_ASSESSMENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-assessment-results";
 const INSTALL_URL = "https://app.fixyourmovement.com/install";
 
-const archetypeResults: Record<string, {
+function getFaamBand(score: number): { tag: string; label: string; color: string; bg: string; border: string } {
+  if (score >= 80) return { tag: "faam_high", label: "Mild Limitation", color: "#16A34A", bg: "#F0FDF4", border: "#86EFAC" };
+  if (score >= 50) return { tag: "faam_moderate", label: "Moderate Limitation", color: "#D97706", bg: "#FFFBEB", border: "#FCD34D" };
+  return { tag: "faam_low", label: "Significant Limitation", color: "#DC2626", bg: "#FEF2F2", border: "#FCA5A5" };
+}
+
+function FaamGauge({ score }: { score: number }) {
+  const band = getFaamBand(score);
+  const circumference = 2 * Math.PI * 54;
+  const dashOffset = circumference - (score / 100) * circumference;
+  return (
+    <div className="flex flex-col items-center">
+      <div className="relative" style={{ width: 160, height: 160 }}>
+        <svg width="160" height="160" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#E2E8F0" strokeWidth="10" />
+          <circle
+            cx="60" cy="60" r="54"
+            fill="none"
+            stroke={band.color}
+            strokeWidth="10"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={dashOffset}
+            transform="rotate(-90 60 60)"
+            style={{ transition: "stroke-dashoffset 1s ease-out" }}
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-4xl font-bold" style={{ color: band.color, lineHeight: 1 }}>{score}</span>
+          <span className="text-xs font-semibold text-slate-500 mt-0.5">/ 100</span>
+        </div>
+      </div>
+      <div
+        className="mt-3 px-4 py-1.5 rounded-full text-sm font-semibold"
+        style={{ color: band.color, backgroundColor: band.bg, border: `1px solid ${band.border}` }}
+      >
+        {band.label}
+      </div>
+    </div>
+  );
+}
+
+function ScoreBar({ score }: { score: number }) {
+  const band = getFaamBand(score);
+  return (
+    <div className="w-full">
+      <div className="flex justify-between text-xs text-slate-400 mb-1.5">
+        <span>0%</span>
+        <span>50%</span>
+        <span>80%</span>
+        <span>100%</span>
+      </div>
+      <div className="relative h-3 bg-slate-100 rounded-full overflow-hidden">
+        <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-red-100" />
+        <div className="absolute top-0 bottom-0" style={{ left: "50%", width: "30%", backgroundColor: "#FEF3C7" }} />
+        <div className="absolute top-0 bottom-0" style={{ left: "80%", right: 0, backgroundColor: "#DCFCE7" }} />
+        <div
+          className="absolute top-0 left-0 bottom-0 rounded-full transition-all duration-1000"
+          style={{ width: `${score}%`, backgroundColor: band.color }}
+        />
+      </div>
+      <div className="flex justify-between text-xs mt-1.5">
+        <span className="text-red-500 font-medium">Significant</span>
+        <span className="text-amber-500 font-medium">Moderate</span>
+        <span className="text-green-500 font-medium">Mild</span>
+      </div>
+    </div>
+  );
+}
+
+const archetypeData: Record<string, {
   name: string;
   clinicalLabel: string;
   drJonathanNote: string;
   prescription: string[];
+  faamFraming: (score: number, band: string) => string;
 }> = {
   Archetype_Frustrated_Fix_Seeker: {
     name: "The Frustrated Fix-Seeker",
@@ -18,6 +89,11 @@ const archetypeResults: Record<string, {
       "Weeks 5-8 apply progressive load to rebuild what's been lost — this is where the cycle of setbacks ends",
       "Weeks 9-12 lock in your capacity gains and return you to full activity without managing every step",
     ],
+    faamFraming: (score, band) => {
+      if (band === "faam_high") return `Your score of ${score}% shows mild functional limitation — your foot is managing, but not without compensation. For someone who has tried multiple treatments, this score reflects exactly what happens when symptoms are managed but underlying capacity is never rebuilt. The goal from here is getting that number higher by building what treatments have been missing.`;
+      if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation — the kind that makes daily life feel like something you have to manage rather than just live. This is where most people end up after months of trying things that address the symptom without building the underlying tissue capacity. A structured process is what changes this number.`;
+      return `Your score of ${score}% reflects significant functional limitation. This is the reality behind what you've been experiencing — your foot isn't just in pain, it's genuinely limited in what it can do. After everything you've tried, this score makes sense. It's not a reflection of your effort. It's a reflection of what those approaches were actually building — or not building.`;
+    },
   },
   Archetype_Active_Person: {
     name: "The Active Person",
@@ -28,6 +104,11 @@ const archetypeResults: Record<string, {
       "Phase 2 progressively reloads the tissue so your foot can handle the demands you're putting on it",
       "Phase 3 returns you to full activity — running, sport, the gym — without the constant flare-up cycle",
     ],
+    faamFraming: (score, band) => {
+      if (band === "faam_high") return `Your score of ${score}% shows mild functional limitation — which means you're still moving, but not freely. For someone who defines themselves by staying active, even mild limitation has a real cost. The goal isn't just maintaining what you have. It's building enough capacity that activity stops requiring constant management.`;
+      if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation. This is what it looks like when your activity level is bumping up against what your foot can currently handle. The tissue isn't keeping up — and rest isn't the answer. A progressive process that builds load tolerance is what closes the gap between where you are and where you want to be.`;
+      return `Your score of ${score}% reflects significant functional limitation. This explains why activity has become so difficult to manage — your foot's capacity is significantly below the demands you're placing on it. The path back to full activity isn't rest. It's structured progressive loading that gradually rebuilds what your foot can handle.`;
+    },
   },
   Archetype_Discouraged_Chronic: {
     name: "The Discouraged Chronic Sufferer",
@@ -38,6 +119,11 @@ const archetypeResults: Record<string, {
       "Phase 2 introduces progressive load in a way your tissue can actually absorb — no flare-up triggers, no guesswork",
       "Phase 3 gives you the functional capacity to trust your foot again — not just manage it",
     ],
+    faamFraming: (score, band) => {
+      if (band === "faam_high") return `Your score of ${score}% shows mild functional limitation — which is actually meaningful context. Despite how long you've been dealing with this, your foot is still functioning. Chronic pain changes how you move and how you think about your body, but this score tells a different story than permanent damage. There is a path forward.`;
+      if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation. After dealing with this for as long as you have, this number captures exactly what chronic pain does over time — it doesn't just hurt, it erodes function. But moderate limitation is not permanent limitation. Duration of pain does not determine outcome. Consistency with the right process does.`;
+      return `Your score of ${score}% reflects significant functional limitation. This number is real — and it reflects what long-standing foot pain actually does to the way you move through life. But significant limitation is not the same as permanent damage. This score is where you're starting, not where you're staying. Recovery is still possible, and this system was built for exactly this situation.`;
+    },
   },
   Archetype_Newly_Concerned: {
     name: "The Newly Concerned",
@@ -48,15 +134,19 @@ const archetypeResults: Record<string, {
       "Phase 2 builds progressive tolerance so your foot can handle the demands of your life without breaking down",
       "Phase 3 locks in those gains — so what you build actually holds",
     ],
+    faamFraming: (score, band) => {
+      if (band === "faam_high") return `Your score of ${score}% shows mild functional limitation — which is exactly where you'd expect to be at this stage. Your foot is managing well enough that daily life still works, but the limitation is real. Acting now, while you're still in this range, is what keeps this from becoming a chronic problem. The earlier the right process starts, the better the outcome.`;
+      if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation — more than you might have expected given how early you're catching this. This tells you that what's happening isn't minor, and it deserves a structured response now rather than later. Starting the right process at this point is what prevents this from becoming the kind of long-term problem others spend years trying to resolve.`;
+      return `Your score of ${score}% reflects significant functional limitation — which is important information. This isn't a minor ache that will resolve on its own. Your foot is already meaningfully limited, and starting the right process now is what makes the difference between a short recovery and a long one. You're asking the right questions at exactly the right time.`;
+    },
   },
 };
 
 export default function AssessmentResults() {
   const [result, setResult] = useState<{
-    name: string;
-    clinicalLabel: string;
-    drJonathanNote: string;
-    prescription: string[];
+    archetype: string;
+    faam_score: number;
+    faam_band: string;
   } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -70,14 +160,15 @@ export default function AssessmentResults() {
       .then((r) => r.json())
       .then((d) => {
         if (d.error) { setError(true); }
-        else {
-          const archetype = d.archetype as string;
-          setResult(archetypeResults[archetype] ?? null);
-        }
+        else { setResult(d); }
         setLoading(false);
       })
       .catch(() => { setError(true); setLoading(false); });
   }, []);
+
+  const archetype = result ? (archetypeData[result.archetype] ?? null) : null;
+  const faamScore = result?.faam_score ?? 0;
+  const faamBand = getFaamBand(faamScore);
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -88,13 +179,14 @@ export default function AssessmentResults() {
       </header>
 
       <main className="max-w-2xl mx-auto px-6 py-12">
+
         {loading && (
           <div className="flex items-center justify-center py-20">
             <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
           </div>
         )}
 
-        {!loading && (error || !result) && (
+        {!loading && (error || !result || !archetype) && (
           <div className="text-center py-20">
             <p className="text-slate-500 text-base mb-4">We couldn't find your assessment results.</p>
             <a href="/lp/take-assessment" className="text-blue-600 text-sm font-medium hover:underline">
@@ -103,9 +195,10 @@ export default function AssessmentResults() {
           </div>
         )}
 
-        {!loading && result && (
+        {!loading && result && archetype && (
           <div className="py-4">
 
+            {/* Dr. Jonathan header */}
             <div className="flex items-center gap-3 mb-6">
               <img
                 src="/images/dr-jonathan-schutza-headshot.png"
@@ -118,20 +211,42 @@ export default function AssessmentResults() {
               </div>
             </div>
 
+            {/* Archetype label */}
             <div className="mb-6">
               <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-1">Your Recovery Profile</p>
-              <h2 className="text-2xl font-bold text-slate-900 mb-2">{result.name}</h2>
-              <p className="text-slate-500 text-sm leading-relaxed italic">{result.clinicalLabel}</p>
+              <h2 className="text-2xl font-bold text-slate-900 mb-2">{archetype.name}</h2>
+              <p className="text-slate-500 text-sm leading-relaxed italic">{archetype.clinicalLabel}</p>
             </div>
 
+            {/* FAAM Score */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-md p-8 mb-6">
+              <p className="text-slate-500 text-xs font-semibold uppercase tracking-widest text-center mb-6">
+                Foot and Ankle Ability Measure (FAAM)
+              </p>
+              <div className="flex justify-center mb-6">
+                <FaamGauge score={faamScore} />
+              </div>
+              <div className="mb-6">
+                <ScoreBar score={faamScore} />
+              </div>
+              <div className="rounded-xl p-5" style={{ backgroundColor: faamBand.bg, border: `1px solid ${faamBand.border}` }}>
+                <p className="font-semibold text-sm mb-1" style={{ color: faamBand.color }}>What this means for you</p>
+                <p className="text-slate-700 text-sm leading-relaxed">
+                  {archetype.faamFraming(faamScore, faamBand.tag)}
+                </p>
+              </div>
+            </div>
+
+            {/* Dr. Jonathan note */}
             <div className="bg-slate-50 rounded-xl border border-slate-200 px-5 py-5 mb-6">
-              <p className="text-slate-700 text-sm leading-relaxed">"{result.drJonathanNote}"</p>
+              <p className="text-slate-700 text-sm leading-relaxed">"{archetype.drJonathanNote}"</p>
             </div>
 
+            {/* Prescription */}
             <div className="bg-white rounded-xl border border-blue-100 px-5 py-5 mb-6">
               <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-4">Your Prescribed Protocol</p>
               <div className="space-y-3">
-                {result.prescription.map((item, i) => (
+                {archetype.prescription.map((item, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
                       {i + 1}
@@ -142,6 +257,7 @@ export default function AssessmentResults() {
               </div>
             </div>
 
+            {/* Log every day callout */}
             <div className="bg-green-50 rounded-xl border border-green-200 px-5 py-5 mb-8">
               <p className="text-green-800 text-sm font-bold mb-2">The one thing that predicts results.</p>
               <p className="text-green-700 text-sm leading-relaxed">
@@ -149,6 +265,7 @@ export default function AssessmentResults() {
               </p>
             </div>
 
+            {/* Primary CTA */}
             <a
               href={INSTALL_URL}
               className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
@@ -160,6 +277,7 @@ export default function AssessmentResults() {
               No payment required to start. Your trial begins when you download.
             </p>
 
+            {/* Email confirmation */}
             <div className="border-t border-slate-100 pt-6">
               <p className="text-slate-500 text-sm text-center">
                 Your personalized recovery emails are on their way to your inbox &#8212; archetype-matched guidance based on your assessment.
