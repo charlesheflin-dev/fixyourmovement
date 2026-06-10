@@ -1,4 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
+function QRCode({ url }: { url: string }) {
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-md p-4 inline-block">
+        <img
+          src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(url)}&color=1e3a5f&bgcolor=ffffff&qzone=1`}
+          alt="Scan to install the app"
+          width={160}
+          height={160}
+          className="rounded-lg"
+        />
+      </div>
+      <p className="text-slate-500 text-sm text-center">Scan with your phone camera to install the app</p>
+      <a href={url} className="text-blue-600 text-xs font-medium hover:underline">
+        Or open on your phone: app.fixyourmovement.com/install
+      </a>
+    </div>
+  );
+}
 
 const GET_ASSESSMENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-assessment-results";
 const INSTALL_URL = "https://app.fixyourmovement.com/install";
@@ -169,6 +200,7 @@ export default function AssessmentResults() {
   const archetype = result ? (archetypeData[result.archetype] ?? null) : null;
   const faamScore = result?.faam_score ?? 0;
   const faamBand = getFaamBand(faamScore);
+  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -239,7 +271,18 @@ export default function AssessmentResults() {
 
             {/* Dr. Jonathan note */}
             <div className="bg-slate-50 rounded-xl border border-slate-200 px-5 py-5 mb-6">
-              <p className="text-slate-700 text-sm leading-relaxed">"{archetype.drJonathanNote}"</p>
+              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-200">
+                <img
+                  src="/images/dr-jonathan-schutza-headshot.png"
+                  alt="Dr. Jonathan Schutza, PT, DPT"
+                  className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm shrink-0"
+                />
+                <div>
+                  <p className="text-slate-900 font-semibold text-sm">Dr. Jonathan Schutza, PT, DPT</p>
+                  <p className="text-slate-400 text-xs">Personal note based on your assessment</p>
+                </div>
+              </div>
+              <p className="text-slate-700 text-sm leading-relaxed italic">"{archetype.drJonathanNote}"</p>
             </div>
 
             {/* Prescription */}
@@ -257,12 +300,46 @@ export default function AssessmentResults() {
               </div>
             </div>
 
+            {/* App mockup accent */}
+            <div className="flex justify-center mb-6">
+              <img
+                src="/images/app-mockup-t2.png"
+                alt="Foot Capacity App"
+                className="w-48 drop-shadow-xl"
+              />
+            </div>
+
             {/* Log every day callout */}
             <div className="bg-green-50 rounded-xl border border-green-200 px-5 py-5 mb-6">
               <p className="text-green-800 text-sm font-bold mb-2">The one thing that makes this work for you specifically.</p>
               <p className="text-green-700 text-sm leading-relaxed">
                 A few minutes of exercises. Thirty seconds of logging your pain score after. That's the whole ask. When you log daily, the app sees where you are and surfaces the exact exercises right for your current situation — not a generic protocol, your protocol. Patients who log every day see measurable pain reduction in their first week. That's not a coincidence. It's the mechanism.
               </p>
+            </div>
+
+            {/* App screenshots strip */}
+            <div className="grid grid-cols-3 gap-2 mb-6 -mx-2">
+              <div className="flex items-end justify-center">
+                <img
+                  src="/images/3-phones.png"
+                  alt="Foot Capacity App screens"
+                  className="w-full object-contain drop-shadow-md rounded-lg"
+                />
+              </div>
+              <div className="flex items-end justify-center">
+                <img
+                  src="/images/3-phones2.png"
+                  alt="Foot Capacity App progress tracking"
+                  className="w-full object-contain drop-shadow-md rounded-lg"
+                />
+              </div>
+              <div className="flex items-end justify-center">
+                <img
+                  src="/images/3-phones-hero.png"
+                  alt="Foot Capacity App with Dr. Jonathan"
+                  className="w-full object-contain drop-shadow-md rounded-lg"
+                />
+              </div>
             </div>
 
             {/* Guarantee block */}
@@ -277,12 +354,18 @@ export default function AssessmentResults() {
             </div>
 
             {/* Primary CTA */}
-            <a
-              href={INSTALL_URL}
-              className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
-            >
-              Start Your Free 7-Day Trial &#8594;
-            </a>
+            {isMobile ? (
+              <a
+                href={INSTALL_URL}
+                className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
+              >
+                Download the App &#8594;
+              </a>
+            ) : (
+              <div className="mb-3">
+                <QRCode url={INSTALL_URL} />
+              </div>
+            )}
 
             <p className="text-center text-slate-400 text-sm mb-8">
               No credit card. No commitment. Log daily and watch what happens.
