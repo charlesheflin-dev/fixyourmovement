@@ -7,6 +7,7 @@ const AWEBER_TOKEN_URL = "https://auth.aweber.com/oauth2/token";
 const ALLOWED_ORIGINS = [
   "https://fixyourmovement.com",
   "https://preview.fixyourmovement.com",
+  "https://app.fixyourmovement.com",
 ];
 function getAllowedOrigin(request) {
   const origin = request.headers.get("Origin") || "";
