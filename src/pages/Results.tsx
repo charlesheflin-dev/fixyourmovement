@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { ShieldCheck, Tag, Infinity, CheckCircle, TrendingDown } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts";
+import { ShieldCheck, Tag, Infinity, CheckCircle, TrendingDown, TrendingUp, Calendar, Activity } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const GET_RESULTS_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-results-data";
@@ -146,17 +146,17 @@ export default function Results() {
   }, []);
 
   useEffect(() => {
-    if (!userId && !emailParam) { window.location.href = "/walkthrough"; return; }
+    if (!userId && !emailParam) { setError(true); setLoading(false); return; }
     const fetchUrl = userId
       ? `${GET_RESULTS_URL}?userId=${userId}`
       : `${GET_RESULTS_URL}?email=${encodeURIComponent(emailParam!)}`;
     fetch(fetchUrl)
       .then((r) => r.json())
       .then((d) => {
-        if (d.error) { window.location.href = "/walkthrough"; } else { setData(d); }
+        if (d.error) { setError(true); } else { setData(d); }
         setLoading(false);
       })
-      .catch(() => { window.location.href = "/walkthrough"; });
+      .catch(() => { setError(true); setLoading(false); });
   }, [userId, emailParam]);
 
   const copy = data?.archetype ? (archetypeCopy[data.archetype] ?? defaultCopy) : defaultCopy;
@@ -165,6 +165,7 @@ export default function Results() {
   const hasCapacity = data?.painTimeline && data.painTimeline.some((p) => p.capacity !== null);
   const hasAppData = data && data.daysLogged > 0;
   const currentPhase = data?.currentPhase ?? 1;
+  const activePhaseIndex = Math.max(0, Math.min(2, currentPhase - 1));
 
   if (loading) {
     return (
@@ -348,6 +349,7 @@ export default function Results() {
                 <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
                   Your FAAM Score: <span style={{ color: getFaamBandColor(data!.faamBand) }}>{data!.faamScore}% — {getFaamBandLabel(data!.faamBand)}</span>
                 </h2>
+                {/* Score bar */}
                 <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-6">
                   <div className="flex justify-between text-xs text-slate-400 mb-2">
                     <span>0%</span><span>50%</span><span>80%</span><span>100%</span>
@@ -372,6 +374,7 @@ export default function Results() {
                     <span className="text-green-500 font-medium">Mild</span>
                   </div>
                 </div>
+                {/* What this means */}
                 <div className="rounded-xl p-5 border" style={{ backgroundColor: getFaamBandColor(data!.faamBand) + "12", borderColor: getFaamBandColor(data!.faamBand) + "40" }}>
                   <p className="font-semibold text-sm mb-1" style={{ color: getFaamBandColor(data!.faamBand) }}>What this means for your recovery</p>
                   <p className="text-slate-700 text-sm leading-relaxed">
@@ -397,7 +400,7 @@ export default function Results() {
                 Most treatments don't have phases. They have exercises. This system has a structured progression — each phase builds on the last.
               </p>
               <div className="space-y-4">
-                {PHASES.map((p) => {
+                {PHASES.map((p, i) => {
                   const isActive = hasAppData && p.phase === Math.max(1, Math.min(3, currentPhase));
                   const isComplete = hasAppData && currentPhase > p.phase;
                   return (
@@ -447,6 +450,7 @@ export default function Results() {
                   Day 7 is not the end of Phase 1.
                 </h2>
 
+                {/* Dr. Jonathan quote block */}
                 <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 mb-8">
                   <div className="flex items-start gap-4">
                     <img
@@ -467,6 +471,7 @@ export default function Results() {
                   </div>
                 </div>
 
+                {/* Stop vs Continue cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                   <div className="rounded-2xl border border-red-200 bg-red-50 p-5">
                     <p className="text-red-600 text-xs font-bold uppercase tracking-wide mb-3">If you stop now</p>
@@ -552,6 +557,26 @@ export default function Results() {
                     <p>He has worked with people who came to him after years of failed treatments — cortisone, orthotics, stretching, multiple rounds of PT. What he found consistently was not that those people lacked effort. They lacked a process that actually built tissue capacity.</p>
                     <p>The Foot Capacity System is the structured approach he built to change that — designed to be followed from home, at your own pace, with the clarity and guidance that most people never got from their prior care.</p>
                   </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ── DR. JONATHAN VIDEO PLACEHOLDER ── */}
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6">
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">A Message For You</p>
+              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">From Dr. Jonathan</h2>
+              <div className="bg-slate-100 rounded-2xl aspect-video flex items-center justify-center border border-slate-200">
+                <div className="text-center px-8">
+                  <div className="w-16 h-16 rounded-full bg-slate-200 flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-7 h-7 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                  <p className="text-slate-500 text-sm font-medium">Video message from Dr. Jonathan — coming soon</p>
                 </div>
               </div>
             </motion.div>
