@@ -184,8 +184,9 @@ export default function AssessmentResults() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const email = params.get("email");
-    if (!email) { setError(true); setLoading(false); return; }
+    const rawEmail = params.get("email");
+    if (!rawEmail) { setError(true); setLoading(false); return; }
+    const email = rawEmail.replace(/ /g, "+");
 
     fetch(`${GET_ASSESSMENT_URL}?email=${encodeURIComponent(email)}`)
       .then((r) => r.json())
