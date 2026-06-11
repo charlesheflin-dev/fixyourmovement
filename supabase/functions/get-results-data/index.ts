@@ -19,34 +19,51 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const url = new URL(req.url);
-    const userId = url.searchParams.get("userId");
+   const url = new URL(req.url);
+   const userId = url.searchParams.get("userId");
+   const emailParam = url.searchParams.get("email");
 
-    if (!userId) {
-      return new Response(JSON.stringify({ error: "userId is required" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
+   if (!userId && !emailParam) {
+     return new Response(JSON.stringify({ error: "userId or email is required" }), {
+       status: 400,
+       headers: { ...corsHeaders, "Content-Type": "application/json" },
+     });
+   }
 
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-    );
+   const supabase = createClient(
+     Deno.env.get("SUPABASE_URL") ?? "",
+     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+   );
 
-    // Fetch profile
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
-      .select("id, email, display_name, current_phase, current_week, start_date, starting_pain_score, token_tier")
-      .eq("id", userId)
-      .single();
+   // Fetch profile — by userId or by email
+   let profile: any = null;
+   let profileError: any = null;
 
-    if (profileError || !profile) {
-      return new Response(JSON.stringify({ error: "User not found" }), {
-        status: 404,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
+   if (userId) {
+     const result = await supabase
+       .from("profiles")
+       .select("id, email, display_name, current_phase, current_week, start_date, starting_pain_score, token_tier")
+       .eq("id", userId)
+       .single();
+     profile = result.data;
+     profileError = result.error;
+   } else {
+     const normalizedEmail = emailParam!.replace(/ /g, "+").toLowerCase();
+     const result = await supabase
+       .from("profiles")
+       .select("id, email, display_name, current_phase, current_week, start_date, starting_pain_score, token_tier")
+       .eq("email", normalizedEmail)
+       .single();
+     profile = result.data;
+     profileError = result.error;
+   }
+
+   if (profileError || !profile) {
+     return new Response(JSON.stringify({ error: "User not found" }), {
+       status: 404,
+       headers: { ...corsHeaders, "Content-Type": "application/json" },
+     });
+   }
 
     // Fetch assessment responses keyed to email
     const { data: assessment } = await supabase
@@ -61,7 +78,7 @@ Deno.serve(async (req) => {
     const { data: logs } = await supabase
       .from("daily_logs")
       .select("log_date, pain_score, morning_pain_score, capacity_score, phase")
-      .eq("user_id", userId)
+      .eq("user_id", profile.id)
       .not("submitted_at", "is", null)
       .order("log_date", { ascending: true })
       .limit(30);
