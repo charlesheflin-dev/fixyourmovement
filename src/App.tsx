@@ -81,7 +81,7 @@ const App = () => (
                    <Route path="/start/new" element={<StartNew />} />
                    <Route path="/checkout" element={<Checkout />} />
                    <Route path="/results/:userId" element={<Results />} />
-                   <Route path="/assessment-results" element={<AssessmentResults />} />
+                   <Route path="/results" element={<Results />} />                   <Route path="/assessment-results" element={<AssessmentResults />} />
                     <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
