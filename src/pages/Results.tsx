@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts";
 import { ShieldCheck, Tag, Infinity, CheckCircle, TrendingDown, TrendingUp, Calendar, Activity } from "lucide-react";
@@ -134,6 +134,8 @@ const PHASES = [
 
 export default function Results() {
   const { userId } = useParams<{ userId: string }>();
+  const [searchParams] = useSearchParams();
+  const emailParam = searchParams.get("email")?.replace(/ /g, "+") ?? null;
   const [data, setData] = useState<ResultsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -144,15 +146,18 @@ export default function Results() {
   }, []);
 
   useEffect(() => {
-    if (!userId) { setError(true); setLoading(false); return; }
-    fetch(`${GET_RESULTS_URL}?userId=${userId}`)
+    if (!userId && !emailParam) { setError(true); setLoading(false); return; }
+    const fetchUrl = userId
+      ? `${GET_RESULTS_URL}?userId=${userId}`
+      : `${GET_RESULTS_URL}?email=${encodeURIComponent(emailParam!)}`;
+    fetch(fetchUrl)
       .then((r) => r.json())
       .then((d) => {
         if (d.error) { setError(true); } else { setData(d); }
         setLoading(false);
       })
       .catch(() => { setError(true); setLoading(false); });
-  }, [userId]);
+  }, [userId, emailParam]);
 
   const copy = data?.archetype ? (archetypeCopy[data.archetype] ?? defaultCopy) : defaultCopy;
   const hasPainDrop = data?.painDrop !== null && data?.painDrop !== undefined && data.painDrop > 0;
