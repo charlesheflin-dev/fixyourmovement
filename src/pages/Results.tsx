@@ -359,7 +359,7 @@ function RoadmapSection({ data }: { data: ResultsData }) {
                     ? "bg-green-50 border-green-200"
                     : phase.state === "active"
                     ? "bg-blue-50 border-blue-200"
-                    : "bg-white border-slate-200 opacity-60"
+                    : "bg-white border-slate-200 opacity-80"
                 }`}>
                   <p className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${
                     phase.state === "completed" ? "text-green-600"
