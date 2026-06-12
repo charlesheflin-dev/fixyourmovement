@@ -6,6 +6,7 @@ import logo from "@/assets/logo.png";
 
 const GET_RESULTS_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-results-data";
 const CHECKOUT_URL = "/checkout";
+const INSIGHTS_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/generate-results-insights";
 
 interface ResultsData {
   userId: string;
@@ -27,9 +28,28 @@ interface ResultsData {
   painTimeline: { date: string; pain: number | null; capacity: number | null }[];
 }
 
+interface InsightsData {
+  heroSubhead: string;
+  trendInsight: string;
+  accomplishmentsCopy: string;
+  finalCtoCopy: string[];
+}
+
+const FALLBACK_INSIGHTS: InsightsData = {
+  heroSubhead: "You showed up every day and did the work. That's what creates real change.",
+  trendInsight: "Your foot is adapting to the structured load you've been giving it. Consistency over time is what drives lasting recovery.",
+  accomplishmentsCopy: "Showing up consistently is the most important thing you built.",
+  finalCtoCopy: [
+    "You've already put in the work.",
+    "You've established a starting point.",
+    "You've built real consistency.",
+    "Your next phase is ready.",
+  ],
+};
+
 // ── Section 1: Recovery Week Complete Hero ────────────────────────────────────
 
-function HeroSection({ data }: { data: ResultsData }) {
+function HeroSection({ data, insights, insightsLoading }: { data: ResultsData; insights: InsightsData; insightsLoading: boolean }) {
   const hasPainDrop = data.painDrop !== null && data.painDrop > 0;
 
   return (
@@ -51,7 +71,9 @@ function HeroSection({ data }: { data: ResultsData }) {
 
         {/* Subhead */}
         <p className="text-blue-100 text-base leading-relaxed mb-8">
-          Over the last 7 days you've completed your first Recovery Week inside the Foot Capacity System.
+          {insightsLoading
+            ? <span className="inline-block bg-white/20 rounded animate-pulse w-64 h-5" />
+            : insights.heroSubhead}
         </p>
 
         {/* Pain stats card */}
@@ -122,7 +144,7 @@ function HeroSection({ data }: { data: ResultsData }) {
 
 // ── Section 2: Progress Trend ─────────────────────────────────────────────────
 
-function ProgressTrendSection({ data }: { data: ResultsData }) {
+function ProgressTrendSection({ data, insights, insightsLoading }: { data: ResultsData; insights: InsightsData; insightsLoading: boolean }) {
   const hasPainDrop = data.painDrop !== null && data.painDrop > 0;
   const hasTimeline = data.painTimeline && data.painTimeline.length >= 2;
 
@@ -184,22 +206,18 @@ function ProgressTrendSection({ data }: { data: ResultsData }) {
           </ResponsiveContainer>
         </div>
 
-        {/* Progress insight card */}
-        {hasPainDrop && (
-          <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-4 flex items-start gap-3 mb-5">
-            <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center shrink-0 mt-0.5">
-              <TrendingUp size={14} className="text-green-600" />
-            </div>
-            <div>
-              <p className="text-green-800 text-sm font-bold mb-1">
-                Pain dropped {data.painDrop} points from {data.startingPain}/10 to {data.latestPain}/10 in {data.daysLogged} days.
-              </p>
-              <p className="text-green-700 text-sm leading-relaxed">
-                Your foot is responding to the work you've been putting in.
-              </p>
-            </div>
+        {/* Progress insight card — always shown, AI-driven */}
+        <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-4 flex items-start gap-3 mb-5">
+          <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center shrink-0 mt-0.5">
+            <TrendingUp size={14} className="text-green-600" />
           </div>
-        )}
+          <div>
+            {insightsLoading
+              ? <div className="space-y-2"><div className="bg-green-200 rounded animate-pulse h-4 w-48" /><div className="bg-green-100 rounded animate-pulse h-3 w-64" /></div>
+              : <p className="text-green-700 text-sm leading-relaxed">{insights.trendInsight}</p>
+            }
+          </div>
+        </div>
 
         {/* Transition line */}
         <p className="text-slate-400 text-sm text-center leading-relaxed">
@@ -213,7 +231,7 @@ function ProgressTrendSection({ data }: { data: ResultsData }) {
 
 // ── Section 3: What You Accomplished ─────────────────────────────────────────
 
-function AccomplishmentsSection({ data }: { data: ResultsData }) {
+function AccomplishmentsSection({ data, insights, insightsLoading }: { data: ResultsData; insights: InsightsData; insightsLoading: boolean }) {
   return (
     <section className="py-10 px-6 bg-slate-50 border-t border-slate-100">
       <div className="max-w-lg mx-auto">
@@ -231,7 +249,9 @@ function AccomplishmentsSection({ data }: { data: ResultsData }) {
 
         {/* Supporting copy */}
         <p className="text-slate-500 text-sm text-center leading-relaxed mb-7">
-          Recovery isn't about one perfect day. It's about showing up consistently and doing the work. You did that this week.
+          {insightsLoading
+            ? <span className="inline-block bg-slate-200 rounded animate-pulse w-56 h-4" />
+            : insights.accomplishmentsCopy}
         </p>
 
         {/* Achievement grid — 2x2 */}
@@ -576,7 +596,7 @@ function NextStepSection() {
 
 // ── Section 7: Don't Start Over. Keep Going. ─────────────────────────────────
 
-function FinalCtaSection() {
+function FinalCtaSection({ insights, insightsLoading }: { insights: InsightsData; insightsLoading: boolean }) {
   return (
     <section className="py-12 px-6 bg-slate-50 border-t border-slate-100">
       <div className="max-w-lg mx-auto text-center">
@@ -597,10 +617,10 @@ function FinalCtaSection() {
 
         {/* Body */}
         <div className="text-slate-500 text-sm leading-loose mb-8 space-y-1">
-          <p>You've already completed Recovery Week.</p>
-          <p>You've established a baseline.</p>
-          <p>You've built consistency.</p>
-          <p>You've started moving in the right direction.</p>
+          {insightsLoading
+            ? [1,2,3,4].map((i) => <div key={i} className="bg-slate-200 rounded animate-pulse h-4 w-48 mx-auto mb-1" />)
+            : (insights.finalCtoCopy ?? FALLBACK_INSIGHTS.finalCtoCopy).map((line, i) => <p key={i}>{line}</p>)
+          }
         </div>
 
         {/* Success card */}
@@ -639,6 +659,8 @@ export default function Results() {
   const emailParam = searchParams.get("email")?.replace(/ /g, "+") ?? null;
   const [data, setData] = useState<ResultsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [insights, setInsights] = useState<InsightsData>(FALLBACK_INSIGHTS);
+  const [insightsLoading, setInsightsLoading] = useState(true);
 
   useEffect(() => {
     if (!userId && !emailParam) { window.location.href = "/walkthrough"; return; }
@@ -653,6 +675,29 @@ export default function Results() {
         } else {
           setData(d);
           setLoading(false);
+          // Fire insights generation — non-fatal
+          fetch(INSIGHTS_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              daysLogged: d.daysLogged,
+              startingPain: d.startingPain,
+              latestPain: d.latestPain,
+              painDrop: d.painDrop,
+              trialSessionsCompleted: d.trialSessionsCompleted,
+              totalReps: d.totalReps,
+              currentStreak: d.currentStreak,
+              currentPhase: d.currentPhase,
+              currentWeek: d.currentWeek,
+              painTimeline: d.painTimeline,
+            }),
+          })
+            .then((r) => r.json())
+            .then((ins) => {
+              if (ins.heroSubhead) setInsights(ins);
+            })
+            .catch(() => {/* keep fallback */})
+            .finally(() => setInsightsLoading(false));
         }
       })
       .catch(() => { window.location.href = "/walkthrough"; });
@@ -685,13 +730,13 @@ export default function Results() {
       </header>
 
       <main>
-        <HeroSection data={data} />
-        <ProgressTrendSection data={data} />
-        <AccomplishmentsSection data={data} />
+        <HeroSection data={data} insights={insights} insightsLoading={insightsLoading} />
+        <ProgressTrendSection data={data} insights={insights} insightsLoading={insightsLoading} />
+        <AccomplishmentsSection data={data} insights={insights} insightsLoading={insightsLoading} />
         <RoadmapSection data={data} />
         <DrJonathanSection />
         <NextStepSection />
-        <FinalCtaSection />
+        <FinalCtaSection insights={insights} insightsLoading={insightsLoading} />
       </main>
 
       {/* Footer */}
