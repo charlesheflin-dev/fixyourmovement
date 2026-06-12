@@ -33,7 +33,7 @@ function HeroSection({ data }: { data: ResultsData }) {
   const hasPainDrop = data.painDrop !== null && data.painDrop > 0;
 
   return (
-    <section className="bg-gradient-to-b from-blue-600 to-blue-700 pt-10 pb-12 px-6">
+    <section className="relative bg-gradient-to-b from-blue-600 to-blue-800 pt-10 pb-20 px-6">
       <div className="max-w-lg mx-auto text-center">
 
         {/* Badge */}
@@ -103,11 +103,18 @@ function HeroSection({ data }: { data: ResultsData }) {
         <a
           href={CHECKOUT_URL}
           onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_hero_cta" })}
-          className="block w-full bg-white text-blue-600 hover:bg-blue-50 font-bold text-base py-4 rounded-xl transition-colors shadow-lg"
+          className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold text-base py-4 rounded-xl transition-colors shadow-lg"
         >
           Continue Recovery &#8594;
         </a>
 
+      </div>
+
+      {/* Wave bottom edge */}
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none">
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="w-full h-12">
+          <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="white" />
+        </svg>
       </div>
     </section>
   );
