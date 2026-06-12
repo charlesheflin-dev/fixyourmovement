@@ -131,8 +131,18 @@ function ProgressTrendSection({ data }: { data: ResultsData }) {
   const chartData = data.painTimeline.map((p) => ({
     date: p.date.slice(5), // MM-DD
     pain: p.pain,
-    capacity: p.capacity,
+    capacity: p.capacity !== null ? Math.round(p.capacity * 10) / 10 : null,
   }));
+
+  // Hide capacity line if more than 80% of values are identical (legacy flat-line detection)
+  const capacityValues = chartData.map((d) => d.capacity).filter((v) => v !== null);
+  const mostCommonCapacity = capacityValues.length > 0
+    ? capacityValues.sort((a, b) =>
+        capacityValues.filter((v) => v === a).length - capacityValues.filter((v) => v === b).length
+      ).pop()
+    : null;
+  const flatCapacityCount = capacityValues.filter((v) => v === mostCommonCapacity).length;
+  const showCapacity = capacityValues.length > 0 && flatCapacityCount / capacityValues.length < 0.8;
 
   return (
     <section className="py-10 px-6 bg-white border-t border-slate-100">
@@ -157,7 +167,7 @@ function ProgressTrendSection({ data }: { data: ResultsData }) {
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 mb-4">
           <div className="flex items-center gap-4 mb-4 text-xs text-slate-500">
             <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-blue-500 inline-block rounded" /> Pain Score (0–10)</span>
-            <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-green-500 inline-block rounded" /> Capacity Score (0–10)</span>
+            {showCapacity && <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-green-500 inline-block rounded" /> Capacity Score (0–10)</span>}
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
@@ -169,7 +179,7 @@ function ProgressTrendSection({ data }: { data: ResultsData }) {
                 labelStyle={{ color: "#475569", fontWeight: 600 }}
               />
               <Line type="monotone" dataKey="pain" stroke="#3B82F6" strokeWidth={2} dot={{ r: 3, fill: "#3B82F6" }} name="Pain" connectNulls />
-              <Line type="monotone" dataKey="capacity" stroke="#22C55E" strokeWidth={2} dot={{ r: 3, fill: "#22C55E" }} name="Capacity" connectNulls />
+              {showCapacity && <Line type="monotone" dataKey="capacity" stroke="#22C55E" strokeWidth={2} dot={{ r: 3, fill: "#22C55E" }} name="Capacity" connectNulls />}
             </LineChart>
           </ResponsiveContainer>
         </div>
