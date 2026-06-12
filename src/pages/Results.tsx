@@ -121,15 +121,6 @@ function HeroSection({ data, insights, insightsLoading }: { data: ResultsData; i
           </div>
         </div>
 
-        {/* CTA */}
-        <a
-          href={CHECKOUT_URL}
-          onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_hero_cta" })}
-          className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold text-base py-4 rounded-xl transition-colors shadow-lg"
-        >
-          Continue Recovery &#8594;
-        </a>
-
       </div>
 
       {/* Wave bottom edge */}
