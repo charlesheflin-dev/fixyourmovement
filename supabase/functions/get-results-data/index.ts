@@ -39,24 +39,24 @@ Deno.serve(async (req) => {
    let profile: any = null;
    let profileError: any = null;
 
-   if (userId) {
-     const result = await supabase
-       .from("profiles")
-       .select("id, email, display_name, current_phase, current_week, start_date, starting_pain_score, token_tier")
-       .eq("id", userId)
-       .single();
-     profile = result.data;
-     profileError = result.error;
-   } else {
-     const normalizedEmail = emailParam!.replace(/ /g, "+").toLowerCase();
-     const result = await supabase
-       .from("profiles")
-       .select("id, email, display_name, current_phase, current_week, start_date, starting_pain_score, token_tier")
-       .eq("email", normalizedEmail)
-       .single();
-     profile = result.data;
-     profileError = result.error;
-   }
+if (userId) {
+      const result = await supabase
+        .from("profiles")
+        .select("id, email, display_name, current_phase, current_week, start_date, starting_pain_score, token_tier, is_trial, trial_started_at, current_streak")
+        .eq("id", userId)
+        .single();
+      profile = result.data;
+      profileError = result.error;
+    } else {
+      const normalizedEmail = emailParam!.replace(/ /g, "+").toLowerCase();
+      const result = await supabase
+        .from("profiles")
+        .select("id, email, display_name, current_phase, current_week, start_date, starting_pain_score, token_tier, is_trial, trial_started_at, current_streak")
+        .eq("email", normalizedEmail)
+        .single();
+      profile = result.data;
+      profileError = result.error;
+    }
 
    if (profileError || !profile) {
      return new Response(JSON.stringify({ error: "User not found" }), {
@@ -83,6 +83,42 @@ Deno.serve(async (req) => {
       .order("log_date", { ascending: true })
       .limit(30);
 
+    // Fetch trial-window logs with exercise_volume for rep counting
+    const trialStartedAt = profile.trial_started_at ?? profile.start_date ?? null;
+    let trialLogs: any[] = [];
+    if (trialStartedAt) {
+      const { data: tLogs } = await supabase
+        .from("daily_logs")
+        .select("log_date, exercise_volume, calf_raise_count")
+        .eq("user_id", profile.id)
+        .not("submitted_at", "is", null)
+        .gte("log_date", trialStartedAt.slice(0, 10))
+        .order("log_date", { ascending: true });
+      trialLogs = tLogs ?? [];
+    }
+
+    // Compute trial sessions completed
+    const trialSessionsCompleted = trialLogs.length;
+
+    // Compute total reps from exercise_volume across trial logs
+    let totalReps = 0;
+    for (const log of trialLogs) {
+      const vol = log.exercise_volume as Record<string, any> | null;
+      if (vol && typeof vol === "object") {
+        for (const entry of Object.values(vol)) {
+          if (entry.is_extra) continue;
+          const sets = entry.actual_sets ?? entry.prescribed_sets ?? 0;
+          const reps = entry.actual_reps ?? entry.prescribed_reps ?? 0;
+          if (entry.unit !== "seconds") {
+            totalReps += sets * reps;
+          }
+        }
+      }
+      if (log.calf_raise_count && log.calf_raise_count > 0) {
+        totalReps += log.calf_raise_count;
+      }
+    }
+
     // Compute pain trend summary
     const submittedLogs = logs ?? [];
     const painScores = submittedLogs
@@ -108,6 +144,11 @@ Deno.serve(async (req) => {
       archetype: assessment?.archetype ?? null,
       faamScore: assessment?.faam_score ?? null,
       faamBand: assessment?.faam_band ?? null,
+      isTrial: profile.is_trial ?? false,
+      trialStartedAt: profile.trial_started_at ?? null,
+      currentStreak: profile.current_streak ?? 0,
+      trialSessionsCompleted,
+      totalReps,
       painTimeline: submittedLogs.map((l) => ({
         date: l.log_date,
         pain: l.morning_pain_score ?? l.pain_score,
