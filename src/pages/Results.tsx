@@ -250,37 +250,65 @@ function AccomplishmentsSection({ data }: { data: ResultsData }) {
 
 // ── Section 4: Recovery Roadmap ───────────────────────────────────────────────
 
-function RoadmapSection() {
-  const phases = [
-    {
-      key: "phase0",
-      label: "Phase 0",
-      name: "Recovery Week Complete",
-      completed: true,
-      bullets: ["Baseline Established", "Momentum Built", "Ready for Phase 1"],
-    },
-    {
-      key: "phase1",
-      label: "Phase 1",
-      name: "Build Foundation",
-      weeks: "Weeks 1–4",
-      bullets: ["Strength", "Stability", "Movement Quality"],
-    },
-    {
-      key: "phase2",
-      label: "Phase 2",
-      name: "Restore Capacity",
-      weeks: "Weeks 5–8",
-      bullets: ["Load Tolerance", "Confidence", "Resilience"],
-    },
-    {
-      key: "phase3",
-      label: "Phase 3",
-      name: "Return to Activity",
-      weeks: "Weeks 9–12",
-      bullets: ["Move More", "Do More", "Trust Your Foot Again"],
-    },
-  ];
+function RoadmapSection({ data }: { data: ResultsData }) {
+  const { currentPhase, currentWeek } = data;
+
+  // Build phase list — only include Calm Mode if user is currently in it
+  const allPhases: {
+    key: string;
+    phaseNum: number;
+    label: string;
+    name: string;
+    weeks?: string;
+    bullets: string[];
+    state: "completed" | "active" | "upcoming";
+    weekLabel?: string;
+  }[] = [];
+
+  if (currentPhase === -1) {
+    allPhases.push({
+      key: "calm",
+      phaseNum: -1,
+      label: "Calm Mode",
+      name: "Calm Mode",
+      bullets: ["Reducing Load", "Managing Flare-Up", "Building Baseline"],
+      state: "active",
+      weekLabel: `Week ${currentWeek}`,
+    });
+  }
+
+  allPhases.push({
+    key: "phase1",
+    phaseNum: 1,
+    label: "Phase 1",
+    name: "Build Foundation",
+    weeks: "Weeks 1–4",
+    bullets: ["Strength", "Stability", "Movement Quality"],
+    state: currentPhase > 1 ? "completed" : currentPhase === 1 ? "active" : "upcoming",
+    weekLabel: currentPhase === 1 ? `Week ${currentWeek}` : undefined,
+  });
+
+  allPhases.push({
+    key: "phase2",
+    phaseNum: 2,
+    label: "Phase 2",
+    name: "Restore Capacity",
+    weeks: "Weeks 5–8",
+    bullets: ["Load Tolerance", "Confidence", "Resilience"],
+    state: currentPhase > 2 ? "completed" : currentPhase === 2 ? "active" : "upcoming",
+    weekLabel: currentPhase === 2 ? `Week ${currentWeek}` : undefined,
+  });
+
+  allPhases.push({
+    key: "phase3",
+    phaseNum: 3,
+    label: "Phase 3",
+    name: "Return to Activity",
+    weeks: "Weeks 9–12",
+    bullets: ["Move More", "Do More", "Trust Your Foot Again"],
+    state: currentPhase > 3 ? "completed" : currentPhase === 3 ? "active" : "upcoming",
+    weekLabel: currentPhase === 3 ? `Week ${currentWeek}` : undefined,
+  });
 
   return (
     <section className="py-10 px-6 bg-white border-t border-slate-100">
@@ -307,52 +335,66 @@ function RoadmapSection() {
           <div className="absolute left-5 top-6 bottom-6 w-0.5 bg-slate-200" />
 
           <div className="space-y-4">
-            {phases.map((phase, i) => (
+            {allPhases.map((phase, i) => (
               <div key={phase.key} className="relative flex gap-4">
                 {/* Node */}
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 z-10 border-2 ${
-                  phase.completed
+                  phase.state === "completed"
                     ? "bg-green-500 border-green-500"
+                    : phase.state === "active"
+                    ? "bg-blue-600 border-blue-600"
                     : "bg-white border-slate-300"
                 }`}>
-                  {phase.completed
+                  {phase.state === "completed"
                     ? <CheckCircle size={18} className="text-white" />
-                    : <span className="text-slate-500 text-sm font-bold">{i}</span>
+                    : phase.state === "active"
+                    ? <span className="text-white text-sm font-bold">{i + 1}</span>
+                    : <span className="text-slate-400 text-sm font-bold">{i + 1}</span>
                   }
                 </div>
 
                 {/* Card */}
                 <div className={`flex-1 rounded-xl border px-4 py-4 mb-1 ${
-                  phase.completed
+                  phase.state === "completed"
                     ? "bg-green-50 border-green-200"
-                    : "bg-white border-slate-200"
+                    : phase.state === "active"
+                    ? "bg-blue-50 border-blue-200"
+                    : "bg-white border-slate-200 opacity-60"
                 }`}>
                   <p className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${
-                    phase.completed ? "text-green-600" : "text-blue-600"
+                    phase.state === "completed" ? "text-green-600"
+                    : phase.state === "active" ? "text-blue-600"
+                    : "text-slate-400"
                   }`}>{phase.label}</p>
                   <p className={`font-bold text-base mb-0.5 ${
-                    phase.completed ? "text-green-800" : "text-slate-900"
+                    phase.state === "completed" ? "text-green-800"
+                    : phase.state === "active" ? "text-slate-900"
+                    : "text-slate-400"
                   }`}>{phase.name}</p>
-                  {phase.weeks && (
+                  {phase.weeks && phase.state !== "active" && (
                     <p className="text-slate-400 text-xs mb-2">{phase.weeks}</p>
                   )}
-                  {phase.completed && (
+                  {phase.state === "completed" && (
                     <span className="inline-block bg-green-500 text-white text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mb-2">
-                      Completed
+                      Complete
+                    </span>
+                  )}
+                  {phase.state === "active" && (
+                    <span className="inline-block bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mb-2">
+                      You Are Here — {phase.weekLabel}
                     </span>
                   )}
                   <div className="flex flex-wrap gap-2">
                     {phase.bullets.map((b, j) => (
                       <span key={j} className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                        phase.completed
+                        phase.state === "completed"
                           ? "bg-green-100 text-green-700"
-                          : "bg-slate-100 text-slate-500"
+                          : phase.state === "active"
+                          ? "bg-blue-100 text-blue-700"
+                          : "bg-slate-100 text-slate-400"
                       }`}>{b}</span>
                     ))}
                   </div>
-                  {phase.completed && (
-                    <p className="text-green-700 text-xs font-semibold mt-2">You're ready for Phase 1.</p>
-                  )}
                 </div>
               </div>
             ))}
@@ -629,7 +671,7 @@ export default function Results() {
         <HeroSection data={data} />
         <ProgressTrendSection data={data} />
         <AccomplishmentsSection data={data} />
-        <RoadmapSection />
+        <RoadmapSection data={data} />
         <DrJonathanSection />
         <NextStepSection />
         <FinalCtaSection />
