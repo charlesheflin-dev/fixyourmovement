@@ -23,6 +23,7 @@ import ExitPopup from "./components/ExitPopup.tsx";
 import EmailConfirmation from "./pages/EmailConfirmation";
 import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
 import TakeAssessment from "./pages/TakeAssessment";
+import DownloadApp from "./pages/DownloadApp";
 import Assessment from "./pages/Assessment";
 import AssessmentPage from "./pages/AssessmentPage";
 import StartFrustrated from "./pages/StartFrustrated";
@@ -73,6 +74,7 @@ const App = () => (
                 <Route path="/email-confirmation" element={<EmailConfirmation />} />
                   <Route path="/lp/newsletter" element={<Navigate to="/lp/take-assessment" replace />} />
                    <Route path="/lp/take-assessment" element={<TakeAssessment />} />
+                    <Route path="/lp/download" element={<DownloadApp />} />
                   <Route path="/assessment-preview" element={<AssessmentPage />} />
                    <Route path="/assessment" element={<Assessment />} />
                    <Route path="/start/frustrated" element={<StartFrustrated />} />
