@@ -169,11 +169,11 @@ export default function DownloadApp() {
                 action="https://www.aweber.com/scripts/addlead.pl"
               >
                 {/* AWeber hidden fields */}
-                <input type="hidden" name="meta_web_form_id" value="830600793" />
+                <input type="hidden" name="meta_web_form_id" value="543768887" />
                 <input type="hidden" name="meta_split_id" value="" />
-                <input type="hidden" name="listname" value="awlist6958674" />
-                <input type="hidden" name="redirect" value="https://fixyourmovement.com/lp/download?access=true&email={!email_urlencoded}" />
-                <input type="hidden" name="meta_redirect_onlist" value="https://fixyourmovement.com/lp/download?access=true&email={!email_urlencoded}" />
+                <input type="hidden" name="listname" value="awlist6961315" />
+                <input type="hidden" name="redirect" value="https://fixyourmovement.com/email-confirmation" />
+                <input type="hidden" name="meta_redirect_onlist" value="https://fixyourmovement.com/email-confirmation" />
                 <input type="hidden" name="meta_adtracking" value="FCS_Direct_App_Download_no_Assessment" />
                 <input type="hidden" name="meta_message" value="1" />
                 <input type="hidden" name="meta_required" value="name,email" />
