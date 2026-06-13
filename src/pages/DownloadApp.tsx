@@ -287,21 +287,8 @@ export default function DownloadApp() {
             <div className="flex items-center gap-1.5"><Check /><span className="text-slate-600 text-sm">Cancel anytime</span></div>
           </div>
 
-          {/* Primary install CTA */}
-          <div className="mb-8">
-            {isMobile ? (
-              <a
-                href={INSTALL_URL}
-                className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors"
-              >
-                INSTALL THE APP — START FREE →
-              </a>
-            ) : (
-              <QRCode url={INSTALL_URL} />
-            )}
-          </div>
         </div>
-
+        
         {/* ── SECTION 2 — WHAT'S INCLUDED ─────────────────────────── */}
 
         <div className="mb-8">
