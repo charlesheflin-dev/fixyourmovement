@@ -90,6 +90,16 @@ export default function DownloadApp() {
 
   const isMobile = useIsMobile();
 
+  // Skip opt-in if arriving via email link with ?access=true
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("access") === "true") {
+      const emailParam = params.get("email");
+      if (emailParam) setEmail(decodeURIComponent(emailParam).replace(/ /g, "+"));
+      setSubmitted(true);
+    }
+  }, []);
+
   // ── Step 1: Form submit — AWeber only, no install email yet ─────────────────
   const handleFormSubmit = async () => {
     if (!name.trim() || !email.trim()) return;
@@ -288,7 +298,7 @@ export default function DownloadApp() {
           </div>
 
         </div>
-        
+
         {/* ── SECTION 2 — WHAT'S INCLUDED ─────────────────────────── */}
 
         <div className="mb-8">
