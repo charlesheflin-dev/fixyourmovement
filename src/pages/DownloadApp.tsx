@@ -74,6 +74,12 @@ function Check() {
   );
 }
 
+// ─── Read cookie helper ──────────────────────────────────────────────────────────
+function getCookie(name: string): string | null {
+  const match = document.cookie.split("; ").find(row => row.startsWith(name + "="));
+  return match ? decodeURIComponent(match.split("=")[1]) : null;
+}
+
 // ─── Main component ─────────────────────────────────────────────────────────────
 export default function DownloadApp() {
   const [email, setEmail] = useState("");
@@ -86,17 +92,48 @@ export default function DownloadApp() {
 
   const isMobile = useIsMobile();
 
-  // Skip opt-in if arriving via email link with ?access=true
+  // Intercept AWeber form submit — store email in cookie before AWeber redirects
+  const handleFormInterceptAndSetCookie = (e: React.FormEvent<HTMLFormElement>) => {
+    const form = e.currentTarget;
+    const emailInput = form.querySelector('input[name="email"]') as HTMLInputElement;
+    if (emailInput?.value) {
+      const encoded = encodeURIComponent(emailInput.value.trim().toLowerCase());
+      document.cookie = `fcs_email=${encoded}; expires=Fri, 31 Dec 2099 23:59:59 GMT; path=/; SameSite=Lax`;
+    }
+    // Do not preventDefault — let form submit normally to AWeber
+  };
+
+  // On confirmed redirect (?access=true), read email from cookie and create trial profile
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("access") === "true") {
+      // Try URL param first (future-proofing), then fall back to cookie
       const emailParam = params.get("email");
-      if (emailParam) setEmail(decodeURIComponent(emailParam).replace(/ /g, "+"));
+      const cookieEmail = getCookie("fcs_email");
+      const resolvedEmail = emailParam
+        ? decodeURIComponent(emailParam).replace(/ /g, "+")
+        : cookieEmail
+        ? cookieEmail.replace(/ /g, "+")
+        : "";
+
+      if (resolvedEmail) {
+        setEmail(resolvedEmail);
+        // Silently create trial profile — mirrors lp/take-assessment flow, non-fatal
+        console.log("[DownloadApp] Calling create-trial-profile with email:", resolvedEmail);
+        fetch(CREATE_TRIAL_PROFILE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: resolvedEmail }),
+        }).then(r => console.log("[DownloadApp] create-trial-profile response:", r.status)).catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
+      } else {
+        console.log("[DownloadApp] No email resolved — cookie:", getCookie("fcs_email"), "param:", new URLSearchParams(window.location.search).get("email"));
+      }
+
       setSubmitted(true);
     }
   }, []);
 
-  // Send install email — creates trial profile + fires Resend install email
+  // Send install email — re-calls create-trial-profile (idempotent dedup) + sends Resend install email
   const handleSendEmail = async () => {
     if (emailSent || emailLoading) return;
     setEmailLoading(true);
@@ -167,6 +204,7 @@ export default function DownloadApp() {
                 method="post"
                 acceptCharset="UTF-8"
                 action="https://www.aweber.com/scripts/addlead.pl"
+                onSubmit={handleFormInterceptAndSetCookie}
               >
                 {/* AWeber hidden fields */}
                 <input type="hidden" name="meta_web_form_id" value="543768887" />
