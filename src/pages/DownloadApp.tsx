@@ -119,14 +119,11 @@ export default function DownloadApp() {
       if (resolvedEmail) {
         setEmail(resolvedEmail);
         // Silently create trial profile — mirrors lp/take-assessment flow, non-fatal
-        console.log("[DownloadApp] Calling create-trial-profile with email:", resolvedEmail);
         fetch(CREATE_TRIAL_PROFILE_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: resolvedEmail }),
-        }).then(r => console.log("[DownloadApp] create-trial-profile response:", r.status)).catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
-      } else {
-        console.log("[DownloadApp] No email resolved — cookie:", getCookie("fcs_email"), "param:", new URLSearchParams(window.location.search).get("email"));
+        }).catch(() => {});
       }
 
       setSubmitted(true);
