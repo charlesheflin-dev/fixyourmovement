@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
-const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
 const INSTALL_URL = "https://app.fixyourmovement.com/install";
 const VIDEO_ID = "b37100f8162e1ab91cf86c9e284447da";
 const VIDEO_THUMBNAIL_ID = "0a87b6a7-6fb2-48dc-9e26-aa5c134c0200";
@@ -77,11 +76,8 @@ function Check() {
 
 // ─── Main component ─────────────────────────────────────────────────────────────
 export default function DownloadApp() {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [formLoading, setFormLoading] = useState(false);
-  const [formError, setFormError] = useState("");
 
   const [emailSent, setEmailSent] = useState(false);
   const [emailLoading, setEmailLoading] = useState(false);
@@ -100,36 +96,7 @@ export default function DownloadApp() {
     }
   }, []);
 
-  // ── Step 1: Form submit — AWeber only, no install email yet ─────────────────
-  const handleFormSubmit = async () => {
-    if (!name.trim() || !email.trim()) return;
-    setFormLoading(true);
-    setFormError("");
-
-    const cleanEmail = email.trim().replace(/ /g, "+").toLowerCase();
-    const cleanName = name.trim();
-
-    // Subscribe + tag in AWeber — non-fatal
-    try {
-      await fetch(WORKER_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: cleanEmail,
-          name: cleanName,
-          checkout_tag: "trial_accepted",
-        }),
-      });
-    } catch {
-      // Non-fatal — proceed regardless
-    }
-
-    setFormLoading(false);
-    setSubmitted(true);
-    window.scrollTo(0, 0);
-  };
-
-  // ── Step 2: Send install email — creates trial profile + fires Resend email ──
+  // Send install email — creates trial profile + fires Resend install email
   const handleSendEmail = async () => {
     if (emailSent || emailLoading) return;
     setEmailLoading(true);
@@ -165,7 +132,7 @@ export default function DownloadApp() {
     },
   ];
 
-  // ── STEP 1: OPT-IN PAGE ─────────────────────────────────────────────────────
+  // ── STEP 1: OPT-IN PAGE (AWeber form) ───────────────────────────────────────
   if (!submitted) {
     return (
       <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -191,48 +158,56 @@ export default function DownloadApp() {
               <div className="flex items-center gap-1.5"><Check /><span className="text-slate-600 text-sm">Cancel anytime</span></div>
             </div>
 
-            {/* Opt-in form */}
+            {/* AWeber opt-in form — styled to match page */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-8">
               <p className="text-slate-900 font-bold text-base text-center mb-1">Start Your Free Trial</p>
-              <p className="text-slate-500 text-sm text-center mb-5">Enter your details to access the download page.</p>
+              <p className="text-slate-500 text-sm text-center mb-5">Enter your details and we'll send you a confirmation email with access.</p>
 
-              <div className="space-y-3 mb-4">
-                <input
-                  type="text"
-                  placeholder="First name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <input
-                  type="email"
-                  placeholder="Email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === "Enter" && name && email) handleFormSubmit(); }}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              {formError && (
-                <p className="text-red-600 text-sm mb-3 bg-red-50 border border-red-200 rounded-lg px-4 py-2">{formError}</p>
-              )}
-
-              <button
-                type="button"
-                onClick={handleFormSubmit}
-                disabled={!name.trim() || !email.trim() || formLoading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold text-base py-4 rounded-xl transition-colors"
+              <form
+                method="post"
+                acceptCharset="UTF-8"
+                action="https://www.aweber.com/scripts/addlead.pl"
               >
-                {formLoading ? "One moment…" : "START MY FREE 7-DAY TRIAL →"}
-              </button>
+                {/* AWeber hidden fields */}
+                <input type="hidden" name="meta_web_form_id" value="830600793" />
+                <input type="hidden" name="meta_split_id" value="" />
+                <input type="hidden" name="listname" value="awlist6958674" />
+                <input type="hidden" name="redirect" value="https://fixyourmovement.com/lp/download?access=true&email={!email_urlencoded}" />
+                <input type="hidden" name="meta_redirect_onlist" value="https://fixyourmovement.com/lp/download?access=true&email={!email_urlencoded}" />
+                <input type="hidden" name="meta_adtracking" value="FCS_Direct_App_Download_no_Assessment" />
+                <input type="hidden" name="meta_message" value="1" />
+                <input type="hidden" name="meta_required" value="name,email" />
+                <input type="hidden" name="meta_tooltip" value="" />
 
-              <p className="text-center text-slate-400 text-xs mt-3">
-                No spam. No obligation. Unsubscribe anytime.
-              </p>
+                <div className="space-y-3 mb-4">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="First name"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email address"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-4 rounded-xl transition-colors"
+                >
+                  START MY FREE 7-DAY TRIAL →
+                </button>
+
+                <p className="text-center text-slate-400 text-xs mt-3">
+                  No spam. No obligation. Confirm your email to get access.
+                </p>
+              </form>
             </div>
 
-            {/* Problem section — above the fold on opt-in page */}
+            {/* Problem section */}
             <div className="mb-8">
               <h2 className="text-xl font-extrabold text-slate-900 text-center leading-tight mb-5">
                 Most People Are One Missing Piece Away.
@@ -275,7 +250,7 @@ export default function DownloadApp() {
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
       <main className="max-w-2xl mx-auto px-6 py-8">
 
-        {/* ── SECTION 1 — HERO + INSTALL CTA ─────────────────────── */}
+        {/* ── SECTION 1 — HERO ────────────────────────────────────── */}
 
         <div style={{ paddingTop: "32px" }}>
           <Pill>
@@ -538,9 +513,15 @@ export default function DownloadApp() {
 
           {/* Send install instructions by email */}
           <div className="bg-slate-50 rounded-2xl border border-slate-200 px-5 py-5 text-center">
-            <p className="text-slate-600 text-sm mb-4">
-              Want the install link sent to <span className="font-semibold text-slate-900">{email}</span>?
-            </p>
+            {email ? (
+              <p className="text-slate-600 text-sm mb-4">
+                Want the install link sent to <span className="font-semibold text-slate-900">{email}</span>?
+              </p>
+            ) : (
+              <p className="text-slate-600 text-sm mb-4">
+                Want us to send the install link to your email?
+              </p>
+            )}
             {emailSent ? (
               <div className="flex items-center justify-center gap-2">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -552,7 +533,7 @@ export default function DownloadApp() {
               <button
                 type="button"
                 onClick={handleSendEmail}
-                disabled={emailLoading}
+                disabled={emailLoading || !email}
                 className="w-full bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 font-semibold text-sm py-3 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {emailLoading ? "Sending…" : "Send the Download Instructions to My Email"}
