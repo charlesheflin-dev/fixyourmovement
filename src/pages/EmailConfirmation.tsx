@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, CheckCircle, ArrowRight } from "lucide-react";
+import { Mail, CheckCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 export default function EmailConfirmation() {
@@ -59,7 +59,7 @@ export default function EmailConfirmation() {
           </div>
 
           {/* Reassurance */}
-          <div className="space-y-3 mb-10">
+          <div className="space-y-3">
             <div className="flex items-center justify-center gap-2 text-slate-500 text-sm">
               <CheckCircle size={14} className="text-blue-600 shrink-0" />
               Can't find it? Check your spam or promotions folder.
@@ -74,15 +74,6 @@ export default function EmailConfirmation() {
             </div>
           </div>
 
-          {/* Soft CTA */}
-          <p className="text-slate-400 text-sm mb-3">While you wait —</p>
-          
-          <a
-            href="/"
-            className="inline-flex items-center gap-2 text-blue-600 font-semibold text-base hover:underline"
-          >
-            See how the full system works <ArrowRight size={16} />
-          </a>
         </motion.div>
       </main>
 
