@@ -446,6 +446,7 @@ function RoadmapSection({ data }: { data: ResultsData }) {
 // ── Section 5: Personal Message from Dr. Jonathan ────────────────────────────
 
 function DrJonathanSection() {
+  const [posterVisible, setPosterVisible] = useState(true);
   return (
     <section className="py-10 px-6 bg-slate-50 border-t border-slate-100">
       <div className="max-w-lg mx-auto">
@@ -471,17 +472,14 @@ function DrJonathanSection() {
 
         <div className="rounded-2xl overflow-hidden shadow-lg mb-3" style={{ position: "relative", paddingTop: "56.25%" }}>
           <iframe
-            src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/7e581f9df0bbb0e4ee02287983d4f31b/iframe"
+            src={`https://customer-hene8ngxxo3eajlj.cloudflarestream.com/7e581f9df0bbb0e4ee02287983d4f31b/iframe${!posterVisible ? "?autoplay=true" : ""}`}
             style={{ border: "none", position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
             allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
             allowFullScreen
           />
+          {posterVisible && (
           <div
-            id="results-vsl-poster"
-            onClick={() => {
-              const poster = document.getElementById("results-vsl-poster");
-              if (poster) poster.style.display = "none";
-            }}
+            onClick={() => setPosterVisible(false)}
             style={{
               position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
               backgroundImage: "url(https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/0a87b6a7-6fb2-48dc-9e26-aa5c134c0200/public)",
@@ -500,6 +498,7 @@ function DrJonathanSection() {
               </svg>
             </div>
           </div>
+          )}
         </div>
         <p className="text-slate-400 text-xs text-center mb-6">A message from Dr. Jonathan</p>
 
