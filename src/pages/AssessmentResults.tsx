@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+const GET_ASSESSMENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-assessment-results";
+const INSTALL_URL = "https://app.fixyourmovement.com/install";
+
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -11,33 +14,46 @@ function useIsMobile() {
   return isMobile;
 }
 
-function QRCode({ url }: { url: string }) {
-  return (
-    <div className="flex flex-col items-center gap-3">
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-md p-4 inline-block">
-        <img
-          src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(url)}&color=1e3a5f&bgcolor=ffffff&qzone=1`}
-          alt="Scan to install the app"
-          width={160}
-          height={160}
-          className="rounded-lg"
-        />
-      </div>
-      <p className="text-slate-500 text-sm text-center">Scan with your phone camera to install the app</p>
-      <a href={url} className="text-blue-600 text-xs font-medium hover:underline">
-        Or open on your phone: app.fixyourmovement.com/install
-      </a>
-    </div>
-  );
-}
-
-const GET_ASSESSMENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-assessment-results";
-const INSTALL_URL = "https://app.fixyourmovement.com/install";
-
 function getFaamBand(score: number): { tag: string; label: string; color: string; bg: string; border: string } {
   if (score >= 80) return { tag: "faam_high", label: "Mild Limitation", color: "#16A34A", bg: "#F0FDF4", border: "#86EFAC" };
   if (score >= 50) return { tag: "faam_moderate", label: "Moderate Limitation", color: "#D97706", bg: "#FFFBEB", border: "#FCD34D" };
   return { tag: "faam_low", label: "Significant Limitation", color: "#DC2626", bg: "#FEF2F2", border: "#FCA5A5" };
+}
+
+function FaamGauge({ score }: { score: number }) {
+  const band = getFaamBand(score);
+  const circumference = 2 * Math.PI * 54;
+  const dashOffset = circumference - (score / 100) * circumference;
+  return (
+    <div className="flex flex-col items-center">
+      <div className="relative" style={{ width: 160, height: 160 }}>
+        <svg width="160" height="160" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#E2E8F0" strokeWidth="10" />
+          <circle
+            cx="60" cy="60" r="54"
+            fill="none"
+            stroke={band.color}
+            strokeWidth="10"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={dashOffset}
+            transform="rotate(-90 60 60)"
+            style={{ transition: "stroke-dashoffset 1s ease-out" }}
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-4xl font-bold" style={{ color: band.color, lineHeight: 1 }}>{score}</span>
+          <span className="text-xs font-semibold text-slate-500 mt-0.5">/ 100</span>
+        </div>
+      </div>
+      <div
+        className="mt-3 px-4 py-1.5 rounded-full text-sm font-semibold"
+        style={{ color: band.color, backgroundColor: band.bg, border: `1px solid ${band.border}` }}
+      >
+        {band.label}
+      </div>
+    </div>
+  );
 }
 
 function ScoreBar({ score }: { score: number }) {
@@ -97,8 +113,8 @@ const archetypeData: Record<string, {
     summary: "You've put in the effort, but something important may still be getting overlooked.",
     whatStandsOut: "Your results suggest there may be a missing piece connecting everything you've already tried.",
     whatMayBeGoingOn: "You've been addressing symptoms. The underlying pattern may still be there.",
-    theBiggerIssue: "The challenge isn't effort. It's having a process that makes sense.",
-    forYouSpecifically: "You don't need another technique. You need something you can stick with.",
+    theBiggerIssue: "The challenge isn't effort. It's having a process that actually builds tissue capacity — not just manages pain.",
+    forYouSpecifically: "You don't need another technique. You need a structured process you can actually stick with.",
   },
   Archetype_Active_Person: {
     name: "The Active Person",
@@ -117,7 +133,7 @@ const archetypeData: Record<string, {
     summary: "You're asking more from your foot than it's currently ready to handle.",
     whatStandsOut: "Your foot may not be the problem. The way it's handling load might be.",
     whatMayBeGoingOn: "You keep pushing forward. Your foot hasn't been keeping pace.",
-    theBiggerIssue: "The challenge isn't doing too much. It's knowing when to push and when to pull back.",
+    theBiggerIssue: "The challenge isn't doing too much. It's knowing when to push and when to pull back — and having a system that tells you.",
     forYouSpecifically: "You don't need to stop doing everything you enjoy. You need a smarter way to keep moving.",
   },
   Archetype_Discouraged_Chronic: {
@@ -137,8 +153,8 @@ const archetypeData: Record<string, {
     summary: "It's become difficult to know what your foot can handle without consequences.",
     whatStandsOut: "Uncertainty may be creating as many limitations as the symptoms themselves.",
     whatMayBeGoingOn: "Every setback creates more hesitation. That cycle can become difficult to break.",
-    theBiggerIssue: "The challenge isn't toughness. It's rebuilding confidence in your decisions.",
-    forYouSpecifically: "You don't need perfect confidence. You need enough confidence to take the next step.",
+    theBiggerIssue: "The challenge isn't toughness. It's rebuilding enough confidence to take consistent action again.",
+    forYouSpecifically: "You don't need perfect confidence. You need enough confidence to take the next step — and a system that makes that step clear.",
   },
   Archetype_Newly_Concerned: {
     name: "The Newly Concerned",
@@ -157,8 +173,8 @@ const archetypeData: Record<string, {
     summary: "You're seeing warning signs early enough to make meaningful changes now.",
     whatStandsOut: "Your results suggest you're addressing this before it becomes harder to reverse.",
     whatMayBeGoingOn: "Your symptoms are trying to get your attention. Ignoring them rarely makes things easier.",
-    theBiggerIssue: "The challenge isn't today's discomfort. It's where the pattern could lead if ignored.",
-    forYouSpecifically: "You don't need to wait for things to get worse. You can start making changes now.",
+    theBiggerIssue: "The challenge isn't today's discomfort. It's where this pattern could lead if it doesn't get the right response now.",
+    forYouSpecifically: "You don't need to wait for things to get worse. You have an opportunity right now that most people wish they had taken earlier.",
   },
 };
 
@@ -170,6 +186,9 @@ export default function AssessmentResults() {
   } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [posterVisible, setPosterVisible] = useState(true);
+
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -190,7 +209,6 @@ export default function AssessmentResults() {
   const archetype = result ? (archetypeData[result.archetype] ?? null) : null;
   const faamScore = result?.faam_score ?? 0;
   const faamBand = getFaamBand(faamScore);
-  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -200,7 +218,7 @@ export default function AssessmentResults() {
         </a>
       </header>
 
-      <main className="max-w-2xl mx-auto px-6 py-8">
+      <main className="max-w-2xl mx-auto px-6 py-12">
 
         {loading && (
           <div className="flex items-center justify-center py-20">
@@ -218,348 +236,167 @@ export default function AssessmentResults() {
         )}
 
         {!loading && result && archetype && (
-          <div className="py-2">
+          <div className="py-4">
 
-            {/* ── SECTION 1 — ASSESSMENT COMPLETE ─────────────────── */}
-
-            <div className="flex justify-center mb-4" style={{ paddingTop: "24px" }}>
-              <div className="inline-flex items-center gap-2 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                Assessment Complete
+            {/* Dr. Jonathan header */}
+            <div className="flex items-center gap-3 mb-6">
+              <img
+                src="/images/dr-jonathan-schutza-headshot.png"
+                alt="Dr. Jonathan Schutza, PT, DPT"
+                className="w-12 h-12 rounded-full object-cover border-2 border-slate-100 shadow-sm shrink-0"
+              />
+              <div>
+                <p className="text-slate-900 font-semibold text-sm">Dr. Jonathan Schutza, PT, DPT</p>
+                <p className="text-slate-400 text-xs">Your Assessment Results</p>
               </div>
             </div>
 
-            <h1 className="text-3xl font-extrabold text-slate-900 text-center leading-tight mb-3">
-              {archetype.name}
-            </h1>
+            {/* Archetype label */}
+            <div className="mb-6">
+              <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-1">Your Recovery Profile</p>
+              <h2 className="text-2xl font-bold text-slate-900 mb-2">{archetype.name}</h2>
+              <p className="text-slate-500 text-sm leading-relaxed italic">{archetype.clinicalLabel}</p>
+            </div>
 
-            <p className="text-slate-500 text-base text-center leading-snug mb-6 max-w-xs mx-auto">
-              {archetype.summary}
-            </p>
-
-            {/* FAAM score card — supporting role, gauge reduced ~20% */}
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-5">
-              <p className="text-slate-400 text-xs font-semibold uppercase tracking-widest text-center mb-4">
-                FAAM Score
+            {/* FAAM Score card */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-md p-8 mb-6">
+              <p className="text-slate-500 text-xs font-semibold uppercase tracking-widest text-center mb-6">
+                Foot and Ankle Ability Measure (FAAM)
               </p>
-              <div className="flex justify-center mb-4">
-                <div className="relative" style={{ width: 128, height: 128 }}>
-                  <svg width="128" height="128" viewBox="0 0 120 120">
-                    <circle cx="60" cy="60" r="54" fill="none" stroke="#E2E8F0" strokeWidth="10" />
-                    <circle
-                      cx="60" cy="60" r="54"
-                      fill="none"
-                      stroke={faamBand.color}
-                      strokeWidth="10"
-                      strokeLinecap="round"
-                      strokeDasharray={String(2 * Math.PI * 54)}
-                      strokeDashoffset={String(2 * Math.PI * 54 - (faamScore / 100) * 2 * Math.PI * 54)}
-                      transform="rotate(-90 60 60)"
-                      style={{ transition: "stroke-dashoffset 1s ease-out" }}
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-3xl font-bold" style={{ color: faamBand.color, lineHeight: 1 }}>{faamScore}</span>
-                    <span className="text-xs font-semibold text-slate-400 mt-0.5">/ 100</span>
-                  </div>
-                </div>
+              <div className="flex justify-center mb-6">
+                <FaamGauge score={faamScore} />
               </div>
-              <div className="flex justify-center mb-4">
-                <div
-                  className="px-4 py-1.5 rounded-full text-sm font-semibold"
-                  style={{ color: faamBand.color, backgroundColor: faamBand.bg, border: `1px solid ${faamBand.border}` }}
-                >
-                  {faamBand.label}
-                </div>
+              <div className="mb-6">
+                <ScoreBar score={faamScore} />
               </div>
-              <ScoreBar score={faamScore} />
-              <div className="rounded-xl p-4 mt-4" style={{ backgroundColor: faamBand.bg, border: `1px solid ${faamBand.border}` }}>
-                <p className="font-semibold text-xs mb-1" style={{ color: faamBand.color }}>What this means for you</p>
+              <div className="rounded-xl p-5" style={{ backgroundColor: faamBand.bg, border: `1px solid ${faamBand.border}` }}>
+                <p className="font-semibold text-sm mb-1" style={{ color: faamBand.color }}>What this means for you</p>
                 <p className="text-slate-700 text-sm leading-relaxed">
                   {archetype.faamFraming(faamScore, faamBand.tag)}
                 </p>
               </div>
             </div>
 
-            {/* What Stands Out insight card */}
-            <div className="bg-blue-50 rounded-2xl border border-blue-100 px-5 py-5 mb-8">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
-                  </svg>
-                </div>
-                <p className="text-blue-700 text-xs font-bold uppercase tracking-widest">What Stands Out</p>
-              </div>
+            {/* What Stands Out — name the problem */}
+            <div className="bg-blue-50 rounded-xl border border-blue-100 px-5 py-5 mb-4">
+              <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-2">What Stands Out</p>
               <p className="text-slate-700 text-sm leading-relaxed">{archetype.whatStandsOut}</p>
             </div>
 
-            {/* ── SECTION 2 — DR. JONATHAN'S ASSESSMENT ────────────── */}
-
-            <div className="flex justify-center mb-4">
-              <div className="inline-flex items-center gap-2 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
-                <span className="w-4 h-4 rounded-full bg-white text-blue-600 text-[10px] font-black flex items-center justify-center">2</span>
-                Dr. Jonathan's Assessment
-              </div>
+            {/* Dr. Jonathan note */}
+            <div className="bg-slate-50 rounded-xl border border-slate-200 px-5 py-5 mb-4">
+              <p className="text-slate-700 text-sm leading-relaxed">"{archetype.drJonathanNote}"</p>
             </div>
 
-            <h2 className="text-2xl font-extrabold text-slate-900 text-center leading-tight mb-3">
-              Why This Keeps Happening
-            </h2>
-            <p className="text-slate-500 text-sm text-center leading-snug mb-6 max-w-xs mx-auto">
-              Your assessment reveals a pattern. Let's look at what it may be showing.
-            </p>
-
-            {/* Card 1 — What May Be Going On */}
-            <div className="bg-blue-50 rounded-2xl border border-blue-100 px-5 py-5 mb-4">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                  </svg>
-                </div>
-                <p className="text-blue-700 text-xs font-bold uppercase tracking-widest">What May Be Going On</p>
-              </div>
+            {/* What May Be Going On — agitate */}
+            <div className="bg-blue-50 rounded-xl border border-blue-100 px-5 py-5 mb-4">
+              <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-2">What May Be Going On</p>
               <p className="text-slate-700 text-sm leading-relaxed">{archetype.whatMayBeGoingOn}</p>
             </div>
 
-            {/* Card 2 — The Bigger Issue */}
-            <div className="bg-blue-50 rounded-2xl border border-blue-100 px-5 py-5 mb-6">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-                  </svg>
-                </div>
-                <p className="text-blue-700 text-xs font-bold uppercase tracking-widest">The Bigger Issue</p>
-              </div>
+            {/* The Bigger Issue — deepen */}
+            <div className="bg-blue-50 rounded-xl border border-blue-100 px-5 py-5 mb-6">
+              <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-2">The Bigger Issue</p>
               <p className="text-slate-700 text-sm leading-relaxed">{archetype.theBiggerIssue}</p>
             </div>
 
-            {/* App visual */}
-            <div className="flex justify-center mb-6">
-              <img
-                src="/images/app-mockup-t2.png"
-                alt="Foot Capacity System app"
-                className="w-full max-w-sm rounded-2xl shadow-lg"
-              />
-            </div>
-
-            {/* Why people like the app */}
-            <div className="mb-4">
-              <p className="text-blue-700 text-xs font-bold uppercase tracking-widest text-center mb-4">Why People Like The App</p>
-              <div className="space-y-2">
-                <p className="text-slate-800 text-base font-medium text-center">Know where you stand.</p>
-                <p className="text-slate-800 text-base font-medium text-center">Know what to focus on.</p>
-                <p className="text-slate-800 text-base font-medium text-center">Know whether you're moving forward.</p>
+            {/* Prescription — solution reveal */}
+            <div className="bg-white rounded-xl border border-blue-100 px-5 py-5 mb-6">
+              <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-4">Your Prescribed Protocol</p>
+              <div className="space-y-3">
+                {archetype.prescription.map((item, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                      {i + 1}
+                    </div>
+                    <p className="text-slate-700 text-sm leading-relaxed">{item}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Bottom reassurance */}
-            <div className="bg-blue-50 rounded-2xl border border-blue-100 px-5 py-5 mb-8 text-center">
-              <p className="text-slate-800 text-base font-semibold leading-snug">Not more information.</p>
-              <p className="text-slate-800 text-base font-semibold leading-snug">More direction.</p>
-            </div>
-
-            {/* ── SECTION 3 — WHAT HAPPENS NEXT ────────────────────── */}
-
-            <div className="flex justify-center mb-4">
-              <div className="inline-flex items-center gap-2 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
-                <span className="w-4 h-4 rounded-full bg-white text-blue-600 text-[10px] font-black flex items-center justify-center">3</span>
-                What Happens Next
-              </div>
-            </div>
-
-            <h2 className="text-2xl font-extrabold text-slate-900 text-center leading-tight mb-3">
-              You're Closer Than You Think.
-            </h2>
-            <p className="text-slate-500 text-sm text-center leading-snug mb-6 max-w-xs mx-auto">
-              Most people don't need more advice. They need a way to move forward.
-            </p>
-
-            {/* This Week */}
-            <div className="bg-blue-50 rounded-2xl border border-blue-100 px-5 py-5 mb-4">
-              <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-2">This Week</p>
-              <p className="text-slate-800 text-sm font-semibold mb-1">Check in daily.</p>
-              <p className="text-slate-700 text-sm">Follow the guidance.</p>
-              <p className="text-slate-700 text-sm">Start building momentum.</p>
-            </div>
-
-            {/* Over the Next Few Weeks */}
-            <div className="bg-blue-50 rounded-2xl border border-blue-100 px-5 py-5 mb-4">
-              <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-2">Over The Next Few Weeks</p>
-              <p className="text-slate-800 text-sm font-semibold mb-1">Become more consistent.</p>
-              <p className="text-slate-700 text-sm">Feel more confident.</p>
-              <p className="text-slate-700 text-sm">Learn what works for you.</p>
-            </div>
-
-            {/* Over Time */}
-            <div className="bg-blue-50 rounded-2xl border border-blue-100 px-5 py-5 mb-4">
-              <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-2">Over Time</p>
-              <p className="text-slate-800 text-sm font-semibold mb-1">Get back to more of the things you enjoy.</p>
-              <p className="text-slate-700 text-sm">With fewer setbacks.</p>
-            </div>
-
-            {/* For You Specifically — dynamic */}
-            <div className="bg-blue-50 rounded-2xl border border-blue-100 px-5 py-5 mb-4">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-                  </svg>
-                </div>
-                <p className="text-blue-700 text-xs font-bold uppercase tracking-widest">For You Specifically</p>
-              </div>
+            {/* For You Specifically — personalized bridge */}
+            <div className="bg-blue-50 rounded-xl border border-blue-100 px-5 py-5 mb-6">
+              <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-2">For You Specifically</p>
               <p className="text-slate-700 text-sm leading-relaxed">{archetype.forYouSpecifically}</p>
             </div>
 
-            {/* Bottom reassurance line */}
-            <div className="text-center mb-8 pt-2">
-              <p className="text-slate-500 text-sm leading-relaxed">Small actions.<br />Repeated consistently.<br />Can create meaningful change.</p>
+            {/* Log every day callout */}
+            <div className="bg-green-50 rounded-xl border border-green-200 px-5 py-5 mb-6">
+              <p className="text-green-800 text-sm font-bold mb-2">The one thing that makes this work for you specifically.</p>
+              <p className="text-green-700 text-sm leading-relaxed">
+                A few minutes of exercises. Thirty seconds of logging your pain score after. That's the whole ask. When you log daily, the app sees where you are and surfaces the exact exercises right for your current situation — not a generic protocol, your protocol. Patients who log every day see measurable pain reduction in their first week. That's not a coincidence. It's the mechanism.
+              </p>
             </div>
-
-            {/* ── SECTION 4 — DR. JONATHAN VIDEO ───────────────────── */}
-
-            <div className="flex justify-center mb-4">
-              <div className="inline-flex items-center gap-2 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
-                <span className="w-4 h-4 rounded-full bg-white text-blue-600 text-[10px] font-black flex items-center justify-center">4</span>
-                A Message From Dr. Jonathan
-              </div>
-            </div>
-
-            <h2 className="text-2xl font-extrabold text-slate-900 text-center leading-tight mb-3">
-              Why So Many People Stay Stuck
-            </h2>
-            <p className="text-slate-500 text-sm text-center leading-snug mb-6 max-w-xs mx-auto">
-              Most people aren't missing effort. They're missing direction.
-            </p>
 
             {/* VSL video */}
-            <div className="rounded-2xl overflow-hidden shadow-lg mb-5" style={{ position: "relative", paddingTop: "56.25%" }}>
+            <div className="rounded-2xl overflow-hidden shadow-lg mb-6" style={{ position: "relative", paddingTop: "56.25%" }}>
               <iframe
                 id="vsl-iframe"
-                src="https://customer-hene8ngxxo3eajlj.cloudflarestream.com/28ca18dffae027045f0b7e95c357abfb/iframe"
+                src={`https://customer-hene8ngxxo3eajlj.cloudflarestream.com/28ca18dffae027045f0b7e95c357abfb/iframe${!posterVisible ? "?autoplay=true" : ""}`}
                 style={{ border: "none", position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
                 allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen
               />
-              <div
-                id="vsl-poster"
-                onClick={() => {
-                  const poster = document.getElementById("vsl-poster");
-                  if (poster) poster.style.display = "none";
-                }}
-                style={{
-                  position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-                  backgroundImage: "url(https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/0a87b6a7-6fb2-48dc-9e26-aa5c134c0200/public)",
-                  backgroundSize: "cover", backgroundPosition: "center",
-                  cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center"
-                }}
-              >
-                <div style={{
-                  width: 64, height: 64, borderRadius: "50%",
-                  backgroundColor: "rgba(255,255,255,0.9)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  boxShadow: "0 4px 24px rgba(0,0,0,0.3)"
-                }}>
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="#2563EB">
-                    <polygon points="5,3 19,12 5,21" />
-                  </svg>
+              {posterVisible && (
+                <div
+                  onClick={() => setPosterVisible(false)}
+                  style={{
+                    position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+                    backgroundImage: "url(https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/0a87b6a7-6fb2-48dc-9e26-aa5c134c0200/public)",
+                    backgroundSize: "cover", backgroundPosition: "center",
+                    cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center"
+                  }}
+                >
+                  <div style={{
+                    width: 64, height: 64, borderRadius: "50%",
+                    backgroundColor: "rgba(255,255,255,0.9)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    boxShadow: "0 4px 24px rgba(0,0,0,0.3)"
+                  }}>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#2563EB">
+                      <polygon points="5,3 19,12 5,21" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
-            {/* Trust card */}
-            <div className="bg-blue-50 rounded-2xl border border-blue-100 px-5 py-5 mb-8">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="12" y1="2" x2="12" y2="6" /><line x1="12" y1="18" x2="12" y2="22" /><line x1="4.93" y1="4.93" x2="7.76" y2="7.76" /><line x1="16.24" y1="16.24" x2="19.07" y2="19.07" /><line x1="2" y1="12" x2="6" y2="12" /><line x1="18" y1="12" x2="22" y2="12" /><line x1="4.93" y1="19.07" x2="7.76" y2="16.24" /><line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
-                  </svg>
-                </div>
-                <p className="text-blue-700 text-xs font-bold uppercase tracking-widest">The Idea Behind The System</p>
-              </div>
-              <p className="text-slate-700 text-sm leading-relaxed mb-2">Most people are given advice.</p>
-              <p className="text-slate-700 text-sm leading-relaxed mb-2">Very few are given direction.</p>
-              <p className="text-blue-600 text-sm font-semibold leading-relaxed">That's what this system was built to provide.</p>
-            </div>
+            {/* Summary — reduce anxiety before CTA */}
+            <p className="text-slate-500 text-sm text-center leading-relaxed italic mb-6">{archetype.summary}</p>
 
-            {/* ── SECTION 5 — START FREE ────────────────────────────── */}
-
-            <div className="flex justify-center mb-4">
-              <div className="inline-flex items-center gap-2 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
-                <span className="w-4 h-4 rounded-full bg-white text-blue-600 text-[10px] font-black flex items-center justify-center">5</span>
-                Start Free
-              </div>
-            </div>
-
-            <h2 className="text-2xl font-extrabold text-slate-900 text-center leading-tight mb-3">
-              See What Changes In The Next 7 Days
-            </h2>
-            <div className="flex justify-center gap-6 mb-6">
-              <div className="flex items-center gap-1.5">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span className="text-slate-600 text-sm font-medium">No credit card.</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span className="text-slate-600 text-sm font-medium">No commitment.</span>
-              </div>
-            </div>
-
-            {/* App visual */}
-            <div className="flex justify-center mb-5">
-              <img
-                src="/images/app-mockup-t2.png"
-                alt="Foot Capacity System app"
-                className="w-full max-w-sm rounded-2xl shadow-lg"
-              />
-            </div>
-
-            {/* What you're really getting */}
-            <div className="bg-blue-50 rounded-2xl border border-blue-100 px-5 py-5 mb-5">
-              <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-3">What You're Really Getting</p>
-              <p className="text-slate-700 text-sm leading-relaxed mb-2">Not another list of exercises.</p>
-              <p className="text-slate-700 text-sm leading-relaxed mb-2">Not another round of guessing.</p>
-              <p className="text-blue-600 text-sm font-semibold leading-relaxed">Daily guidance built around where you are today.</p>
+            {/* Guarantee block */}
+            <div className="bg-blue-600 rounded-xl px-5 py-5 mb-6">
+              <p className="text-white text-sm font-bold mb-2">We're confident enough to let you go first.</p>
+              <p className="text-blue-100 text-sm leading-relaxed mb-3">
+                Download the full app. Follow your prescribed protocol for 7 days. Log daily. If your pain doesn't go down, you don't pay — ever. No card required to start. No commitment beyond showing up.
+              </p>
+              <p className="text-blue-200 text-xs leading-relaxed">
+                After your 7-day trial, continuing is $157/month for 3 months or $397 one-time — the full Foot Capacity System. You'll see that clearly inside the app when you're ready. But right now, the only thing that matters is your first session.
+              </p>
             </div>
 
             {/* Primary CTA */}
             {isMobile ? (
               <a
                 href={INSTALL_URL}
-                className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-5"
+                className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
               >
-                START MY FREE 7-DAY TRIAL &#8594;
+                Start Your Free 7-Day Trial &#8594;
               </a>
             ) : (
-              <div className="mb-5">
-                <QRCode url={INSTALL_URL} />
+              <div className="mb-3 flex flex-col items-center gap-3">
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(INSTALL_URL)}`}
+                  alt="QR code to install the app"
+                  className="w-36 h-36 rounded-xl border border-blue-200 shadow-sm"
+                />
+                <p className="text-slate-500 text-xs">Scan with your phone to install the app</p>
               </div>
             )}
 
-            {/* Install card — mobile only */}
-            {isMobile && (
-              <div className="bg-blue-50 rounded-2xl border border-blue-100 px-5 py-5 mb-5 text-center">
-                <p className="text-blue-700 text-xs font-bold uppercase tracking-widest mb-3">Install The App</p>
-                <a
-                  href={INSTALL_URL}
-                  className="text-blue-600 text-sm font-semibold hover:underline"
-                >
-                  Open on your phone: app.fixyourmovement.com/install &#8594;
-                </a>
-              </div>
-            )}
-
-            {/* Reassurance line */}
-            <p className="text-center text-slate-400 text-sm mb-6">
-              About 10–15 minutes per day.
+            <p className="text-center text-slate-400 text-sm mb-8">
+              No credit card. No commitment. Log daily and watch what happens.
             </p>
 
             {/* Footer note */}
