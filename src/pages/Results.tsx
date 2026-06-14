@@ -446,6 +446,7 @@ function RoadmapSection({ data }: { data: ResultsData }) {
 // ── Section 5: Personal Message from Dr. Jonathan ────────────────────────────
 
 function DrJonathanSection() {
+  const [posterVisible, setPosterVisible] = useState(true);
   return (
     <section className="py-10 px-6 bg-slate-50 border-t border-slate-100">
       <div className="max-w-lg mx-auto">
@@ -469,18 +470,37 @@ function DrJonathanSection() {
           <p>You started building momentum.</p>
         </div>
 
-        {/* Video placeholder */}
-        <div className="rounded-2xl overflow-hidden shadow-lg mb-3 bg-slate-200 aspect-video flex items-center justify-center">
-          <div className="text-center px-6">
-            <div className="w-16 h-16 rounded-full bg-white/80 flex items-center justify-center mx-auto mb-3 shadow">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="#2563EB">
+        <div className="rounded-2xl overflow-hidden shadow-lg mb-3" style={{ position: "relative", paddingTop: "56.25%" }}>
+          <iframe
+            src={`https://customer-hene8ngxxo3eajlj.cloudflarestream.com/7e581f9df0bbb0e4ee02287983d4f31b/iframe${!posterVisible ? "?autoplay=true" : ""}`}
+            style={{ border: "none", position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen
+          />
+          {posterVisible && (
+          <div
+            onClick={() => setPosterVisible(false)}
+            style={{
+              position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+              backgroundImage: "url(https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/0a87b6a7-6fb2-48dc-9e26-aa5c134c0200/public)",
+              backgroundSize: "cover", backgroundPosition: "center",
+              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center"
+            }}
+          >
+            <div style={{
+              width: 64, height: 64, borderRadius: "50%",
+              backgroundColor: "rgba(255,255,255,0.9)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.3)"
+            }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="#2563EB">
                 <polygon points="5,3 19,12 5,21" />
               </svg>
             </div>
-            <p className="text-slate-500 text-sm font-medium">Video coming soon</p>
           </div>
+          )}
         </div>
-        <p className="text-slate-400 text-xs text-center mb-6">45-second message from Dr. Jonathan</p>
+        <p className="text-slate-400 text-xs text-center mb-6">A message from Dr. Jonathan</p>
 
         {/* Encouragement card */}
         <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-4 text-center">
