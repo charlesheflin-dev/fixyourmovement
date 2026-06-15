@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import AskDrJonathan from "@/components/AskDrJonathan";
 import AssessmentCTA from "@/components/AssessmentCTA";
 import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -623,6 +624,8 @@ export default function Index() {
           </div>
         </div>
       </footer>
+
+            <AskDrJonathan />
 
       {/* STICKY MOBILE CTA */}
       <div

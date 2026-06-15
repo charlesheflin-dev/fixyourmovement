@@ -33,6 +33,7 @@ import StartNew from "./pages/StartNew";
 import Checkout from "./pages/Checkout";
 import Results from "./pages/Results";
 import AssessmentResults from "./pages/AssessmentResults";
+import AskDrJonathanPage from "./pages/AskDrJonathan";
 
 const queryClient = new QueryClient();
 
@@ -84,6 +85,7 @@ const App = () => (
                    <Route path="/checkout" element={<Checkout />} />
                    <Route path="/results/:userId" element={<Results />} />
                    <Route path="/results" element={<Results />} />                   <Route path="/assessment-results" element={<AssessmentResults />} />
+                   <Route path="/ask" element={<AskDrJonathanPage />} />
                     <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
