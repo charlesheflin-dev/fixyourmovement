@@ -28,6 +28,7 @@ const FILES_TO_EMBED = [
   'clinical-plantar-fasciitis.md',
   'app-behavior.md',
   'website-conversion-knowledge.md',
+  'research-layer.md',
 ];
 
 const OPENAI_MODEL = 'text-embedding-3-small';
