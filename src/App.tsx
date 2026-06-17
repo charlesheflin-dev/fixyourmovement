@@ -34,6 +34,20 @@ import Checkout from "./pages/Checkout";
 import Results from "./pages/Results";
 import AssessmentResults from "./pages/AssessmentResults";
 import AskDrJonathanPage from "./pages/AskDrJonathan";
+import AskDrJonathan from "./components/AskDrJonathan.tsx";
+
+function AskDrJonathanGlobal() {
+  const { pathname } = useLocation();
+  const excluded = [
+    "/assessment",
+    "/assessment-results",
+    "/email-confirmation",
+    "/thank-you",
+    "/ask",
+  ];
+  if (excluded.some((path) => pathname.startsWith(path))) return null;
+  return <AskDrJonathan />;
+}
 
 const queryClient = new QueryClient();
 
@@ -57,6 +71,7 @@ const App = () => (
         <ScrollToTop />
         <CookieConsent />
         <ExitPopup />
+        <AskDrJonathanGlobal />
          <Routes>
            <Route path="/" element={<Index />} />
            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
