@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import logo from "@/assets/logo.png";
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
 const INSTALL_URL = "https://app.fixyourmovement.com/install";
 const VIDEO_ID = "b37100f8162e1ab91cf86c9e284447da";
 const VIDEO_THUMBNAIL_ID = "0a87b6a7-6fb2-48dc-9e26-aa5c134c0200";
+const VIDEO_POSTER_SRC = `https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/${VIDEO_THUMBNAIL_ID}/public`;
 
 // ─── useIsMobile ────────────────────────────────────────────────────────────────
 function useIsMobile() {
@@ -89,6 +91,7 @@ export default function DownloadApp() {
   const [emailLoading, setEmailLoading] = useState(false);
 
   const [objectionOpen, setObjectionOpen] = useState<number | null>(null);
+  const [posterVisible, setPosterVisible] = useState(true);
 
   const isMobile = useIsMobile();
 
@@ -169,39 +172,70 @@ export default function DownloadApp() {
   // ── STEP 1: OPT-IN PAGE (AWeber form) ───────────────────────────────────────
   if (!submitted) {
     return (
-      <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
-        <main className="max-w-2xl mx-auto px-6 py-8">
+      <div className="min-h-screen bg-white flex flex-col" style={{ fontFamily: "Inter, sans-serif" }}>
+        {/* Header */}
+        <header className="w-full border-b border-slate-100 py-4 px-6">
+          <div className="max-w-5xl mx-auto flex items-center gap-3">
+            <img src={logo} alt="The Foot Capacity System" className="h-10 w-auto" />
+            <span className="font-bold text-slate-900 text-lg hidden sm:inline">The Foot Capacity System</span>
+          </div>
+        </header>
 
-          <div style={{ paddingTop: "32px" }}>
-            <Pill>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              Free 7-Day Trial
-            </Pill>
-
-            <h1 className="text-3xl font-extrabold text-slate-900 text-center leading-tight mb-3">
-              See How Your Foot Responds<br />In The Next 7 Days.
+        <main className="flex-1 w-full max-w-5xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-12 items-center">
+          {/* Left Column: Copy & Steps */}
+          <div>
+            <h1 className="text-4xl font-extrabold text-slate-900 leading-tight mb-4">
+              Recovery Shouldn't Require A Waiting Room.
             </h1>
-            <p className="text-slate-500 text-base text-center leading-relaxed mb-5 max-w-sm mx-auto">
-              No credit card. No commitment. A clear daily plan and a way to track whether it's working.
+            <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+              Stop waiting weeks for appointments. Start your structured plantar fasciitis recovery from home today.
             </p>
 
-            <div className="flex justify-center gap-6 mb-8">
-              <div className="flex items-center gap-1.5"><Check /><span className="text-slate-600 text-sm">No credit card</span></div>
-              <div className="flex items-center gap-1.5"><Check /><span className="text-slate-600 text-sm">Cancel anytime</span></div>
+            <div className="flex flex-wrap gap-2 mb-8">
+              <span className="bg-blue-50 text-blue-700 text-sm font-semibold px-4 py-2 rounded-full">No referrals</span>
+              <span className="bg-blue-50 text-blue-700 text-sm font-semibold px-4 py-2 rounded-full">No specialists</span>
+              <span className="bg-blue-50 text-blue-700 text-sm font-semibold px-4 py-2 rounded-full">No waiting rooms</span>
             </div>
 
-            {/* AWeber opt-in form — styled to match page */}
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-8">
-              <p className="text-slate-900 font-bold text-base text-center mb-1">Start Your Free Trial</p>
-              <p className="text-slate-500 text-sm text-center mb-5">Enter your details and we'll send you a confirmation email with access.</p>
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg shrink-0">1</div>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-lg">Assess your starting point</h3>
+                  <p className="text-slate-600 text-sm mt-1">Understand exactly where your foot capacity stands today.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg shrink-0">2</div>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-lg">Follow the daily plan</h3>
+                  <p className="text-slate-600 text-sm mt-1">Get clear, 10-minute daily sessions tailored to your phase.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg shrink-0">3</div>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-lg">Track your progress</h3>
+                  <p className="text-slate-600 text-sm mt-1">Log your pain and watch your capacity score climb week over week.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Image & Form */}
+          <div className="flex flex-col items-center">
+            <img src="/3-phones.png" alt="Foot Capacity Tracker App" className="w-full max-w-sm mb-8 drop-shadow-xl rounded-2xl" />
+
+            <div className="w-full max-w-sm bg-white rounded-2xl border border-slate-200 shadow-lg p-6">
+              <h2 className="text-xl font-extrabold text-slate-900 text-center mb-1">Get Your Free 7-Day Access</h2>
+              <p className="text-slate-500 text-sm text-center mb-5">Start your recovery protocol today.</p>
 
               <form
                 method="post"
                 acceptCharset="UTF-8"
                 action="https://www.aweber.com/scripts/addlead.pl"
                 onSubmit={handleFormInterceptAndSetCookie}
+                className="space-y-3"
               >
                 {/* AWeber hidden fields */}
                 <input type="hidden" name="meta_web_form_id" value="543768887" />
@@ -214,72 +248,46 @@ export default function DownloadApp() {
                 <input type="hidden" name="meta_required" value="name,email" />
                 <input type="hidden" name="meta_tooltip" value="" />
 
-                <div className="space-y-3 mb-4">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="First name"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email address"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="First name"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email address"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
 
                 <button
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-4 rounded-xl transition-colors"
                 >
-                  START MY FREE 7-DAY TRIAL →
+                  GET FREE 7-DAY ACCESS →
                 </button>
 
-                <p className="text-center text-slate-400 text-xs mt-3">
-                  No spam. No obligation. Confirm your email to get access.
+                <p className="text-center text-slate-400 text-xs mt-2">
+                  No credit card required. Supported by a Doctor of Physical Therapy.
                 </p>
               </form>
             </div>
-
-            {/* Problem section */}
-            <div className="mb-8">
-              <h2 className="text-xl font-extrabold text-slate-900 text-center leading-tight mb-5">
-                Most People Are One Missing Piece Away.
-              </h2>
-              <div className="space-y-3 mb-5">
-                {[
-                  "You've tried things. Some helped. None of it stuck.",
-                  "You don't know if what you're doing is making it better or worse.",
-                  "Every flare-up feels like starting over.",
-                ].map((line, i) => (
-                  <div key={i} className="bg-slate-50 rounded-2xl border border-slate-200 px-5 py-4">
-                    <p className="text-slate-800 text-sm font-semibold leading-snug">"{line}"</p>
-                  </div>
-                ))}
-              </div>
-              <p className="text-slate-500 text-sm text-center leading-relaxed max-w-xs mx-auto">
-                The problem usually isn't effort. It's not having a clear process to follow.
-              </p>
-            </div>
-
           </div>
-
-          {/* Footer */}
-          <div className="border-t border-slate-100 pt-6 pb-8 text-center">
-            <p className="text-slate-400 text-xs">
-              &copy; {new Date().getFullYear()} The Foot Capacity System &middot;{" "}
-              <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>
-              {" "}&middot;{" "}
-              <a href="/terms-of-service" className="hover:underline">Terms</a>
-            </p>
-          </div>
-
         </main>
+
+        {/* Footer */}
+        <div className="border-t border-slate-100 py-6 px-6 text-center">
+          <p className="text-slate-400 text-xs">
+            &copy; {new Date().getFullYear()} The Foot Capacity System &middot;{" "}
+            <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>
+            {" "}&middot;{" "}
+            <a href="/terms-of-service" className="hover:underline">Terms</a>
+          </p>
+        </div>
       </div>
     );
   }
-
   // ── STEP 2: DOWNLOAD PAGE ────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -422,35 +430,33 @@ export default function DownloadApp() {
 
           <div className="rounded-2xl overflow-hidden shadow-lg mb-5" style={{ position: "relative", paddingTop: "56.25%" }}>
             <iframe
-              src={`https://customer-hene8ngxxo3eajlj.cloudflarestream.com/${VIDEO_ID}/iframe`}
+              src={`https://customer-hene8ngxxo3eajlj.cloudflarestream.com/${VIDEO_ID}/iframe${!posterVisible ? "?autoplay=true" : ""}`}
               style={{ border: "none", position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
               allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
               allowFullScreen
             />
-            <div
-              id="vsl-poster"
-              onClick={() => {
-                const poster = document.getElementById("vsl-poster");
-                if (poster) poster.style.display = "none";
-              }}
-              style={{
-                position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-                backgroundImage: `url(https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/${VIDEO_THUMBNAIL_ID}/public)`,
-                backgroundSize: "cover", backgroundPosition: "center",
-                cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-              }}
-            >
-              <div style={{
-                width: 64, height: 64, borderRadius: "50%",
-                backgroundColor: "rgba(255,255,255,0.9)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
-              }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="#2563EB">
-                  <polygon points="5,3 19,12 5,21" />
-                </svg>
+            {posterVisible && (
+              <div
+                onClick={() => setPosterVisible(false)}
+                style={{
+                  position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+                  backgroundImage: `url(${VIDEO_POSTER_SRC})`,
+                  backgroundSize: "cover", backgroundPosition: "center",
+                  cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+                }}
+              >
+                <div style={{
+                  width: 64, height: 64, borderRadius: "50%",
+                  backgroundColor: "rgba(255,255,255,0.9)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
+                }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="#2563EB">
+                    <polygon points="5,3 19,12 5,21" />
+                  </svg>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           <InfoCard
