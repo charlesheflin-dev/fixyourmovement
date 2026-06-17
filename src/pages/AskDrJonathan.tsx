@@ -17,7 +17,7 @@ function MessageText({ content, isUser }: { content: string; isUser: boolean }) 
     <>
       {parts.map((part, i) =>
         urlRegex.test(part) ? (
-          <a key={i} href={part} target="_blank" rel="noopener noreferrer" className={`underline break-all ${isUser ? 'text-blue-200 hover:text-white' : 'text-blue-600 hover:text-blue-800'}`}>
+          <a key={i} href={part.startsWith('http') ? part : `https://${part}`} target="_blank" rel="noopener noreferrer" className={`underline break-all ${isUser ? 'text-blue-200 hover:text-white' : 'text-blue-600 hover:text-blue-800'}`}>
             {part}
           </a>
         ) : (
@@ -32,7 +32,7 @@ function MessageText({ content, isUser }: { content: string; isUser: boolean }) 
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',
   content:
-    "Hi — I'm here to help with questions about plantar fasciitis recovery, how the program works, or anything else on your mind. What would you like to know?",
+    "Hi — I'm Ask Dr. Jonathan, an AI assistant trained on Dr. Jonathan Schutza's clinical knowledge and the Foot Capacity System program. I can answer questions about plantar fasciitis recovery, how the program works, what to expect from the app, and whether this approach might be right for your situation. What's on your mind?",
 };
 
 const API_URL = import.meta.env.VITE_ASK_DR_JONATHAN_URL as string;
