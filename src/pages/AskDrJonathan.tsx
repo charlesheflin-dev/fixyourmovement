@@ -12,12 +12,13 @@ interface Message {
 
 function MessageText({ content, isUser }: { content: string; isUser: boolean }) {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const isUrl = /^https?:\/\//;
   const parts = content.split(urlRegex);
   return (
     <>
       {parts.map((part, i) => {
-        if (!urlRegex.test(part)) return <span key={i}>{part}</span>;
-        const cleanUrl = part.replace(/[.,;:!?)]+$/, '');
+        if (!isUrl.test(part)) return <span key={i}>{part}</span>;
+        const cleanUrl = part.replace(/[.,:;!?)]+$/, '');
         const trailing = part.slice(cleanUrl.length);
         const href = cleanUrl.startsWith('http') ? cleanUrl : `https://${cleanUrl}`;
         return (
