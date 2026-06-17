@@ -15,19 +15,23 @@ function MessageText({ content, isUser }: { content: string; isUser: boolean }) 
   const parts = content.split(urlRegex);
   return (
     <>
-      {parts.map((part, i) =>
-        urlRegex.test(part) ? (
-          <a key={i} href={part.startsWith('http') ? part : `https://${part}`} target="_blank" rel="noopener noreferrer" className={`underline break-all ${isUser ? 'text-blue-200 hover:text-white' : 'text-blue-600 hover:text-blue-800'}`}>
-            {part}
-          </a>
-        ) : (
-          <span key={i}>{part}</span>
-        )
-      )}
+      {parts.map((part, i) => {
+        if (!urlRegex.test(part)) return <span key={i}>{part}</span>;
+        const cleanUrl = part.replace(/[.,;:!?)]+$/, '');
+        const trailing = part.slice(cleanUrl.length);
+        const href = cleanUrl.startsWith('http') ? cleanUrl : `https://${cleanUrl}`;
+        return (
+          <span key={i}>
+            <a href={href} target="_blank" rel="noopener noreferrer" className={`underline break-all ${isUser ? 'text-blue-200 hover:text-white' : 'text-blue-600 hover:text-blue-800'}`}>
+              {cleanUrl}
+            </a>
+            {trailing}
+          </span>
+        );
+      })}
     </>
   );
 }
-
 
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',

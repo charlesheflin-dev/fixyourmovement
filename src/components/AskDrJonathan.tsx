@@ -15,15 +15,20 @@ function MessageText({ content }: { content: string }) {
   const parts = content.split(urlRegex);
   return (
     <>
-      {parts.map((part, i) =>
-        urlRegex.test(part) ? (
-          <a key={i} href={part.startsWith('http') ? part : `https://${part}`} target="_blank" rel="noopener noreferrer" className="underline text-blue-300 hover:text-blue-100 break-all">
-            {part}
-          </a>
-        ) : (
-          <span key={i}>{part}</span>
-        )
-      )}
+      {parts.map((part, i) => {
+        if (!urlRegex.test(part)) return <span key={i}>{part}</span>;
+        const cleanUrl = part.replace(/[.,;:!?)]+$/, '');
+        const trailing = part.slice(cleanUrl.length);
+        const href = cleanUrl.startsWith('http') ? cleanUrl : `https://${cleanUrl}`;
+        return (
+          <span key={i}>
+            <a href={href} target="_blank" rel="noopener noreferrer" className="underline text-blue-300 hover:text-blue-100 break-all">
+              {cleanUrl}
+            </a>
+            {trailing}
+          </span>
+        );
+      })}
     </>
   );
 }
