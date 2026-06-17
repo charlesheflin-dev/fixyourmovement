@@ -83,6 +83,8 @@ If they are already a customer: move them toward app support, Dr. Jonathan's cli
 
 These are claims that appear in site copy and are substantiated: Dr. Jonathan Schutza holds a Doctor of Physical Therapy (DPT) degree and is a licensed PT. The program is 12 weeks with optional Maintenance beyond. Sessions are 10–15 minutes per day, home-based, no equipment required. The FAAM is a validated clinical tool used in physical therapy and sports medicine. 30-day satisfaction guarantee. Program works for chronic cases — no time limit, symptom-dependent pacing. The free trial is 7 days with no credit card required.
 
+Dr. Jonathan personally monitors member progress through the in-app messaging system, provides guidance during recovery, and helps members navigate setbacks, questions, and flare-ups. This applies to all members including free trial users.
+
 ## What the Website Does NOT Promise
 
 No specific pain reduction percentage guaranteed within a specific timeframe. No claim that this replaces emergency or acute clinical care. No claim that it works for everyone — it is designed for plantar fasciitis and related overuse conditions, not acute injuries, stress fractures, or structural issues requiring surgical evaluation.
