@@ -76,6 +76,16 @@ function Check() {
   );
 }
 
+// ─── CheckCircle icon ────────────────────────────────────────────────────────────
+function CheckCircle() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5">
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="9 12 11 14 15 10" />
+    </svg>
+  );
+}
+
 // ─── Read cookie helper ──────────────────────────────────────────────────────────
 function getCookie(name: string): string | null {
   const match = document.cookie.split("; ").find(row => row.startsWith(name + "="));
@@ -110,7 +120,6 @@ export default function DownloadApp() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("access") === "true") {
-      // Try URL param first (future-proofing), then fall back to cookie
       const emailParam = params.get("email");
       const cookieEmail = getCookie("fcs_email");
       const resolvedEmail = emailParam
@@ -121,7 +130,6 @@ export default function DownloadApp() {
 
       if (resolvedEmail) {
         setEmail(resolvedEmail);
-        // Silently create trial profile — mirrors lp/take-assessment flow, non-fatal
         fetch(CREATE_TRIAL_PROFILE_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -133,7 +141,7 @@ export default function DownloadApp() {
     }
   }, []);
 
-  // Send install email — re-calls create-trial-profile (idempotent dedup) + sends Resend install email
+  // Send install email
   const handleSendEmail = async () => {
     if (emailSent || emailLoading) return;
     setEmailLoading(true);
@@ -169,109 +177,250 @@ export default function DownloadApp() {
     },
   ];
 
-  // ── STEP 1: OPT-IN PAGE (AWeber form) ───────────────────────────────────────
+  // ── STEP 1: OPT-IN PAGE ─────────────────────────────────────────────────────
   if (!submitted) {
     return (
       <div className="min-h-screen bg-white flex flex-col" style={{ fontFamily: "Inter, sans-serif" }}>
+
         {/* Header */}
-        <header className="w-full border-b border-slate-100 py-4 px-6">
-          <div className="max-w-5xl mx-auto flex items-center gap-3">
-            <img src={logo} alt="The Foot Capacity System" className="h-10 w-auto" />
-            <span className="font-bold text-slate-900 text-lg hidden sm:inline">The Foot Capacity System</span>
+        <header className="w-full border-b border-slate-100 py-3 px-6">
+          <div className="max-w-3xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <img src={logo} alt="The Foot Capacity System" className="h-10 w-auto" />
+              <div>
+                <p className="font-bold text-slate-900 text-base leading-tight">The Foot Capacity System</p>
+                <p className="text-slate-400 text-xs">Dr. Jonathan Schutza, PT, DPT</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-full">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              FREE 7-DAY TRIAL
+            </div>
           </div>
         </header>
 
-        <main className="flex-1 w-full max-w-5xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Column: Copy & Steps */}
-          <div>
-            <h1 className="text-4xl font-extrabold text-slate-900 leading-tight mb-4">
-              Recovery Shouldn't Require A Waiting Room.
+        <main className="flex-1 w-full max-w-3xl mx-auto px-6 py-10">
+
+          {/* Headline */}
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-4">
+              Recovery Shouldn't<br />Require A Waiting Room.
             </h1>
-            <p className="text-slate-600 text-lg mb-8 leading-relaxed">
-              Stop waiting weeks for appointments. Start your structured plantar fasciitis recovery from home today.
+            <p className="text-slate-600 text-lg leading-relaxed">
+              Just a daily recovery plan from Dr. Jonathan<br className="hidden sm:block" /> delivered directly to your phone.
             </p>
-
-            <div className="flex flex-wrap gap-2 mb-8">
-              <span className="bg-blue-50 text-blue-700 text-sm font-semibold px-4 py-2 rounded-full">No referrals</span>
-              <span className="bg-blue-50 text-blue-700 text-sm font-semibold px-4 py-2 rounded-full">No specialists</span>
-              <span className="bg-blue-50 text-blue-700 text-sm font-semibold px-4 py-2 rounded-full">No waiting rooms</span>
-            </div>
-
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg shrink-0">1</div>
-                <div>
-                  <h3 className="font-bold text-slate-900 text-lg">Assess your starting point</h3>
-                  <p className="text-slate-600 text-sm mt-1">Understand exactly where your foot capacity stands today.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg shrink-0">2</div>
-                <div>
-                  <h3 className="font-bold text-slate-900 text-lg">Follow the daily plan</h3>
-                  <p className="text-slate-600 text-sm mt-1">Get clear, 10-minute daily sessions tailored to your phase.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg shrink-0">3</div>
-                <div>
-                  <h3 className="font-bold text-slate-900 text-lg">Track your progress</h3>
-                  <p className="text-slate-600 text-sm mt-1">Log your pain and watch your capacity score climb week over week.</p>
-                </div>
-              </div>
-            </div>
           </div>
 
-          {/* Right Column: Image & Form */}
-          <div className="flex flex-col items-center">
-            <img src="/3-phones.png" alt="Foot Capacity Tracker App" className="w-full max-w-sm mb-8 drop-shadow-xl rounded-2xl" />
+          {/* From Guesswork → To Clarity + Phone image */}
+          <div className="mb-8">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="text-blue-600 text-sm font-semibold">From Guesswork</span>
+              <svg width="80" height="12" viewBox="0 0 80 12" fill="none">
+                <path d="M0 6 H72 M66 1 L78 6 L66 11" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="text-blue-600 text-sm font-semibold">To Clarity</span>
+            </div>
+            <img
+              src="/images/3-phones.png"
+              alt="The Foot Capacity System app — from baseline to daily plan to progress tracking"
+              className="w-full max-w-xl mx-auto block"
+            />
+          </div>
 
-            <div className="w-full max-w-sm bg-white rounded-2xl border border-slate-200 shadow-lg p-6">
-              <h2 className="text-xl font-extrabold text-slate-900 text-center mb-1">Get Your Free 7-Day Access</h2>
-              <p className="text-slate-500 text-sm text-center mb-5">Start your recovery protocol today.</p>
+          {/* Features list */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-10">
+            {[
+              "No referrals",
+              "No specialists",
+              "No copays",
+              "No insurance approval",
+              "No waiting rooms",
+              "No travel or gas",
+              "No rearranging your life",
+              "No childcare logistics",
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <CheckCircle />
+                <span className="text-slate-700 text-sm font-medium">{item}</span>
+              </div>
+            ))}
+          </div>
 
-              <form
-                method="post"
-                acceptCharset="UTF-8"
-                action="https://www.aweber.com/scripts/addlead.pl"
-                onSubmit={handleFormInterceptAndSetCookie}
-                className="space-y-3"
-              >
-                {/* AWeber hidden fields */}
-                <input type="hidden" name="meta_web_form_id" value="543768887" />
-                <input type="hidden" name="meta_split_id" value="" />
-                <input type="hidden" name="listname" value="awlist6961315" />
-                <input type="hidden" name="redirect" value="https://fixyourmovement.com/email-confirmation" />
-                <input type="hidden" name="meta_redirect_onlist" value="https://fixyourmovement.com/email-confirmation" />
-                <input type="hidden" name="meta_adtracking" value="FCS_Direct_App_Download_no_Assessment" />
-                <input type="hidden" name="meta_message" value="1" />
-                <input type="hidden" name="meta_required" value="name,email" />
-                <input type="hidden" name="meta_tooltip" value="" />
+          {/* 3-step process */}
+          <div className="grid grid-cols-3 gap-4 mb-10 text-center">
+            {[
+              { num: "1", label: "Assess", body: "Find your starting point and get personalized." },
+              { num: "2", label: "Follow Your Plan", body: "Get daily guidance based on how your foot feels." },
+              { num: "3", label: "Track Progress", body: "See what's working and keep moving forward." },
+            ].map((step, i) => (
+              <div key={i}>
+                <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-lg flex items-center justify-center mx-auto mb-2">
+                  {step.num}
+                </div>
+                <p className="text-slate-900 font-bold text-sm mb-1">{step.label}</p>
+                <p className="text-slate-500 text-xs leading-snug">{step.body}</p>
+              </div>
+            ))}
+          </div>
 
+          {/* Form */}
+          <div className="max-w-lg mx-auto">
+            <h2 className="text-3xl font-extrabold text-slate-900 text-center mb-2">
+              Get Your Free 7-Day Access
+            </h2>
+            <p className="text-blue-600 font-semibold text-base text-center mb-2">
+              Your first step is simple.
+            </p>
+            <p className="text-slate-500 text-sm text-center mb-6 leading-relaxed">
+              Enter your name and email below.<br />
+              We'll send you immediate access to the app and<br />
+              start your first week with Dr. Jonathan.
+            </p>
+
+            <form
+              method="post"
+              acceptCharset="UTF-8"
+              action="https://www.aweber.com/scripts/addlead.pl"
+              onSubmit={handleFormInterceptAndSetCookie}
+              className="space-y-3"
+            >
+              {/* AWeber hidden fields */}
+              <input type="hidden" name="meta_web_form_id" value="543768887" />
+              <input type="hidden" name="meta_split_id" value="" />
+              <input type="hidden" name="listname" value="awlist6961315" />
+              <input type="hidden" name="redirect" value="https://fixyourmovement.com/email-confirmation" />
+              <input type="hidden" name="meta_redirect_onlist" value="https://fixyourmovement.com/email-confirmation" />
+              <input type="hidden" name="meta_adtracking" value="FCS_Direct_App_Download_no_Assessment" />
+              <input type="hidden" name="meta_message" value="1" />
+              <input type="hidden" name="meta_required" value="name,email" />
+              <input type="hidden" name="meta_tooltip" value="" />
+
+              <div className="relative">
+                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+                </svg>
                 <input
                   type="text"
                   name="name"
                   placeholder="First name"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-4 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
+              </div>
+
+              <div className="relative">
+                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
+                </svg>
                 <input
                   type="email"
                   name="email"
                   placeholder="Email address"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-4 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
+              </div>
 
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-4 rounded-xl transition-colors"
-                >
-                  GET FREE 7-DAY ACCESS →
-                </button>
+              <button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-4 rounded-xl transition-colors"
+              >
+                GET INSTANT ACCESS →
+              </button>
 
-                <p className="text-center text-slate-400 text-xs mt-2">
-                  No credit card required. Supported by a Doctor of Physical Therapy.
+              <div className="flex items-center justify-center gap-1.5 text-slate-400 text-xs mt-2">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                No credit card. No spam. Your email stays private.
+              </div>
+            </form>
+          </div>
+
+          {/* You're Not Doing This Alone */}
+          <div className="mt-12 border-t border-slate-100 pt-10">
+            <div className="flex items-start gap-4 mb-6">
+              <div className="shrink-0">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-blue-600 font-bold text-base mb-1">You're Not Doing This Alone</p>
+                <p className="text-slate-900 font-bold text-base leading-snug mb-3">
+                  Your daily plan lives inside the app,<br />but the support doesn't stop there.
                 </p>
-              </form>
+                <p className="text-slate-600 text-sm leading-relaxed mb-3">
+                  Dr. Jonathan regularly reviews member progress, provides guidance through the in-app messaging system, and helps people navigate the setbacks, questions, and flare-ups that often derail recovery.
+                </p>
+                <div className="flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                  <p className="text-blue-600 text-sm font-semibold">This is not just an app.</p>
+                </div>
+                <p className="text-slate-600 text-sm mt-0.5 ml-6">It's a recovery system backed by a real physical therapist.</p>
+              </div>
+            </div>
+
+            {/* Open the app → 4 steps */}
+            <p className="text-slate-900 font-bold text-base text-center mb-6">
+              Open the app, follow today's plan, and start moving forward.
+            </p>
+
+            <div className="grid grid-cols-4 gap-4 text-center mb-8">
+              {[
+                {
+                  icon: (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="5" y="2" width="14" height="20" rx="2" ry="2" /><line x1="12" y1="18" x2="12.01" y2="18" />
+                    </svg>
+                  ),
+                  label: "Open the app",
+                  body: "Your plan is ready when you are.",
+                },
+                {
+                  icon: (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                    </svg>
+                  ),
+                  label: "Log your pain",
+                  body: "Track your foot's response daily.",
+                },
+                {
+                  icon: (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" /><polygon points="10 8 16 12 10 16 10 8" />
+                    </svg>
+                  ),
+                  label: "Follow today's plan",
+                  body: "Watch short videos and do your session.",
+                },
+                {
+                  icon: (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                  ),
+                  label: "Track your progress",
+                  body: "See what's working and keep moving.",
+                },
+              ].map((step, i) => (
+                <div key={i} className="flex flex-col items-center">
+                  <div className="mb-2">{step.icon}</div>
+                  <p className="text-slate-900 font-bold text-xs mb-1">{step.label}</p>
+                  <p className="text-slate-500 text-xs leading-snug">{step.body}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Trust badge */}
+            <div className="flex items-center justify-center gap-2 mb-8">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+              <p className="text-slate-500 text-xs">Trusted by thousands. Built by a physical therapist. Backed by science.</p>
             </div>
           </div>
         </main>
@@ -288,13 +437,13 @@ export default function DownloadApp() {
       </div>
     );
   }
+
   // ── STEP 2: DOWNLOAD PAGE ────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
       <main className="max-w-2xl mx-auto px-6 py-8">
 
         {/* ── SECTION 1 — HERO ────────────────────────────────────── */}
-
         <div style={{ paddingTop: "32px" }}>
           <Pill>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -314,11 +463,9 @@ export default function DownloadApp() {
             <div className="flex items-center gap-1.5"><Check /><span className="text-slate-600 text-sm">No credit card</span></div>
             <div className="flex items-center gap-1.5"><Check /><span className="text-slate-600 text-sm">Cancel anytime</span></div>
           </div>
-
         </div>
 
         {/* ── SECTION 2 — WHAT'S INCLUDED ─────────────────────────── */}
-
         <div className="mb-8">
           <Pill>
             <span className="w-4 h-4 rounded-full bg-white text-blue-600 text-[10px] font-black flex items-center justify-center">✓</span>
@@ -388,7 +535,6 @@ export default function DownloadApp() {
         </div>
 
         {/* ── PRICING TRANSPARENCY ────────────────────────────────── */}
-
         <div className="bg-slate-50 rounded-2xl border border-slate-200 px-5 py-5 mb-8">
           <p className="text-slate-700 text-xs font-bold uppercase tracking-widest mb-3">What Happens After 7 Days?</p>
           <p className="text-slate-600 text-sm leading-relaxed mb-4">
@@ -414,7 +560,6 @@ export default function DownloadApp() {
         </div>
 
         {/* ── SECTION 3 — DR. JONATHAN VIDEO ─────────────────────── */}
-
         <div className="mb-8">
           <Pill>
             <span className="w-4 h-4 rounded-full bg-white text-blue-600 text-[10px] font-black flex items-center justify-center">▶</span>
@@ -477,7 +622,6 @@ export default function DownloadApp() {
         </div>
 
         {/* ── SECTION 4 — SOCIAL PROOF ────────────────────────────── */}
-
         <div className="mb-8">
           <div className="space-y-3">
             {[
@@ -493,7 +637,6 @@ export default function DownloadApp() {
         </div>
 
         {/* ── SECTION 5 — OBJECTIONS ──────────────────────────────── */}
-
         <div className="mb-8">
           <h2 className="text-xl font-extrabold text-slate-900 text-center leading-tight mb-5">
             Common Questions
@@ -526,7 +669,6 @@ export default function DownloadApp() {
         </div>
 
         {/* ── SECTION 6 — FINAL CTA ───────────────────────────────── */}
-
         <div className="mb-8">
           <h2 className="text-2xl font-extrabold text-slate-900 text-center leading-tight mb-3">
             Start Today. See What 7 Days Does.
