@@ -3,11 +3,31 @@
 // Same logic as the widget, but full-screen layout.
 
 import { useState, useRef, useEffect } from 'react';
+import logo from '@/assets/logo.png';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
+
+function MessageText({ content, isUser }: { content: string; isUser: boolean }) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const parts = content.split(urlRegex);
+  return (
+    <>
+      {parts.map((part, i) =>
+        urlRegex.test(part) ? (
+          <a key={i} href={part} target="_blank" rel="noopener noreferrer" className={`underline break-all ${isUser ? 'text-blue-200 hover:text-white' : 'text-blue-600 hover:text-blue-800'}`}>
+            {part}
+          </a>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </>
+  );
+}
+
 
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',
@@ -22,7 +42,7 @@ export default function AskDrJonathanPage() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -73,7 +93,7 @@ export default function AskDrJonathanPage() {
     }
   }
 
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
@@ -85,9 +105,9 @@ export default function AskDrJonathanPage() {
       {/* Page header */}
       <header className="flex items-center gap-3 border-b border-gray-200 bg-white px-4 py-3 sm:px-6">
         <img
-          src="/images/fcs-logo-v2.jpg"
+          src={logo}
           alt="Foot Capacity System"
-          className="h-9 w-9 rounded-lg object-cover"
+          className="h-9 w-auto"
         />
         <div>
           <h1 className="text-base font-semibold text-gray-900">Ask Dr. Jonathan</h1>
@@ -119,7 +139,7 @@ export default function AskDrJonathanPage() {
                   }
                 `}
               >
-                {msg.content}
+                <MessageText content={msg.content} isUser={msg.role === 'user'} />
               </div>
             </div>
           ))}
@@ -145,15 +165,15 @@ export default function AskDrJonathanPage() {
       {/* Input area */}
       <div className="border-t border-gray-200 bg-white px-4 py-4 sm:px-6">
         <div className="mx-auto flex max-w-2xl items-center gap-3">
-          <input
-            ref={inputRef}
-            type="text"
+          <textarea
+            ref={inputRef as React.RefObject<HTMLTextAreaElement>}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask a question about plantar fasciitis recovery..."
             disabled={isLoading}
-            className="flex-1 rounded-full border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            rows={2}
+            className="flex-1 rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 resize-none"
           />
           <button
             onClick={sendMessage}

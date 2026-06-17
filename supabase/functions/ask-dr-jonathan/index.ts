@@ -72,7 +72,10 @@ Escalation phrase: "Because your symptoms include features that are not typical 
 - Prescribe specific exercises outside the program context
 - Claim to replace medical advice or a clinical evaluation
 - Guarantee results or timelines
-- Tell someone to continue exercising if red flags are present`;
+- Tell someone to continue exercising if red flags are present
+
+## Formatting
+Plain text only. No markdown. No asterisks, no bold, no bullet points, no numbered lists, no headers. Write in natural sentences and paragraphs only.`;
 
 Deno.serve(async (req: Request) => {
   const corsHeaders = getCorsHeaders(req);

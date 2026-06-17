@@ -10,6 +10,24 @@ interface Message {
   content: string;
 }
 
+function MessageText({ content }: { content: string }) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const parts = content.split(urlRegex);
+  return (
+    <>
+      {parts.map((part, i) =>
+        urlRegex.test(part) ? (
+          <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="underline text-blue-300 hover:text-blue-100 break-all">
+            {part}
+          </a>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </>
+  );
+}
+
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',
   content:
@@ -24,7 +42,7 @@ export default function AskDrJonathan() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-scroll to bottom when new message arrives
   useEffect(() => {
@@ -80,7 +98,7 @@ export default function AskDrJonathan() {
     }
   }
 
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
@@ -180,7 +198,7 @@ export default function AskDrJonathan() {
                     }
                   `}
                 >
-                  {msg.content}
+                  <MessageText content={msg.content} />
                 </div>
               </div>
             ))}
@@ -202,15 +220,15 @@ export default function AskDrJonathan() {
           {/* Input area */}
           <div className="border-t border-gray-200 p-3">
             <div className="flex items-center gap-2">
-              <input
-                ref={inputRef}
-                type="text"
+              <textarea
+                ref={inputRef as React.RefObject<HTMLTextAreaElement>}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Ask a question..."
                 disabled={isLoading}
-                className="flex-1 rounded-full border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:opacity-50"
+                rows={2}
+                className="flex-1 rounded-2xl border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:opacity-50 resize-none"
               />
               <button
                 onClick={sendMessage}
