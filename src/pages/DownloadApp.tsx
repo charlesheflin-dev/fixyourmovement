@@ -105,7 +105,6 @@ export default function DownloadApp() {
 
   const isMobile = useIsMobile();
 
-  // Intercept AWeber form submit — store email in cookie before AWeber redirects
   const handleFormInterceptAndSetCookie = (e: React.FormEvent<HTMLFormElement>) => {
     const form = e.currentTarget;
     const emailInput = form.querySelector('input[name="email"]') as HTMLInputElement;
@@ -113,10 +112,8 @@ export default function DownloadApp() {
       const encoded = encodeURIComponent(emailInput.value.trim().toLowerCase());
       document.cookie = `fcs_email=${encoded}; expires=Fri, 31 Dec 2099 23:59:59 GMT; path=/; SameSite=Lax`;
     }
-    // Do not preventDefault — let form submit normally to AWeber
   };
 
-  // On confirmed redirect (?access=true), read email from cookie and create trial profile
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("access") === "true") {
@@ -141,13 +138,10 @@ export default function DownloadApp() {
     }
   }, []);
 
-  // Send install email
   const handleSendEmail = async () => {
     if (emailSent || emailLoading) return;
     setEmailLoading(true);
-
     const cleanEmail = email.trim().replace(/ /g, "+").toLowerCase();
-
     try {
       await fetch(CREATE_TRIAL_PROFILE_URL, {
         method: "POST",
@@ -157,7 +151,6 @@ export default function DownloadApp() {
     } catch {
       // Non-fatal
     }
-
     setEmailLoading(false);
     setEmailSent(true);
   };
@@ -180,10 +173,10 @@ export default function DownloadApp() {
   // ── STEP 1: OPT-IN PAGE ─────────────────────────────────────────────────────
   if (!submitted) {
     return (
-      <div className="min-h-screen bg-white flex flex-col" style={{ fontFamily: "Inter, sans-serif" }}>
+      <div className="min-h-screen bg-slate-50 flex flex-col" style={{ fontFamily: "Inter, sans-serif" }}>
 
         {/* Header */}
-        <header className="w-full border-b border-slate-100 py-3 px-6">
+        <header className="w-full bg-white border-b border-slate-200 py-3 px-6">
           <div className="max-w-3xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img src={logo} alt="The Foot Capacity System" className="h-10 w-auto" />
@@ -192,7 +185,7 @@ export default function DownloadApp() {
                 <p className="text-slate-400 text-xs">Dr. Jonathan Schutza, PT, DPT</p>
               </div>
             </div>
-            <div className="flex items-center gap-2 bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-full">
+            <div className="flex items-center gap-2 bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-full shrink-0">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
@@ -203,8 +196,8 @@ export default function DownloadApp() {
 
         <main className="flex-1 w-full max-w-3xl mx-auto px-6 py-10">
 
-          {/* Headline */}
-          <div className="mb-8">
+          {/* Headline — white card */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4">
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-4">
               Recovery Shouldn't<br />Require A Waiting Room.
             </h1>
@@ -213,60 +206,73 @@ export default function DownloadApp() {
             </p>
           </div>
 
-          {/* From Guesswork → To Clarity + Phone image */}
-          <div className="mb-8">
-            <div className="flex items-center justify-center gap-3 mb-4">
+          {/* App showcase card — phones + features + 3-step */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4">
+
+            {/* From Guesswork → To Clarity */}
+            <div className="flex items-center justify-center gap-3 mb-5">
               <span className="text-blue-600 text-sm font-semibold">From Guesswork</span>
               <svg width="80" height="12" viewBox="0 0 80 12" fill="none">
                 <path d="M0 6 H72 M66 1 L78 6 L66 11" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               <span className="text-blue-600 text-sm font-semibold">To Clarity</span>
             </div>
-            <img
-              src="/images/3-phones.png"
-              alt="The Foot Capacity System app — from baseline to daily plan to progress tracking"
-              className="w-full max-w-xl mx-auto block"
-            />
-          </div>
 
-          {/* Features list */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-10">
-            {[
-              "No referrals",
-              "No specialists",
-              "No copays",
-              "No insurance approval",
-              "No waiting rooms",
-              "No travel or gas",
-              "No rearranging your life",
-              "No childcare logistics",
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <CheckCircle />
-                <span className="text-slate-700 text-sm font-medium">{item}</span>
+            {/* Phone image + features side by side on desktop, stacked on mobile */}
+            <div className="flex flex-col md:flex-row md:items-start gap-8 mb-8">
+              {/* Phone image */}
+              <div className="md:w-1/2">
+                <img
+                  src="/images/3-phones.png"
+                  alt="The Foot Capacity System app"
+                  className="w-full"
+                />
               </div>
-            ))}
-          </div>
 
-          {/* 3-step process */}
-          <div className="grid grid-cols-3 gap-4 mb-10 text-center">
-            {[
-              { num: "1", label: "Assess", body: "Find your starting point and get personalized." },
-              { num: "2", label: "Follow Your Plan", body: "Get daily guidance based on how your foot feels." },
-              { num: "3", label: "Track Progress", body: "See what's working and keep moving forward." },
-            ].map((step, i) => (
-              <div key={i}>
-                <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-lg flex items-center justify-center mx-auto mb-2">
-                  {step.num}
+              {/* Features list */}
+              <div className="md:w-1/2 flex flex-col justify-center">
+                <div className="space-y-3">
+                  {[
+                    "No referrals",
+                    "No specialists",
+                    "No copays",
+                    "No insurance approval",
+                    "No waiting rooms",
+                    "No travel or gas",
+                    "No rearranging your life",
+                    "No childcare logistics",
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <CheckCircle />
+                      <span className="text-slate-700 text-sm font-medium">{item}</span>
+                    </div>
+                  ))}
                 </div>
-                <p className="text-slate-900 font-bold text-sm mb-1">{step.label}</p>
-                <p className="text-slate-500 text-xs leading-snug">{step.body}</p>
               </div>
-            ))}
+            </div>
+
+            {/* 3-step process */}
+            <div className="border-t border-slate-100 pt-6">
+              <div className="grid grid-cols-3 gap-4 text-center">
+                {[
+                  { num: "1", label: "Assess", body: "Find your starting point and get personalized." },
+                  { num: "2", label: "Follow Your Plan", body: "Get daily guidance based on how your foot feels." },
+                  { num: "3", label: "Track Progress", body: "See what's working and keep moving forward." },
+                ].map((step, i) => (
+                  <div key={i}>
+                    <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-lg flex items-center justify-center mx-auto mb-2">
+                      {step.num}
+                    </div>
+                    <p className="text-blue-600 font-bold text-sm mb-1">{step.label}</p>
+                    <p className="text-slate-500 text-xs leading-snug">{step.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Form */}
-          <div className="max-w-lg mx-auto">
+          {/* Form card */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4">
             <h2 className="text-3xl font-extrabold text-slate-900 text-center mb-2">
               Get Your Free 7-Day Access
             </h2>
@@ -284,9 +290,8 @@ export default function DownloadApp() {
               acceptCharset="UTF-8"
               action="https://www.aweber.com/scripts/addlead.pl"
               onSubmit={handleFormInterceptAndSetCookie}
-              className="space-y-3"
+              className="space-y-3 max-w-md mx-auto"
             >
-              {/* AWeber hidden fields */}
               <input type="hidden" name="meta_web_form_id" value="543768887" />
               <input type="hidden" name="meta_split_id" value="" />
               <input type="hidden" name="listname" value="awlist6961315" />
@@ -337,11 +342,11 @@ export default function DownloadApp() {
             </form>
           </div>
 
-          {/* You're Not Doing This Alone */}
-          <div className="mt-12 border-t border-slate-100 pt-10">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="shrink-0">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          {/* You're Not Doing This Alone card */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4">
+            <div className="flex items-start gap-5">
+              <div className="shrink-0 mt-1">
+                <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
               </div>
@@ -350,29 +355,32 @@ export default function DownloadApp() {
                 <p className="text-slate-900 font-bold text-base leading-snug mb-3">
                   Your daily plan lives inside the app,<br />but the support doesn't stop there.
                 </p>
-                <p className="text-slate-600 text-sm leading-relaxed mb-3">
+                <p className="text-slate-600 text-sm leading-relaxed mb-4">
                   Dr. Jonathan regularly reviews member progress, provides guidance through the in-app messaging system, and helps people navigate the setbacks, questions, and flare-ups that often derail recovery.
                 </p>
-                <div className="flex items-center gap-2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                <div className="flex items-start gap-2 bg-blue-50 rounded-xl px-4 py-3 border border-blue-100">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                   </svg>
-                  <p className="text-blue-600 text-sm font-semibold">This is not just an app.</p>
+                  <div>
+                    <p className="text-blue-600 text-sm font-bold">This is not just an app.</p>
+                    <p className="text-slate-600 text-sm">It's a recovery system backed by a real physical therapist.</p>
+                  </div>
                 </div>
-                <p className="text-slate-600 text-sm mt-0.5 ml-6">It's a recovery system backed by a real physical therapist.</p>
               </div>
             </div>
+          </div>
 
-            {/* Open the app → 4 steps */}
+          {/* 4-step process card */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4">
             <p className="text-slate-900 font-bold text-base text-center mb-6">
               Open the app, follow today's plan, and start moving forward.
             </p>
-
-            <div className="grid grid-cols-4 gap-4 text-center mb-8">
+            <div className="grid grid-cols-4 gap-4 text-center">
               {[
                 {
                   icon: (
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="5" y="2" width="14" height="20" rx="2" ry="2" /><line x1="12" y1="18" x2="12.01" y2="18" />
                     </svg>
                   ),
@@ -381,7 +389,7 @@ export default function DownloadApp() {
                 },
                 {
                   icon: (
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
                     </svg>
                   ),
@@ -390,7 +398,7 @@ export default function DownloadApp() {
                 },
                 {
                   icon: (
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="12" cy="12" r="10" /><polygon points="10 8 16 12 10 16 10 8" />
                     </svg>
                   ),
@@ -399,7 +407,7 @@ export default function DownloadApp() {
                 },
                 {
                   icon: (
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
                     </svg>
                   ),
@@ -414,19 +422,20 @@ export default function DownloadApp() {
                 </div>
               ))}
             </div>
-
-            {/* Trust badge */}
-            <div className="flex items-center justify-center gap-2 mb-8">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
-              <p className="text-slate-500 text-xs">Trusted by thousands. Built by a physical therapist. Backed by science.</p>
-            </div>
           </div>
+
+          {/* Trust badge */}
+          <div className="flex items-center justify-center gap-2 py-4">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <p className="text-slate-400 text-xs">Trusted by thousands. Built by a physical therapist. Backed by science.</p>
+          </div>
+
         </main>
 
         {/* Footer */}
-        <div className="border-t border-slate-100 py-6 px-6 text-center">
+        <div className="border-t border-slate-200 bg-white py-6 px-6 text-center">
           <p className="text-slate-400 text-xs">
             &copy; {new Date().getFullYear()} The Foot Capacity System &middot;{" "}
             <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>
@@ -694,7 +703,6 @@ export default function DownloadApp() {
             You can cancel anytime. The trial exists because we're confident in what happens in the first week.
           </p>
 
-          {/* Send install instructions by email */}
           <div className="bg-slate-50 rounded-2xl border border-slate-200 px-5 py-5 text-center">
             {email ? (
               <p className="text-slate-600 text-sm mb-4">
