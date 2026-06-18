@@ -7,8 +7,8 @@
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const SIMILARITY_THRESHOLD = 0.65;
-const MAX_CHUNKS = 4;
+const LOW_SIMILARITY_LOG_THRESHOLD = 0.55;
+const MAX_CHUNKS = 6;
 
 const ALLOWED_ORIGINS = [
   "https://fixyourmovement.com",
@@ -149,18 +149,12 @@ Deno.serve(async (req: Request) => {
       throw new Error(`RPC error: ${rpcError.message}`);
     }
 
-    // First message: apply threshold to determine if topic is in scope
-    // Follow-up messages: no threshold, maintain conversation continuity
-    const chunks = rawChunks
-      ? isFollowUp
-        ? rawChunks
-        : rawChunks.filter((c: { similarity: number }) => c.similarity >= SIMILARITY_THRESHOLD)
-      : [];
+    // All messages pass through to Claude — no threshold gate
+    // Log low-similarity questions for review without blocking the answer
+    const chunks = rawChunks ?? [];
 
-    const hasGoodMatch = chunks && chunks.length > 0;
-
-    // ── Step 3: If first message with no good match, save and return fallback
-    if (!hasGoodMatch && !isFollowUp) {
+    const topSimilarityCheck = chunks[0]?.similarity ?? 0;
+    if (topSimilarityCheck < LOW_SIMILARITY_LOG_THRESHOLD) {
       try {
         await supabase.from("unanswered_questions").insert({
           question: message.trim(),
@@ -169,19 +163,6 @@ Deno.serve(async (req: Request) => {
       } catch {
         // Non-fatal
       }
-
-      return new Response(
-        JSON.stringify({
-          reply:
-            "That's a great question — I want to make sure I give you an accurate answer rather than guess. Dr. Jonathan reviews questions like this personally. Send it to contact@fixyourmovement.com and you'll hear back directly.",
-          sources: [],
-          similarity: 0,
-        }),
-        {
-          status: 200,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
-      );
     }
 
     // ── Step 4: Build context from retrieved chunks ──────────────────────────
@@ -193,7 +174,7 @@ Deno.serve(async (req: Request) => {
           .join("\n\n---\n\n")
       : "No specific context retrieved — use your general knowledge of the program and the conversation history to answer naturally.";
 
-    const topSimilarity = chunks[0]?.similarity ?? 0;
+    const topSimilarity = topSimilarityCheck;
 
     // ── Step 5: Build conversation history for Claude ────────────────────────
     const conversationMessages = [
