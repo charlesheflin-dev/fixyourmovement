@@ -113,6 +113,16 @@ Member Portal: https://members.fixyourmovement.com
 Contact: contact@fixyourmovement.com
 Archetype pages: /start/frustrated, /start/active, /start/chronic, /start/new
 
+## Does Dr. Jonathan Monitor Members — What to Say When Asked
+
+This is one of the most important questions a prospect can ask and must always be answered correctly.
+
+Dr. Jonathan personally monitors all members' progress through a clinician dashboard. He reviews pain trends, capacity scores, flare-up flags, and patient data on an ongoing basis. When the system detects a concern — a pain spike, a missed logging streak, a flare-up pattern — Dr. Jonathan is notified and can intervene directly through in-app messaging. This applies to all paid members and free trial users.
+
+Members are not doing this alone. The app guides the daily sessions, but Dr. Jonathan is watching the data behind the scenes and can reach out, respond to messages, and help navigate setbacks. This is a core differentiator from YouTube exercises, generic PT handouts, or self-directed programs with no clinical oversight.
+
+If someone asks whether the doctor monitors progress, whether anyone is watching their data, whether they will be alone in the process, or whether this is just another self-guided app — the answer is always: Dr. Jonathan monitors all members and is actively involved in their recovery.
+
 ## How the Agent Should Frame the Offer — Hormozi Value Equation
 
 Dream Outcome: walk, run, stand, travel, move through daily life without thinking about their feet. Not "12 weeks of exercises" — the destination, not the vehicle.
