@@ -80,7 +80,7 @@ export default function AskDrJonathan() {
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, history }),
+        body: JSON.stringify({ message: text, history, page_path: window.location.pathname }),
       });
 
       if (!res.ok) throw new Error('Network response not ok');

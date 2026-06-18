@@ -100,7 +100,7 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    const { message, history = [] } = await req.json();
+    const { message, history = [], page_path = null } = await req.json();
 
     if (!message || typeof message !== "string" || message.trim().length === 0) {
       return new Response(JSON.stringify({ error: "Message is required" }), {
@@ -219,7 +219,21 @@ Deno.serve(async (req: Request) => {
       claudeData.content?.[0]?.text ??
       "I wasn't able to generate a response. Please try again or email contact@fixyourmovement.com.";
 
-    // ── Step 7: Return response ──────────────────────────────────────────────
+    // ── Step 7: Log question to chat_questions ───────────────────────────────
+    try {
+      await supabase.from("chat_questions").insert({
+        question: message.trim(),
+        reply,
+        was_answered: topSimilarity >= LOW_SIMILARITY_LOG_THRESHOLD,
+        similarity_score: Math.round(topSimilarity * 100) / 100,
+        page_path: page_path ?? null,
+        asked_at: new Date().toISOString(),
+      });
+    } catch {
+      // Non-fatal
+    }
+
+    // ── Step 8: Return response ──────────────────────────────────────────────
     return new Response(
       JSON.stringify({
         reply,
