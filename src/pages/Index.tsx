@@ -564,6 +564,15 @@ export default function Index() {
                   No. While many people initially discover the system because of plantar fasciitis or heel pain, The Foot Capacity System was designed more broadly around improving foot and ankle strength, movement tolerance, and long-term recovery consistency.
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="faq-9" className="border-b border-slate-200 pb-1">
+                <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">
+                  Can I use my HSA or FSA?
+                </AccordionTrigger>
+                <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">
+                  You may be able to use HSA or FSA funds for programs focused on recovery, rehabilitation, and improving physical function. The Foot Capacity System was created by Dr. Jonathan Schutza, PT, DPT, and is designed to help individuals navigate foot and ankle pain through guided exercise, progress tracking, and structured recovery support. Because eligibility varies by plan and provider, we recommend checking with your HSA/FSA administrator regarding your specific coverage.
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
           </div>
         </section>
