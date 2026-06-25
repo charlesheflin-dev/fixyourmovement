@@ -470,7 +470,7 @@ export default function DownloadApp() {
 
           <div className="flex justify-center gap-6 mb-6">
             <div className="flex items-center gap-1.5"><Check /><span className="text-slate-600 text-sm">No credit card</span></div>
-            <div className="flex items-center gap-1.5"><Check /><span className="text-slate-600 text-sm">Cancel anytime</span></div>
+            <div className="flex items-center gap-1.5"><Check /><span className="text-slate-600 text-sm">No commitment</span></div>
           </div>
         </div>
 
@@ -541,31 +541,6 @@ export default function DownloadApp() {
               </InfoCard>
             ))}
           </div>
-        </div>
-
-        {/* ── PRICING TRANSPARENCY ────────────────────────────────── */}
-        <div className="bg-slate-50 rounded-2xl border border-slate-200 px-5 py-5 mb-8">
-          <p className="text-slate-700 text-xs font-bold uppercase tracking-widest mb-3">What Happens After 7 Days?</p>
-          <p className="text-slate-600 text-sm leading-relaxed mb-4">
-            After your trial, you'll see two simple options inside the app. No automatic charges — nothing happens unless you choose to continue.
-          </p>
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 rounded-full bg-blue-600 mt-1.5 shrink-0" />
-              <p className="text-slate-700 text-sm leading-relaxed">
-                <span className="font-semibold text-slate-900">$397 one-time</span> — full 12-week program, lifetime access
-              </p>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 rounded-full bg-blue-600 mt-1.5 shrink-0" />
-              <p className="text-slate-700 text-sm leading-relaxed">
-                <span className="font-semibold text-slate-900">$157/month × 3 payments</span> — same program, spread out
-              </p>
-            </div>
-          </div>
-          <p className="text-slate-400 text-xs mt-4 leading-relaxed">
-            No card required to start. If you decide it's not for you, you just don't continue.
-          </p>
         </div>
 
         {/* ── SECTION 3 — DR. JONATHAN VIDEO ─────────────────────── */}
@@ -699,8 +674,8 @@ export default function DownloadApp() {
             </div>
           )}
 
-          <p className="text-center text-slate-500 text-sm leading-relaxed max-w-xs mx-auto mb-8">
-            You can cancel anytime. The trial exists because we're confident in what happens in the first week.
+<p className="text-center text-slate-500 text-sm leading-relaxed max-w-xs mx-auto mb-8">
+            No card required. The trial exists because we're confident in what happens in the first week.
           </p>
 
           <div className="bg-slate-50 rounded-2xl border border-slate-200 px-5 py-5 text-center">
