@@ -23,6 +23,10 @@ const faqs: { q: string; a: React.ReactNode; highlight?: boolean }[] = [
     q: "Can this be followed from home?",
     a: "Yes. The Foot Capacity System was specifically designed to help people follow a more structured recovery process from home through guided sessions, tracking tools, and built-in recovery support.",
   },
+  {
+    q: "Can I use my HSA or FSA?",
+    a: "You may be able to use HSA or FSA funds for programs focused on recovery, rehabilitation, and improving physical function. The Foot Capacity System was created by Dr. Jonathan Schutza, PT, DPT, and is designed to help individuals navigate foot and ankle pain through guided exercise, progress tracking, and structured recovery support. Because eligibility varies by plan and provider, we recommend checking with your HSA/FSA administrator regarding your specific coverage.",
+  },
 ];
 
 const FAQSection = () => {
