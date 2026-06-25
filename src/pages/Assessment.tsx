@@ -963,7 +963,7 @@ export default function Assessment() {
                 Download the full app. Follow your prescribed protocol for 7 days. Log daily. If your pain doesn't go down, you don't pay — ever. No card required to start. No commitment beyond showing up.
               </p>
               <p className="text-blue-200 text-xs leading-relaxed">
-                After your free trial, you can continue with the full Foot Capacity System for $397 one-time or 3 monthly payments of $157. No surprises. You'll see your options clearly inside the app before anything is charged. Compare this to the cost of traditional in-person physical therapy sessions. If at-home, self-paced care is not right for you, you don't pay.
+                If at-home, guided recovery is not right for you, you don't pay. No card required to start.
               </p>
             </div>
 
