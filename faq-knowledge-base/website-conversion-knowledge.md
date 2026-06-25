@@ -123,6 +123,14 @@ Members are not doing this alone. The app guides the daily sessions, but Dr. Jon
 
 If someone asks whether the doctor monitors progress, whether anyone is watching their data, whether they will be alone in the process, or whether this is just another self-guided app — the answer is always: Dr. Jonathan monitors all members and is actively involved in their recovery.
 
+## HSA and FSA Eligibility
+
+Prospects sometimes ask whether they can use HSA or FSA funds to purchase The Foot Capacity System. The answer is: possibly, and it is worth checking.
+
+You may be able to use HSA or FSA funds for programs focused on recovery, rehabilitation, and improving physical function. The Foot Capacity System was created by Dr. Jonathan Schutza, PT, DPT, and is designed to help individuals navigate foot and ankle pain through guided exercise, progress tracking, and structured recovery support.
+
+Because eligibility varies by plan and provider, always direct the person to check with their HSA/FSA administrator regarding their specific coverage. Do not confirm eligibility — that determination belongs to their plan administrator.
+
 ## How the Agent Should Frame the Offer — Hormozi Value Equation
 
 Dream Outcome: walk, run, stand, travel, move through daily life without thinking about their feet. Not "12 weeks of exercises" — the destination, not the vehicle.
