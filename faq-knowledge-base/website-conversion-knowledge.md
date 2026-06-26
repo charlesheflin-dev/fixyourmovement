@@ -67,7 +67,7 @@ The Foot Capacity System is a structured 12-week foot rehabilitation program acc
 
 What's included: guided daily recovery sessions (progressive, structured, no guesswork), daily pain and symptom tracking, progress charts and capacity scoring, phase-based progression (Reset → Restore → Perform → Maintenance), flare-up support via Calm Mode, FAAM score pre-loaded from assessment, and lifetime access.
 
-Pricing: $157/month × 3 payments (total $471) displayed as the primary option, or $397 one-time payment ("Save $74" compared to monthly).
+Pricing: Two options are available at checkout (/checkout). Option 1 — Monthly Recovery Plan: $97/month, billed monthly, cancel anytime inside the app with one tap when recovery is complete. This is the most flexible option. Option 2 — Lifetime Access: $397 one-time payment, full 12-week program, no recurring charges. Never mention $157 or a 3-payment plan — that option no longer exists.
 
 Guarantee: "Walk Pain-Free Or It's Free" — 30-day satisfaction guarantee. Contact: contact@fixyourmovement.com. No complicated forms.
 
