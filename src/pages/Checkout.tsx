@@ -213,7 +213,7 @@ export default function Checkout() {
             </div>
           </div>
           <div className="border-t border-slate-100 px-6 py-4">
-            <p className="text-slate-600 text-sm leading-relaxed">
+            <p className="text-slate-600 text-sm leading-relaxed text-center">
               Try the Foot Capacity System for 30 days. If it's not the right fit, simply email us within 30 days and we'll refund your investment. No complicated forms. No hoops to jump through.
             </p>
           </div>
