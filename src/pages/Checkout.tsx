@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import logo from "@/assets/logo.png";
 
 const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
 const MONTHLY_URL = "https://whop.com/checkout/plan_myAABQ8dqq8W3";
@@ -102,10 +103,10 @@ export default function Checkout() {
                         <polyline points="20 6 9 17 4 12" />
                       </svg>
                     </div>
-                    <p className="text-slate-600 text-sm leading-relaxed italic">
-                      <span className="font-semibold not-italic text-slate-800">Your monthly plan has a finish line.</span>{" "}
-                      If your journey takes six months, you can keep using the Foot Capacity System from there without an ongoing monthly plan.
-                    </p>
+                    <div className="text-slate-600 text-sm leading-relaxed">
+                      <p className="font-semibold text-slate-800 mb-1">Your monthly plan has a finish line.</p>
+                      <p className="italic">If your journey takes six months, you can keep using the Foot Capacity System from there without an ongoing monthly plan.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -168,12 +169,9 @@ export default function Checkout() {
         </div>
 
         {/* HSA/FSA Callout */}
-        <div className="flex items-start gap-3 bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-5">
-          <span className="text-lg shrink-0">✅</span>
-          <div>
-            <p className="text-slate-800 text-sm font-semibold">HSA/FSA funds may be eligible*</p>
-            <p className="text-slate-500 text-xs leading-relaxed">Check with your plan administrator to determine your eligibility.</p>
-          </div>
+        <div className="flex flex-col items-center text-center bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-5">
+          <p className="text-slate-800 text-sm font-semibold">✅ HSA/FSA funds may be eligible*</p>
+          <p className="text-slate-500 text-xs leading-relaxed">Check with your plan administrator to determine your eligibility.</p>
         </div>
 
         {/* CTA Button */}
@@ -211,10 +209,7 @@ export default function Checkout() {
               <p className="text-blue-600 font-semibold text-sm">30-Day Money-Back Guarantee</p>
             </div>
             <div className="shrink-0 hidden sm:block">
-              <div className="text-right">
-                <p className="text-blue-600 font-black text-2xl leading-none">FCS</p>
-                <div className="w-16 h-0.5 bg-blue-600 mt-1" />
-              </div>
+              <img src={logo} alt="FCS" className="h-10 w-auto" />
             </div>
           </div>
           <div className="border-t border-slate-100 px-6 py-4">
