@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
-const MONTHLY_URL = "https://whop.com/checkout/plan_gbAoZNeVlXmgH";
+const MONTHLY_URL = "https://whop.com/checkout/plan_myAABQ8dqq8W3";
 const ONETIME_URL = "https://whop.com/checkout/plan_f7hnKFT1vq0zb";
 
 type Plan = "monthly" | "onetime";
@@ -44,7 +44,7 @@ export default function Checkout() {
         {/* Plan cards */}
         <div className="space-y-4 mb-8">
 
-          {/* Monthly plan — default */}
+          {/* $97/mo — Pay Until You're Better — default */}
           <button
             type="button"
             onClick={() => setSelected("monthly")}
@@ -63,7 +63,6 @@ export default function Checkout() {
 
             <div className="flex items-start justify-between gap-4 mt-1">
               <div className="flex items-start gap-3">
-                {/* Radio indicator */}
                 <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5 ${
                   selected === "monthly" ? "border-blue-600" : "border-slate-300"
                 }`}>
@@ -72,32 +71,41 @@ export default function Checkout() {
                   )}
                 </div>
                 <div>
-                  <p className="text-slate-900 font-bold text-base mb-1">Pay Monthly</p>
-                  <p className="text-slate-500 text-sm leading-relaxed">
-                    <span className="underline">Only 3 monthly payments.</span> First charge today, then at 30 and 60 days.
+                  <p className="text-slate-900 font-bold text-base mb-1">Pay Until You're Better</p>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-2">
+                    $97/month. When you're better, tap one button in the app and billing stops. That's it.
+                  </p>
+                  <p className="text-slate-400 text-xs italic leading-relaxed">
+                    Compare this to the cost of traditional in-person physical therapy — no waiting rooms, no copays, no scheduling.
                   </p>
                 </div>
               </div>
               <div className="text-right shrink-0">
-                <p className="text-slate-900 font-bold text-2xl leading-none">$157</p>
+                <p className="text-slate-900 font-bold text-2xl leading-none">$97</p>
                 <p className="text-slate-500 text-xs mt-1">per month</p>
               </div>
             </div>
           </button>
 
-          {/* One-time plan */}
+          {/* One-time plan — Best Value */}
           <button
             type="button"
             onClick={() => setSelected("onetime")}
-            className={`w-full text-left rounded-2xl border-2 p-6 transition-all ${
+            className={`w-full text-left rounded-2xl border-2 p-6 transition-all relative ${
               selected === "onetime"
                 ? "border-blue-600 bg-blue-50"
                 : "border-slate-200 bg-white hover:border-slate-300"
             }`}
           >
-            <div className="flex items-start justify-between gap-4">
+            {/* Best Value badge */}
+            <div className="absolute -top-3 left-6">
+              <span className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                Best Value
+              </span>
+            </div>
+
+            <div className="flex items-start justify-between gap-4 mt-1">
               <div className="flex items-start gap-3">
-                {/* Radio indicator */}
                 <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5 ${
                   selected === "onetime" ? "border-blue-600" : "border-slate-300"
                 }`}>
@@ -106,14 +114,9 @@ export default function Checkout() {
                   )}
                 </div>
                 <div>
-                  <p className="text-slate-900 font-bold text-base mb-1">
-                    Pay In Full
-                    <span className="ml-2 inline-block bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">
-                      Save $74
-                    </span>
-                  </p>
+                  <p className="text-slate-900 font-bold text-base mb-1">Pay In Full</p>
                   <p className="text-slate-500 text-sm leading-relaxed">
-                    One payment. Save $74 compared to the monthly plan.
+                    One payment. Full 12-week program with lifetime access. No recurring charges.
                   </p>
                 </div>
               </div>
@@ -136,7 +139,7 @@ export default function Checkout() {
           })}
         >
           {selected === "monthly"
-            ? "Get Started — $157/month →"
+            ? "Get Started — $97/month →"
             : "Get Started — $397 One Time →"}
         </a>
 
