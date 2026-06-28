@@ -412,17 +412,29 @@ export default function Walkthrough() {
                 </div>
               </div>
 
-              <div className="mx-6 mb-4 border border-slate-200 rounded-2xl p-5 flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-4xl font-bold text-blue-600">$157</p>
-                  <p className="text-slate-500 text-xs mt-1">Only 3 monthly payments of $157.</p>
-                </div>
-                <div className="flex flex-col items-start gap-1">
-                  <div className="flex items-center gap-2">
-                    <Infinity size={20} className="text-slate-400" />
-                    <p className="font-semibold text-slate-900 text-sm">Lifetime Access Included</p>
+              <div className="mx-6 mb-4 border border-slate-200 rounded-2xl p-5 flex flex-col gap-4">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-4xl font-bold text-blue-600">$97</p>
+                    <p className="text-slate-500 text-xs mt-1">per month — Monthly Recovery Plan</p>
                   </div>
-                  <p className="text-slate-500 text-xs">Get lifetime access to the complete system, all updates, and everything you need to keep moving forward.</p>
+                  <div className="flex flex-col items-start gap-1">
+                    <div className="flex items-center gap-2">
+                      <Infinity size={20} className="text-slate-400" />
+                      <p className="font-semibold text-slate-900 text-sm">Or $397 One-Time for Lifetime Access</p>
+                    </div>
+                    <p className="text-slate-500 text-xs">Choose your plan at checkout. Both include the complete Foot Capacity System.</p>
+                  </div>
+                </div>
+                <div className="border-t border-slate-100 pt-4 space-y-2">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle size={14} className="text-blue-600 shrink-0 mt-0.5" />
+                    <p className="text-slate-600 text-xs leading-snug">Stay for 6 months and billing stops automatically — you keep lifetime access from there.</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle size={14} className="text-blue-600 shrink-0 mt-0.5" />
+                    <p className="text-slate-600 text-xs leading-snug">Recover sooner? Cancel anytime with one tap inside the app — no forms, no friction.</p>
+                  </div>
                 </div>
               </div>
 
