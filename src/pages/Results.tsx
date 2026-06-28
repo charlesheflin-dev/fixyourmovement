@@ -553,10 +553,10 @@ function NextStepSection() {
           </div>
           <p className="text-blue-100 text-sm mb-2">Unlock your personalized plan and keep building.</p>
           <div className="mb-1">
-            <span className="text-4xl font-bold text-white">$157</span>
-            <span className="text-blue-200 text-base font-normal"> / 3 months</span>
+            <span className="text-4xl font-bold text-white">$97</span>
+            <span className="text-blue-200 text-base font-normal"> / month</span>
           </div>
-          <p className="text-blue-200 text-xs mb-5">or $397 one-time payment</p>
+          <p className="text-blue-200 text-xs mb-5">or $397 one-time — lifetime access</p>
           <a
             href={CHECKOUT_URL}
             onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_offer_cta" })}
