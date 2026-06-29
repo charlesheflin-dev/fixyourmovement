@@ -546,45 +546,14 @@ function NextStepSection() {
           </div>
         </div>
 
-        {/* Offer card */}
-        <div className="bg-blue-600 rounded-2xl p-6 mb-5">
-          <div className="inline-block bg-white/20 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4">
-            Your Phase 1 Plan Is Ready
-          </div>
-          <p className="text-blue-100 text-sm mb-2">Unlock your personalized plan and keep building.</p>
-          <div className="mb-1">
-            <span className="text-4xl font-bold text-white">$157</span>
-            <span className="text-blue-200 text-base font-normal"> / 3 months</span>
-          </div>
-          <p className="text-blue-200 text-xs mb-5">or $397 one-time payment</p>
-          <a
-            href={CHECKOUT_URL}
-            onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_offer_cta" })}
-            className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold text-base text-center py-4 rounded-xl transition-colors shadow-lg mb-3"
-          >
-            Continue Recovery &#8594;
-          </a>
-          <p className="text-blue-200 text-xs text-center">Instant access. Cancel anytime.</p>
-
-          {/* Included list */}
-          <div className="bg-white/10 rounded-xl p-4 mt-4">
-            <p className="text-white text-xs font-bold uppercase tracking-wide mb-3">What's Included</p>
-            <div className="space-y-2">
-              {[
-                "Personalized progression",
-                "Exercise video guidance",
-                "Pain & progress tracking",
-                "Flare-up support",
-                "Build Foundation Phase",
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <CheckCircle size={13} className="text-green-300 shrink-0" />
-                  <p className="text-blue-100 text-sm">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        {/* Primary CTA */}
+      <a  
+        href={CHECKOUT_URL}
+          onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_offer_cta" })}
+          className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg text-center py-4 rounded-xl transition-colors shadow-lg mb-4"
+        >
+          Continue My Recovery &#8594;
+        </a>
 
         {/* Trust row */}
         <div className="grid grid-cols-3 gap-3 text-center">
