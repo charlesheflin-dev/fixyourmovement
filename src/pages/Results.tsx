@@ -546,45 +546,59 @@ function NextStepSection() {
           </div>
         </div>
 
-        {/* Offer card */}
-        <div className="bg-blue-600 rounded-2xl p-6 mb-5">
-          <div className="inline-block bg-white/20 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4">
-            Your Phase 1 Plan Is Ready
+        {/* Monthly plan card */}
+        <div className="border-2 border-blue-600 bg-blue-50 rounded-2xl p-5 mb-4 relative">
+          <div className="absolute -top-3 left-5">
+            <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Most Flexible</span>
           </div>
-          <p className="text-blue-100 text-sm mb-2">Unlock your personalized plan and keep building.</p>
-          <div className="mb-1">
-            <span className="text-4xl font-bold text-white">$97</span>
-            <span className="text-blue-200 text-base font-normal"> / month</span>
+          <p className="text-slate-900 font-extrabold text-lg mt-1 mb-0.5">Monthly Recovery Plan</p>
+          <div className="flex items-end gap-1 mb-2">
+            <span className="text-4xl font-extrabold text-blue-600">$97</span>
+            <span className="text-blue-500 text-sm font-semibold mb-1">/ month</span>
           </div>
-          <p className="text-blue-200 text-xs mb-5">or $397 one-time — lifetime access</p>
-          <a
-            href={CHECKOUT_URL}
-            onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_offer_cta" })}
-            className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold text-base text-center py-4 rounded-xl transition-colors shadow-lg mb-3"
-          >
-            Continue Recovery &#8594;
-          </a>
-          <p className="text-blue-200 text-xs text-center">Instant access. Cancel anytime.</p>
-
-          {/* Included list */}
-          <div className="bg-white/10 rounded-xl p-4 mt-4">
-            <p className="text-white text-xs font-bold uppercase tracking-wide mb-3">What's Included</p>
-            <div className="space-y-2">
-              {[
-                "Personalized progression",
-                "Exercise video guidance",
-                "Pain & progress tracking",
-                "Flare-up support",
-                "Build Foundation Phase",
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <CheckCircle size={13} className="text-green-300 shrink-0" />
-                  <p className="text-blue-100 text-sm">{item}</p>
-                </div>
-              ))}
+          <p className="text-slate-600 text-sm leading-relaxed mb-3">
+            Stay with the program while it's helping you move toward the life you miss. Cancel anytime inside the app with one tap.
+          </p>
+          <div className="border-t border-blue-200 pt-3 space-y-2">
+            <div className="flex items-start gap-2">
+              <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                <CheckCircle size={11} className="text-white" />
+              </div>
+              <p className="text-slate-700 text-xs leading-snug italic">
+                <span className="font-semibold not-italic text-slate-800">Your monthly plan has a finish line.</span>{" "}
+                If your journey takes six months, you can keep using the Foot Capacity System from there without an ongoing monthly plan.
+              </p>
             </div>
           </div>
         </div>
+
+        {/* Lifetime plan card */}
+        <div className="border-2 border-green-600 bg-white rounded-2xl p-5 mb-5 relative">
+          <div className="absolute -top-3 left-5">
+            <span className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Best Value</span>
+          </div>
+          <p className="text-slate-900 font-extrabold text-lg mt-1 mb-0.5">Lifetime Access</p>
+          <div className="flex items-end gap-1 mb-2">
+            <span className="text-4xl font-extrabold text-slate-900">$397</span>
+            <span className="text-slate-500 text-sm font-semibold mb-1">one time</span>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed mb-3">
+            One payment. Full access to the complete 12-week Foot Capacity System, plus future improvements and updates. No monthly plan.
+          </p>
+          <div className="flex items-start gap-2 bg-green-50 border border-green-200 rounded-xl px-3 py-2">
+            <span className="text-sm shrink-0">✅</span>
+            <p className="text-slate-700 text-xs leading-snug"><span className="font-semibold">HSA/FSA funds may be eligible*</span> — check with your plan administrator.</p>
+          </div>
+        </div>
+
+        {/* Primary CTA */}
+        <a
+          href={CHECKOUT_URL}
+          onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_offer_cta" })}
+          className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg text-center py-4 rounded-xl transition-colors shadow-lg mb-4"
+        >
+          Continue Monthly — $97/month &#8594;
+        </a>
 
         {/* Trust row */}
         <div className="grid grid-cols-3 gap-3 text-center">
