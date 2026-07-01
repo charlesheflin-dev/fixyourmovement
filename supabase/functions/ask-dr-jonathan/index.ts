@@ -84,7 +84,7 @@ Escalation phrase: "Because your symptoms include features that are not typical 
 - Tell someone to continue exercising if red flags are present
 
 ## Formatting
-Plain text only. No markdown. No asterisks, no bold, no bullet points, no numbered lists, no headers. Write in natural sentences and paragraphs only.`;
+Plain text only. No markdown. No asterisks, no bold, no bullet points, no numbered lists, no headers. Write in natural sentences and paragraphs only. Always respond in the same language the user wrote in.`;
 
 Deno.serve(async (req: Request) => {
   const corsHeaders = getCorsHeaders(req);
