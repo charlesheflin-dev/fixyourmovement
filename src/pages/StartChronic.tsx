@@ -5,6 +5,7 @@ import {
   Smartphone, BarChart2, SlidersHorizontal, Heart, UserCheck,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
+import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
@@ -148,6 +149,20 @@ export default function StartChronic() {
                 </div>
               </div>
             </motion.div>
+          </div>
+        </section>
+
+        {/* ── SECTION 3.5: USER JOURNEY CAROUSEL ──────────────────────────── */}
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6">
+            <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-3 text-center">Real Member Results</p>
+            <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-2 text-center">
+              What the data looks like in practice.
+            </h2>
+            <p className="text-slate-500 text-base leading-relaxed mb-8 text-center">
+              These are real outcomes from active members tracked inside the app.
+            </p>
+            <UserJourneyCarousel />
           </div>
         </section>
 
