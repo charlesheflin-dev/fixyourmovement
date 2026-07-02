@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 const stories = [
   {
     id: 1,
-    alias: "J.B.",
+    alias: "Jamie B.",
     phase: "Phase 2",
     week: "Week 5",
     stats: [
@@ -12,11 +12,11 @@ const stories = [
       { label: "Logging Streak", value: "16", detail: "Consecutive", sub: "Days" },
     ],
     headline: "From 7/10 pain to nearly pain-free — while still actively progressing through the program.",
-    story: "J.B. came into the Foot Capacity System reporting pain at 7 out of 10 — enough to disrupt daily life and limit what she could do on her feet. Her baseline FAAM score of 72.6% told the same story: her foot function was meaningfully impaired before she started.\n\nFive weeks and 27 logged sessions later, J.B.'s pain has dropped to 2.8 out of 10 — a 60% reduction. But the number that stands out even more is her FAAM score: 96.4%, up from 72.6% at baseline. That's a 33-point functional improvement — moving from impaired to near-perfect foot function — while she's still mid-program in Phase 2.\n\nWhat makes J.B.'s story particularly compelling: she has a current 16-day logging streak and has been consistent throughout. Her results aren't a fluke of a good few days — they're built from showing up every day and letting the system do its work. She's still going. The trajectory is pointing further up.",
+    story: "Jamie B. came into the Foot Capacity System reporting pain at 7 out of 10 — enough to disrupt daily life and limit what she could do on her feet. Her baseline FAAM score of 72.6% told the same story: her foot function was meaningfully impaired before she started.\n\nFive weeks and 27 logged sessions later, Jamie B.'s pain has dropped to 2.8 out of 10 — a 60% reduction. But the number that stands out even more is her FAAM score: 96.4%, up from 72.6% at baseline. That's a 33-point functional improvement — moving from impaired to near-perfect foot function — while she's still mid-program in Phase 2.\n\nWhat makes Jamie B.'s story particularly compelling: she has a current 16-day logging streak and has been consistent throughout. Her results aren't a fluke of a good few days — they're built from showing up every day and letting the system do its work. She's still going. The trajectory is pointing further up.",
   },
   {
     id: 2,
-    alias: "M.G.",
+    alias: "Maria G.",
     phase: "Phase 2",
     week: "Week 3",
     stats: [
@@ -25,11 +25,11 @@ const stories = [
       { label: "Time in Program", value: "3", detail: "Weeks", sub: "" },
     ],
     headline: "86% pain reduction in 3 weeks. From 7/10 to virtually pain-free.",
-    story: "M.G. started the Foot Capacity System with a pain score of 7 out of 10 and a FAAM score of 77.4% — functional, but clearly limited. In just 3 weeks, her pain score has dropped to 1.0 out of 10. That's an 86% reduction — the single largest pain improvement of any user currently in the program.\n\nHer FAAM score has climbed in parallel: from 77.4% at baseline to 97.6% at the start of Phase 2. A 20-point functional improvement alongside near-complete pain resolution, in less than a month.\n\nM.G. is now in Phase 2, Week 3 — which means these results came during the foundational stage of the program. She hasn't even reached the higher-intensity phases yet. M.G. didn't just reduce her pain — she essentially eliminated it, while simultaneously regaining near-full foot function.",
+    story: "Maria G. started the Foot Capacity System with a pain score of 7 out of 10 and a FAAM score of 77.4% — functional, but clearly limited. In just 3 weeks, her pain score has dropped to 1.0 out of 10. That's an 86% reduction — the single largest pain improvement of any user currently in the program.\n\nHer FAAM score has climbed in parallel: from 77.4% at baseline to 97.6% at the start of Phase 2. A 20-point functional improvement alongside near-complete pain resolution, in less than a month.\n\nMaria G. is now in Phase 2, Week 3 — which means these results came during the foundational stage of the program. She hasn't even reached the higher-intensity phases yet. Maria G. didn't just reduce her pain — she essentially eliminated it, while simultaneously regaining near-full foot function.",
   },
   {
     id: 3,
-    alias: "A.T.",
+    alias: "Annie T.",
     phase: "Phase 2",
     week: "Week 2",
     stats: [
@@ -38,7 +38,7 @@ const stories = [
       { label: "Longest Streak", value: "8", detail: "Consecutive", sub: "Days" },
     ],
     headline: "76% pain reduction and full Phase 2 function restored — in 2 weeks.",
-    story: "A.T. came in with pain at 5 out of 10 and a FAAM baseline of 83.3% — suggesting she was still reasonably functional but dealing with real, persistent pain that wasn't going away on its own. Within 2 weeks of starting the program, her pain is down to 1.2 out of 10 — a 76% reduction — and her FAAM has climbed to 92.9%.\n\nWhat makes A.T.'s story a strong one for a different audience segment: her starting numbers weren't dramatic. She wasn't a 9/10 pain patient — she was someone with moderate chronic foot pain and good-but-not-great function. That's a profile a lot of people will recognise themselves in. The message it sends: you don't have to be in crisis for this to work.\n\nShe's 8 logged sessions deep, currently in Phase 2, and her consistency is holding.",
+    story: "Annie T. came in with pain at 5 out of 10 and a FAAM baseline of 83.3% — suggesting she was still reasonably functional but dealing with real, persistent pain that wasn't going away on its own. Within 2 weeks of starting the program, her pain is down to 1.2 out of 10 — a 76% reduction — and her FAAM has climbed to 92.9%.\n\nWhat makes Annie T.'s story a strong one for a different audience segment: her starting numbers weren't dramatic. She wasn't a 9/10 pain patient — she was someone with moderate chronic foot pain and good-but-not-great function. That's a profile a lot of people will recognise themselves in. The message it sends: you don't have to be in crisis for this to work.\n\nShe's 8 logged sessions deep, currently in Phase 2, and her consistency is holding.",
   },
 ];
 
@@ -105,9 +105,9 @@ export default function UserJourneyCarousel() {
               key={idx}
               className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 cursor-pointer transition-shadow hover:shadow-md flex-shrink-0"
               style={{ height: `${CARD_HEIGHT}px` }}
-              onMouseEnter={() => !isMobile && openModal(story.id)}
-              onMouseLeave={() => !isMobile && closeModal()}
-              onClick={() => isMobile && openModal(story.id)}
+              onMouseEnter={() => { if (!isMobile) isPausedRef.current = true; }}
+              onMouseLeave={() => { if (!isMobile && activeModal === null) isPausedRef.current = false; }}
+              onClick={() => openModal(story.id)}
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
