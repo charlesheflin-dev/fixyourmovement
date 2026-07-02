@@ -43,12 +43,12 @@ const stories = [
 ];
 
 export default function UserJourneyCarousel() {
-  const [activeModal, setActiveModal] = useState<number | null>(null);
-  const [isPaused, setIsPaused] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const animRef = useRef<number | null>(null);
-  const posRef = useRef(0);
+    const [activeModal, setActiveModal] = useState<number | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
+    const trackRef = useRef<HTMLDivElement>(null);
+    const animRef = useRef<number | null>(null);
+    const posRef = useRef(0);
+    const isPausedRef = useRef(false);
   const CARD_HEIGHT = 220;
   const GAP = 24;
   const STEP = CARD_HEIGHT + GAP;
@@ -62,28 +62,29 @@ export default function UserJourneyCarousel() {
   }, []);
 
   useEffect(() => {
-    if (isPaused || activeModal !== null) return;
     const total = stories.length * STEP;
     const animate = () => {
-      posRef.current += SPEED;
-      if (posRef.current >= total) posRef.current = 0;
-      if (trackRef.current) {
-        trackRef.current.style.transform = `translateY(-${posRef.current}px)`;
+      if (!isPausedRef.current) {
+        posRef.current += SPEED;
+        if (posRef.current >= total) posRef.current = 0;
+        if (trackRef.current) {
+          trackRef.current.style.transform = `translateY(-${posRef.current}px)`;
+        }
       }
       animRef.current = requestAnimationFrame(animate);
     };
     animRef.current = requestAnimationFrame(animate);
     return () => { if (animRef.current) cancelAnimationFrame(animRef.current); };
-  }, [isPaused, activeModal]);
+  }, []);
 
   const openModal = (id: number) => {
-    setIsPaused(true);
+    isPausedRef.current = true;
     setActiveModal(id);
   };
 
   const closeModal = () => {
     setActiveModal(null);
-    setIsPaused(false);
+    isPausedRef.current = false;
   };
 
   const activeStory = stories.find((s) => s.id === activeModal) ?? null;
