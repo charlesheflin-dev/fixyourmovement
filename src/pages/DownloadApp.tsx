@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
+import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
@@ -706,6 +707,13 @@ export default function DownloadApp() {
               </button>
             )}
           </div>
+        </div>
+
+        {/* User Journey Carousel */}
+        <div className="mb-8">
+          <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-2 text-center">Real Member Results</p>
+          <p className="text-slate-500 text-sm text-center mb-5">These are real outcomes from active members tracked inside the app.</p>
+          <UserJourneyCarousel />
         </div>
 
         {/* Footer */}

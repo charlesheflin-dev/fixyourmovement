@@ -5,6 +5,7 @@ import {
   Smartphone, BarChart2, SlidersHorizontal, Heart, UserCheck,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
+import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
@@ -755,6 +756,13 @@ export default function StartActive() {
                 <span className="flex items-center gap-2"><ShieldCheck size={13} className="text-blue-500 shrink-0" />Risk Free 30-Day Guarantee</span>
                 <span className="flex items-center gap-2"><Lock size={13} className="text-blue-500 shrink-0" />Secure checkout</span>
                 <span className="flex items-center gap-2"><Infinity size={13} className="text-blue-500 shrink-0" />Lifetime access</span>
+              </div>
+
+              {/* User Journey Carousel */}
+              <div className="mt-12">
+                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2 text-center">Real Member Results</p>
+                <p className="text-slate-500 text-base text-center mb-6">These are real outcomes from active members tracked inside the app.</p>
+                <UserJourneyCarousel />
               </div>
             </motion.div>
           </div>
