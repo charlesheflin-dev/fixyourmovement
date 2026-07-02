@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
+import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
@@ -984,6 +985,13 @@ export default function Assessment() {
             <p className="text-center text-slate-400 text-sm mb-8">
               No credit card. No commitment. Log daily and watch what happens.
             </p>
+
+            {/* User Journey Carousel */}
+            <div className="mb-8">
+              <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-2 text-center">Real Member Results</p>
+              <p className="text-slate-500 text-sm text-center mb-5">These are real outcomes from active members tracked inside the app.</p>
+              <UserJourneyCarousel />
+            </div>
 
             {/* Email confirmation */}
             <div className="border-t border-slate-100 pt-6 pb-8">

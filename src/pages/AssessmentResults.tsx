@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 
 const GET_ASSESSMENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-assessment-results";
 const INSTALL_URL = "https://app.fixyourmovement.com/install";
@@ -398,6 +399,13 @@ export default function AssessmentResults() {
             <p className="text-center text-slate-400 text-sm mb-8">
               No credit card. No commitment. Log daily and watch what happens.
             </p>
+
+            {/* User Journey Carousel */}
+            <div className="mb-8">
+              <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-2 text-center">Real Member Results</p>
+              <p className="text-slate-500 text-sm text-center mb-5">These are real outcomes from active members tracked inside the app.</p>
+              <UserJourneyCarousel />
+            </div>
 
             {/* Footer note */}
             <div className="border-t border-slate-100 pt-6 pb-8">
