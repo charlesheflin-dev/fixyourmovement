@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { CheckCircle, TrendingUp, Map, Video, ArrowRight, Shield, Zap, Infinity } from "lucide-react";
+import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 import logo from "@/assets/logo.png";
 
 const GET_RESULTS_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-results-data";
@@ -569,6 +570,13 @@ function NextStepSection() {
           ))}
         </div>
 
+        {/* User Journey Carousel */}
+        <div className="mt-8">
+          <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-2 text-center">Real Member Results</p>
+          <p className="text-slate-500 text-sm text-center mb-5">These are real outcomes from active members tracked inside the app.</p>
+          <UserJourneyCarousel />
+        </div>
+
       </div>
     </section>
   );
@@ -622,9 +630,16 @@ function FinalCtaSection({ insights, insightsLoading }: { insights: InsightsData
         </a>
 
         {/* Reassurance row */}
-        <p className="text-slate-400 text-xs">
+        <p className="text-slate-400 text-xs mb-8">
           Instant access &nbsp;·&nbsp; 30-Day Guarantee &nbsp;·&nbsp; Lifetime Access
         </p>
+
+        {/* User Journey Carousel */}
+        <div>
+          <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-2 text-center">Real Member Results</p>
+          <p className="text-slate-500 text-sm text-center mb-5">These are real outcomes from active members tracked inside the app.</p>
+          <UserJourneyCarousel />
+        </div>
 
       </div>
     </section>
