@@ -105,9 +105,9 @@ export default function UserJourneyCarousel() {
               key={idx}
               className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 cursor-pointer transition-shadow hover:shadow-md flex-shrink-0"
               style={{ height: `${CARD_HEIGHT}px` }}
-              onMouseEnter={() => { if (!isMobile) openModal(story.id); }}
-              onMouseLeave={() => { if (!isMobile) closeModal(); }}
-              onClick={() => { if (isMobile) openModal(story.id); }}
+              onMouseEnter={() => { if (!isMobile) isPausedRef.current = true; }}
+              onMouseLeave={() => { if (!isMobile && activeModal === null) isPausedRef.current = false; }}
+              onClick={() => openModal(story.id)}
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
@@ -121,12 +121,16 @@ export default function UserJourneyCarousel() {
               <div className="grid grid-cols-3 gap-3">
                 {story.stats.map((stat, i) => (
                   <div key={i} className="bg-slate-50 border border-slate-100 rounded-xl p-3 flex flex-col items-center text-center">
-                    <p className="text-slate-500 text-[10px] font-semibold uppercase tracking-wide mb-1">{stat.label}</p>
+                    <p className="text-slate-500 text-[10px] font-semibold uppercase tracking-wide mb-0.5">{stat.label}</p>
+                    {stat.label === "FAAM Improvement" && (
+                      <p className="text-slate-400 text-[9px] leading-snug mb-1">Capacity/Strength Improvement</p>
+                    )}
                     <p className="text-blue-600 text-2xl font-bold leading-none mb-1">{stat.value}</p>
                     <p className="text-slate-600 text-[10px] leading-snug">{stat.detail}</p>
                   </div>
                 ))}
               </div>
+              <p className="text-center text-slate-400 text-[10px] mt-3">Click to read the full story</p>
             </div>
           ))}
         </div>
