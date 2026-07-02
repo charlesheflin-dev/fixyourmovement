@@ -211,6 +211,20 @@ export default function StartFrustrated() {
            </div>
         </section>
 
+        {/* ── SECTION 3.5: USER JOURNEY CAROUSEL ──────────────────────────── */}
+        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6">
+            <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-3 text-center">Real Member Results</p>
+            <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-2 text-center">
+              What the data looks like in practice.
+            </h2>
+            <p className="text-slate-500 text-base leading-relaxed mb-8 text-center">
+              These are real outcomes from active members tracked inside the app.
+            </p>
+            <UserJourneyCarousel />
+          </div>
+        </section>
+
         {/* ── SECTION 3.5: COMPARISON ──────────────────────────────────────── */}
         <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
@@ -1079,13 +1093,6 @@ export default function StartFrustrated() {
                 <span className="flex items-center gap-2"><ShieldCheck size={13} className="text-blue-500 shrink-0" />Risk Free 30-Day Guarantee</span>
                 <span className="flex items-center gap-2"><Lock size={13} className="text-blue-500 shrink-0" />Secure checkout</span>
                 <span className="flex items-center gap-2"><Infinity size={13} className="text-blue-500 shrink-0" />Lifetime access</span>
-              </div>
-
-              {/* User Journey Carousel */}
-              <div className="mt-12">
-                <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-2 text-center">Real Member Results</p>
-                <p className="text-slate-500 text-base text-center mb-6">These are real outcomes from active members tracked inside the app.</p>
-                <UserJourneyCarousel />
               </div>
             </motion.div>
           </div>
