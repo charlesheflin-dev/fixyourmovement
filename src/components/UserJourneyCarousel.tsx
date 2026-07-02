@@ -105,9 +105,9 @@ export default function UserJourneyCarousel() {
               key={idx}
               className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 cursor-pointer transition-shadow hover:shadow-md flex-shrink-0"
               style={{ height: `${CARD_HEIGHT}px` }}
-              onMouseEnter={() => { if (!isMobile) isPausedRef.current = true; }}
-              onMouseLeave={() => { if (!isMobile && activeModal === null) isPausedRef.current = false; }}
-              onClick={() => openModal(story.id)}
+              onMouseEnter={() => { if (!isMobile) openModal(story.id); }}
+              onMouseLeave={() => { if (!isMobile) closeModal(); }}
+              onClick={() => { if (isMobile) openModal(story.id); }}
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
