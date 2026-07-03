@@ -4,6 +4,7 @@ import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
+const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
 const INSTALL_URL = "https://app.fixyourmovement.com/install";
 const VIDEO_ID = "b37100f8162e1ab91cf86c9e284447da";
 const VIDEO_THUMBNAIL_ID = "0a87b6a7-6fb2-48dc-9e26-aa5c134c0200";
@@ -128,11 +129,20 @@ export default function DownloadApp() {
 
       if (resolvedEmail) {
         setEmail(resolvedEmail);
+        // 1. Create Supabase trial profile
         fetch(CREATE_TRIAL_PROFILE_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: resolvedEmail }),
-        }).catch(() => {});
+        }).catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
+
+        // 2. Migrate confirmed subscriber to main AWeber list (awlist6958674)
+        // AWeber automation then removes them from download list (awlist6961315)
+        fetch(WORKER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: resolvedEmail, action: "migrate_to_main_list" }),
+        }).catch(err => console.error("[DownloadApp] AWeber migration error:", err));
       }
 
       setSubmitted(true);
