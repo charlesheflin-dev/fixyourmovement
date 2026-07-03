@@ -101,7 +101,7 @@ async function findSubscriber(accessToken, accountId, listId, email) {
   return data.entries && data.entries.length > 0 ? data.entries[0] : null;
 }
 
-async function applyTag(accessToken, subscriberUrl, archetype) {
+async function applyTag(accessToken, subscriberUrl, tag) {
   const fullUrl = subscriberUrl.startsWith("http") ? subscriberUrl : `https://api.aweber.com${subscriberUrl}`;
   const getResponse = await fetch(fullUrl, {
     headers: { "Authorization": `Bearer ${accessToken}` },
@@ -112,7 +112,7 @@ async function applyTag(accessToken, subscriberUrl, archetype) {
   }
 
   const formBody = new URLSearchParams();
-  formBody.append("tags", JSON.stringify({ add: [archetype], remove: [] }));
+  formBody.append("tags", JSON.stringify({ add: [tag], remove: [] }));
 
   const updateResponse = await fetch(fullUrl, {
     method: "PATCH",
@@ -129,6 +129,32 @@ async function applyTag(accessToken, subscriberUrl, archetype) {
   }
 
   return true;
+}
+
+async function migrateToMainList(accessToken, accountId, mainListId, email) {
+  const url = `${AWEBER_API_BASE}/accounts/${accountId}/lists/${mainListId}/subscribers`;
+
+  const formBody = new URLSearchParams();
+  formBody.append("email", email);
+  formBody.append("status", "subscribed");
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${accessToken}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: formBody.toString(),
+  });
+
+  const responseText = await response.text();
+
+  // 201 = created, 400 with "already subscribed" = already on list — both acceptable
+  if (!response.ok && response.status !== 400) {
+    throw new Error(`Failed to add subscriber to main list: ${response.status} — ${responseText}`);
+  }
+
+  return { status: response.status, body: responseText };
 }
 
 export default {
@@ -167,7 +193,27 @@ export default {
         });
       }
 
-      const VALID_CHECKOUT_TAGS = ["checkout_visited", "trial_accepted"];
+      // ── migrate_to_main_list branch ─────────────────────────────────────────
+      // Called from DownloadApp.tsx on ?access=true after email confirmation.
+      // Adds the confirmed subscriber directly to awlist6958674 (main list)
+      // with status=subscribed, bypassing double opt-in since they already confirmed.
+      // AWeber automation then removes them from awlist6961315 (download list).
+      if (body.action === "migrate_to_main_list") {
+        const accessToken = await refreshAccessToken(env);
+        const accountId = await getAccountId(accessToken);
+        const mainListId = env.AWEBER_LIST_ID.replace("awlist", "");
+        await migrateToMainList(accessToken, accountId, mainListId, email);
+        return new Response(JSON.stringify({ success: true }), {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": getAllowedOrigin(request),
+          },
+        });
+      }
+
+      // ── checkout_tag branch ─────────────────────────────────────────────────
+      const VALID_CHECKOUT_TAGS = ["checkout_visited", "trial_accepted", "customer", "trial_pass_97"];
       if (body.checkout_tag && VALID_CHECKOUT_TAGS.includes(body.checkout_tag)) {
         const accessToken = await refreshAccessToken(env);
         const accountId = await getAccountId(accessToken);
@@ -185,10 +231,7 @@ export default {
         });
       }
 
-      // ── FAAM tag branch ──────────────────────────────────────────────────────
-      // When the assessment page sends faam_tag (after FAAM completion),
-      // we apply the score band tag to the subscriber.
-      // Valid tags: faam_low | faam_moderate | faam_high
+      // ── FAAM tag branch ─────────────────────────────────────────────────────
       if (faam_tag) {
         const VALID_FAAM_TAGS = ["faam_low", "faam_moderate", "faam_high"];
         if (!VALID_FAAM_TAGS.includes(faam_tag)) {
@@ -219,7 +262,6 @@ export default {
           );
         }
 
-        // Remove other FAAM band tags, apply the new one
         const ALL_FAAM_TAGS = ["faam_low", "faam_moderate", "faam_high"];
         const tagsToRemove = ALL_FAAM_TAGS.filter(t => t !== faam_tag);
         const fullUrl = subscriber.self_link.startsWith("http")
@@ -254,7 +296,7 @@ export default {
         );
       }
 
-      // ── Archetype tag branch (original flow) ────────────────────────────────
+      // ── Archetype tag branch ────────────────────────────────────────────────
       if (!answers) {
         return new Response(JSON.stringify({ error: "Missing email or answers" }), {
           status: 400,
