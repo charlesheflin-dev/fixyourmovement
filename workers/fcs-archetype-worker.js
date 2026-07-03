@@ -213,7 +213,7 @@ export default {
       }
 
       // ── checkout_tag branch ─────────────────────────────────────────────────
-      const VALID_CHECKOUT_TAGS = ["checkout_visited", "trial_accepted", "customer", "trial_pass_97"];
+      const VALID_CHECKOUT_TAGS = ["checkout_visited", "trial_accepted", "customer", "trial_pass_97", "techissue_07032026"];
       if (body.checkout_tag && VALID_CHECKOUT_TAGS.includes(body.checkout_tag)) {
         const accessToken = await refreshAccessToken(env);
         const accountId = await getAccountId(accessToken);
