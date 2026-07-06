@@ -170,6 +170,37 @@ async function migrateToMainList(accessToken, accountId, downloadListId, mainLis
   return { status: response.status, body: responseText };
 }
 
+async function confirmSubscriber(accessToken, accountId, mainListId, email) {
+  const subscriber = await findSubscriber(accessToken, accountId, mainListId, email);
+
+  if (!subscriber) {
+    throw new Error(`Subscriber not found: ${email}`);
+  }
+
+  const fullUrl = subscriber.self_link.startsWith("http")
+    ? subscriber.self_link
+    : `https://api.aweber.com${subscriber.self_link}`;
+
+  const formBody = new URLSearchParams();
+  formBody.append("status", "subscribed");
+
+  const patchResponse = await fetch(fullUrl, {
+    method: "PATCH",
+    headers: {
+      "Authorization": `Bearer ${accessToken}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: formBody.toString(),
+  });
+
+  if (!patchResponse.ok) {
+    const errText = await patchResponse.text();
+    throw new Error(`Failed to confirm subscriber: ${patchResponse.status} — ${errText}`);
+  }
+
+  return true;
+}
+
 export default {
   async fetch(request, env, ctx) {
     if (request.method === "OPTIONS") {
@@ -218,6 +249,55 @@ export default {
         const mainListId = env.AWEBER_LIST_ID.replace("awlist", "");
         await migrateToMainList(accessToken, accountId, downloadListId, mainListId, email);
         return new Response(JSON.stringify({ success: true }), {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": getAllowedOrigin(request),
+          },
+        });
+      }
+
+      // ── confirm_all_unconfirmed branch ─────────────────────────────────────
+      // ONE-TIME BACKFILL: confirms all unconfirmed subscribers on awlist6958674.
+      // Run once via backfill-confirm-subscribers.js then remove this branch.
+      if (body.action === "confirm_subscriber") {
+        const accessToken = await refreshAccessToken(env);
+        const accountId = await getAccountId(accessToken);
+        const mainListId = env.AWEBER_LIST_ID.replace("awlist", "");
+        await confirmSubscriber(accessToken, accountId, mainListId, email);
+        return new Response(JSON.stringify({ success: true }), {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": getAllowedOrigin(request),
+          },
+        });
+      }
+
+      // ── get_unconfirmed branch ──────────────────────────────────────────────
+      // ONE-TIME BACKFILL: returns all unconfirmed emails on awlist6958674.
+      // Called by backfill-confirm-subscribers.js then remove this branch.
+      if (body.action === "get_unconfirmed") {
+        const accessToken = await refreshAccessToken(env);
+        const accountId = await getAccountId(accessToken);
+        const mainListId = env.AWEBER_LIST_ID.replace("awlist", "");
+        const emails = [];
+        let start = 0;
+        const size = 100;
+        while (true) {
+          const url = `${AWEBER_API_BASE}/accounts/${accountId}/lists/${mainListId}/subscribers?ws.op=find&status=unconfirmed&ws.start=${start}&ws.size=${size}`;
+          const res = await fetch(url, { headers: { "Authorization": `Bearer ${accessToken}` } });
+          if (!res.ok) {
+            const text = await res.text();
+            throw new Error(`Failed to fetch unconfirmed: ${res.status} — ${text}`);
+          }
+          const data = JSON.parse(await res.text());
+          const entries = data.entries || [];
+          entries.forEach(s => emails.push(s.email));
+          if (entries.length < size) break;
+          start += size;
+        }
+        return new Response(JSON.stringify({ success: true, emails }), {
           status: 200,
           headers: {
             "Content-Type": "application/json",
