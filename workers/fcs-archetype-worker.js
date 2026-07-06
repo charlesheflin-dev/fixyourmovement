@@ -219,8 +219,10 @@ export default {
         const accountId = await getAccountId(accessToken);
         const listId = env.AWEBER_LIST_ID.replace("awlist", "");
         const subscriber = await findSubscriber(accessToken, accountId, listId, email);
-        if (subscriber) {
+        if (subscriber && (body.checkout_tag !== "trial_accepted" || subscriber.status === "subscribed")) {
           await applyTag(accessToken, subscriber.self_link, body.checkout_tag);
+        } else if (subscriber) {
+          console.log(`[Worker] Skipped tag "${body.checkout_tag}" for ${email} — subscriber status is "${subscriber.status}", not "subscribed".`);
         }
         return new Response(JSON.stringify({ success: true }), {
           status: 200,
