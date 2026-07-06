@@ -131,14 +131,27 @@ async function applyTag(accessToken, subscriberUrl, tag) {
   return true;
 }
 
-async function migrateToMainList(accessToken, accountId, mainListId, email) {
-  const url = `${AWEBER_API_BASE}/accounts/${accountId}/lists/${mainListId}/subscribers`;
+async function migrateToMainList(accessToken, accountId, downloadListId, mainListId, email) {
+  // Find the subscriber on the download/holding list (awlist6961315)
+  const subscriber = await findSubscriber(accessToken, accountId, downloadListId, email);
+
+  if (!subscriber) {
+    throw new Error(`Subscriber not found on download list for migration: ${email}`);
+  }
+
+  // Use the AWeber Move endpoint — moves subscriber without sending a new verification message,
+  // preserving their confirmed status on the destination list.
+  const subscriberUrl = subscriber.self_link.startsWith("http")
+    ? subscriber.self_link
+    : `https://api.aweber.com${subscriber.self_link}`;
+
+  const mainListLink = `${AWEBER_API_BASE}/accounts/${accountId}/lists/${mainListId}`;
 
   const formBody = new URLSearchParams();
-  formBody.append("email", email);
-  formBody.append("status", "subscribed");
+  formBody.append("ws.op", "move");
+  formBody.append("list_link", mainListLink);
 
-  const response = await fetch(url, {
+  const response = await fetch(subscriberUrl, {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${accessToken}`,
@@ -149,9 +162,9 @@ async function migrateToMainList(accessToken, accountId, mainListId, email) {
 
   const responseText = await response.text();
 
-  // 201 = created, 400 with "already subscribed" = already on list — both acceptable
-  if (!response.ok && response.status !== 400) {
-    throw new Error(`Failed to add subscriber to main list: ${response.status} — ${responseText}`);
+  // 201 = moved successfully
+  if (!response.ok) {
+    throw new Error(`Failed to move subscriber to main list: ${response.status} — ${responseText}`);
   }
 
   return { status: response.status, body: responseText };
@@ -201,8 +214,9 @@ export default {
       if (body.action === "migrate_to_main_list") {
         const accessToken = await refreshAccessToken(env);
         const accountId = await getAccountId(accessToken);
+        const downloadListId = env.AWEBER_DOWNLOAD_LIST_ID.replace("awlist", "");
         const mainListId = env.AWEBER_LIST_ID.replace("awlist", "");
-        await migrateToMainList(accessToken, accountId, mainListId, email);
+        await migrateToMainList(accessToken, accountId, downloadListId, mainListId, email);
         return new Response(JSON.stringify({ success: true }), {
           status: 200,
           headers: {
