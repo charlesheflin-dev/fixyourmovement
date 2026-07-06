@@ -1,7 +1,7 @@
 # website-context.md — The Foot Capacity System (fixyourmovement.com)
 
-**LAST UPDATED**: 2026-07-02
-**STATUS**: Production live. All UserJourneyCarousel rollout complete. Ask Dr. Jonathan live. Pricing updated to $97/mo + $397. All archetype pages, assessment pages, results pages, and download page current.
+**LAST UPDATED**: 2026-07-03
+**STATUS**: Production live. All UserJourneyCarousel rollout complete. Ask Dr. Jonathan live. Pricing updated to $97/mo + $397. All archetype pages, assessment pages, results pages, and download page current. /lp/download flow fully fixed and tested (2026-07-03). 100 missing trial profiles backfilled. AWeber list automation bug open (support ticket pending).
 
 ---
 
@@ -112,6 +112,8 @@ fixyourmovement-com/
 │   └── research-layer.md            # 13 chunks — clinical evidence, safety guardrails
 ├── scripts/
 │   └── seed-faq-embeddings.js       # Seeds faq_embeddings table (requires local-only dev deps)
+├── migrate-missing-profiles.js      # One-time/recovery script — calls create-trial-profile for a list of emails. Use when subscribers confirmed in AWeber but have no Supabase profile row. Run with: node migrate-missing-profiles.js
+├── tag-tech-issue.js                # AWeber bulk tagging script — calls Worker checkout_tag branch for a list of emails. Reusable for any bulk tag operation. Uses 2000ms delay to avoid AWeber rate limits. Run with: node tag-tech-issue.js
 ├── .plans/
 │   └── foot-recovery-toolkit-revision-plan.md
 ├── index.html                       # SEO-optimized entry point
@@ -285,7 +287,23 @@ Features: Auto-scroll to top on route change. Cookie consent banner (30s delay).
 
 **TakeAssessment.tsx** — Headline: "Get Clarity. Know What's Next. Take the Assessment." AWeber form. Tracking label: Assessment_Opt_In. Post-submit → /email-confirmation. AWeber redirects confirmed subscriber → /assessment?email=.
 
-**DownloadApp.tsx** — Two-state: Step 1 = AWeber opt-in (form ID 543768887, list awlist6961315); Step 2 = download page (shown after ?access=true). Stores email in fcs_email cookie on submit. Step 2 includes UserJourneyCarousel above footer. Mobile: install button. Desktop: QR code.
+**DownloadApp.tsx** — Two-state page at /lp/download.
+
+**Step 1 (opt-in gate)**: Hormozi-style sales page with AWeber form (ID 543768887, list awlist6961315). On form submit, email is stored in `fcs_email` cookie (SameSite=Lax, expires 2099) via `handleFormInterceptAndSetCookie` before AWeber redirect. AWeber sends a double opt-in confirmation email. AWeber confirmation redirect is set to `https://fixyourmovement.com/lp/download?access=true` — AWeber automatically appends `&email=subscriber@email.com` to this URL (confirmed behavior — no merge tag needed).
+
+**Step 2 (download page)**: Shown when `?access=true` is in URL. `useEffect` fires on mount and:
+1. Reads email from `?email=` URL param (primary) or `fcs_email` cookie (fallback)
+2. Calls `create-trial-profile` Edge Function with `{ email }` — creates Supabase auth user + profiles row with `is_trial=true`, `token_tier=1`, `subscription_status=active`. Errors logged to console as `[DownloadApp] create-trial-profile error:` (non-fatal, never silently swallowed)
+3. Calls Cloudflare Worker with `{ email, action: "migrate_to_main_list" }` — adds subscriber to awlist6958674 as confirmed (bypasses double opt-in). Errors logged as `[DownloadApp] AWeber migration error:` (non-fatal)
+
+Step 2 includes: mobile install button → `https://app.fixyourmovement.com/install`, desktop QR code, "Send Download Instructions to My Email" button (re-calls `create-trial-profile`), UserJourneyCarousel above footer.
+
+**Constants in DownloadApp.tsx**:
+- `CREATE_TRIAL_PROFILE_URL` = `https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile`
+- `WORKER_URL` = `https://fcs-archetype-worker.charles-heflin.workers.dev`
+- `INSTALL_URL` = `https://app.fixyourmovement.com/install`
+
+**CRITICAL — do not remove WORKER_URL or the migrate_to_main_list fetch call from the useEffect. This is what moves confirmed subscribers from awlist6961315 to awlist6958674 and triggers the AWeber automation to remove them from the download list. Without it, subscribers pile up in awlist6961315 and never enter nurture sequences.**
 
 **ThankYou.tsx** — Post-purchase. Cloudflare Stream video ID: fc14393e8758f53eb9a7bb92fd21f071. CTA: "Get Started in the App" → https://app.fixyourmovement.com/. Green callout for trial users.
 
@@ -558,8 +576,8 @@ Section 5: Install CTA (mobile button / desktop QR) + UserJourneyCarousel
 ## AWeber Infrastructure
 
 ### Lists
-- **awlist6958674** — FCS main list (all confirmed subscribers)
-- **awlist6961315** — FCS Direct App Download (temporary; auto-moves to main list after confirmation)
+- **awlist6958674** — FCS main list (all confirmed subscribers). All nurture sequences trigger from this list.
+- **awlist6961315** — FCS Direct App Download (temporary holding list). Subscribers enter here on /lp/download form submit. After email confirmation, DownloadApp.tsx calls the Worker `migrate_to_main_list` action to add them to awlist6958674 as confirmed. AWeber automation is configured to unsubscribe them from awlist6961315 when they join awlist6958674 — but this automation has a known bug (as of 2026-07-03, support ticket pending). Do not rely on this automation — the programmatic migration via Worker is the authoritative mechanism. If subscribers pile up in awlist6961315, run `migrate-missing-profiles.js` to backfill Supabase and bulk import the CSV to awlist6958674 in AWeber.
 
 ### Forms
 - Assessment opt-in: form ID 356574860, tracking label Assessment_Opt_In (list awlist6958674)
@@ -601,10 +619,11 @@ Section 5: Install CTA (mobile button / desktop QR) + UserJourneyCarousel
 - Subject: "Your Assessment Results Are Waiting"
 - CTA: https://fixyourmovement.com/assessment-results?email={{ subscriber.email }}
 
-### AWeber Post-Confirmation Redirect
-- URL: https://fixyourmovement.com/assessment
-- AWeber automatically appends &email=subscriber@email.com
-- No merge tag needed in AWeber redirect URL field
+### AWeber Post-Confirmation Redirects
+- **Assessment flow** (awlist6958674): `https://fixyourmovement.com/assessment` — AWeber auto-appends `&email=subscriber@email.com`
+- **Download flow** (awlist6961315): `https://fixyourmovement.com/lp/download?access=true` — AWeber auto-appends `&email=subscriber@email.com`
+- No merge tags needed in AWeber redirect URL fields — AWeber appends email automatically
+- The `?access=true` param is what triggers Step 2 in DownloadApp.tsx. Without it the page stays on Step 1.
 
 ### AWeber FAAM Campaigns — DELETED
 Previously 3 campaigns (faam_low/moderate/high). All deleted 2026-06-11. Replaced by single assessment results email above.
@@ -614,6 +633,7 @@ Previously 3 campaigns (faam_low/moderate/high). All deleted 2026-06-11. Replace
 2. Configure Exit Rules on all 5 workflows (exit on archetype tag swap)
 3. Build unconfirmed subscriber redirect: if Assessment.tsx has no email param → redirect to /lp/take-assessment
 4. Build AWeber Trial Nurture Campaign (trigger: trial_accepted tag, 7-day sequence, exit: customer tag)
+5. **OPEN BUG**: AWeber list automation (awlist6961315 → awlist6958674 on confirmation) not firing. Support ticket open 2026-07-03. Until resolved, programmatic Worker migration is the only reliable mechanism.
 
 ---
 
@@ -625,18 +645,25 @@ Previously 3 campaigns (faam_low/moderate/high). All deleted 2026-06-11. Replace
 **Deployment**: Paste into Cloudflare dashboard editor. Do NOT use wrangler CLI.
 **CORS**: fixyourmovement.com, preview.fixyourmovement.com, app.fixyourmovement.com
 
-**Three POST request types handled**:
-1. Archetype tagging: { email, answers } — determines and applies archetype tag
-2. FAAM band tagging: { email, faam_tag, faam_score } — applies faam_low/moderate/high, removes other two
-3. Event tagging: { email, checkout_tag } — valid: "checkout_visited", "trial_accepted". Only applies if subscriber already exists. Does NOT create new subscribers.
+**Four POST request types handled** (checked in this order):
+1. **List migration**: `{ email, action: "migrate_to_main_list" }` — POSTs subscriber to awlist6958674 with `status=subscribed`, bypassing double opt-in. Called by DownloadApp.tsx on ?access=true. 201 = created, 400 = already subscribed (both treated as success). This is the authoritative mechanism for moving download subscribers to the main list.
+2. **Event tagging**: `{ email, checkout_tag }` — valid tags: `"checkout_visited"`, `"trial_accepted"`, `"customer"`, `"trial_pass_97"`, `"techissue_07032026"`. Only applies tag if subscriber already exists on awlist6958674. Does NOT create new subscribers. To add a new valid tag, add it to the `VALID_CHECKOUT_TAGS` array in both the deployed Worker AND `workers/fcs-archetype-worker.js` in the repo.
+3. **FAAM band tagging**: `{ email, faam_tag, faam_score }` — applies `faam_low` / `faam_moderate` / `faam_high`, removes the other two simultaneously.
+4. **Archetype tagging**: `{ email, answers }` — determines archetype from HOOK answers and applies tag.
 
 **OAuth**: Auto-refreshes access token on every request. Credentials: AWEBER_CLIENT_ID, AWEBER_CLIENT_SECRET, AWEBER_ACCESS_TOKEN, AWEBER_REFRESH_TOKEN, AWEBER_LIST_ID (all in Cloudflare env vars).
+
+**Deployment**: Paste full file into Cloudflare dashboard Quick Edit → Deploy. Do NOT use wrangler CLI. After deploying to Cloudflare, always update `workers/fcs-archetype-worker.js` in the repo to match exactly. The deployed version is the source of truth — if they diverge, paste the deployed version into the repo file.
 
 ---
 
 ## Trial User Flow
 
-**create-trial-profile** (app Supabase Edge Function, JWT OFF): Called from Assessment.tsx (after save-assessment) and DownloadApp.tsx (on ?access=true). Sets is_trial=true, trial_started_at=now(), token_tier=1. Idempotent.
+**create-trial-profile** (app Supabase Edge Function, JWT OFF): Called from Assessment.tsx (after save-assessment) and DownloadApp.tsx (on ?access=true). Sets is_trial=true, trial_started_at=now(), token_tier=1, subscription_status=active. Idempotent — dedup path upserts trial fields and resends install email if auth user already exists.
+
+**CRITICAL — supabase-js version must be 2.45.0 or higher.** `getUserByEmail` does not exist in supabase-js v2. Use `listUsers({ filter: 'email eq "email@example.com"' })` for email lookup. This was the root cause of a major regression on 2026-07-03 where all /lp/download subscribers failed to get Supabase profiles created. Do not downgrade the supabase-js import version in this function.
+
+**Install email**: Sent via Resend from `noreply@fixyourmovement.com`. Subject: "Your Foot Capacity App Is Ready to Download". CTA: `https://app.fixyourmovement.com/install`. Includes unsubscribe link.
 
 **trial_accepted tag**: Applied by app CreateProfile.tsx after successful onboarding — NOT by website or Cloudflare Worker. Triggers Trial Nurture Campaign (pending build).
 
@@ -793,3 +820,15 @@ If deployment doesn't appear immediately after a merge to main, wait 2-3 minutes
 
 **12. Ask Dr. Jonathan similarity threshold was removed.**
 As of 2026-06-27, all questions pass through to Claude regardless of similarity score. The 0.55 threshold is retained for logging only. Do not re-add a blocking threshold.
+
+**13. supabase.auth.admin.getUserByEmail does not exist in supabase-js v2.**
+This method never existed in the v2 client. Use `supabase.auth.admin.listUsers({ filter: 'email eq "email@example.com"' })` instead. This broke all /lp/download profile creation from launch until 2026-07-03. Fix: upgrade import to supabase-js@2.45.0+. Never downgrade the supabase-js version in create-trial-profile.
+
+**14. AWeber list automation (move subscriber between lists) is unreliable.**
+The AWeber dashboard automation configured to move confirmed subscribers from awlist6961315 to awlist6958674 does not fire correctly. Do not rely on AWeber list automations for subscriber migration. Use the Cloudflare Worker `migrate_to_main_list` action instead (called programmatically from DownloadApp.tsx). AWeber support ticket open as of 2026-07-03.
+
+**15. AWeber rate limits on rapid API calls.**
+When bulk-tagging subscribers via the Worker, AWeber's API rate limits at approximately 40 sequential requests within a short window. Use a minimum 2000ms delay between requests in bulk scripts. If rate limit errors appear (403 ForbiddenError), pause and retry the failed batch.
+
+**16. The Cloudflare Worker deployed version may differ from the repo file.**
+Always treat the deployed version (viewable via Cloudflare dashboard Quick Edit) as the source of truth. After any manual deploy, copy the deployed code into `workers/fcs-archetype-worker.js` in the repo and commit. Never assume the repo file matches what is deployed.
