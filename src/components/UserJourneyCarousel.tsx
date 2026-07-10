@@ -40,6 +40,71 @@ const stories = [
     headline: "76% pain reduction and full Phase 2 function restored — in 2 weeks.",
     story: "Annie T. came in with pain at 5 out of 10 and a FAAM baseline of 83.3% — suggesting she was still reasonably functional but dealing with real, persistent pain that wasn't going away on its own. Within 2 weeks of starting the program, her pain is down to 1.2 out of 10 — a 76% reduction — and her FAAM has climbed to 92.9%.\n\nWhat makes Annie T.'s story a strong one for a different audience segment: her starting numbers weren't dramatic. She wasn't a 9/10 pain patient — she was someone with moderate chronic foot pain and good-but-not-great function. That's a profile a lot of people will recognise themselves in. The message it sends: you don't have to be in crisis for this to work.\n\nShe's 8 logged sessions deep, currently in Phase 2, and her consistency is holding.",
   },
+  {
+    id: 4,
+    alias: "Martin M.",
+    phase: "Phase 2",
+    week: "Week 2",
+    stats: [
+      { label: "Pain Reduction", value: "40%", detail: "5.0 → 3.0 /10", sub: "Pain score" },
+      { label: "FAAM Improvement", value: "+79%", detail: "51.2% → 91.7%", sub: "Measured using the validated Foot and Ankle Ability Measure (FAAM)." },
+      { label: "Longest Streak", value: "7", detail: "Consecutive", sub: "Days" },
+    ],
+    headline: "Foot function nearly doubled while pain dropped 40% — in the first two weeks of Phase 2.",
+    story: "Martin M. started the Foot Capacity System with a pain score of 5 out of 10 and a FAAM baseline of 51.2% — real, limiting impairment. Two weeks into Phase 2, his pain is down to 3 out of 10, a 40% reduction, and his FAAM score has climbed to 91.7%.\n\nThat's a 79% functional improvement in fourteen days — foot function that's nearly doubled from where he started. Martin M. is a clear example of how quickly consistent, structured loading can move the needle, even early in the program.",
+  },
+  {
+    id: 5,
+    alias: "Melanie R.",
+    phase: "Phase 2",
+    week: "Week 3",
+    stats: [
+      { label: "Pain Reduction", value: "67%", detail: "6.0 → 2.0 /10", sub: "Pain score" },
+      { label: "FAAM Improvement", value: "+13%", detail: "81.0% → 91.7%", sub: "Measured using the validated Foot and Ankle Ability Measure (FAAM)." },
+      { label: "Longest Streak", value: "17", detail: "Consecutive", sub: "Days" },
+    ],
+    headline: "67% pain reduction — backed by 17 straight days of daily consistency.",
+    story: "Melanie R. came into the program with pain at 6 out of 10 and a FAAM baseline of 81.0% — already reasonably functional, but dealing with real, persistent discomfort. Three weeks in, her pain has dropped to 2 out of 10, a 67% reduction, and her FAAM score has climbed to 91.7%.\n\nWhat stands out most about Melanie R.'s story is her consistency: a 17-day logging streak with no gaps. Her results didn't come from a handful of good days — they're the product of showing up daily and letting the program compound.",
+  },
+  {
+    id: 6,
+    alias: "Julie D.",
+    phase: "Phase 2",
+    week: "Week 1",
+    stats: [
+      { label: "Pain Reduction", value: "33%", detail: "3.0 → 2.0 /10", sub: "Pain score" },
+      { label: "FAAM Improvement", value: "+45%", detail: "58.3% → 84.5%", sub: "Measured using the validated Foot and Ankle Ability Measure (FAAM)." },
+      { label: "Longest Streak", value: "7", detail: "Consecutive", sub: "Days" },
+    ],
+    headline: "A 45-point functional leap in the very first week of Phase 2.",
+    story: "Julie D. began the program with moderate pain — 3 out of 10 — and a FAAM baseline of 58.3%, indicating meaningful functional limitation even without severe pain. In just her first week of Phase 2, her FAAM score jumped to 84.5%, a 45% functional improvement, while her pain dropped further to 2 out of 10.\n\nJulie D.'s story is a reminder that pain and function don't always move at the same pace — and that real, measurable functional gains can show up fast, even for patients who didn't start out in crisis.",
+  },
+  {
+    id: 7,
+    alias: "Harbinder K.",
+    phase: "Phase 2",
+    week: "Week 2",
+    stats: [
+      { label: "Pain Reduction", value: "86%", detail: "7.0 → 1.0 /10", sub: "Pain score" },
+      { label: "FAAM Improvement", value: "2.4x", detail: "33.3% → 79.8%", sub: "Measured using the validated Foot and Ankle Ability Measure (FAAM)." },
+      { label: "Longest Streak", value: "6", detail: "Consecutive", sub: "Days" },
+    ],
+    headline: "Foot function more than doubled — starting from one of the lowest baselines in the program.",
+    story: "Harbinder K. entered the Foot Capacity System with a FAAM baseline of just 33.3% and pain at 7 out of 10 — one of the most limited starting points of any current member. Two weeks into Phase 2, her pain has dropped to 1 out of 10, an 86% reduction, and her FAAM score has more than doubled to 79.8%.\n\nHarbinder K.'s trajectory shows what's possible even from a severely limited starting point. She didn't just improve — she transformed her baseline function in a matter of weeks.",
+  },
+  {
+    id: 8,
+    alias: "Dana K.",
+    phase: "Phase 2",
+    week: "Week 2",
+    stats: [
+      { label: "Pain Reduction", value: "60%", detail: "5.0 → 2.0 /10", sub: "Pain score" },
+      { label: "FAAM Improvement", value: "+81%", detail: "44.0% → 79.8%", sub: "Measured using the validated Foot and Ankle Ability Measure (FAAM)." },
+      { label: "Longest Streak", value: "5", detail: "Consecutive", sub: "Days" },
+    ],
+    headline: "81% functional improvement and 60% less pain — in the first two weeks of Phase 2.",
+    story: "Dana K. started the program with pain at 5 out of 10 and a FAAM baseline of 44.0% — clear, meaningful impairment. Two weeks into Phase 2, her pain is down to 2 out of 10, a 60% reduction, and her FAAM score has climbed to 79.8%, an 81% functional improvement.\n\nDana K.'s results show how quickly both pain and function can move together when a patient commits early — she's still in the first weeks of Phase 2, with more of the program still ahead of her.",
+  },
 ];
 
 export default function UserJourneyCarousel() {
