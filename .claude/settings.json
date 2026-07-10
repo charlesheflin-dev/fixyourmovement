@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "ask": [
+      "Write",
+      "Edit",
+      "NotebookEdit",
+      "Bash(git add:*)",
+      "Bash(git stage:*)",
+      "Bash(git commit:*)",
+      "Bash(git push origin staging:*)",
+      "PowerShell(git add:*)",
+      "PowerShell(git stage:*)",
+      "PowerShell(git commit:*)",
+      "PowerShell(git push origin staging:*)"
+    ],
+    "deny": [
+      "Bash(git push origin main)",
+      "Bash(git push origin main:*)",
+      "Bash(git push origin staging:main)",
+      "Bash(git push origin staging:main:*)",
+      "PowerShell(git push origin main)",
+      "PowerShell(git push origin main:*)",
+      "PowerShell(git push origin staging:main)",
+      "PowerShell(git push origin staging:main:*)"
+    ],
+    "defaultMode": "default"
+  }
+}
