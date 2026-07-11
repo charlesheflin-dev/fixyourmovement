@@ -4,6 +4,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import logo from '@/assets/logo.png';
+import SuggestedQuestions from '@/components/SuggestedQuestions';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -148,6 +149,12 @@ export default function AskDrJonathanPage() {
               </div>
             </div>
           ))}
+
+          <SuggestedQuestions
+            setValue={setInput}
+            inputRef={inputRef}
+            conversationStarted={messages.length > 1}
+          />
 
           {/* Loading dots */}
           {isLoading && (
