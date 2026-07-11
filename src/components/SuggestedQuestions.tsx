@@ -14,6 +14,7 @@ import {
   Activity,
   ChevronRight,
   ChevronDown,
+  MessageCircle,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -78,8 +79,9 @@ export default function SuggestedQuestions({
     <section aria-labelledby="suggested-questions-heading" className="mx-auto max-w-2xl">
       <h2
         id="suggested-questions-heading"
-        className="mb-3 text-sm font-semibold text-gray-700"
+        className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-700"
       >
+        <MessageCircle className="h-4 w-4 flex-shrink-0 text-gray-500" />
         Not sure where to start? Try one of these:
       </h2>
 

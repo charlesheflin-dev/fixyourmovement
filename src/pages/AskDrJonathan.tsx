@@ -4,6 +4,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import logo from '@/assets/logo.png';
+import headshot from '@/assets/headshot2.png';
 import SuggestedQuestions from '@/components/SuggestedQuestions';
 
 interface Message {
@@ -35,6 +36,39 @@ function MessageText({ content, isUser }: { content: string; isUser: boolean }) 
   );
 }
 
+function WelcomeCard() {
+  return (
+    <div className="flex items-start gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
+      <img
+        src={headshot}
+        alt="Dr. Jonathan Schutza"
+        className="h-16 w-16 flex-shrink-0 rounded-full object-cover grayscale sm:h-20 sm:w-20"
+      />
+      <div className="space-y-3 text-sm leading-relaxed text-gray-800 sm:text-base">
+        <h2 className="text-xl font-bold text-blue-600 sm:text-2xl">Welcome.</h2>
+        <p className="font-semibold text-gray-900">
+          Before you leave with unanswered questions, ask me.
+        </p>
+        <p>
+          Whether your question is about heel pain, recovery, or if the Foot
+          Capacity System is right for you, I'm here to help.
+        </p>
+        <p>
+          I'm Ask Dr. Jonathan, an AI assistant trained on Dr. Jonathan
+          Schutza's rehabilitation philosophy, educational content, and the
+          Foot Capacity System.
+        </p>
+        <p>
+          You can ask about heel pain, plantar fasciitis, recovery timelines,
+          walking, exercise and activity, how the app works, Lifetime Access,
+          or HSA/FSA reimbursement. If it's on your mind, there's a good
+          chance someone else has wondered the same thing.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',
   content:
@@ -49,6 +83,8 @@ export default function AskDrJonathanPage() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  const conversationStarted = messages.length > 1;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -108,55 +144,79 @@ export default function AskDrJonathanPage() {
 
   return (
     <div className="flex h-screen flex-col bg-gray-50">
-      {/* Page header */}
-      <header className="flex items-center gap-3 border-b border-gray-200 bg-white px-4 py-3 sm:px-6">
-        <img
-          src={logo}
-          alt="Foot Capacity System"
-          className="h-9 w-auto"
-        />
-        <div>
-          <h1 className="text-base font-semibold text-gray-900">Ask Dr. Jonathan</h1>
-          <p className="text-xs text-gray-500">Plantar fasciitis recovery Q&A</p>
-        </div>
-      </header>
+      {/* Page header — collapses to a compact bar once the conversation starts */}
+      {conversationStarted ? (
+        <header className="flex items-center gap-3 border-b border-gray-200 bg-white px-4 py-3 sm:px-6">
+          <img src={logo} alt="Foot Capacity System" className="h-9 w-auto" />
+          <div>
+            <h1 className="text-base font-semibold text-gray-900">Ask Dr. Jonathan</h1>
+            <p className="text-xs text-gray-500">Plantar fasciitis recovery Q&A</p>
+          </div>
+        </header>
+      ) : (
+        <header className="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+          <div className="mx-auto flex max-w-2xl items-center gap-4">
+            <img src={logo} alt="Foot Capacity System" className="h-14 w-auto flex-shrink-0" />
+            <div>
+              <h1 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">
+                Ask Dr. Jonathan
+              </h1>
+              <p className="text-base font-semibold text-blue-600 sm:text-lg">
+                Get Answers Before You Decide
+              </p>
+            </div>
+          </div>
+        </header>
+      )}
 
       {/* Message thread */}
       <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
         <div className="mx-auto max-w-2xl space-y-4">
-          {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              {/* Assistant avatar dot */}
-              {msg.role === 'assistant' && (
-                <div className="mr-2 mt-1 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
-                  J
-                </div>
-              )}
+          {!conversationStarted && (
+            <>
+              <WelcomeCard />
+              <p className="text-center text-sm leading-relaxed text-gray-600">
+                If you're unsure whether the Foot Capacity System is right for
+                you, ask before you leave. I'd rather answer your questions
+                than have you leave wondering.
+              </p>
+              <hr className="border-gray-200" />
+            </>
+          )}
+
+          {messages
+            .filter((m) => m !== WELCOME_MESSAGE)
+            .map((msg, idx) => (
               <div
-                className={`
-                  max-w-[75%] rounded-2xl px-4 py-3 text-sm leading-relaxed
-                  ${
-                    msg.role === 'user'
-                      ? 'bg-blue-600 text-white rounded-br-sm'
-                      : 'border border-gray-200 bg-white text-gray-800 rounded-bl-sm shadow-sm'
-                  }
-                `}
+                key={idx}
+                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                <MessageText content={msg.content} isUser={msg.role === 'user'} />
+                {msg.role === 'assistant' && (
+                  <div className="mr-2 mt-1 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
+                    J
+                  </div>
+                )}
+                <div
+                  className={`
+                    max-w-[75%] rounded-2xl px-4 py-3 text-sm leading-relaxed
+                    ${
+                      msg.role === 'user'
+                        ? 'bg-blue-600 text-white rounded-br-sm'
+                        : 'border border-gray-200 bg-white text-gray-800 rounded-bl-sm shadow-sm'
+                    }
+                  `}
+                >
+                  <MessageText content={msg.content} isUser={msg.role === 'user'} />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
           <SuggestedQuestions
             setValue={setInput}
             inputRef={inputRef}
-            conversationStarted={messages.length > 1}
+            conversationStarted={conversationStarted}
           />
 
-          {/* Loading dots */}
           {isLoading && (
             <div className="flex justify-start">
               <div className="mr-2 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
