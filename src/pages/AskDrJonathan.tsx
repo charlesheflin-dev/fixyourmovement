@@ -42,7 +42,7 @@ function WelcomeCard() {
       <img
         src={headshot}
         alt="Dr. Jonathan Schutza"
-        className="h-16 w-16 flex-shrink-0 rounded-full object-cover grayscale sm:h-20 sm:w-20"
+        className="h-16 w-16 flex-shrink-0 rounded-full object-cover object-top grayscale sm:h-20 sm:w-20"
       />
       <div className="space-y-3 text-sm leading-relaxed text-gray-800 sm:text-base">
         <h2 className="text-xl font-bold text-blue-600 sm:text-2xl">Welcome.</h2>
