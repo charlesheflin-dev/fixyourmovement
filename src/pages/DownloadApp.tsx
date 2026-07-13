@@ -11,14 +11,21 @@ const VIDEO_THUMBNAIL_ID = "0a87b6a7-6fb2-48dc-9e26-aa5c134c0200";
 const VIDEO_POSTER_SRC = `https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/${VIDEO_THUMBNAIL_ID}/public`;
 
 // ─── useIsMobile ────────────────────────────────────────────────────────────────
+// User-agent based, not viewport-width based. Width (window.innerWidth < 768)
+// was the previous check and is unreliable here: a phone in landscape can
+// report >= 768px, and email links opened in an in-app browser/WebView
+// (Gmail app, etc.) can report unusual viewport metrics that don't reflect
+// the actual device. Real-world reports (2026-07-13): mobile users on the
+// download page were shown the desktop QR-code branch instead of the
+// install button. Computed synchronously in the useState initializer
+// (rather than via useEffect) so there's no one-frame flash of the wrong
+// branch before it corrects itself, and no resize listener needed since a
+// device's user-agent doesn't change when its window resizes. iPad is
+// intentionally included as mobile — this is the phone/tablet install path.
 function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
+  const [isMobile] = useState(() =>
+    /Android|iPhone|iPad|iPod|Mobile|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  );
   return isMobile;
 }
 
