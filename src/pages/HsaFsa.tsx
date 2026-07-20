@@ -1,20 +1,12 @@
-import type { MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Check } from "lucide-react";
 import logo from "@/assets/logo.png";
-import headshot from "@/assets/headshot2.png";
+import headshot from "@/assets/dj-head-2.jpg";
 import receiptPreview from "@/assets/receipt-provider-preview.png";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 
 const CHECKOUT_URL = "/checkout";
-
-// Page-scoped smooth scroll for internal section CTAs. Kept local (scrollIntoView,
-// no global scroll-behavior) so the site-wide ScrollToTop route reset is unaffected.
-const scrollToId = (id: string) => (e: MouseEvent<HTMLAnchorElement>) => {
-  e.preventDefault();
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-};
 
 export default function HsaFsa() {
   return (
@@ -35,42 +27,36 @@ export default function HsaFsa() {
               </div>
 
               <h1 className="font-display text-3xl md:text-[2.75rem] font-bold text-slate-900 leading-snug mb-5">
-                Use Your HSA or FSA for the Foot Capacity System
+                Using Your HSA or FSA with the Foot Capacity System
               </h1>
 
               <p className="text-slate-600 text-lg leading-relaxed mb-5">
-                Everything you need to understand the reimbursement process, the documentation you'll receive, and the steps to request reimbursement, all in one place.
-              </p>
-              <p className="text-slate-600 text-lg leading-relaxed mb-5">
-                Whether you're considering Lifetime Access or the Monthly Recovery Plan, this page explains what to expect before and after your purchase.
+                Learn how HSA and FSA reimbursement typically works, what documentation you'll receive, and what to expect before and after your purchase.
               </p>
               <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                We've built this resource to answer the questions we hear most often, explain the reimbursement process in plain English, and show you exactly what you'll receive after your purchase.
+                Whether you're considering Lifetime Access or the Monthly Recovery Plan, this page answers the questions we hear most often and explains the process in plain English.
               </p>
 
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+              <div className="mb-8">
+                <p className="text-slate-500 text-base leading-relaxed mb-1">Already know what you need?</p>
                 <a
                   href={CHECKOUT_URL}
                   target="_self"
                   rel="noopener noreferrer"
                   onClick={() => window.gtag?.('event', 'checkout_click', { event_category: 'conversion', event_label: 'hsa_hero' })}
-                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors text-center"
+                  className="inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors"
                 >
-                  Start My Recovery →
-                </a>
-                <a
-                  href="#how-reimbursement-works"
-                  onClick={scrollToId("how-reimbursement-works")}
-                  className="inline-flex items-center justify-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors"
-                >
-                  See How Reimbursement Works →
+                  View Membership Options →
                 </a>
               </div>
 
               <div className="bg-slate-50 rounded-xl p-5">
-                <p className="text-slate-900 font-semibold text-sm mb-1">Remember</p>
+                <p className="text-slate-900 font-semibold text-sm mb-1">Important</p>
+                <p className="text-slate-600 text-base leading-relaxed mb-2">
+                  Every HSA and FSA plan is different.
+                </p>
                 <p className="text-slate-600 text-base leading-relaxed">
-                  Every HSA and FSA plan is different. Your administrator makes the reimbursement decision, not the Foot Capacity System.
+                  Your HSA or FSA administrator—not the Foot Capacity System—determines eligibility and reimbursement.
                 </p>
               </div>
             </motion.div>
@@ -84,62 +70,65 @@ export default function HsaFsa() {
               <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
                 Can I Use My HSA or FSA?
               </h2>
+              <p className="font-display text-xl md:text-2xl font-bold text-slate-900 leading-snug mb-6">
+                Yes, you may be able to.
+              </p>
               <div className="space-y-5 text-slate-600 text-lg leading-relaxed">
-                <p>Many Health Savings Accounts (HSAs) and Flexible Spending Accounts (FSAs) may reimburse qualified healthcare expenses, depending on your individual plan.</p>
+                <p>Many HSA and FSA plans reimburse qualified healthcare expenses, depending on your individual plan.</p>
                 <p>The Foot Capacity System was developed and is overseen by a licensed physical therapist and provides structured rehabilitation for foot and ankle conditions.</p>
-                <p>Every purchase includes professional reimbursement documentation designed to support your reimbursement request.</p>
-                <p>Because every HSA and FSA plan is different, your administrator determines eligibility and reimbursement according to your individual plan.</p>
+                <p>Every purchase includes your Receipt &amp; Provider Information PDF, emailed to you automatically after purchase.</p>
+                <p>Eligibility and reimbursement decisions are always made by your HSA or FSA administrator according to your individual plan.</p>
               </div>
 
-              <div className="bg-slate-50 rounded-xl p-5 mt-8">
-                <p className="text-slate-900 font-semibold text-sm mb-1">Remember</p>
+              <div className="bg-blue-50 rounded-xl p-5 mt-8">
+                <p className="text-blue-700 font-semibold text-sm mb-1">Good to Know</p>
+                <p className="text-slate-600 text-base leading-relaxed mb-2">
+                  You don't necessarily have to pay using your HSA or FSA card.
+                </p>
                 <p className="text-slate-600 text-base leading-relaxed">
-                  Every HSA and FSA plan is different. Your administrator makes the reimbursement decision, not the Foot Capacity System.
+                  Many plans allow you to purchase first using another payment method and submit your documentation later for reimbursement.
                 </p>
               </div>
 
-              <div className="mt-8">
-                <a href="#documentation" onClick={scrollToId("documentation")} className="inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors">
-                  See Your Reimbursement Documentation →
-                </a>
-              </div>
             </motion.div>
           </div>
         </section>
 
-        {/* SECTION 3 — MEET YOUR REIMBURSEMENT DOCUMENTATION */}
+        {/* SECTION 3 — YOUR RECEIPT & PROVIDER INFORMATION PDF */}
         <section id="documentation" className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
-                Meet Your Reimbursement Documentation
+                Your Receipt &amp; Provider Information PDF
               </h2>
               <div className="space-y-5 text-slate-600 text-lg leading-relaxed mb-10">
-                <p>Immediately after your purchase, you'll receive your Receipt &amp; Provider Information PDF by email, usually within a few minutes.</p>
-                <p>This professionally prepared document combines your purchase details with licensed provider credentials and a detailed service description, giving you the documentation commonly requested during the reimbursement process.</p>
+                <p>Every Foot Capacity System membership includes a Receipt &amp; Provider Information PDF delivered automatically after purchase.</p>
+                <p>This document combines your purchase receipt with additional provider information that some HSA and FSA administrators may request during the reimbursement process.</p>
+                <p>Because every plan is different, documentation requirements can vary. We created this resource to help simplify that process whenever additional information is requested.</p>
               </div>
 
               <div className="flex justify-center mb-10">
                 <img
                   src={receiptPreview}
                   alt="Sample Receipt & Provider Information PDF showing purchaser information, payment details, receipt number, licensed physical therapist credentials, NPI, Louisiana Physical Therapy License, and a detailed service description."
-                  className="w-full max-w-lg rounded-2xl border border-slate-200 shadow-sm"
+                  className="w-full max-w-[648px] rounded-2xl border border-slate-200 shadow-sm"
                 />
               </div>
 
-              <div className="bg-white rounded-2xl p-7 mb-6">
-                <p className="text-slate-900 font-semibold text-base mb-4">Every document includes</p>
+              <p className="text-slate-500 text-sm italic text-center max-w-xl mx-auto mb-10">
+                Example of the Receipt &amp; Provider Information PDF every member receives automatically after purchase. Sample purchaser information shown; your document will contain your own purchase and payment details.
+              </p>
+
+              <h3 className="font-display text-xl font-bold text-slate-900 mb-4">What You'll Receive</h3>
+              <div className="bg-white rounded-2xl p-7 mb-12">
                 <ul className="space-y-3">
                   {[
-                    "Purchaser information",
-                    "Payment information",
-                    "Receipt number",
-                    "Payment reference",
+                    "Purchase receipt",
+                    "Provider information",
                     "Licensed physical therapist credentials",
                     "National Provider Identifier (NPI)",
-                    "Louisiana Physical Therapy License",
-                    "Detailed service description",
-                    "Ready to submit with your reimbursement request",
+                    "Louisiana Physical Therapy License information",
+                    "Program details that may assist with reimbursement requests",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <Check size={18} className="text-blue-600 shrink-0 mt-0.5" />
@@ -149,84 +138,12 @@ export default function HsaFsa() {
                 </ul>
               </div>
 
-              <p className="text-slate-500 text-sm italic text-center max-w-xl mx-auto mb-8">
-                Illustration shown with sample purchaser information. Your documentation will contain your own purchase and payment details.
-              </p>
-
-              <div>
-                <a href="#how-reimbursement-works" onClick={scrollToId("how-reimbursement-works")} className="inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors">
-                  See How to Request Reimbursement →
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* SECTION 4 — HOW TO REQUEST REIMBURSEMENT */}
-        <section id="how-reimbursement-works" className="py-10 md:py-14 bg-white border-t border-slate-100">
-          <div className="max-w-3xl mx-auto px-6">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
-                How to Request Reimbursement
-              </h2>
-              <p className="text-slate-600 text-lg leading-relaxed mb-12">
-                Requesting reimbursement is usually straightforward. While every HSA and FSA administrator has its own process, the general steps are similar.
-              </p>
-
-              <div className="flex flex-col md:flex-row md:gap-6">
-                {[
-                  { n: "1", title: "Purchase the Foot Capacity System", body: "Purchase either Lifetime Access or the Monthly Recovery Plan using any accepted payment method.", note: "You don't have to pay with your HSA or FSA card. Many plans allow you to request reimbursement after you've already made your purchase. Follow your administrator's requirements for your specific plan." },
-                  { n: "2", title: "Receive Your Reimbursement Documentation", body: "Within minutes of completing your purchase, you'll automatically receive your Receipt & Provider Information PDF by email.", note: "Save this document for your records and for your reimbursement request." },
-                  { n: "3", title: "Submit Your Request", body: "Submit your reimbursement documentation using the reimbursement process required by your HSA or FSA administrator.", note: "Some administrators provide an online portal, while others may require a reimbursement form. Follow the instructions provided by your individual plan." },
-                  { n: "4", title: "Administrator Review", body: "Your administrator reviews your request according to your individual benefits plan.", note: "If additional documentation is requested, contact the Foot Capacity System support team first. We'll review the request with you and provide any additional documentation we reasonably can." },
-                ].map((step) => (
-                  <div
-                    key={step.n}
-                    className="flex-1 py-6 md:py-0 md:px-5 border-t md:border-t-0 md:border-l border-slate-200 first:border-t-0 first:md:border-l-0 first:md:pl-0 last:md:pr-0"
-                  >
-                    <div className="w-8 h-8 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center mb-4">{step.n}</div>
-                    <p className="font-semibold text-slate-900 text-base mb-2">{step.title}</p>
-                    <p className="text-slate-600 text-base leading-relaxed mb-3">{step.body}</p>
-                    <p className="text-slate-500 text-sm leading-relaxed">{step.note}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="bg-slate-50 rounded-xl p-5 mt-12">
-                <p className="text-slate-900 font-semibold text-sm mb-1">Remember</p>
-                <p className="text-slate-600 text-base leading-relaxed">
-                  The Foot Capacity System provides your reimbursement documentation. Your HSA or FSA administrator determines eligibility and reimbursement according to your individual plan.
-                </p>
-              </div>
-
-              <div className="mt-8">
-                <a href="#why-documentation-matters" onClick={scrollToId("why-documentation-matters")} className="inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors">
-                  Why This Documentation Matters →
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* SECTION 5 — WHY THIS DOCUMENTATION MATTERS */}
-        <section id="why-documentation-matters" className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
-          <div className="max-w-3xl mx-auto px-6">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
-                Why This Documentation Matters
-              </h2>
-              <div className="space-y-5 text-slate-600 text-lg leading-relaxed mb-10">
-                <p>Most online purchases generate a basic payment receipt.</p>
-                <p>That's usually enough for everyday purchases, but healthcare reimbursement requests often require additional information.</p>
-                <p>That's why every Foot Capacity System purchase includes more than a standard receipt.</p>
-                <p>You'll automatically receive Your Reimbursement Documentation, formally titled Receipt &amp; Provider Information, which combines purchaser information, payment details, licensed provider credentials, and a detailed service description in one professional document.</p>
-              </div>
-
+              <h3 className="font-display text-xl font-bold text-slate-900 mb-6">Why This Document Is Different</h3>
               <div className="flex flex-col md:flex-row gap-6 items-stretch">
                 <div className="flex-1 bg-white rounded-2xl p-7">
                   <p className="font-bold text-slate-900 text-lg mb-4">Typical Online Receipt</p>
                   <ul className="space-y-3">
-                    {["Purchase confirmation", "Payment amount", "Date of purchase", "Transaction ID"].map((item, i) => (
+                    {["Purchase confirmation", "Transaction amount", "Payment information", "Limited provider details"].map((item, i) => (
                       <li key={i} className="flex items-start gap-3">
                         <Check size={18} className="text-slate-300 shrink-0 mt-0.5" />
                         <span className="text-slate-600 text-base leading-relaxed">{item}</span>
@@ -235,9 +152,9 @@ export default function HsaFsa() {
                   </ul>
                 </div>
                 <div className="flex-1 bg-blue-50 rounded-2xl p-7">
-                  <p className="font-bold text-blue-600 text-lg mb-4">Your Reimbursement Documentation</p>
+                  <p className="font-bold text-blue-600 text-lg mb-4">Your Receipt &amp; Provider Information PDF</p>
                   <ul className="space-y-3">
-                    {["Purchaser information", "Payment information", "Receipt number", "Payment reference", "Licensed physical therapist credentials", "National Provider Identifier (NPI)", "Louisiana Physical Therapy License", "Detailed service description", "Documentation for your records"].map((item, i) => (
+                    {["Purchase confirmation", "Transaction amount", "Provider information", "Licensed physical therapist credentials", "National Provider Identifier (NPI)", "Louisiana Physical Therapy License", "Program information", "Organized for reimbursement documentation"].map((item, i) => (
                       <li key={i} className="flex items-start gap-3">
                         <Check size={18} className="text-blue-600 shrink-0 mt-0.5" />
                         <span className="text-slate-700 text-base leading-relaxed">{item}</span>
@@ -246,21 +163,55 @@ export default function HsaFsa() {
                   </ul>
                 </div>
               </div>
-
-              <p className="text-slate-600 text-lg leading-relaxed mt-10">
-                We've designed this documentation to help make the reimbursement process as straightforward as possible.
-              </p>
-
-              <div className="mt-8">
-                <a href="#meet-the-pt" onClick={scrollToId("meet-the-pt")} className="inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors">
-                  Meet the Physical Therapist Behind the Program →
-                </a>
-              </div>
             </motion.div>
           </div>
         </section>
 
-        {/* SECTION 6 — DEVELOPED BY A LICENSED PHYSICAL THERAPIST */}
+        {/* SECTION 4 — HOW THE REIMBURSEMENT PROCESS TYPICALLY WORKS */}
+        <section id="how-reimbursement-works" className="py-10 md:py-14 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6">
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
+                How the Reimbursement Process Typically Works
+              </h2>
+              <div className="space-y-5 text-slate-600 text-lg leading-relaxed mb-12">
+                <p>Most reimbursement requests follow a similar process.</p>
+                <p>Although every HSA and FSA administrator has different requirements, these four steps represent the process many members experience.</p>
+              </div>
+
+              <div className="flex flex-col md:flex-row md:gap-6">
+                {[
+                  { n: "1", title: "Purchase the Foot Capacity System", body: "Purchase your Foot Capacity System membership." },
+                  { n: "2", title: "Receive Your Receipt & Provider Information PDF", body: "Receive your Receipt & Provider Information PDF automatically by email." },
+                  { n: "3", title: "Submit Your Request", body: "Submit your documentation according to your HSA or FSA administrator's reimbursement process." },
+                  { n: "4", title: "Administrator Review", body: "Your administrator reviews the submission and determines reimbursement based on your individual plan." },
+                ].map((step) => (
+                  <div
+                    key={step.n}
+                    className="flex-1 py-6 md:py-0 md:px-5 border-t md:border-t-0 md:border-l border-slate-200 first:border-t-0 first:md:border-l-0 first:md:pl-0 last:md:pr-0"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center mb-4">{step.n}</div>
+                    <p className="font-semibold text-slate-900 text-base mb-2">{step.title}</p>
+                    <p className="text-slate-600 text-base leading-relaxed">{step.body}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-slate-50 rounded-xl p-5 mt-12">
+                <p className="text-slate-900 font-semibold text-sm mb-1">Important</p>
+                <p className="text-slate-600 text-base leading-relaxed mb-2">
+                  The Foot Capacity System automatically provides your documentation after purchase.
+                </p>
+                <p className="text-slate-600 text-base leading-relaxed">
+                  Your HSA or FSA administrator determines reimbursement eligibility and any documentation requirements.
+                </p>
+              </div>
+
+            </motion.div>
+          </div>
+        </section>
+
+        {/* SECTION 5 — DEVELOPED BY A LICENSED PHYSICAL THERAPIST */}
         <section id="meet-the-pt" className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
@@ -272,40 +223,27 @@ export default function HsaFsa() {
                 <img
                   src={headshot}
                   alt="Dr. Jonathan Schutza, PT, DPT, Cert. DN"
-                  className="w-40 h-40 md:w-48 md:h-48 rounded-2xl object-cover shrink-0 mx-auto md:mx-0"
+                  className="w-full max-w-[300px] h-auto rounded-2xl shrink-0 mx-auto md:mx-0"
                 />
                 <div className="text-slate-600 text-lg leading-relaxed">
                   <p className="font-bold text-slate-900 text-xl mb-3">Dr. Jonathan Schutza, PT, DPT, Cert. DN</p>
-                  <p className="mb-4">Dr. Jonathan Schutza earned his Doctor of Physical Therapy degree from LSU Health Shreveport in 2019 and is the founder of Back At It Physical Therapy. He specializes in evidence-based rehabilitation of musculoskeletal injuries, with a particular focus on foot and ankle conditions.</p>
-                  <p>Dr. Schutza developed and oversees the Foot Capacity System, a structured foot and ankle rehabilitation program built around progressive loading, symptom tracking, and individualized progression to help users reduce pain and improve function.</p>
-                </div>
-              </div>
-
-              <div className="mb-8">
-                <h3 className="font-display text-xl font-bold text-slate-900 mb-3">Why provider credentials are included</h3>
-                <div className="space-y-4 text-slate-600 text-lg leading-relaxed">
-                  <p>The provider information included with your reimbursement documentation identifies the licensed physical therapist who developed and oversees the Foot Capacity System.</p>
-                  <p>Some HSA and FSA administrators request provider credentials during the reimbursement review process. Including this information from the beginning helps ensure your documentation is as complete as possible.</p>
+                  <p className="mb-4">Dr. Jonathan Schutza is a licensed physical therapist and Doctor of Physical Therapy who specializes in evidence-based rehabilitation of foot and ankle conditions.</p>
+                  <p>He developed the Foot Capacity System and oversees its educational content and ongoing development.</p>
                 </div>
               </div>
 
               <div className="bg-blue-50 rounded-xl p-5">
                 <p className="text-blue-700 font-semibold text-sm mb-1">Good to Know</p>
                 <p className="text-slate-600 text-base leading-relaxed">
-                  Your reimbursement documentation includes Dr. Schutza's National Provider Identifier (NPI) and Louisiana Physical Therapy License because some administrators request this information during the reimbursement review process.
+                  Your Receipt &amp; Provider Information PDF includes Dr. Jonathan's National Provider Identifier (NPI) and Louisiana Physical Therapy License information because some HSA and FSA administrators may request these details during reimbursement review.
                 </p>
               </div>
 
-              <div className="mt-8">
-                <a href="#member-progress" onClick={scrollToId("member-progress")} className="inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors">
-                  See Real Member Progress →
-                </a>
-              </div>
             </motion.div>
           </div>
         </section>
 
-        {/* SECTION 7 — REAL PROGRESS INSIDE THE FOOT CAPACITY SYSTEM */}
+        {/* SECTION 6 — REAL PROGRESS INSIDE THE FOOT CAPACITY SYSTEM */}
         <section id="member-progress" className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
@@ -313,9 +251,9 @@ export default function HsaFsa() {
                 Real Progress Inside the Foot Capacity System
               </h2>
               <div className="space-y-4 text-slate-600 text-lg leading-relaxed">
-                <p>Your reimbursement documentation supports your purchase.</p>
-                <p>Your progress is what makes the investment worthwhile.</p>
-                <p>Below are examples of real member progress tracked inside the Foot Capacity System.</p>
+                <p>Recovery looks different for everyone.</p>
+                <p>Some members experience meaningful improvements within weeks, while others make steady progress over a longer period. The Foot Capacity System helps members track that progress over time rather than relying on guesswork.</p>
+                <p>Below are examples of real member progress recorded inside the Foot Capacity System.</p>
               </div>
             </motion.div>
 
@@ -324,7 +262,7 @@ export default function HsaFsa() {
             </div>
 
             <p className="text-slate-500 text-base leading-relaxed mb-8">
-              These examples represent real member progress captured inside the Foot Capacity System. Individual results vary based on many factors, including starting condition, consistency, and adherence to the program.
+              Every recovery journey is different. Individual results vary based on many factors, including consistency, starting point, and individual circumstances.
             </p>
 
             <a
@@ -339,37 +277,38 @@ export default function HsaFsa() {
           </div>
         </section>
 
-        {/* SECTION 8 — WHY MANY PEOPLE CHOOSE TO USE THEIR HSA OR FSA */}
+        {/* SECTION 7 — WHY SOME MEMBERS USE THEIR HSA OR FSA */}
         <section className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
-                Why Many People Choose to Use Their HSA or FSA
+                Why Some Members Use Their HSA or FSA
               </h2>
               <div className="space-y-5 text-slate-600 text-lg leading-relaxed mb-8">
-                <p>Many people contribute money to an HSA or FSA before taxes are deducted from their paycheck.</p>
-                <p>Because those dollars are generally contributed before taxes, using them for eligible healthcare expenses can cost less than paying with money that's already been taxed.</p>
-                <p>For example, someone whose combined federal and state tax savings are approximately 24% could reduce the effective cost of a $397 Lifetime Access purchase by about $95.</p>
-                <p>Actual savings vary based on your individual tax situation and your HSA or FSA plan.</p>
+                <p>Many members choose to use HSA or FSA funds because these accounts are specifically designed to help pay for qualified healthcare expenses using pre-tax dollars.</p>
+                <p>Depending on your individual tax situation and benefits plan, this may reduce your overall out-of-pocket cost compared to paying with after-tax income.</p>
+                <p>Every person's situation is different, so consult your benefits administrator or tax professional if you have questions.</p>
+              </div>
+
+              <div className="bg-white rounded-2xl border border-slate-200 p-7 mb-8">
+                <p className="text-slate-400 text-xs font-semibold uppercase tracking-widest mb-3">Example Only</p>
+                <p className="text-slate-600 text-base leading-relaxed">
+                  Someone in a 24% combined federal and state tax bracket using HSA or FSA funds for a $397 Lifetime Access membership could see approximately $95 in tax savings. This is an illustration only. Actual savings vary based on your individual tax situation and your HSA or FSA plan.
+                </p>
               </div>
 
               <div className="bg-blue-50 rounded-xl p-5">
                 <p className="text-blue-700 font-semibold text-sm mb-1">Good to Know</p>
                 <p className="text-slate-600 text-base leading-relaxed">
-                  You don't receive a discount from the Foot Capacity System. Any potential savings come from how HSA or FSA funds are treated under your individual benefits plan and tax situation.
+                  Potential savings come from your individual HSA or FSA plan and tax situation—not from a Foot Capacity System discount.
                 </p>
               </div>
 
-              <div className="mt-8">
-                <a href="#common-situations" onClick={scrollToId("common-situations")} className="inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors">
-                  Common Situations →
-                </a>
-              </div>
             </motion.div>
           </div>
         </section>
 
-        {/* SECTION 9 — COMMON SITUATIONS */}
+        {/* SECTION 8 — COMMON SITUATIONS */}
         <section id="common-situations" className="py-10 md:py-14 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
@@ -403,37 +342,16 @@ export default function HsaFsa() {
             </Accordion>
 
             <div className="bg-blue-50 rounded-xl p-5 mt-8">
-              <p className="text-blue-700 font-semibold text-sm mb-1">Good to Know</p>
+              <p className="text-blue-700 font-semibold text-sm mb-1">Need Help?</p>
               <p className="text-slate-600 text-base leading-relaxed">
-                If you're unsure what your administrator is requesting, contact us before submitting additional paperwork. We'll help you understand what documentation you already have and whether anything else may be appropriate.
+                If your HSA or FSA administrator requests additional documentation or you have questions about your purchase, contact us before submitting your reimbursement request. We're happy to help however we can.
               </p>
             </div>
 
-            <div className="mt-8">
-              <a href="#faq" onClick={scrollToId("faq")} className="inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors">
-                Browse Frequently Asked Questions →
-              </a>
-            </div>
           </div>
         </section>
 
-        {/* SECTION 10 — WHY WE BUILT THIS RESOURCE */}
-        <section className="py-10 md:py-14 bg-white border-t border-slate-100">
-          <div className="max-w-3xl mx-auto px-6">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-6">
-                Why We Built This Resource
-              </h2>
-              <div className="space-y-5 text-slate-600 text-lg leading-relaxed">
-                <p>We know HSA and FSA reimbursement can feel confusing.</p>
-                <p>That's why we created this resource, to explain the process in plain English, show you exactly what documentation you'll receive, and answer the questions we hear most often before you purchase.</p>
-                <p>If you still need help after reading through this page, we're happy to point you in the right direction.</p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* SECTION 11 — FREQUENTLY ASKED QUESTIONS */}
+        {/* SECTION 9 — FREQUENTLY ASKED QUESTIONS */}
         <section id="faq" className="py-10 md:py-14 bg-slate-50 border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <h2 className="font-display text-2xl md:text-[2rem] font-bold text-slate-900 leading-snug mb-8">
@@ -459,7 +377,7 @@ export default function HsaFsa() {
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Immediately after purchase you'll receive your Receipt &amp; Provider Information PDF by email. This document includes purchaser information, payment details, provider credentials, receipt information, and a detailed service description.</AccordionContent>
               </AccordionItem>
 
-              <h3 className="font-display text-lg font-bold text-slate-900 mt-8 mb-3">Eligibility</h3>
+              <h3 className="font-display text-lg font-bold text-slate-900 mt-14 mb-3">Eligibility</h3>
               <AccordionItem value="faq-5" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">Can I use my HSA?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Many HSA plans reimburse qualified healthcare expenses. Your administrator determines eligibility according to your individual plan.</AccordionContent>
@@ -477,7 +395,7 @@ export default function HsaFsa() {
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">No. Reimbursement decisions are made solely by your HSA or FSA administrator.</AccordionContent>
               </AccordionItem>
 
-              <h3 className="font-display text-lg font-bold text-slate-900 mt-8 mb-3">Purchasing</h3>
+              <h3 className="font-display text-lg font-bold text-slate-900 mt-14 mb-3">Purchasing</h3>
               <AccordionItem value="faq-9" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">Do I have to use my HSA or FSA card?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">No. Many plans allow reimbursement after purchase.</AccordionContent>
@@ -495,7 +413,7 @@ export default function HsaFsa() {
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Submission deadlines vary by administrator. Follow your individual plan's reimbursement requirements.</AccordionContent>
               </AccordionItem>
 
-              <h3 className="font-display text-lg font-bold text-slate-900 mt-8 mb-3">Your Reimbursement Documentation</h3>
+              <h3 className="font-display text-lg font-bold text-slate-900 mt-14 mb-3">Documentation</h3>
               <AccordionItem value="faq-13" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">What is included?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Your Receipt &amp; Provider Information PDF includes purchaser information, payment information, receipt number, payment reference, provider credentials, NPI, Louisiana Physical Therapy License, and a detailed service description.</AccordionContent>
@@ -517,7 +435,7 @@ export default function HsaFsa() {
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Yes. Contact the Foot Capacity System support team and we'll help you obtain another copy.</AccordionContent>
               </AccordionItem>
 
-              <h3 className="font-display text-lg font-bold text-slate-900 mt-8 mb-3">Reimbursement</h3>
+              <h3 className="font-display text-lg font-bold text-slate-900 mt-14 mb-3">Reimbursement</h3>
               <AccordionItem value="faq-18" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">How do I request reimbursement?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Submit your reimbursement documentation according to the instructions provided by your HSA or FSA administrator.</AccordionContent>
@@ -535,7 +453,7 @@ export default function HsaFsa() {
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Healthcare reimbursement requests often require more information than a standard online purchase receipt. That's why every purchase includes a professionally prepared Receipt &amp; Provider Information PDF.</AccordionContent>
               </AccordionItem>
 
-              <h3 className="font-display text-lg font-bold text-slate-900 mt-8 mb-3">Support</h3>
+              <h3 className="font-display text-lg font-bold text-slate-900 mt-14 mb-3">Support</h3>
               <AccordionItem value="faq-22" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">Who should I contact?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Questions about reimbursement decisions should be directed to your HSA or FSA administrator. Questions about your purchase or documentation should be directed to the Foot Capacity System support team.</AccordionContent>
@@ -544,24 +462,27 @@ export default function HsaFsa() {
           </div>
         </section>
 
-        {/* SECTION 12 — INVEST IN YOUR RECOVERY WITH CONFIDENCE */}
+        {/* FINAL SECTION — READY WHEN YOU ARE */}
         <section className="py-16 md:py-24 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">Invest in Your Recovery with Confidence</p>
               <h2 className="font-display text-3xl md:text-[2.5rem] font-bold text-slate-900 leading-tight mb-6">
-                Everything You Need. Nothing You Don't.
+                Ready When You Are.
               </h2>
               <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                Whether you're using HSA or FSA funds, paying with a personal credit card, or simply learning more about the reimbursement process, we've designed the Foot Capacity System to make every step as straightforward as possible.
+                Whether you choose Lifetime Access or the Monthly Recovery Plan, you'll automatically receive your Receipt &amp; Provider Information PDF after purchase, along with full access to the Foot Capacity System.
               </p>
 
+              <p className="text-slate-900 font-semibold text-base mb-4">Everything You'll Receive</p>
               <ul className="space-y-3 mb-10">
                 {[
-                  "One purchase. Lifetime access. All future updates included.",
-                  "Your Reimbursement Documentation emailed automatically after purchase.",
-                  "Developed by a licensed physical therapist.",
-                  "30-Day Money-Back Guarantee.",
+                  "Full access to the Foot Capacity System",
+                  "Your Receipt & Provider Information PDF delivered automatically by email",
+                  "Evidence-based rehabilitation guidance developed by a licensed physical therapist",
+                  "Lifetime updates with the Lifetime Membership",
+                  "Monthly Recovery Plan option available",
+                  "30-Day Money-Back Guarantee",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <Check size={20} className="text-blue-600 shrink-0 mt-0.5" />
@@ -577,8 +498,15 @@ export default function HsaFsa() {
                 onClick={() => window.gtag?.('event', 'checkout_click', { event_category: 'conversion', event_label: 'hsa_final' })}
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
               >
-                Invest in My Recovery →
+                Choose My Membership →
               </a>
+
+              <p className="text-slate-500 text-base leading-relaxed mt-6">
+                Compare Lifetime Access and the Monthly Recovery Plan, then choose the option that's right for your recovery journey.
+              </p>
+              <p className="text-slate-500 text-base leading-relaxed mt-4">
+                Questions before you purchase? We're happy to help. Contact us anytime.
+              </p>
             </motion.div>
           </div>
         </section>
@@ -586,7 +514,7 @@ export default function HsaFsa() {
         {/* FOOTER DISCLAIMER */}
         <section className="py-10 bg-slate-50 border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
-            <p className="text-slate-900 font-semibold text-sm mb-2">Important</p>
+            <p className="text-slate-900 font-semibold text-sm mb-2">Important Information</p>
             <div className="space-y-3 text-slate-500 text-sm leading-relaxed">
               <p>The Foot Capacity System cannot determine HSA or FSA eligibility or reimbursement.</p>
               <p>Eligibility, documentation requirements, and reimbursement decisions are determined solely by your HSA or FSA administrator and your individual benefits plan.</p>
@@ -608,7 +536,7 @@ export default function HsaFsa() {
             <a href="/refund-policy" className="hover:text-slate-600 transition-colors">Refund Policy</a>
             <a href="/eula" className="hover:text-slate-600 transition-colors">EULA</a>
             <a href="/contact" className="hover:text-slate-600 transition-colors">Contact</a>
-            <a href="https://members.fixyourmovement.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Patient App</a>
+            <a href="https://app.fixyourmovement.com/" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Patient App</a>
           </div>
         </div>
       </footer>
