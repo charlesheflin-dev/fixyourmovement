@@ -359,7 +359,7 @@ export default function HsaFsa() {
             </h2>
 
             <Accordion type="single" collapsible className="space-y-3">
-              <h3 className="font-display text-lg font-bold text-slate-900 mb-3">Before You Purchase</h3>
+              <h3 className="font-display text-lg font-bold text-slate-900 mb-1">Before You Purchase</h3>
               <AccordionItem value="faq-1" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">Should I contact my administrator before purchasing?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">You don't have to, but you're always welcome to contact your HSA or FSA administrator if you'd like to better understand your individual plan's reimbursement process.</AccordionContent>
@@ -377,7 +377,7 @@ export default function HsaFsa() {
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Immediately after purchase you'll receive your Receipt &amp; Provider Information PDF by email. This document includes purchaser information, payment details, provider credentials, receipt information, and a detailed service description.</AccordionContent>
               </AccordionItem>
 
-              <h3 className="font-display text-lg font-bold text-slate-900 mt-14 mb-3">Eligibility</h3>
+              <h3 className="font-display text-lg font-bold text-slate-900 border-t border-slate-200 pt-5 md:pt-8 mb-1">Eligibility</h3>
               <AccordionItem value="faq-5" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">Can I use my HSA?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Many HSA plans reimburse qualified healthcare expenses. Your administrator determines eligibility according to your individual plan.</AccordionContent>
@@ -395,7 +395,7 @@ export default function HsaFsa() {
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">No. Reimbursement decisions are made solely by your HSA or FSA administrator.</AccordionContent>
               </AccordionItem>
 
-              <h3 className="font-display text-lg font-bold text-slate-900 mt-14 mb-3">Purchasing</h3>
+              <h3 className="font-display text-lg font-bold text-slate-900 border-t border-slate-200 pt-5 md:pt-8 mb-1">Purchasing</h3>
               <AccordionItem value="faq-9" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">Do I have to use my HSA or FSA card?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">No. Many plans allow reimbursement after purchase.</AccordionContent>
@@ -413,7 +413,7 @@ export default function HsaFsa() {
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Submission deadlines vary by administrator. Follow your individual plan's reimbursement requirements.</AccordionContent>
               </AccordionItem>
 
-              <h3 className="font-display text-lg font-bold text-slate-900 mt-14 mb-3">Documentation</h3>
+              <h3 className="font-display text-lg font-bold text-slate-900 border-t border-slate-200 pt-5 md:pt-8 mb-1">Documentation</h3>
               <AccordionItem value="faq-13" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">What is included?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Your Receipt &amp; Provider Information PDF includes purchaser information, payment information, receipt number, payment reference, provider credentials, NPI, Louisiana Physical Therapy License, and a detailed service description.</AccordionContent>
@@ -435,7 +435,7 @@ export default function HsaFsa() {
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Yes. Contact the Foot Capacity System support team and we'll help you obtain another copy.</AccordionContent>
               </AccordionItem>
 
-              <h3 className="font-display text-lg font-bold text-slate-900 mt-14 mb-3">Reimbursement</h3>
+              <h3 className="font-display text-lg font-bold text-slate-900 border-t border-slate-200 pt-5 md:pt-8 mb-1">Reimbursement</h3>
               <AccordionItem value="faq-18" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">How do I request reimbursement?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Submit your reimbursement documentation according to the instructions provided by your HSA or FSA administrator.</AccordionContent>
@@ -453,7 +453,7 @@ export default function HsaFsa() {
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Healthcare reimbursement requests often require more information than a standard online purchase receipt. That's why every purchase includes a professionally prepared Receipt &amp; Provider Information PDF.</AccordionContent>
               </AccordionItem>
 
-              <h3 className="font-display text-lg font-bold text-slate-900 mt-14 mb-3">Support</h3>
+              <h3 className="font-display text-lg font-bold text-slate-900 border-t border-slate-200 pt-5 md:pt-8 mb-1">Support</h3>
               <AccordionItem value="faq-22" className="border-b border-slate-200 pb-1">
                 <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">Who should I contact?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Questions about reimbursement decisions should be directed to your HSA or FSA administrator. Questions about your purchase or documentation should be directed to the Foot Capacity System support team.</AccordionContent>
