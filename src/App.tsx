@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound.tsx";
 import RefundPolicy from "./pages/RefundPolicy.tsx";
 import EULA from "./pages/EULA.tsx";
 import Walkthrough from "./pages/Walkthrough";
+import HsaFsa from "./pages/HsaFsa";
 import NewIndex from "./pages/NewIndex.tsx";
 import NewWalkthrough from "./pages/NewWalkthrough.tsx";
 import Index_archive from "./pages/Index_archive_2026_05_25";
@@ -82,6 +83,7 @@ const App = () => (
             <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/eula" element={<EULA />} />
              <Route path="/walkthrough" element={<Walkthrough />} />
+             <Route path="/hsa-fsa" element={<HsaFsa />} />
                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                  <Route path="/newindex" element={<NewIndex />} />
                  <Route path="/newwalkthrough" element={<NewWalkthrough />} />

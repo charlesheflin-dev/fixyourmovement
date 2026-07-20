@@ -570,7 +570,19 @@ export default function Index() {
                   Can I use my HSA or FSA?
                 </AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">
-                  You may be able to use HSA or FSA funds for programs focused on recovery, rehabilitation, and improving physical function. The Foot Capacity System was created by Dr. Jonathan Schutza, PT, DPT, and is designed to help individuals navigate foot and ankle pain through guided exercise, progress tracking, and structured recovery support. Because eligibility varies by plan and provider, we recommend checking with your HSA/FSA administrator regarding your specific coverage.
+                  <p className="mb-4">That's a great question, and the answer is: you may be able to.</p>
+                  <p className="mb-4">Many HSA and FSA plans cover products and programs that support recovery, rehabilitation, and improving physical function. The Foot Capacity System was developed by Dr. Jonathan Schutza, PT, DPT, a licensed physical therapist, to help people recover from heel, foot, and ankle pain through a structured rehabilitation program.</p>
+                  <p className="mb-4">After your purchase, you'll receive professional reimbursement documentation that includes Dr. Schutza's credentials and license information, making it easier to submit a reimbursement request if your plan allows.</p>
+                  <p className="mb-4">Because every HSA and FSA plan is different, eligibility and reimbursement decisions are made by your individual benefits administrator.</p>
+                  <a
+                    href="https://fixyourmovement.com/hsa-fsa"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => window.gtag?.('event', 'hsa_fsa_click', { event_category: 'engagement', event_label: 'index_faq' })}
+                    className="inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors"
+                  >
+                    Learn more about HSA/FSA eligibility, reimbursement, and the documentation you'll receive →
+                  </a>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
