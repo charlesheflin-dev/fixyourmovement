@@ -492,17 +492,18 @@ export default function HsaFsa() {
               </ul>
 
               <a
-                href={CHECKOUT_URL}
+                href="https://fixyourmovement.com/checkout?source=hsa"
                 target="_self"
                 rel="noopener noreferrer"
                 onClick={() => window.gtag?.('event', 'checkout_click', { event_category: 'conversion', event_label: 'hsa_final' })}
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
+                data-source="hsa"
               >
                 Choose My Membership →
               </a>
 
               <p className="text-slate-500 text-base leading-relaxed mt-6">
-                Compare Lifetime Access and the Monthly Recovery Plan, then choose the option that's right for your recovery journey.
+                Compare Lifetime Access and the Monthly Recovery Plan, then choose the option that fits your recovery journey.
               </p>
               <p className="text-slate-500 text-base leading-relaxed mt-4">
                 Questions before you purchase? We're happy to help. Contact us anytime.

@@ -8,7 +8,7 @@ const ONETIME_URL = "https://whop.com/checkout/plan_f7hnKFT1vq0zb";
 type Plan = "monthly" | "onetime";
 
 export default function Checkout() {
-  const [selected, setSelected] = useState<Plan>("monthly");
+  const [selected, setSelected] = useState<Plan>("onetime");
 
   useEffect(() => {
     try {
@@ -32,22 +32,119 @@ export default function Checkout() {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <p className="text-blue-600 text-xs font-bold uppercase tracking-widest mb-3">Choose Your Path</p>
+          <p className="text-blue-600 text-xs font-bold uppercase tracking-widest mb-3">ONE SYSTEM. TWO WAYS TO JOIN.</p>
           <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-3">
             Start Building Stronger Feet Today
           </h1>
           <p className="text-slate-500 text-base leading-relaxed">
-            Choose the option that fits your recovery journey.<br />
-            Both include the complete Foot Capacity System.
+            Choose the option that fits your recovery journey.
           </p>
+          <p className="text-slate-500 text-base leading-relaxed mt-3">
+            Both options include the complete Foot Capacity System. Simply choose whether you'd rather pay monthly or own it for life.
+          </p>
+        </div>
+
+        {/* HSA/FSA information card */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 mb-6">
+          <span className="inline-block bg-green-600 text-white text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide mb-4">
+            ✓ HSA / FSA ELIGIBLE*
+          </span>
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-full bg-green-50 hidden sm:flex items-center justify-center shrink-0">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 2h12a1 1 0 0 1 1 1v18l-2.5-1.5L14 21l-2-1.5L10 21l-2.5-1.5L5 21V3a1 1 0 0 1 1-1z" />
+                <line x1="9" y1="8" x2="15" y2="8" />
+                <line x1="9" y1="12" x2="15" y2="12" />
+                <line x1="9" y1="16" x2="13" y2="16" />
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-slate-900 font-extrabold text-xl leading-snug mb-2">HSA or FSA? Start here.</p>
+              <p className="text-slate-600 text-base leading-relaxed mb-4">
+                Many people don't realize they may be able to use HSA or FSA funds for the Foot Capacity System. Learn how reimbursement typically works, what documentation you'll receive, and what to expect before you purchase.
+              </p>
+              <a
+                href="https://fixyourmovement.com/hsa-fsa"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => window.gtag?.('event', 'hsa_fsa_click', { event_category: 'engagement', event_label: 'checkout_hsa_card' })}
+                className="inline-flex items-center gap-1 text-blue-600 font-semibold text-base hover:text-blue-700 transition-colors"
+              >
+                Learn How HSA/FSA Works →
+              </a>
+            </div>
+          </div>
+          <div className="border-t border-slate-100 mt-5 pt-4">
+            <p className="text-slate-500 text-xs leading-relaxed">
+              *Eligibility and reimbursement are determined by your individual plan and benefits administrator.
+            </p>
+          </div>
         </div>
 
         {/* Plan cards */}
         <div className="space-y-4 mb-6">
 
+          {/* Lifetime Access */}
+          <button
+            type="button"
+            aria-pressed={selected === "onetime"}
+            onClick={() => setSelected("onetime")}
+            className={`w-full text-left rounded-2xl border-2 p-6 transition-all relative ${
+              selected === "onetime"
+                ? "border-blue-600 bg-blue-50"
+                : "border-slate-200 bg-white hover:border-slate-300"
+            }`}
+          >
+            {/* Our Recommendation badge */}
+            <div className="absolute -top-3 left-5">
+              <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                ⭐ OUR RECOMMENDATION
+              </span>
+            </div>
+
+            <div className="flex items-start gap-4 mt-1">
+              {/* Radio */}
+              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${
+                selected === "onetime" ? "border-blue-600" : "border-slate-300"
+              }`}>
+                {selected === "onetime" && (
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue-600" />
+                )}
+              </div>
+
+              {/* Icon */}
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${
+                selected === "onetime" ? "bg-blue-100" : "bg-slate-100"
+              }`}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={selected === "onetime" ? "#2563EB" : "#94A3B8"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <polyline points="9 12 11 14 15 10" />
+                </svg>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-3">
+                  <p className="text-slate-900 font-extrabold text-lg leading-snug">Lifetime Access</p>
+                  <div className="text-right shrink-0">
+                    <p className={`font-extrabold text-3xl leading-none ${selected === "onetime" ? "text-blue-600" : "text-slate-900"}`}>$397</p>
+                    <p className={`text-xs font-semibold mt-0.5 ${selected === "onetime" ? "text-blue-500" : "text-slate-500"}`}>one time</p>
+                  </div>
+                </div>
+                <p className="text-slate-800 text-sm font-semibold leading-relaxed mt-2">
+                  One payment. Lifetime access. Every future update included.
+                </p>
+                <p className="text-slate-600 text-sm leading-relaxed mt-2">
+                  Return whenever you need it, revisit any phase, and keep the Foot Capacity System for life.
+                </p>
+              </div>
+            </div>
+          </button>
+
           {/* Monthly Recovery Plan */}
           <button
             type="button"
+            aria-pressed={selected === "monthly"}
             onClick={() => setSelected("monthly")}
             className={`w-full text-left rounded-2xl border-2 p-6 transition-all relative ${
               selected === "monthly"
@@ -57,7 +154,7 @@ export default function Checkout() {
           >
             {/* Most Flexible badge */}
             <div className="absolute -top-3 left-5">
-              <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+              <span className="bg-slate-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
                 Most Flexible
               </span>
             </div>
@@ -93,8 +190,11 @@ export default function Checkout() {
                     <p className={`text-xs font-semibold mt-0.5 ${selected === "monthly" ? "text-blue-500" : "text-slate-500"}`}>per month</p>
                   </div>
                 </div>
+                <p className="text-slate-600 text-sm leading-relaxed mt-2">
+                  Begin your recovery today with the flexibility to continue month by month.
+                </p>
                 <p className="text-slate-600 text-sm leading-relaxed mt-2 mb-4">
-                  Stay with the program while it's helping you move toward the life you miss. Cancel anytime inside the app with one tap.
+                  Cancel anytime, or continue until you've reached your goals.
                 </p>
                 <div className={`border-t pt-4 ${selected === "monthly" ? "border-blue-200" : "border-slate-100"}`}>
                   <div className="flex items-start gap-2">
@@ -104,8 +204,8 @@ export default function Checkout() {
                       </svg>
                     </div>
                     <div className="text-slate-600 text-sm leading-relaxed">
-                      <p className="font-semibold text-slate-800 mb-1">Your monthly plan has a finish line.</p>
-                      <p className="italic">If your journey takes six months, you can keep using the Foot Capacity System from there without an ongoing monthly plan.</p>
+                      <p className="font-semibold text-slate-800 mb-1">Unlike most subscriptions, yours won't continue forever.</p>
+                      <p className="italic">If your recovery journey takes six months, you'll keep the Foot Capacity System without an ongoing monthly plan.</p>
                     </div>
                   </div>
                 </div>
@@ -113,65 +213,6 @@ export default function Checkout() {
             </div>
           </button>
 
-          {/* Lifetime Access */}
-          <button
-            type="button"
-            onClick={() => setSelected("onetime")}
-            className={`w-full text-left rounded-2xl border-2 p-6 transition-all relative ${
-              selected === "onetime"
-                ? "border-blue-600 bg-blue-50"
-                : "border-slate-200 bg-white hover:border-slate-300"
-            }`}
-          >
-            {/* Best Value badge */}
-            <div className="absolute -top-3 left-5">
-              <span className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-                Best Value
-              </span>
-            </div>
-
-            <div className="flex items-start gap-4 mt-1">
-              {/* Radio */}
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${
-                selected === "onetime" ? "border-blue-600" : "border-slate-300"
-              }`}>
-                {selected === "onetime" && (
-                  <div className="w-2.5 h-2.5 rounded-full bg-blue-600" />
-                )}
-              </div>
-
-              {/* Icon */}
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${
-                selected === "onetime" ? "bg-green-100" : "bg-slate-100"
-              }`}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={selected === "onetime" ? "#16A34A" : "#94A3B8"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  <polyline points="9 12 11 14 15 10" />
-                </svg>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-slate-900 font-extrabold text-lg leading-snug">Lifetime Access</p>
-                  <div className="text-right shrink-0">
-                    <p className={`font-extrabold text-3xl leading-none ${selected === "onetime" ? "text-blue-600" : "text-slate-900"}`}>$397</p>
-                    <p className={`text-xs font-semibold mt-0.5 ${selected === "onetime" ? "text-blue-500" : "text-slate-500"}`}>one time</p>
-                  </div>
-                </div>
-                <p className="text-slate-600 text-sm leading-relaxed mt-2">
-                  One payment. Full access to the complete 12-week Foot Capacity System, plus future improvements and updates. No monthly plan.
-                </p>
-              </div>
-            </div>
-          </button>
-
-        </div>
-
-        {/* HSA/FSA Callout */}
-        <div className="flex flex-col items-center text-center bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-5">
-          <p className="text-slate-800 text-sm font-semibold">✅ HSA/FSA funds may be eligible*</p>
-          <p className="text-slate-500 text-xs leading-relaxed">Check with your plan administrator to determine your eligibility.</p>
         </div>
 
         {/* CTA Button */}
