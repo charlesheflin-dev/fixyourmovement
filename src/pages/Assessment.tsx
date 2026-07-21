@@ -165,7 +165,6 @@ const archetypeResults: Record<string, {
   drJonathanNote: string;
   prescription: string[];
   faamFraming: (score: number, band: string) => string;
-  salesUrl: string;
   summary: string;
   whatStandsOut: string;
   whatMayBeGoingOn: string;
@@ -188,7 +187,6 @@ const archetypeResults: Record<string, {
       if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation — the kind that makes daily life feel like something you have to manage rather than just live. This is where most people end up after months of trying things that address the symptom without building the underlying tissue capacity. A structured process is what changes this number.`;
       return `Your score of ${score}% reflects significant functional limitation. This is the reality behind what you've been experiencing — your foot isn't just in pain, it's genuinely limited in what it can do. After everything you've tried, this score makes sense. It's not a reflection of your effort. It's a reflection of what those approaches were actually building — or not building.`;
     },
-    salesUrl: "https://fixyourmovement.com/start/frustrated",
     summary: "You've put in the effort, but something important may still be getting overlooked.",
     whatStandsOut: "Your results suggest there may be a missing piece connecting everything you've already tried.",
     whatMayBeGoingOn: "You've been addressing symptoms. The underlying pattern may still be there.",
@@ -211,7 +209,6 @@ const archetypeResults: Record<string, {
       if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation. This is what it looks like when your activity level is bumping up against what your foot can currently handle. The tissue isn't keeping up — and rest isn't the answer. A progressive process that builds load tolerance is what closes the gap between where you are and where you want to be.`;
       return `Your score of ${score}% reflects significant functional limitation. This explains why activity has become so difficult to manage — your foot's capacity is significantly below the demands you're placing on it. The path back to full activity isn't rest. It's structured progressive loading that gradually rebuilds what your foot can handle.`;
     },
-    salesUrl: "https://fixyourmovement.com/start/active",
     summary: "You're asking more from your foot than it's currently ready to handle.",
     whatStandsOut: "Your foot may not be the problem. The way it's handling load might be.",
     whatMayBeGoingOn: "You keep pushing forward. Your foot hasn't been keeping pace.",
@@ -234,7 +231,6 @@ const archetypeResults: Record<string, {
       if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation. After dealing with this for as long as you have, this number captures exactly what chronic pain does over time — it doesn't just hurt, it erodes function. But moderate limitation is not permanent limitation. Duration of pain does not determine outcome. Consistency with the right process does.`;
       return `Your score of ${score}% reflects significant functional limitation. This number is real — and it reflects what long-standing foot pain actually does to the way you move through life. But significant limitation is not the same as permanent damage. This score is where you're starting, not where you're staying. Recovery is still possible, and this system was built for exactly this situation.`;
     },
-    salesUrl: "https://fixyourmovement.com/start/chronic",
     summary: "It's become difficult to know what your foot can handle without consequences.",
     whatStandsOut: "Uncertainty may be creating as many limitations as the symptoms themselves.",
     whatMayBeGoingOn: "Every setback creates more hesitation. That cycle can become difficult to break.",
@@ -257,7 +253,6 @@ const archetypeResults: Record<string, {
       if (band === "faam_moderate") return `Your score of ${score}% reflects moderate functional limitation — more than you might have expected given how early you're catching this. This tells you that what's happening isn't minor, and it deserves a structured response now rather than later. Starting the right process at this point is what prevents this from becoming the kind of long-term problem others spend years trying to resolve.`;
       return `Your score of ${score}% reflects significant functional limitation — which is important information. This isn't a minor ache that will resolve on its own. Your foot is already meaningfully limited, and starting the right process now is what makes the difference between a short recovery and a long one. You're asking the right questions at exactly the right time.`;
     },
-    salesUrl: "https://fixyourmovement.com/start/new",
     summary: "You're seeing warning signs early enough to make meaningful changes now.",
     whatStandsOut: "Your results suggest you're addressing this before it becomes harder to reverse.",
     whatMayBeGoingOn: "Your symptoms are trying to get your attention. Ignoring them rarely makes things easier.",
