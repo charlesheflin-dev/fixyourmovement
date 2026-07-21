@@ -2,8 +2,8 @@
 // Edge Function — Ask Dr. Jonathan FAQ chat agent
 // JWT OFF — public-facing
 // Receives { message, history } from the widget
-// First message: similarity threshold applied
-// Follow-up messages: no threshold, full conversation context maintained
+// No similarity threshold gate — every message is answered.
+// LOW_SIMILARITY_LOG_THRESHOLD is used only to set the was_answered log flag.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
@@ -64,7 +64,7 @@ Escalation phrase: "Because your symptoms include features that are not typical 
 
 ## Program References (use naturally, never pushy)
 - Always include https:// when referencing any URL so links are clickable
-- Primary CTA for new users: https://fixyourmovement.com/lp/take-assessment (always recommend this as the first step for anyone who has not yet started)
+- Assessment link: https://fixyourmovement.com/lp/take-assessment — do not offer this link until you know the person has not already taken the assessment. Never assume. If it has not come up, ask first: something like "Have you already taken the free foot assessment?" Offer the link only once they confirm they have not. If they say they have taken it, do not suggest it again — move them toward the free trial, the app, or whatever they actually asked about.
 - App install link: https://app.fixyourmovement.com/install (only surface this if the user has explicitly said they already signed up, confirmed their email, and cannot find their install link — do not mention it otherwise)
 - Contact for questions outside scope: contact@fixyourmovement.com
 
@@ -74,7 +74,8 @@ Escalation phrase: "Because your symptoms include features that are not typical 
 - Sessions are 10–15 minutes per day, home-based, no equipment required.
 - The free trial is 7 days only — no credit card required. After 7 days the user decides whether to purchase. Never say "30-day trial" or "free 30-day trial" — this is incorrect.
 - The 30-day guarantee is separate from the trial. It is a money-back guarantee for paying customers — "Walk Pain-Free Or It's Free." These are two different things and must never be combined or confused.
-- Pricing has two options only. Option 1: Monthly Recovery Plan at $97/month — billed monthly, cancel anytime inside the app with one tap when recovery is complete. Option 2: Lifetime Access at $397 one-time — full 12-week program, no recurring charges. Never mention $157 or a 3-payment plan — that option no longer exists.
+- Pricing has two options only. Option 1: Monthly Recovery Plan at $97/month — billed monthly, cancel anytime inside the app with one tap when recovery is complete. Option 2: Lifetime Access at $397 one-time — full 12-week program, no recurring charges. Never mention $157 or a 3-payment plan — that option no longer exists. On the monthly plan, cancellation is one tap in the app — no form and no need to contact support. Nobody is expected to make a set number of payments. If someone does stay on the monthly plan for six months, billing stops automatically and they keep their access from then on. Do not present this as a target, a commitment, or a total to pay, and never quote a combined figure.
+- After any purchase a Receipt & Provider Information PDF is emailed automatically, with the purchase details and Dr. Jonathan Schutza, PT, DPT's provider credentials, for anyone submitting an HSA or FSA claim. Eligibility is always decided by their plan administrator, never by you. Never estimate or imply how many plans cover this program, and never say or suggest that many, most, or some plans cover it — you have no data on plan coverage. You may say that many HSA and FSA plans reimburse qualified healthcare expenses in general, which is what the /hsa-fsa page says, but never extend that to this program specifically. Say only that it may be eligible and is worth checking. Full details at https://fixyourmovement.com/hsa-fsa.
 
 ## What You Must Never Do
 - Diagnose or confirm a specific diagnosis
@@ -119,8 +120,6 @@ Deno.serve(async (req: Request) => {
     if (!openaiKey || !anthropicKey || !supabaseUrl || !supabaseServiceKey) {
       throw new Error("Missing required environment variables");
     }
-
-    const isFollowUp = Array.isArray(history) && history.length > 0;
 
     // ── Step 1: Embed the user message ──────────────────────────────────────
     const embedRes = await fetch("https://api.openai.com/v1/embeddings", {

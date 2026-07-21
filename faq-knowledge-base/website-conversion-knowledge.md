@@ -1,7 +1,7 @@
 # Website & Conversion Knowledge Base
 Category 3: The Website, The Offer, and Why the Assessment Is the Right First Step
 For use by: Ask Dr. Jonathan / FCS Chat Agent
-Last updated: June 2026
+Last updated: July 2026
 
 ## What the Website Is and What It Is Trying to Do
 
@@ -39,15 +39,15 @@ After 7 days, they receive a personalized results page (via email and in-app) sh
 
 ## The Four Recovery Archetypes
 
-The HOOK assessment segments visitors into one of four archetypes. Each person receives personalized framing, email sequences, and a dedicated sales page based on their archetype.
+The HOOK assessment segments visitors into one of four archetypes. Each person receives personalized framing, email sequences, and a dedicated sales page based on their archetype. That page is delivered after the assessment is completed, so the agent does not link to it directly. If someone wants to see it again, they can retake the assessment or look for the "Your Assessment Results" email from @fixyourmovement.com.
 
-The Frustrated Fix-Seeker (/start/frustrated): "Feeling Like Nothing Has Worked." Core fear: wasted effort again. These people have tried everything. They weren't lacking effort — they were missing a clear, structured process.
+The Frustrated Fix-Seeker: "Feeling Like Nothing Has Worked." Core fear: wasted effort again. These people have tried everything. They weren't lacking effort — they were missing a clear, structured process.
 
-The Active Person (/start/active): "Staying Active While Recovering." Core fear: losing what they love. Movement is part of who they are. The program is built for people who need to keep moving while they recover.
+The Active Person: "Staying Active While Recovering." Core fear: losing what they love. Movement is part of who they are. The program is built for people who need to keep moving while they recover.
 
-The Discouraged Chronic Sufferer (/start/chronic): "Learning To Trust Your Body Again." Core fear: permanent damage. Months or years of setbacks have eroded confidence. Recovery is still possible. The program travels with them indefinitely.
+The Discouraged Chronic Sufferer: "Learning To Trust Your Body Again." Core fear: permanent damage. Months or years of setbacks have eroded confidence. Recovery is still possible. The program travels with them indefinitely.
 
-The Newly Concerned (/start/new): "Getting Ahead Of the Problem Early." Core fear: making it worse. New pain is an opportunity. The sooner someone starts the right process, the easier it is to stay ahead of the cycle.
+The Newly Concerned: "Getting Ahead Of the Problem Early." Core fear: making it worse. New pain is an opportunity. The sooner someone starts the right process, the easier it is to stay ahead of the cycle.
 
 ## The FAAM Score Bands and What They Mean for a Visitor
 
@@ -70,6 +70,16 @@ What's included: guided daily recovery sessions (progressive, structured, no gue
 Pricing: Two options are available at checkout (/checkout). Option 1 — Monthly Recovery Plan: $97/month, billed monthly, cancel anytime inside the app with one tap when recovery is complete. This is the most flexible option. Option 2 — Lifetime Access: $397 one-time payment, full 12-week program, no recurring charges. Never mention $157 or a 3-payment plan — that option no longer exists.
 
 Guarantee: "Walk Pain-Free Or It's Free" — 30-day satisfaction guarantee. Contact: contact@fixyourmovement.com. No complicated forms.
+
+## The Monthly Plan — Cancelling, and What Happens If Someone Stays
+
+Nobody is locked into anything on the Monthly Recovery Plan. Cancellation is one tap inside the app — no form, no email, and no need to contact support.
+
+Most people cancel when their recovery is complete, and that is exactly how the plan is meant to work. There is no penalty for cancelling early and no minimum number of payments anyone is expected to make.
+
+For anyone who does stay on the monthly plan through the full program, billing stops automatically after six months and they keep their access from that point on. There is nothing to claim and no action to take — it happens on its own.
+
+Do not present this as a target to reach, a commitment, or a total amount to pay, and do not quote a combined figure. If someone asks whether the monthly plan bills forever, the answer is no: they can cancel any time with one tap, and billing also stops on its own if they stay the full six months.
 
 ## Why the Assessment Is Better Than Jumping Straight to the Program
 
@@ -109,9 +119,8 @@ Download the App (direct): https://fixyourmovement.com/lp/download
 App Install: https://app.fixyourmovement.com/install
 Full Walkthrough / Sales Page: https://fixyourmovement.com/walkthrough
 Checkout: https://fixyourmovement.com/checkout
-Member Portal: https://members.fixyourmovement.com
+HSA/FSA Information: https://fixyourmovement.com/hsa-fsa
 Contact: contact@fixyourmovement.com
-Archetype pages: /start/frustrated, /start/active, /start/chronic, /start/new
 
 ## Does Dr. Jonathan Monitor Members — What to Say When Asked
 
@@ -127,7 +136,11 @@ If someone asks whether the doctor monitors progress, whether anyone is watching
 
 Prospects sometimes ask whether they can use HSA or FSA funds to purchase The Foot Capacity System. The answer is: possibly, and it is worth checking.
 
+There is a dedicated page explaining all of this at https://fixyourmovement.com/hsa-fsa — send people there when the topic comes up.
+
 You may be able to use HSA or FSA funds for programs focused on recovery, rehabilitation, and improving physical function. The Foot Capacity System was created by Dr. Jonathan Schutza, PT, DPT, and is designed to help individuals navigate foot and ankle pain through guided exercise, progress tracking, and structured recovery support.
+
+After any purchase, a Receipt & Provider Information PDF is emailed automatically. Nobody has to request it, fill out a form, or contact support. It documents the purchaser's name, purchase date, product, amount paid, payment method, and payment reference, alongside Dr. Jonathan Schutza, PT, DPT's provider details — his license as a physical therapist, his National Provider Identifier, his state PT license number, and the practice, Back At It Physical Therapy, LLC. It also carries a plain-language description of the program as structured foot and ankle rehabilitation. This is the documentation an HSA or FSA administrator typically asks for when someone submits a reimbursement claim. On the monthly plan a receipt is sent for each payment.
 
 Because eligibility varies by plan and provider, always direct the person to check with their HSA/FSA administrator regarding their specific coverage. Do not confirm eligibility — that determination belongs to their plan administrator.
 
