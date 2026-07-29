@@ -80,6 +80,7 @@ export default function PostTrialSurvey() {
 
   const [data, setData] = useState<SurveyResultsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const startedFired = useRef(false);
 
   const [q1, setQ1] = useState<number | null>(null);
   const [q2, setQ2] = useState<string | null>(null);
@@ -101,6 +102,22 @@ export default function PostTrialSurvey() {
         } else {
           setData(d);
           setLoading(false);
+          // Fire the survey_started funnel event once - only here, after we know the survey
+          // is actually being shown to a valid user (the redirects above never reach this
+          // branch). Fire-and-forget; never blocks render.
+          if (!startedFired.current) {
+            startedFired.current = true;
+            fetch(SAVE_SURVEY_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              keepalive: true,
+              body: JSON.stringify({
+                event: "started",
+                userId: d.userId ?? userId ?? null,
+                email: emailParam,
+              }),
+            }).catch(() => { /* non-fatal */ });
+          }
         }
       })
       .catch(() => { window.location.href = "/walkthrough"; });
