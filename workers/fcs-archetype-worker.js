@@ -307,18 +307,20 @@ export default {
       }
 
       // ── checkout_tag branch ─────────────────────────────────────────────────
-      const VALID_CHECKOUT_TAGS = ["checkout_visited", "trial_accepted", "customer", "trial_pass_97", "techissue_07032026"];
+      const VALID_CHECKOUT_TAGS = ["checkout_visited", "trial_accepted", "customer", "trial_pass_97", "techissue_07032026", "trial_reoffer_nolog", "trial_reoffer_lapsed"];
       if (body.checkout_tag && VALID_CHECKOUT_TAGS.includes(body.checkout_tag)) {
         const accessToken = await refreshAccessToken(env);
         const accountId = await getAccountId(accessToken);
         const listId = env.AWEBER_LIST_ID.replace("awlist", "");
         const subscriber = await findSubscriber(accessToken, accountId, listId, email);
+        let tagged = false;
         if (subscriber && (body.checkout_tag !== "trial_accepted" || subscriber.status === "subscribed")) {
           await applyTag(accessToken, subscriber.self_link, body.checkout_tag);
+          tagged = true;
         } else if (subscriber) {
           console.log(`[Worker] Skipped tag "${body.checkout_tag}" for ${email} — subscriber status is "${subscriber.status}", not "subscribed".`);
         }
-        return new Response(JSON.stringify({ success: true }), {
+        return new Response(JSON.stringify({ success: true, tagged, reason: tagged ? null : (subscriber ? "status_not_subscribed" : "not_found_on_main_list") }), {
           status: 200,
           headers: {
             "Content-Type": "application/json",
