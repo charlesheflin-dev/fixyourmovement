@@ -30,6 +30,7 @@ import AssessmentPage from "./pages/AssessmentPage";
 import Unsubscribed from "./pages/Unsubscribed";
 import Checkout from "./pages/Checkout";
 import Results from "./pages/Results";
+import PostTrialSurvey from "./pages/PostTrialSurvey";
 import AssessmentResults from "./pages/AssessmentResults";
 import AskDrJonathanPage from "./pages/AskDrJonathan";
 import AskDrJonathan from "./components/AskDrJonathan.tsx";
@@ -96,6 +97,8 @@ const App = () => (
                    <Route path="/start/*" element={<Navigate to="/lp/take-assessment" replace />} />
                    <Route path="/unsubscribed" element={<Unsubscribed />} />
                    <Route path="/checkout" element={<Checkout />} />
+                   <Route path="/survey/:userId" element={<PostTrialSurvey />} />
+                   <Route path="/survey" element={<PostTrialSurvey />} />
                    <Route path="/results/:userId" element={<Results />} />
                    <Route path="/results" element={<Results />} />                   <Route path="/assessment-results" element={<AssessmentResults />} />
                    <Route path="/ask" element={<AskDrJonathanPage />} />
