@@ -257,7 +257,7 @@ export default function Checkout() {
           })}
         >
           {selected === "monthly"
-            ? "Continue Monthly — $97/month →"
+            ? (isSave50 ? "Continue Monthly →" : "Continue Monthly — $97/month →")
             : "Unlock Lifetime Access — $397 →"}
         </a>
 
