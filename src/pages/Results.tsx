@@ -24,6 +24,7 @@ interface ResultsData {
   isTrial: boolean;
   trialStartedAt: string | null;
   currentStreak: number;
+  surveyBranch: string | null;
   trialSessionsCompleted: number;
   totalReps: number;
   painTimeline: { date: string; pain: number | null; capacity: number | null }[];
@@ -517,7 +518,9 @@ function DrJonathanSection() {
 
 // ── Section 6: Your Next Step (Offer) ────────────────────────────────────────
 
-function NextStepSection() {
+function NextStepSection({ branch }: { branch: string | null }) {
+  const isMedium = branch === "medium";
+  const checkoutHref = isMedium ? `${CHECKOUT_URL}?offer=save50` : CHECKOUT_URL;
   return (
     <section className="py-10 px-6 bg-white border-t border-slate-100">
       <div className="max-w-lg mx-auto">
@@ -537,6 +540,15 @@ function NextStepSection() {
           You've built a strong foundation. Your personalized Phase 1 plan is ready.
         </p>
 
+        {isMedium && (
+          <div className="bg-blue-50 border border-blue-200 rounded-xl px-5 py-4 mb-5">
+            <p className="text-blue-900 font-bold text-base mb-2">Take 30 More Days to Decide.</p>
+            <p className="text-blue-800 text-sm leading-relaxed">
+              Seven days isn't long to be sure. So here's $50 off your first month — your next 30 days for just <span className="font-bold">$47</span>, then $97/mo until you recover, cancel anytime with a single click in the app. Use the full month to decide if the Foot Capacity System is right for you, backed by our 30-day money-back guarantee.
+            </p>
+          </div>
+        )}
+
         {/* Recommendation card */}
         <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 flex items-start gap-3 mb-5">
           <CheckCircle size={18} className="text-green-500 shrink-0 mt-0.5" />
@@ -549,11 +561,11 @@ function NextStepSection() {
 
         {/* Primary CTA */}
       <a  
-        href={CHECKOUT_URL}
-          onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_offer_cta" })}
+        href={checkoutHref}
+          onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: `results_offer_cta_${branch ?? "none"}` })}
           className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg text-center py-4 rounded-xl transition-colors shadow-lg mb-4"
         >
-          Continue My Recovery &#8594;
+          {isMedium ? "Continue for $47" : "Continue My Recovery"} &#8594;
         </a>
 
         {/* Trust row */}
@@ -584,7 +596,8 @@ function NextStepSection() {
 
 // ── Section 7: Don't Start Over. Keep Going. ─────────────────────────────────
 
-function FinalCtaSection({ insights, insightsLoading }: { insights: InsightsData; insightsLoading: boolean }) {
+function FinalCtaSection({ insights, insightsLoading, branch }: { insights: InsightsData; insightsLoading: boolean; branch: string | null }) {
+  const checkoutHref = branch === "medium" ? `${CHECKOUT_URL}?offer=save50` : CHECKOUT_URL;
   return (
     <section className="py-12 px-6 bg-slate-50 border-t border-slate-100">
       <div className="max-w-lg mx-auto text-center">
@@ -622,8 +635,8 @@ function FinalCtaSection({ insights, insightsLoading }: { insights: InsightsData
 
         {/* Final CTA */}
         <a
-          href={CHECKOUT_URL}
-          onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_final_cta" })}
+          href={checkoutHref}
+          onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: `results_final_cta_${branch ?? "none"}` })}
           className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg py-5 rounded-xl transition-colors shadow-lg mb-3"
         >
           Continue My Protocol &#8594;
@@ -730,8 +743,8 @@ export default function Results() {
         <AccomplishmentsSection data={data} insights={insights} insightsLoading={insightsLoading} />
         <RoadmapSection data={data} />
         <DrJonathanSection />
-        <NextStepSection />
-        <FinalCtaSection insights={insights} insightsLoading={insightsLoading} />
+        <NextStepSection branch={data.surveyBranch} />
+        <FinalCtaSection insights={insights} insightsLoading={insightsLoading} branch={data.surveyBranch} />
       </main>
 
       {/* Footer */}

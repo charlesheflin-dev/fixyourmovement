@@ -8,7 +8,19 @@ const ONETIME_URL = "https://whop.com/checkout/plan_f7hnKFT1vq0zb";
 type Plan = "monthly" | "onetime";
 
 export default function Checkout() {
-  const [selected, setSelected] = useState<Plan>("onetime");
+  const isSave50 = new URLSearchParams(window.location.search).get("offer") === "save50";
+  const [selected, setSelected] = useState<Plan>(isSave50 ? "monthly" : "onetime");
+  const [copied, setCopied] = useState(false);
+
+  const copyCode = () => {
+    navigator.clipboard?.writeText("RECOVER50").then(
+      () => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      },
+      () => {}
+    );
+  };
 
   useEffect(() => {
     try {
@@ -215,6 +227,26 @@ export default function Checkout() {
 
         </div>
 
+        {/* $50-off code card (medium offer, monthly only) */}
+        {isSave50 && selected === "monthly" && (
+          <div className="rounded-2xl border-2 border-blue-600 bg-blue-50 p-5 mb-6">
+            <p className="text-blue-900 font-bold text-sm uppercase tracking-wide mb-2">Your $50-Off Code</p>
+            <div className="flex items-center gap-3 mb-3">
+              <code className="flex-1 bg-white border border-blue-200 rounded-lg px-4 py-3 text-blue-900 font-mono font-bold text-lg tracking-wider">RECOVER50</code>
+              <button
+                type="button"
+                onClick={copyCode}
+                className="shrink-0 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-5 py-3 rounded-lg transition-colors"
+              >
+                {copied ? "Copied!" : "Copy"}
+              </button>
+            </div>
+            <p className="text-blue-800 text-sm leading-relaxed">
+              Paste this on the checkout page to take $50 off your first month — your first 30 days for <span className="font-bold">$47</span>, then $97/mo until you recover, cancel anytime with a single click in the app.
+            </p>
+          </div>
+        )}
+
         {/* CTA Button */}
         <a
           href={checkoutUrl}
@@ -228,6 +260,12 @@ export default function Checkout() {
             ? "Continue Monthly — $97/month →"
             : "Unlock Lifetime Access — $397 →"}
         </a>
+
+        {isSave50 && selected === "monthly" && (
+          <p className="text-center text-blue-700 text-sm font-semibold mb-4">
+            Don't forget to paste RECOVER50 on the checkout page.
+          </p>
+        )}
 
         {/* Trust strip */}
         <div className="flex justify-center gap-5 text-xs text-slate-400 mb-8">

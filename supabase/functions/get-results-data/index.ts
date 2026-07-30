@@ -74,6 +74,22 @@ if (userId) {
       .limit(1)
       .single();
 
+    // Fetch the latest post-trial survey branch for this user, if any.
+    // The survey response may have been written keyed by user_id OR by email
+    // (save-survey-response allows either), so match on both. Newest wins.
+    // No survey row is the normal case (anyone reaching /results without taking
+    // the survey) — leave surveyBranch null and the page keeps its default behavior.
+    let surveyBranch: string | null = null;
+    const { data: surveyRows } = await supabase
+      .from("survey_responses")
+      .select("branch, completed_at")
+      .or(`user_id.eq.${profile.id},email.eq.${profile.email.toLowerCase()}`)
+      .order("completed_at", { ascending: false })
+      .limit(1);
+    if (surveyRows && surveyRows.length > 0) {
+      surveyBranch = surveyRows[0].branch ?? null;
+    }
+
     // Fetch daily logs — last 30 submitted logs
     const { data: logs } = await supabase
       .from("daily_logs")
@@ -147,6 +163,7 @@ if (userId) {
       isTrial: profile.is_trial ?? false,
       trialStartedAt: profile.trial_started_at ?? null,
       currentStreak: profile.current_streak ?? 0,
+      surveyBranch,
       trialSessionsCompleted,
       totalReps,
       painTimeline: submittedLogs.map((l) => ({
