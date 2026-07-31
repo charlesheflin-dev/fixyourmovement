@@ -25,6 +25,7 @@ interface ResultsData {
   trialStartedAt: string | null;
   currentStreak: number;
   surveyBranch: string | null;
+  hasExtension: boolean;
   trialSessionsCompleted: number;
   totalReps: number;
   painTimeline: { date: string; pain: number | null; capacity: number | null }[];
@@ -871,7 +872,12 @@ export default function Results() {
   // Offer softens monotonically: nologs/flat (any branch) and improved+low get the
   // free week; improved with high/medium/none keeps the existing checkout sections
   // (which already route medium -> $47 internally). Never hardens.
-  const showFreeWeek = resultsMode !== "improved" || data.surveyBranch === "low";
+  // Gentle-path users who have NOT yet used their free week get the free-week
+  // button; those who already have (hasExtension) fall through to the $47 offer
+  // instead of being shown a "free week" they can't actually claim.
+  const gentlePath = resultsMode !== "improved" || data.surveyBranch === "low";
+  const showFreeWeek = gentlePath && !data.hasExtension;
+  const forceSave50 = gentlePath && data.hasExtension;
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -898,8 +904,8 @@ export default function Results() {
           ? <FreeWeekSection userId={userId ?? null} email={emailParam} />
           : (
             <>
-              <NextStepSection branch={data.surveyBranch} />
-              <FinalCtaSection insights={insights} insightsLoading={insightsLoading} branch={data.surveyBranch} />
+              <NextStepSection branch={forceSave50 ? "medium" : data.surveyBranch} />
+              <FinalCtaSection insights={insights} insightsLoading={insightsLoading} branch={forceSave50 ? "medium" : data.surveyBranch} />
             </>
           )}
       </main>

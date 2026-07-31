@@ -90,6 +90,19 @@ if (userId) {
       surveyBranch = surveyRows[0].branch ?? null;
     }
 
+    // Whether this user has already used their one free-week extension. The
+    // results page reads this so it never offers "another free week" to someone
+    // who's already had one — they get the $47 offer directly instead.
+    let hasExtension = false;
+    const { data: extRows } = await supabase
+      .from("trial_extensions")
+      .select("user_id")
+      .eq("user_id", profile.id)
+      .limit(1);
+    if (extRows && extRows.length > 0) {
+      hasExtension = true;
+    }
+
     // Fetch daily logs — last 30 submitted logs
     const { data: logs } = await supabase
       .from("daily_logs")
@@ -164,6 +177,7 @@ if (userId) {
       trialStartedAt: profile.trial_started_at ?? null,
       currentStreak: profile.current_streak ?? 0,
       surveyBranch,
+      hasExtension,
       trialSessionsCompleted,
       totalReps,
       painTimeline: submittedLogs.map((l) => ({
