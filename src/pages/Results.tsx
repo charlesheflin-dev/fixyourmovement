@@ -661,6 +661,142 @@ function FinalCtaSection({ insights, insightsLoading, branch }: { insights: Insi
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
+// Slice C: data-quality heroes + free-week offer
+
+const GRANT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/grant-trial-extension";
+
+// Shown when the user has zero logged days — no progress to report yet, so we
+// reframe honestly and route to the free week instead of a hard checkout close.
+function NoLogsHeroSection() {
+  return (
+    <section className="relative bg-gradient-to-b from-blue-600 to-blue-800 pt-10 pb-20 px-6">
+      <div className="max-w-lg mx-auto text-center">
+        <div className="inline-flex items-center gap-2 bg-blue-500 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-8">
+          <CheckCircle size={14} />
+          Your Trial
+        </div>
+        <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">
+          Your Results Start<br />With Your First Log.
+        </h1>
+        <p className="text-blue-100 text-base leading-relaxed mb-8">
+          We don&apos;t have any logged days for you yet, and that&apos;s okay. The Foot Capacity System builds your results from how your foot responds day to day. Log a few days inside the app and your real, personalized progress will show up right here.
+        </p>
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none">
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="w-full h-12">
+          <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="white" />
+        </svg>
+      </div>
+    </section>
+  );
+}
+
+// Shown when the user logged days but pain has not improved yet. Validate the
+// effort (never fabricate progress) and route to the free week.
+function FlatHeroSection({ data }: { data: ResultsData }) {
+  return (
+    <section className="relative bg-gradient-to-b from-blue-600 to-blue-800 pt-10 pb-20 px-6">
+      <div className="max-w-lg mx-auto text-center">
+        <div className="inline-flex items-center gap-2 bg-green-500 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-8">
+          <CheckCircle size={14} />
+          Recovery Week Complete
+        </div>
+        <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">
+          Recovery Isn&apos;t<br />a Straight Line.
+        </h1>
+        <p className="text-blue-100 text-base leading-relaxed mb-8">
+          One week in, the numbers don&apos;t always move yet, and that&apos;s completely normal. What matters most right now is that you showed up and did the work — that consistency is exactly what recovery is built on.
+        </p>
+        <div className="grid grid-cols-3 gap-3 mb-8">
+          {[
+            { icon: "📅", value: data.daysLogged, label: "Days Logged" },
+            { icon: "👟", value: data.trialSessionsCompleted, label: "Recovery Sessions" },
+            { icon: "🔥", value: data.currentStreak, label: "Day Streak" },
+          ].map((item, i) => (
+            <div key={i} className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-3 text-center">
+              <p className="text-2xl mb-1">{item.icon}</p>
+              <p className="text-2xl font-bold text-white">{item.value}</p>
+              <p className="text-blue-200 text-[10px] font-semibold uppercase tracking-wide leading-tight mt-0.5">{item.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none">
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="w-full h-12">
+          <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="white" />
+        </svg>
+      </div>
+    </section>
+  );
+}
+
+// Gentle-path offer: claim a free extra week. Grant is enforced server-side (one
+// per user); an already-extended or non-trial user is routed to the $47 offer.
+function FreeWeekSection({ userId, email }: { userId: string | null; email: string | null }) {
+  const [claiming, setClaiming] = useState(false);
+  const [granted, setGranted] = useState(false);
+
+  async function claim() {
+    if (claiming) return;
+    setClaiming(true);
+    try {
+      const res = await fetch(GRANT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, email, source: "results_freeweek" }),
+      });
+      const d = await res.json();
+      if (d.granted) {
+        window.gtag?.("event", "free_week_granted", { event_category: "conversion", event_label: "results_freeweek" });
+        setGranted(true);
+      } else {
+        window.location.href = "/checkout?offer=save50";
+      }
+    } catch {
+      window.location.href = "/checkout?offer=save50";
+    }
+  }
+
+  if (granted) {
+    return (
+      <section className="px-6 py-12 bg-white">
+        <div className="max-w-lg mx-auto text-center">
+          <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-5">
+            <CheckCircle size={14} />
+            Week Added
+          </div>
+          <h2 className="text-3xl font-bold text-slate-900 leading-tight mb-3">You&apos;ve Got Another Week.</h2>
+          <p className="text-slate-600 text-base leading-relaxed">
+            Done — 7 more days added. Keep logging inside the app, and your results will be waiting when you&apos;re ready.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="px-6 py-12 bg-white">
+      <div className="max-w-lg mx-auto text-center">
+        <h2 className="text-3xl font-bold text-slate-900 leading-tight mb-3">
+          Not Ready to Decide?<br />Take Another Week — Free.
+        </h2>
+        <p className="text-slate-600 text-base leading-relaxed mb-8">
+          You don&apos;t have to decide today. Take 7 more days on us, no charge and no card required. Keep logging, and see how much further your foot can go.
+        </p>
+        <button
+          type="button"
+          onClick={claim}
+          disabled={claiming}
+          className="inline-flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-bold text-lg py-4 rounded-xl transition-colors"
+        >
+          {claiming ? "Adding your week…" : "Add My Free Week"}
+          {!claiming && <ArrowRight size={20} />}
+        </button>
+      </div>
+    </section>
+  );
+}
+
 export default function Results() {
   const { userId } = useParams<{ userId: string }>();
   const [searchParams] = useSearchParams();
@@ -678,7 +814,7 @@ export default function Results() {
     fetch(fetchUrl)
       .then((r) => r.json())
       .then((d) => {
-        if (d.error || !d.daysLogged || d.daysLogged === 0) {
+        if (d.error) {
           window.location.href = "/walkthrough";
         } else {
           setData(d);
@@ -724,6 +860,19 @@ export default function Results() {
 
   if (!data) return null;
 
+  // Slice C — render by data quality. daysLogged 0 -> nologs; logged but no pain
+  // improvement -> flat; otherwise improved.
+  const resultsMode =
+    data.daysLogged === 0
+      ? "nologs"
+      : (data.painDrop === null || data.painDrop <= 0)
+        ? "flat"
+        : "improved";
+  // Offer softens monotonically: nologs/flat (any branch) and improved+low get the
+  // free week; improved with high/medium/none keeps the existing checkout sections
+  // (which already route medium -> $47 internally). Never hardens.
+  const showFreeWeek = resultsMode !== "improved" || data.surveyBranch === "low";
+
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
 
@@ -738,13 +887,21 @@ export default function Results() {
       </header>
 
       <main>
-        <HeroSection data={data} insights={insights} insightsLoading={insightsLoading} />
-        <ProgressTrendSection data={data} insights={insights} insightsLoading={insightsLoading} />
-        <AccomplishmentsSection data={data} insights={insights} insightsLoading={insightsLoading} />
-        <RoadmapSection data={data} />
+        {resultsMode === "improved" && <HeroSection data={data} insights={insights} insightsLoading={insightsLoading} />}
+        {resultsMode === "flat" && <FlatHeroSection data={data} />}
+        {resultsMode === "nologs" && <NoLogsHeroSection />}
+        {resultsMode === "improved" && <ProgressTrendSection data={data} insights={insights} insightsLoading={insightsLoading} />}
+        {resultsMode === "improved" && <AccomplishmentsSection data={data} insights={insights} insightsLoading={insightsLoading} />}
+        {resultsMode === "improved" && <RoadmapSection data={data} />}
         <DrJonathanSection />
-        <NextStepSection branch={data.surveyBranch} />
-        <FinalCtaSection insights={insights} insightsLoading={insightsLoading} branch={data.surveyBranch} />
+        {showFreeWeek
+          ? <FreeWeekSection userId={userId ?? null} email={emailParam} />
+          : (
+            <>
+              <NextStepSection branch={data.surveyBranch} />
+              <FinalCtaSection insights={insights} insightsLoading={insightsLoading} branch={data.surveyBranch} />
+            </>
+          )}
       </main>
 
       {/* Footer */}

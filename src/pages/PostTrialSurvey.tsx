@@ -87,8 +87,9 @@ export default function PostTrialSurvey() {
   const [q3, setQ3] = useState<string | null>(null);
   const [q3Other, setQ3Other] = useState("");
 
-  // Fetch — mirrors Results.tsx: userId OR ?email=, redirect to /walkthrough if neither
-  // or if the profile has no logged days, same as the sibling page.
+  // Fetch — mirrors Results.tsx: userId OR ?email=, redirect to /walkthrough only on a
+  // genuine failure (no identifier, fetch error, or user-not-found). Zero-log users are
+  // NOT bounced — they proceed to the survey and the reframed results (Slice C).
   useEffect(() => {
     if (!userId && !emailParam) { window.location.href = "/walkthrough"; return; }
     const fetchUrl = userId
@@ -97,7 +98,7 @@ export default function PostTrialSurvey() {
     fetch(fetchUrl)
       .then((r) => r.json())
       .then((d: SurveyResultsData) => {
-        if (d.error || !d.daysLogged || d.daysLogged === 0) {
+        if (d.error) {
           window.location.href = "/walkthrough";
         } else {
           setData(d);
