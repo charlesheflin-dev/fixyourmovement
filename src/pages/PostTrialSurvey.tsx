@@ -254,15 +254,13 @@ export default function PostTrialSurvey() {
           </div>
 
           <div className="mt-5">
-            <div className="flex justify-between text-[13px] text-gray-500 mb-2 px-1">
-              <span>Not Ready</span>
-              <span>I'm Ready to Finish</span>
-            </div>
-            <div
-              role="radiogroup"
-              aria-label="How likely are you to keep going and finish what you started, from 1 (not ready) to 10 (ready to finish)"
-              className="flex justify-between gap-1"
-            >
+            <div className="w-max mx-auto">
+              <div className="text-[13px] text-gray-500 mb-2 px-1">Not Ready</div>
+              <div
+                role="radiogroup"
+                aria-label="How likely are you to keep going and finish what you started, from 1 (not ready) to 10 (ready to finish)"
+                className="grid grid-cols-5 gap-2"
+              >
               {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => {
                 const selected = q1 === n;
                 return (
@@ -284,6 +282,8 @@ export default function PostTrialSurvey() {
                   </button>
                 );
               })}
+              </div>
+              <div className="text-[13px] text-gray-500 mt-2 px-1 text-right">I'm Ready to Finish</div>
             </div>
           </div>
         </section>
