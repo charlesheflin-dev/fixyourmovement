@@ -261,7 +261,7 @@ export default function PostTrialSurvey() {
             <div
               role="radiogroup"
               aria-label="How likely are you to keep going and finish what you started, from 1 (not ready) to 10 (ready to finish)"
-              className="flex justify-between gap-1"
+              className="grid grid-cols-5 gap-2 w-max mx-auto"
             >
               {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => {
                 const selected = q1 === n;
