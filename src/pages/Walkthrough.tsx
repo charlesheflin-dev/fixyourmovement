@@ -206,6 +206,19 @@ export default function Walkthrough() {
               These are real outcomes from active members tracked inside the app.
             </p>
             <UserJourneyCarousel />
+            <div className="max-w-lg mx-auto mt-12 space-y-4">
+              {[
+                { name: "Carol-Anne", body: "The best strength building course I have ever done for my plantar fasciitis issues. Issues that I have had for 5+ years. I have tried so many things. Some helped a bit but Dr Schutza's strength building programme is outstanding and in a league of its own. I am in weeks 4 and have experienced a massive difference in my feet. Dr Schutza has designed an amazing app with superb exercises. He provides oversight on one's progress allowing one to proceed with confidence. Simply outstanding. If I could give a score of 10 stars I would!" },
+                { name: "Karen", body: "Dealing with plantar fasciitis pain since October, seeing a doctor, going to PT, I was fed up. I searched online for exercises and came across Dr. Jonathan's site. I started following his exercise suggestions before the Foot Capacity System because I liked his demeanor. When he presented the system, I admit, I was skeptical; I gave the Trial a chance and was impressed. Along with the progression of exercises, it's the accountability and consistency that are making a big difference. My pain is minimal compared to where I started. Currently in Phase 2 - week 4, and seeing my strength and mobility improve is encouraging. I am impressed with the option to continue with this program, or never really leave, should the pain and limitations return. I feel confident that this is the right approach for me. Thank you so much for this program!" },
+                { name: "Brittany", body: "I am so happy that I found Dr Jonathan's program and app! I have been at it 3 weeks and have had so much progress already. I have gone from hobbling around all day everyday for the last 4 months to walking normally with very little pain. I was constantly looking online for exercises and tricks to help my foot feel better - there is so much out there and so much conflicting advice. It wasn't until I started using The Foot Capacity System that I really started getting better. The app is clear and straightforward and adjusts to how my foot feels each day. I do my exercises each day and then move on with my day knowing I've done what I need to so that I keep progressing. I have gained so much confidence and strength already. I know I am going to be able to meet my goal. Thank you Dr. Jonathan!" },
+              ].map((r, i) => (
+                <div key={i} className="rounded-2xl border border-slate-200 shadow-sm px-6 py-6">
+                  <p className="text-slate-900 text-sm font-bold">{r.name}</p>
+                  <p className="text-amber-400 text-sm tracking-wide mb-3">★★★★★</p>
+                  <p className="text-slate-600 text-sm leading-relaxed">{r.body}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
