@@ -816,6 +816,14 @@ function BeforeYouDecideSection() {
               </li>
             ))}
           </ul>
+          <a
+            href="https://fixyourmovement.com/hsa-fsa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 mt-4 text-xs font-medium text-blue-600 hover:underline"
+          >
+            Learn How HSA/FSA Works &#8594;
+          </a>
         </div>
       </div>
     </section>
