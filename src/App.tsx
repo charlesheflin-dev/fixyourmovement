@@ -45,6 +45,7 @@ function AskDrJonathanGlobal() {
     "/thank-you",
     "/unsubscribed",
     "/ask",
+    "/dr-jonathan-schutza",
   ];
   if (excluded.some((path) => pathname.startsWith(path))) return null;
   return <AskDrJonathan />;
