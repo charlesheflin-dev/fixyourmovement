@@ -15,6 +15,7 @@ import RefundPolicy from "./pages/RefundPolicy.tsx";
 import EULA from "./pages/EULA.tsx";
 import Walkthrough from "./pages/Walkthrough";
 import HsaFsa from "./pages/HsaFsa";
+import DrJonathanSchutza from "./pages/DrJonathanSchutza";
 import NewIndex from "./pages/NewIndex.tsx";
 import NewWalkthrough from "./pages/NewWalkthrough.tsx";
 import Index_archive from "./pages/Index_archive_2026_05_25";
@@ -44,6 +45,7 @@ function AskDrJonathanGlobal() {
     "/thank-you",
     "/unsubscribed",
     "/ask",
+    "/dr-jonathan-schutza",
   ];
   if (excluded.some((path) => pathname.startsWith(path))) return null;
   return <AskDrJonathan />;
@@ -83,6 +85,7 @@ const App = () => (
             <Route path="/eula" element={<EULA />} />
              <Route path="/walkthrough" element={<Walkthrough />} />
              <Route path="/hsa-fsa" element={<HsaFsa />} />
+             <Route path="/dr-jonathan-schutza" element={<DrJonathanSchutza />} />
                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                  <Route path="/newindex" element={<NewIndex />} />
                  <Route path="/newwalkthrough" element={<NewWalkthrough />} />
