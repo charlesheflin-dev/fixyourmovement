@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import logo from "@/assets/logo.png";
@@ -43,102 +42,6 @@ const REVIEWS = [
 ];
 
 export default function DrJonathanSchutza() {
-  useEffect(() => {
-    const prevTitle = document.title;
-    document.title = "Dr. Jonathan Schutza, PT, DPT | Foot & Ankle Physical Therapist";
-
-    // Canonical link — upsert and restore
-    const canonicalHref = "https://fixyourmovement.com/dr-jonathan-schutza";
-    let canonical = document.head.querySelector('link[rel="canonical"]');
-    let createdCanonical = false;
-    let prevCanonicalHref: string | null = null;
-    if (canonical) {
-      prevCanonicalHref = canonical.getAttribute("href");
-      canonical.setAttribute("href", canonicalHref);
-    } else {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      canonical.setAttribute("href", canonicalHref);
-      document.head.appendChild(canonical);
-      createdCanonical = true;
-    }
-
-    // Meta description — upsert and restore
-    const descContent =
-      "Dr. Jonathan Schutza, PT, DPT — Doctor of Physical Therapy in Shreveport, Louisiana, specializing in foot and ankle rehabilitation and creator of the Foot Capacity System.";
-    let desc = document.head.querySelector('meta[name="description"]');
-    let createdDesc = false;
-    let prevDescContent: string | null = null;
-    if (desc) {
-      prevDescContent = desc.getAttribute("content");
-      desc.setAttribute("content", descContent);
-    } else {
-      desc = document.createElement("meta");
-      desc.setAttribute("name", "description");
-      desc.setAttribute("content", descContent);
-      document.head.appendChild(desc);
-      createdDesc = true;
-    }
-
-    // JSON-LD Person schema — append and remove
-    const personSchema = {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": "https://fixyourmovement.com/dr-jonathan-schutza#person",
-      "url": "https://fixyourmovement.com/dr-jonathan-schutza",
-      "name": "Dr. Jonathan Schutza, PT, DPT",
-      "honorificPrefix": "Dr.",
-      "honorificSuffix": "PT, DPT",
-      "jobTitle": "Doctor of Physical Therapy",
-      "image": new URL(headshot, "https://fixyourmovement.com").href,
-      "description":
-        "Doctor of Physical Therapy and licensed physical therapist in Shreveport, Louisiana, focused on foot and ankle rehabilitation and creator of the Foot Capacity System.",
-      "knowsAbout": [
-        "plantar fasciitis", "plantar fasciopathy", "heel pain",
-        "foot and ankle rehabilitation", "foot and ankle mechanics",
-        "movement rehabilitation", "therapeutic exercise progression",
-        "injury recovery", "progressive loading and capacity development",
-        "flare-up management",
-      ],
-      "sameAs": [
-        "https://www.linkedin.com/in/jonathan-schutza-b05838a1/",
-        "https://www.instagram.com/dr.schutza.pt/",
-        "https://www.facebook.com/profile.php?id=61551075877536",
-      ],
-      "hasCredential": [
-        { "@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "name": "Doctor of Physical Therapy (DPT)" },
-        { "@type": "EducationalOccupationalCredential", "credentialCategory": "license", "name": "Louisiana Physical Therapy License #10272", "recognizedBy": { "@type": "Organization", "name": "Louisiana Physical Therapy Board", "url": "https://www.laptboard.org/" } },
-        { "@type": "EducationalOccupationalCredential", "credentialCategory": "certificate", "name": "Dry Needling Certification" },
-      ],
-      "identifier": { "@type": "PropertyValue", "propertyID": "NPI", "value": "1487332854" },
-      "alumniOf": { "@type": "CollegeOrUniversity", "name": "LSU Health Sciences Center Shreveport" },
-      "worksFor": { "@type": "Organization", "name": "Back At It Physical Therapy, LLC", "url": "https://backatitpt.com/" },
-      "memberOf": [
-        { "@type": "Organization", "name": "American Physical Therapy Association", "url": "https://www.apta.org/" },
-        { "@type": "Organization", "name": "Louisiana Physical Therapy Association", "url": "https://aptala.org/" },
-      ],
-    };
-    const ldScript = document.createElement("script");
-    ldScript.type = "application/ld+json";
-    ldScript.text = JSON.stringify(personSchema);
-    document.head.appendChild(ldScript);
-
-    return () => {
-      document.title = prevTitle;
-      if (createdCanonical) {
-        canonical?.remove();
-      } else if (prevCanonicalHref !== null) {
-        canonical?.setAttribute("href", prevCanonicalHref);
-      }
-      if (createdDesc) {
-        desc?.remove();
-      } else if (prevDescContent !== null) {
-        desc?.setAttribute("content", prevDescContent);
-      }
-      ldScript.remove();
-    };
-  }, []);
-
   return (
     <div className="min-h-screen bg-white font-inter">
       <main>
