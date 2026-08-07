@@ -8,6 +8,23 @@ const SAVE_ASSESSMENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
 const INSTALL_URL = "https://app.fixyourmovement.com/install";
 
+// ─── Cookie read + origin-article attribution (from blog cookies; edge re-validates) ───
+function getCookie(name: string): string | null {
+  const match = document.cookie.split("; ").find(row => row.startsWith(name + "="));
+  return match ? decodeURIComponent(match.split("=")[1]) : null;
+}
+function sanitizeArticleSlug(v: string | null): string | null {
+  if (!v) return null;
+  const s = v.trim().slice(0, 200);
+  return /^[A-Za-z0-9/_-]+$/.test(s) ? s : null;
+}
+function articleFields(): { first_article: string | null; last_article: string | null } {
+  return {
+    first_article: sanitizeArticleSlug(getCookie("fcs_first_article")),
+    last_article:  sanitizeArticleSlug(getCookie("fcs_last_article")),
+  };
+}
+
 // ─── Types ──────────────────────────────────────────────────────────────────────
 type Q2Value = "stretching" | "shoes_orthotics" | "rest" | "physical_therapy" | "injections" | "nothing";
 
@@ -439,7 +456,7 @@ export default function Assessment() {
         await fetch(CREATE_TRIAL_PROFILE_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.replace(/ /g, "+") }),
+          body: JSON.stringify({ email: email.replace(/ /g, "+"), ...articleFields() }),
         });
       } catch {
         // Non-fatal

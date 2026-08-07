@@ -101,6 +101,19 @@ function getCookie(name: string): string | null {
   return match ? decodeURIComponent(match.split("=")[1]) : null;
 }
 
+// ─── Origin-article attribution (from blog cookies; edge re-validates) ───────────
+function sanitizeArticleSlug(v: string | null): string | null {
+  if (!v) return null;
+  const s = v.trim().slice(0, 200);
+  return /^[A-Za-z0-9/_-]+$/.test(s) ? s : null;
+}
+function articleFields(): { first_article: string | null; last_article: string | null } {
+  return {
+    first_article: sanitizeArticleSlug(getCookie("fcs_first_article")),
+    last_article:  sanitizeArticleSlug(getCookie("fcs_last_article")),
+  };
+}
+
 // ─── Main component ─────────────────────────────────────────────────────────────
 export default function DownloadApp() {
   const [email, setEmail] = useState("");
@@ -140,7 +153,7 @@ export default function DownloadApp() {
         fetch(CREATE_TRIAL_PROFILE_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: resolvedEmail }),
+          body: JSON.stringify({ email: resolvedEmail, ...articleFields() }),
         }).catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
 
         // 2. Migrate confirmed subscriber to main AWeber list (awlist6958674)
@@ -164,7 +177,7 @@ export default function DownloadApp() {
       await fetch(CREATE_TRIAL_PROFILE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: cleanEmail }),
+        body: JSON.stringify({ email: cleanEmail, ...articleFields() }),
       });
     } catch {
       // Non-fatal
