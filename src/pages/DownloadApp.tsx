@@ -133,6 +133,21 @@ export default function DownloadApp() {
     if (emailInput?.value) {
       const encoded = encodeURIComponent(emailInput.value.trim().toLowerCase());
       document.cookie = `fcs_email=${encoded}; expires=Fri, 31 Dec 2099 23:59:59 GMT; path=/; SameSite=Lax`;
+      // Pre-hop origin-article capture: stage the article slugs keyed by email at
+      // form submit — same jar as the blog cookie, before the AWeber confirmation
+      // hop. keepalive so the request survives navigation to AWeber; text/plain to
+      // avoid a CORS preflight that could be dropped on unload. Fire-and-forget;
+      // never blocks the native submit.
+      try {
+        fetch(CREATE_TRIAL_PROFILE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({ email: emailInput.value.trim().toLowerCase(), ...articleFields(), stage_only: true }),
+          keepalive: true,
+        }).catch(() => {});
+      } catch {
+        // Non-fatal
+      }
     }
   };
 
