@@ -1,6 +1,46 @@
 import { motion } from "framer-motion";
 import { ShieldCheck, CheckCircle, ArrowRight, ClipboardList } from "lucide-react";
 import logo from "@/assets/logo.png";
+import type { FormEvent } from "react";
+
+const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
+
+// Origin-article attribution (from blog cookies; edge re-validates)
+function getCookie(name: string): string | null {
+  const match = document.cookie.split("; ").find(row => row.startsWith(name + "="));
+  return match ? decodeURIComponent(match.split("=")[1]) : null;
+}
+function sanitizeArticleSlug(v: string | null): string | null {
+  if (!v) return null;
+  const s = v.trim().slice(0, 200);
+  return /^[A-Za-z0-9/_-]+$/.test(s) ? s : null;
+}
+function articleFields(): { first_article: string | null; last_article: string | null } {
+  return {
+    first_article: sanitizeArticleSlug(getCookie("fcs_first_article")),
+    last_article:  sanitizeArticleSlug(getCookie("fcs_last_article")),
+  };
+}
+
+// Pre-hop origin-article capture at form submit (same jar as the blog cookie, before
+// the AWeber confirmation hop). keepalive survives navigation to AWeber; text/plain
+// avoids a CORS preflight that could be dropped on unload. Fire-and-forget; never
+// blocks the native submit. No preventDefault — the AWeber POST proceeds unchanged.
+function handleStageAttribution(e: FormEvent<HTMLFormElement>) {
+  const emailInput = e.currentTarget.querySelector('input[name="email"]') as HTMLInputElement | null;
+  const value = emailInput?.value?.trim().toLowerCase();
+  if (!value) return;
+  try {
+    fetch(CREATE_TRIAL_PROFILE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ email: value, ...articleFields(), stage_only: true }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // Non-fatal
+  }
+}
 
 export default function TakeAssessment() {
   return (
@@ -84,6 +124,7 @@ export default function TakeAssessment() {
                   acceptCharset="UTF-8"
                   action="https://www.aweber.com/scripts/addlead.pl"
                   className="space-y-4"
+                  onSubmit={handleStageAttribution}
                 >
                   {/* AWeber required hidden fields */}
                   <input type="hidden" name="meta_web_form_id" value="356574860" />
