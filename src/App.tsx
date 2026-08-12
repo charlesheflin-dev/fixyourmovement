@@ -34,6 +34,9 @@ import Results from "./pages/Results";
 import PostTrialSurvey from "./pages/PostTrialSurvey";
 import AssessmentResults from "./pages/AssessmentResults";
 import AskDrJonathanPage from "./pages/AskDrJonathan";
+import GuideMorning from "./pages/GuideMorning";
+import GuideToughDay from "./pages/GuideToughDay";
+import GuideNext from "./pages/GuideNext";
 import AskDrJonathan from "./components/AskDrJonathan.tsx";
 
 function AskDrJonathanGlobal() {
@@ -105,6 +108,9 @@ const App = () => (
                    <Route path="/results/:userId" element={<Results />} />
                    <Route path="/results" element={<Results />} />                   <Route path="/assessment-results" element={<AssessmentResults />} />
                    <Route path="/ask" element={<AskDrJonathanPage />} />
+                    <Route path="/guide/morning" element={<GuideMorning />} />
+                    <Route path="/guide/tough-day" element={<GuideToughDay />} />
+                    <Route path="/guide/next" element={<GuideNext />} />
                     <Route path="*" element={<NotFound />} />
          </Routes>
       </BrowserRouter>
