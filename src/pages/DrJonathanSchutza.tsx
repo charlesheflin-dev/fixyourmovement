@@ -260,10 +260,10 @@ export default function DrJonathanSchutza() {
                 <p>
                   Email:{" "}
                   <a
-                    href="mailto:SchutzaPT@gmail.com"
+                    href="mailto:SchutzaDPT@fixyourmovement.com"
                     className="text-blue-600 font-semibold hover:text-blue-700 transition-colors"
                   >
-                    SchutzaPT@gmail.com
+                    SchutzaDPT@fixyourmovement.com
                   </a>
                 </p>
               </div>
