@@ -67,6 +67,31 @@ function ScrollToTop() {
   return null;
 }
 
+// Capture ?source= (ad/channel attribution, e.g. Kindle) into first-party cookies,
+// mirroring the blog's fcs_first_article/fcs_last_article semantics: first-touch is
+// write-once (frozen), last-touch overwrites each time. Host-only, path=/, ~400d,
+// SameSite=Lax — the article-cookie attributes. Same [A-Za-z0-9/_-] charset; a
+// malformed value is ignored. Read at signup by the create-trial-profile callers.
+function SourceCapture() {
+  const { search } = useLocation();
+
+  useEffect(() => {
+    const raw = new URLSearchParams(search).get("source");
+    if (!raw) return;
+    const s = raw.trim().slice(0, 200);
+    if (!/^[A-Za-z0-9/_-]+$/.test(s)) return;
+    if (s === "hsa") return;   // reserved internal nav marker (HsaFsa -> /checkout?source=hsa), not an ad channel
+    const enc = encodeURIComponent(s);
+    const attrs = "path=/; max-age=34560000; SameSite=Lax";
+    if (!document.cookie.split("; ").some(row => row.startsWith("fcs_first_source="))) {
+      document.cookie = `fcs_first_source=${enc}; ${attrs}`;
+    }
+    document.cookie = `fcs_last_source=${enc}; ${attrs}`;
+  }, [search]);
+
+  return null;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -74,6 +99,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <SourceCapture />
         <CookieConsent />
         <ExitPopup />
         <AskDrJonathanGlobal />

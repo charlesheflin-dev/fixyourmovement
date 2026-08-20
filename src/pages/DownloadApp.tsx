@@ -113,6 +113,12 @@ function articleFields(): { first_article: string | null; last_article: string |
     last_article:  sanitizeArticleSlug(getCookie("fcs_last_article")),
   };
 }
+function sourceFields(): { first_source: string | null; last_source: string | null } {
+  return {
+    first_source: sanitizeArticleSlug(getCookie("fcs_first_source")),
+    last_source:  sanitizeArticleSlug(getCookie("fcs_last_source")),
+  };
+}
 
 // ─── Main component ─────────────────────────────────────────────────────────────
 export default function DownloadApp() {
@@ -142,7 +148,7 @@ export default function DownloadApp() {
         fetch(CREATE_TRIAL_PROFILE_URL, {
           method: "POST",
           headers: { "Content-Type": "text/plain" },
-          body: JSON.stringify({ email: emailInput.value.trim().toLowerCase(), ...articleFields(), stage_only: true }),
+          body: JSON.stringify({ email: emailInput.value.trim().toLowerCase(), ...articleFields(), ...sourceFields(), stage_only: true }),
           keepalive: true,
         }).catch(() => {});
       } catch {
@@ -168,7 +174,7 @@ export default function DownloadApp() {
         fetch(CREATE_TRIAL_PROFILE_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: resolvedEmail, ...articleFields() }),
+          body: JSON.stringify({ email: resolvedEmail, ...articleFields(), ...sourceFields() }),
         }).catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
 
         // 2. Migrate confirmed subscriber to main AWeber list (awlist6958674)
@@ -192,7 +198,7 @@ export default function DownloadApp() {
       await fetch(CREATE_TRIAL_PROFILE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: cleanEmail, ...articleFields() }),
+        body: JSON.stringify({ email: cleanEmail, ...articleFields(), ...sourceFields() }),
       });
     } catch {
       // Non-fatal
