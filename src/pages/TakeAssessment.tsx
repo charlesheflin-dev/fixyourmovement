@@ -21,6 +21,12 @@ function articleFields(): { first_article: string | null; last_article: string |
     last_article:  sanitizeArticleSlug(getCookie("fcs_last_article")),
   };
 }
+function sourceFields(): { first_source: string | null; last_source: string | null } {
+  return {
+    first_source: sanitizeArticleSlug(getCookie("fcs_first_source")),
+    last_source:  sanitizeArticleSlug(getCookie("fcs_last_source")),
+  };
+}
 
 // Pre-hop origin-article capture at form submit (same jar as the blog cookie, before
 // the AWeber confirmation hop). keepalive survives navigation to AWeber; text/plain
@@ -34,7 +40,7 @@ function handleStageAttribution(e: FormEvent<HTMLFormElement>) {
     fetch(CREATE_TRIAL_PROFILE_URL, {
       method: "POST",
       headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify({ email: value, ...articleFields(), stage_only: true }),
+      body: JSON.stringify({ email: value, ...articleFields(), ...sourceFields(), stage_only: true }),
       keepalive: true,
     }).catch(() => {});
   } catch {

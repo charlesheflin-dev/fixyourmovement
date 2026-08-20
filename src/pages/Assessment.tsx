@@ -24,6 +24,12 @@ function articleFields(): { first_article: string | null; last_article: string |
     last_article:  sanitizeArticleSlug(getCookie("fcs_last_article")),
   };
 }
+function sourceFields(): { first_source: string | null; last_source: string | null } {
+  return {
+    first_source: sanitizeArticleSlug(getCookie("fcs_first_source")),
+    last_source:  sanitizeArticleSlug(getCookie("fcs_last_source")),
+  };
+}
 
 // ─── Types ──────────────────────────────────────────────────────────────────────
 type Q2Value = "stretching" | "shoes_orthotics" | "rest" | "physical_therapy" | "injections" | "nothing";
@@ -456,7 +462,7 @@ export default function Assessment() {
         await fetch(CREATE_TRIAL_PROFILE_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.replace(/ /g, "+"), ...articleFields() }),
+          body: JSON.stringify({ email: email.replace(/ /g, "+"), ...articleFields(), ...sourceFields() }),
         });
       } catch {
         // Non-fatal
