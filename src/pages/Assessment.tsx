@@ -979,11 +979,17 @@ export default function Assessment() {
             <div className="bg-blue-600 rounded-xl px-5 py-5 mb-6">
               <p className="text-white text-sm font-bold mb-2">We're confident enough to let you go first.</p>
               <p className="text-blue-100 text-sm leading-relaxed mb-3">
-                Download the full app. Follow your prescribed protocol for 7 days. Log daily. If your pain doesn't go down, you don't pay — ever. No card required to start. No commitment beyond showing up.
+                Follow your prescribed protocol for 7 days. Log daily. If your pain doesn't go down, you don't pay — ever. No card required to start. No commitment beyond showing up.
               </p>
               <p className="text-blue-200 text-xs leading-relaxed">
                 If at-home, guided recovery is not right for you, you don't pay. No card required to start.
               </p>
+            </div>
+
+            {/* Handoff headline */}
+            <div className="text-center mb-4">
+              <p className="text-slate-900 text-lg font-bold mb-1">Want to start working on this?</p>
+              <p className="text-slate-600 text-sm">I'll show you exactly where I'd have you start.</p>
             </div>
 
             {/* Primary CTA */}
@@ -992,7 +998,7 @@ export default function Assessment() {
                 href={INSTALL_URL}
                 className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
               >
-                Start Your Free 7-Day Trial &#8594;
+                START MY PLAN &#8594;
               </a>
             ) : (
               <div className="mb-3 flex justify-center">
@@ -1001,7 +1007,7 @@ export default function Assessment() {
             )}
 
             <p className="text-center text-slate-400 text-sm mb-8">
-              No credit card. No commitment. Log daily and watch what happens.
+              Free for 7 days • No card required • Takes about a minute to set up
             </p>
 
             {/* User Journey Carousel */}
