@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
+const LOG_FUNNEL_EVENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/log-funnel-event";
 const INSTALL_URL = "https://app.fixyourmovement.com/install";
 const VIDEO_ID = "b37100f8162e1ab91cf86c9e284447da";
 const VIDEO_THUMBNAIL_ID = "0a87b6a7-6fb2-48dc-9e26-aa5c134c0200";
@@ -119,6 +120,26 @@ function sourceFields(): { first_source: string | null; last_source: string | nu
   };
 }
 
+// ─── Funnel-events (Change 3 Tier 1) ─────────────────────────────────────────────
+// Fire-and-forget front-funnel event to log-funnel-event, keyed by the fcs_anon cookie
+// minted app-wide in App.tsx. keepalive so it survives navigation; never blocks UX; a
+// dead endpoint can't harm the funnel. account_created carries the raw email (server
+// hashes it — never stored raw).
+function logFunnelEvent(event: string, extra?: Record<string, unknown>) {
+  try {
+    const anon_id = getCookie("fcs_anon");
+    if (!anon_id) return;
+    fetch(LOG_FUNNEL_EVENT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ anon_id, funnel: "download", event, ...extra }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // Non-fatal
+  }
+}
+
 // ─── Main component ─────────────────────────────────────────────────────────────
 export default function DownloadApp() {
   const [email, setEmail] = useState("");
@@ -132,6 +153,21 @@ export default function DownloadApp() {
 
   const isMobile = useIsMobile();
 
+  const landingLogged = useRef(false);
+  const emailFocusLogged = useRef(false);
+
+  useEffect(() => {
+    if (landingLogged.current) return;
+    landingLogged.current = true;
+    logFunnelEvent("landing_reached");
+  }, []);
+
+  const handleEmailFocus = () => {
+    if (emailFocusLogged.current) return;
+    emailFocusLogged.current = true;
+    logFunnelEvent("email_field_viewed");
+  };
+
   const handleDownloadSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -142,6 +178,7 @@ export default function DownloadApp() {
       return;
     }
 
+    logFunnelEvent("email_submitted");
     setEmail(value);
     document.cookie = `fcs_email=${encodeURIComponent(value)}; expires=Fri, 31 Dec 2099 23:59:59 GMT; path=/; SameSite=Lax`;
 
@@ -153,6 +190,8 @@ export default function DownloadApp() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: value, ...articleFields(), ...sourceFields() }),
     }).catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
+
+    logFunnelEvent("account_created", { email: value });
 
     // Background add to AWeber (main list, per the form's listname) — full-fidelity
     // replay of the form's own fields; no-cors keepalive; the native redirect is bypassed.
@@ -370,6 +409,7 @@ export default function DownloadApp() {
                   type="email"
                   name="email"
                   placeholder="Email address"
+                  onFocus={handleEmailFocus}
                   className="w-full pl-10 pr-4 py-4 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>

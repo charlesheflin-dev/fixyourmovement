@@ -89,6 +89,16 @@ function SourceCapture() {
     document.cookie = `fcs_last_source=${enc}; ${attrs}`;
   }, [search]);
 
+  // Mint a stable first-party anon id once (funnel-events spine, Change 3 Tier 1).
+  // Host-only, write-once — mirrors the fcs_first_source seam above, and SourceCapture
+  // sits ahead of the routed pages so this is set before any funnel page mounts.
+  // Unconditional (no consent branch): CookieConsent is notice-only, gates nothing.
+  useEffect(() => {
+    if (!document.cookie.split("; ").some(row => row.startsWith("fcs_anon="))) {
+      document.cookie = `fcs_anon=${crypto.randomUUID()}; path=/; max-age=34560000; SameSite=Lax`;
+    }
+  }, []);
+
   return null;
 }
 

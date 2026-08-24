@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { ShieldCheck, CheckCircle, ArrowRight, ClipboardList } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { useEffect, useRef } from "react";
 import type { FormEvent } from "react";
 
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
+const LOG_FUNNEL_EVENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/log-funnel-event";
 
 // Origin-article attribution (from blog cookies; edge re-validates)
 function getCookie(name: string): string | null {
@@ -28,6 +30,26 @@ function sourceFields(): { first_source: string | null; last_source: string | nu
   };
 }
 
+// ─── Funnel-events (Change 3 Tier 1) ─────────────────────────────────────────────
+// Fire-and-forget front-funnel event to log-funnel-event, keyed by the fcs_anon cookie
+// minted app-wide in App.tsx. keepalive so it survives navigation; never blocks UX; a
+// dead endpoint can't harm the funnel. No account_created here — the assessment account
+// mints later at Assessment.tsx (post-FAAM), where that event fires instead.
+function logFunnelEvent(event: string, extra?: Record<string, unknown>) {
+  try {
+    const anon_id = getCookie("fcs_anon");
+    if (!anon_id) return;
+    fetch(LOG_FUNNEL_EVENT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ anon_id, funnel: "assessment", event, ...extra }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // Non-fatal
+  }
+}
+
 // Intercept submit: stop the native AWeber redirect (removes the email-confirmation
 // detour), replay the exact form packet to AWeber in the background (keepalive so it
 // survives the navigation; no-cors because addlead.pl sends no CORS headers), keep the
@@ -43,6 +65,8 @@ function handleAssessmentSubmit(e: FormEvent<HTMLFormElement>) {
     emailInput?.focus();
     return;
   }
+
+  logFunnelEvent("email_submitted");
 
   // Background add to AWeber — full-fidelity replay of the form's own fields (same list
   // and meta_adtracking the native submit would have sent), minus the redirect.
@@ -75,7 +99,28 @@ function handleAssessmentSubmit(e: FormEvent<HTMLFormElement>) {
   window.location.assign(`/assessment?email=${encodeURIComponent(value)}`);
 }
 
+function useAssessmentFunnelEvents() {
+  const landingLogged = useRef(false);
+  const emailFocusLogged = useRef(false);
+
+  useEffect(() => {
+    if (landingLogged.current) return;
+    landingLogged.current = true;
+    logFunnelEvent("landing_reached");
+  }, []);
+
+  const handleEmailFocus = () => {
+    if (emailFocusLogged.current) return;
+    emailFocusLogged.current = true;
+    logFunnelEvent("email_field_viewed");
+  };
+
+  return { handleEmailFocus };
+}
+
 export default function TakeAssessment() {
+  const { handleEmailFocus } = useAssessmentFunnelEvents();
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
 
@@ -194,6 +239,7 @@ export default function TakeAssessment() {
                       type="email"
                       name="email"
                       placeholder="your@email.com"
+                      onFocus={handleEmailFocus}
                       className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-base placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                     />
                   </div>
