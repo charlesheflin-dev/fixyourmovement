@@ -313,6 +313,21 @@ export default {
         const accountId = await getAccountId(accessToken);
         const listId = env.AWEBER_LIST_ID.replace("awlist", "");
         const subscriber = await findSubscriber(accessToken, accountId, listId, email);
+
+        // Guard rail (relocated to point-of-use): trial_accepted requires a subscribed
+        // status. If the lead landed unconfirmed (opt-in-off add at submit), confirm here
+        // at onboarding — where the subscriber reliably exists — so the gate below passes.
+        // Does NOT relax the gate; it makes the subscriber actually subscribed. On confirm
+        // failure we fall through to the prior graceful skip.
+        if (subscriber && body.checkout_tag === "trial_accepted" && subscriber.status !== "subscribed") {
+          try {
+            await confirmSubscriber(accessToken, accountId, listId, email);
+            subscriber.status = "subscribed";
+          } catch (err) {
+            console.log(`[Worker] confirm-then-tag failed for ${email}: ${err.message}`);
+          }
+        }
+
         let tagged = false;
         if (subscriber && (body.checkout_tag !== "trial_accepted" || subscriber.status === "subscribed")) {
           await applyTag(accessToken, subscriber.self_link, body.checkout_tag);

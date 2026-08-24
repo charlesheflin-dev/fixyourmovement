@@ -6,6 +6,7 @@ import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
 const SAVE_ASSESSMENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/save-assessment";
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
+const LOG_FUNNEL_EVENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/log-funnel-event";
 const INSTALL_URL = "https://app.fixyourmovement.com/install";
 
 // ─── Cookie read + origin-article attribution (from blog cookies; edge re-validates) ───
@@ -29,6 +30,27 @@ function sourceFields(): { first_source: string | null; last_source: string | nu
     first_source: sanitizeArticleSlug(getCookie("fcs_first_source")),
     last_source:  sanitizeArticleSlug(getCookie("fcs_last_source")),
   };
+}
+
+// ─── Funnel-events (Change 3 Tier 1) ─────────────────────────────────────────────
+// Assessment-funnel account_created tick. The other assessment events (landing_reached,
+// email_field_viewed, email_submitted) fire on TakeAssessment.tsx (/lp/take-assessment);
+// the account mints here post-FAAM, so this event fires here. Keyed by the fcs_anon cookie
+// minted app-wide in App.tsx; keepalive fire-and-forget; a dead endpoint can't harm the flow.
+// Carries the raw email — the edge fn hashes it (never stored raw).
+function logFunnelEvent(event: string, extra?: Record<string, unknown>) {
+  try {
+    const anon_id = getCookie("fcs_anon");
+    if (!anon_id) return;
+    fetch(LOG_FUNNEL_EVENT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ anon_id, funnel: "assessment", event, ...extra }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // Non-fatal
+  }
 }
 
 // ─── Types ──────────────────────────────────────────────────────────────────────
@@ -467,6 +489,7 @@ export default function Assessment() {
       } catch {
         // Non-fatal
       }
+      logFunnelEvent("account_created", { email: email.replace(/ /g, "+") });
       setStep("results");
     } catch (err: unknown) {
       setFaamError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
