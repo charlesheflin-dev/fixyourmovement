@@ -28,14 +28,38 @@ function sourceFields(): { first_source: string | null; last_source: string | nu
   };
 }
 
-// Pre-hop origin-article capture at form submit (same jar as the blog cookie, before
-// the AWeber confirmation hop). keepalive survives navigation to AWeber; text/plain
-// avoids a CORS preflight that could be dropped on unload. Fire-and-forget; never
-// blocks the native submit. No preventDefault — the AWeber POST proceeds unchanged.
-function handleStageAttribution(e: FormEvent<HTMLFormElement>) {
-  const emailInput = e.currentTarget.querySelector('input[name="email"]') as HTMLInputElement | null;
+// Intercept submit: stop the native AWeber redirect (removes the email-confirmation
+// detour), replay the exact form packet to AWeber in the background (keepalive so it
+// survives the navigation; no-cors because addlead.pl sends no CORS headers), keep the
+// origin-attribution stage, then carry the user straight into the assessment with their
+// email on the URL — Assessment.tsx reads ?email= to identify the lead (previously
+// AWeber appended it to the confirmation redirect).
+function handleAssessmentSubmit(e: FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const emailInput = form.querySelector('input[name="email"]') as HTMLInputElement | null;
   const value = emailInput?.value?.trim().toLowerCase();
-  if (!value) return;
+  if (!value) {
+    emailInput?.focus();
+    return;
+  }
+
+  // Background add to AWeber — full-fidelity replay of the form's own fields (same list
+  // and meta_adtracking the native submit would have sent), minus the redirect.
+  try {
+    const params = new URLSearchParams();
+    new FormData(form).forEach((v, k) => params.append(k, String(v)));
+    fetch(form.action, {
+      method: "POST",
+      body: params,
+      mode: "no-cors",
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // Non-fatal
+  }
+
+  // Origin-article/source attribution stage (unchanged; harmless once body-carried too).
   try {
     fetch(CREATE_TRIAL_PROFILE_URL, {
       method: "POST",
@@ -46,6 +70,9 @@ function handleStageAttribution(e: FormEvent<HTMLFormElement>) {
   } catch {
     // Non-fatal
   }
+
+  // Carry forward in-session — no inbox trip. Email on the URL, as AWeber appended it before.
+  window.location.assign(`/assessment?email=${encodeURIComponent(value)}`);
 }
 
 export default function TakeAssessment() {
@@ -130,7 +157,7 @@ export default function TakeAssessment() {
                   acceptCharset="UTF-8"
                   action="https://www.aweber.com/scripts/addlead.pl"
                   className="space-y-4"
-                  onSubmit={handleStageAttribution}
+                  onSubmit={handleAssessmentSubmit}
                 >
                   {/* AWeber required hidden fields */}
                   <input type="hidden" name="meta_web_form_id" value="356574860" />

@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import logo from "@/assets/logo.png";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
-const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
 const INSTALL_URL = "https://app.fixyourmovement.com/install";
 const VIDEO_ID = "b37100f8162e1ab91cf86c9e284447da";
 const VIDEO_THUMBNAIL_ID = "0a87b6a7-6fb2-48dc-9e26-aa5c134c0200";
@@ -133,62 +132,59 @@ export default function DownloadApp() {
 
   const isMobile = useIsMobile();
 
-  const handleFormInterceptAndSetCookie = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleDownloadSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const form = e.currentTarget;
-    const emailInput = form.querySelector('input[name="email"]') as HTMLInputElement;
-    if (emailInput?.value) {
-      const encoded = encodeURIComponent(emailInput.value.trim().toLowerCase());
-      document.cookie = `fcs_email=${encoded}; expires=Fri, 31 Dec 2099 23:59:59 GMT; path=/; SameSite=Lax`;
-      // Pre-hop origin-article capture: stage the article slugs keyed by email at
-      // form submit — same jar as the blog cookie, before the AWeber confirmation
-      // hop. keepalive so the request survives navigation to AWeber; text/plain to
-      // avoid a CORS preflight that could be dropped on unload. Fire-and-forget;
-      // never blocks the native submit.
-      try {
-        fetch(CREATE_TRIAL_PROFILE_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain" },
-          body: JSON.stringify({ email: emailInput.value.trim().toLowerCase(), ...articleFields(), ...sourceFields(), stage_only: true }),
-          keepalive: true,
-        }).catch(() => {});
-      } catch {
-        // Non-fatal
-      }
+    const emailInput = form.querySelector('input[name="email"]') as HTMLInputElement | null;
+    const value = emailInput?.value?.trim().toLowerCase();
+    if (!value) {
+      emailInput?.focus();
+      return;
     }
+
+    setEmail(value);
+    document.cookie = `fcs_email=${encodeURIComponent(value)}; expires=Fri, 31 Dec 2099 23:59:59 GMT; path=/; SameSite=Lax`;
+
+    // Mint the account now — the real create that used to run only after the
+    // confirmation return. No stage_only; article + source attribution ride the body
+    // (cookie survives now that there's no inbox hop), matched field-for-field.
+    fetch(CREATE_TRIAL_PROFILE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: value, ...articleFields(), ...sourceFields() }),
+    }).catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
+
+    // Background add to AWeber (main list, per the form's listname) — full-fidelity
+    // replay of the form's own fields; no-cors keepalive; the native redirect is bypassed.
+    try {
+      const params = new URLSearchParams();
+      new FormData(form).forEach((v, k) => params.append(k, String(v)));
+      fetch(form.action, {
+        method: "POST",
+        body: params,
+        mode: "no-cors",
+        keepalive: true,
+      }).catch(() => {});
+    } catch {
+      // Non-fatal
+    }
+
+    // Origin attribution stage — retained until the body-path is verified on staging
+    // (build-spec change-set #3); harmless if it leaves an unconsumed staged row.
+    try {
+      fetch(CREATE_TRIAL_PROFILE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ email: value, ...articleFields(), ...sourceFields(), stage_only: true }),
+        keepalive: true,
+      }).catch(() => {});
+    } catch {
+      // Non-fatal
+    }
+
+    // Straight to the install screen in-session — no inbox trip.
+    setSubmitted(true);
   };
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("access") === "true") {
-      const emailParam = params.get("email");
-      const cookieEmail = getCookie("fcs_email");
-      const resolvedEmail = emailParam
-        ? decodeURIComponent(emailParam).replace(/ /g, "+")
-        : cookieEmail
-        ? cookieEmail.replace(/ /g, "+")
-        : "";
-
-      if (resolvedEmail) {
-        setEmail(resolvedEmail);
-        // 1. Create Supabase trial profile
-        fetch(CREATE_TRIAL_PROFILE_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: resolvedEmail, ...articleFields(), ...sourceFields() }),
-        }).catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
-
-        // 2. Migrate confirmed subscriber to main AWeber list (awlist6958674)
-        // AWeber automation then removes them from download list (awlist6961315)
-        fetch(WORKER_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: resolvedEmail, action: "migrate_to_main_list" }),
-        }).catch(err => console.error("[DownloadApp] AWeber migration error:", err));
-      }
-
-      setSubmitted(true);
-    }
-  }, []);
 
   const handleSendEmail = async () => {
     if (emailSent || emailLoading) return;
@@ -341,12 +337,12 @@ export default function DownloadApp() {
               method="post"
               acceptCharset="UTF-8"
               action="https://www.aweber.com/scripts/addlead.pl"
-              onSubmit={handleFormInterceptAndSetCookie}
+              onSubmit={handleDownloadSubmit}
               className="space-y-3 max-w-md mx-auto"
             >
               <input type="hidden" name="meta_web_form_id" value="543768887" />
               <input type="hidden" name="meta_split_id" value="" />
-              <input type="hidden" name="listname" value="awlist6961315" />
+              <input type="hidden" name="listname" value="awlist6958674" />
               <input type="hidden" name="redirect" value="https://fixyourmovement.com/email-confirmation" />
               <input type="hidden" name="meta_redirect_onlist" value="https://fixyourmovement.com/email-confirmation" />
               <input type="hidden" name="meta_adtracking" value="FCS_Direct_App_Download_no_Assessment" />
