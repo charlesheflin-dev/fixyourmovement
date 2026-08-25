@@ -162,6 +162,14 @@ export default function DownloadApp() {
     logFunnelEvent("landing_reached");
   }, []);
 
+  // When the install screen replaces the opt-in page, reset scroll to top —
+  // React preserves the window scroll offset across the state swap, so without
+  // this the user lands mid-page and has to scroll up. (2026-08-25)
+  useEffect(() => {
+    if (!submitted) return;
+    window.scrollTo(0, 0);
+  }, [submitted]);
+
   const handleEmailFocus = () => {
     if (emailFocusLogged.current) return;
     emailFocusLogged.current = true;
