@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
+import { installUrlWithTracking } from "@/lib/installTracking";
 
 const GET_ASSESSMENT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-assessment-results";
 const INSTALL_URL = "https://app.fixyourmovement.com/install";
+
+// Read a first-party cookie (fcs_anon minted in App.tsx SourceCapture).
+function getCookie(name: string): string | null {
+  const match = document.cookie.split("; ").find(row => row.startsWith(name + "="));
+  return match ? decodeURIComponent(match.split("=")[1]) : null;
+}
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -190,6 +197,11 @@ export default function AssessmentResults() {
   const [posterVisible, setPosterVisible] = useState(true);
 
   const isMobile = useIsMobile();
+
+  // Tracked install URL: stamps fcs_anon + install_src=session so a wall event on
+  // app.fixyourmovement.com joins back to this session's funnel_events row. No-op if
+  // the anon cookie is absent.
+  const installHref = installUrlWithTracking(INSTALL_URL, { anon: getCookie("fcs_anon"), src: "session" });
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -386,7 +398,7 @@ export default function AssessmentResults() {
             {/* Primary CTA */}
             {isMobile ? (
               <a
-                href={INSTALL_URL}
+                href={installHref}
                 className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
               >
                 START MY PLAN &#8594;
@@ -394,7 +406,7 @@ export default function AssessmentResults() {
             ) : (
               <div className="mb-3 flex flex-col items-center gap-3">
                 <img
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(INSTALL_URL)}`}
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(installHref)}`}
                   alt="QR code to install the app"
                   className="w-36 h-36 rounded-xl border border-blue-200 shadow-sm"
                 />

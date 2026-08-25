@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
+import { installUrlWithTracking } from "@/lib/installTracking";
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
@@ -387,6 +388,11 @@ export default function Assessment() {
 
   const isMobile = useIsMobile();
 
+  // Tracked install URL: stamps fcs_anon + install_src=session so a wall event on
+  // app.fixyourmovement.com joins back to this session's funnel_events row. No-op if
+  // the anon cookie is absent.
+  const installHref = installUrlWithTracking(INSTALL_URL, { anon: getCookie("fcs_anon"), src: "session" });
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const emailParam = params.get("email");
@@ -484,7 +490,7 @@ export default function Assessment() {
         await fetch(CREATE_TRIAL_PROFILE_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.replace(/ /g, "+"), ...articleFields(), ...sourceFields() }),
+          body: JSON.stringify({ email: email.replace(/ /g, "+"), anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields() }),
         });
       } catch {
         // Non-fatal
@@ -1018,14 +1024,14 @@ export default function Assessment() {
             {/* Primary CTA */}
             {isMobile ? (
               <a
-                href={INSTALL_URL}
+                href={installHref}
                 className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
               >
                 START MY PLAN &#8594;
               </a>
             ) : (
               <div className="mb-3 flex justify-center">
-                <QRCode url={INSTALL_URL} />
+                <QRCode url={installHref} />
               </div>
             )}
 
