@@ -27,7 +27,6 @@ import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
 import TakeAssessment from "./pages/TakeAssessment";
 import DownloadApp from "./pages/DownloadApp";
 import Assessment from "./pages/Assessment";
-import AssessmentPage from "./pages/AssessmentPage";
 import Unsubscribed from "./pages/Unsubscribed";
 import Checkout from "./pages/Checkout";
 import Results from "./pages/Results";
@@ -134,7 +133,6 @@ const App = () => (
                   <Route path="/lp/newsletter" element={<Navigate to="/lp/take-assessment" replace />} />
                    <Route path="/lp/take-assessment" element={<TakeAssessment />} />
                     <Route path="/lp/download" element={<DownloadApp />} />
-                  <Route path="/assessment-preview" element={<AssessmentPage />} />
                    <Route path="/assessment" element={<Assessment />} />
                    <Route path="/start/*" element={<Navigate to="/lp/take-assessment" replace />} />
                    <Route path="/unsubscribed" element={<Unsubscribed />} />

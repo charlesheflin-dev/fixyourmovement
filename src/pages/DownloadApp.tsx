@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
+import { installUrlWithTracking } from "@/lib/installTracking";
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
@@ -153,6 +154,11 @@ export default function DownloadApp() {
 
   const isMobile = useIsMobile();
 
+  // Tracked install URL: stamps fcs_anon + install_src=session so a wall event on
+  // app.fixyourmovement.com joins back to this session's funnel_events row. No-op if
+  // the anon cookie is absent.
+  const installHref = installUrlWithTracking(INSTALL_URL, { anon: getCookie("fcs_anon"), src: "session" });
+
   const landingLogged = useRef(false);
   const emailFocusLogged = useRef(false);
 
@@ -196,7 +202,7 @@ export default function DownloadApp() {
     fetch(CREATE_TRIAL_PROFILE_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: value, ...articleFields(), ...sourceFields() }),
+      body: JSON.stringify({ email: value, anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields() }),
     }).catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
 
     logFunnelEvent("account_created", { email: value });
@@ -241,7 +247,7 @@ export default function DownloadApp() {
       await fetch(CREATE_TRIAL_PROFILE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: cleanEmail, ...articleFields(), ...sourceFields() }),
+        body: JSON.stringify({ email: cleanEmail, anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields() }),
       });
     } catch {
       // Non-fatal
@@ -759,14 +765,14 @@ export default function DownloadApp() {
 
           {isMobile ? (
             <a
-              href={INSTALL_URL}
+              href={installHref}
               className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-4"
             >
               INSTALL THE APP — START FREE →
             </a>
           ) : (
             <div className="mb-6">
-              <QRCode url={INSTALL_URL} />
+              <QRCode url={installHref} />
             </div>
           )}
 
