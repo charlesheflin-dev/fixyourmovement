@@ -195,8 +195,14 @@ export default function DrJonathanSchutza() {
                 Articles by Dr. Schutza
               </h2>
               <p className="text-slate-600 text-lg leading-relaxed">
-                Dr. Schutza&apos;s published articles are coming soon.
+                Read Dr. Schutza&apos;s latest articles on foot and ankle health.
               </p>
+              <a
+                href="/blog/"
+                className="inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors mt-4"
+              >
+                Read the blog →
+              </a>
             </motion.div>
           </div>
         </section>
