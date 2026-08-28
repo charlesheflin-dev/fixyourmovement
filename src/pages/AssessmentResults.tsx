@@ -382,7 +382,7 @@ export default function AssessmentResults() {
             <div className="bg-blue-600 rounded-xl px-5 py-5 mb-6">
               <p className="text-white text-sm font-bold mb-2">We're confident enough to let you go first.</p>
               <p className="text-blue-100 text-sm leading-relaxed mb-3">
-                Follow your prescribed protocol for 7 days. Log daily. If your pain doesn't go down, you don't pay — ever. No card required to start. No commitment beyond showing up.
+                Follow your prescribed protocol and log 7 days. If your pain doesn't go down, you don't pay — ever. No card required to start. No commitment beyond showing up.
               </p>
               <p className="text-blue-200 text-xs leading-relaxed">
                 If at-home, guided recovery is not right for you, you don't pay. No card required to start.
@@ -415,7 +415,7 @@ export default function AssessmentResults() {
             )}
 
             <p className="text-center text-slate-400 text-sm mb-8">
-              Free for 7 days • No card required • Takes about a minute to set up
+              Free for 7 days of logging • No card required • Takes about a minute to set up
             </p>
 
             {/* User Journey Carousel */}

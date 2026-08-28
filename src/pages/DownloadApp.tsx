@@ -290,7 +290,7 @@ export default function DownloadApp() {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              FREE 7-DAY TRIAL
+              FREE TRIAL · LOG 7 DAYS
             </div>
           </div>
         </header>
@@ -375,7 +375,7 @@ export default function DownloadApp() {
           {/* Form card */}
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4">
             <h2 className="text-3xl font-extrabold text-slate-900 text-center mb-2">
-              Get Your Free 7-Day Access
+              Get Your Free Access — Log 7 Days
             </h2>
             <p className="text-blue-600 font-semibold text-base text-center mb-2">
               Your first step is simple.
@@ -560,11 +560,11 @@ export default function DownloadApp() {
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            Free 7-Day Trial
+            Free Trial — 7 Days of Logging
           </Pill>
 
           <h1 className="text-3xl font-extrabold text-slate-900 text-center leading-tight mb-3">
-            See How Your Foot Responds<br />In The Next 7 Days.
+            See How Your Foot Responds<br />Over Your First 7 Days of Logging.
           </h1>
           <p className="text-slate-500 text-base text-center leading-relaxed mb-5 max-w-sm mx-auto">
             No credit card. No commitment. A clear daily plan and a way to track whether it's working.
@@ -757,7 +757,7 @@ export default function DownloadApp() {
         {/* ── SECTION 6 — FINAL CTA ───────────────────────────────── */}
         <div className="mb-8">
           <h2 className="text-2xl font-extrabold text-slate-900 text-center leading-tight mb-3">
-            Start Today. See What 7 Days Does.
+            Start Today. See What 7 Days of Logging Does.
           </h2>
           <p className="text-slate-500 text-sm text-center leading-snug mb-6 max-w-xs mx-auto">
             About 10–15 minutes per day. No credit card. No commitment.

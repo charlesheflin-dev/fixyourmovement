@@ -13,9 +13,9 @@ The homepage is not the sales page. The homepage emotionally stabilizes visitors
 
 ## The Funnel — How It Works Step by Step
 
-Path 1 — Assessment First (Primary Path): Visitor lands on fixyourmovement.com, opts in to take the free assessment at /lp/take-assessment (name + email, no credit card), confirms email, completes 5 HOOK questions to determine their archetype, completes the 21-question FAAM, sees their personalized results page, downloads the free 7-day trial app, and after 7 days receives a personalized results page at /results/:userId with an upgrade CTA.
+Path 1 — Assessment First (Primary Path): Visitor lands on fixyourmovement.com, opts in to take the free assessment at /lp/take-assessment (name + email, no credit card), confirms email, completes 5 HOOK questions to determine their archetype, completes the 21-question FAAM, sees their personalized results page, downloads the free trial app, and after completing 7 days of logging receives a personalized results page at /results/:userId with an upgrade CTA.
 
-Path 2 — Direct App Download: Visitor goes to /lp/download, opts in, confirms email, and installs the app directly without taking the assessment. Less personalization but same 7-day free trial.
+Path 2 — Direct App Download: Visitor goes to /lp/download, opts in, confirms email, and installs the app directly without taking the assessment. Less personalization but same free trial (7 days of logging).
 
 Path 3 — Walkthrough First: Visitor goes to /walkthrough, watches the overview video, reads the full offer, and CTAs link to /checkout where they choose monthly or one-time before going to Whop.
 
@@ -29,13 +29,13 @@ The FAAM (Foot and Ankle Ability Measure) is a validated clinical tool used in p
 
 Assessment results are stored and accessible at /assessment-results?email= — visitors can return to them at any time. Their FAAM score and archetype are also used to pre-populate their profile when they start the app.
 
-## The Free 7-Day Trial — What It Is and What to Expect
+## The Free Trial — What It Is and What to Expect
 
-After completing the assessment, visitors are invited to download the Foot Capacity System app for a free 7-day trial. No credit card required to start. The app is available at app.fixyourmovement.com/install.
+After completing the assessment, visitors are invited to download the Foot Capacity System app for a free trial. No credit card required to start. The app is available at app.fixyourmovement.com/install.
 
 What they get in the trial: guided daily sessions from Phase 1 (Reset) of the 12-week program, daily symptom and pain logging, progress tracking, and the structure of the full program — they experience what it's actually like to follow it.
 
-After 7 days, they receive a personalized results page (via email and in-app) showing their actual data: days logged, sessions completed, pain trend, and where they are in the recovery roadmap. This page includes the upgrade offer.
+After completing 7 days of logging, they receive a personalized results page (via email and in-app) showing their actual data: days logged, sessions completed, pain trend, and where they are in the recovery roadmap. This page includes the upgrade offer.
 
 ## The Four Recovery Archetypes
 
@@ -83,7 +83,7 @@ Do not present this as a target to reach, a commitment, or a total amount to pay
 
 ## Why the Assessment Is Better Than Jumping Straight to the Program
 
-If they haven't taken the assessment: recommend the assessment first. It's free and takes 3 minutes. They'll know exactly where they stand before spending any money. Their FAAM score gets loaded into the app automatically. They'll understand which archetype they are — so their email guidance and recovery framing will be specific to their situation. The free 7-day trial follows the assessment — they can try the actual program before paying anything.
+If they haven't taken the assessment: recommend the assessment first. It's free and takes 3 minutes. They'll know exactly where they stand before spending any money. Their FAAM score gets loaded into the app automatically. They'll understand which archetype they are — so their email guidance and recovery framing will be specific to their situation. The free trial follows the assessment — they can try the actual program before paying anything.
 
 If they have already taken the assessment: don't suggest it again. Move them toward the trial or the full program depending on where they are.
 
@@ -91,7 +91,7 @@ If they are already a customer: move them toward app support, Dr. Jonathan's cli
 
 ## What the Website Promises — Confirmed Claims
 
-These are claims that appear in site copy and are substantiated: Dr. Jonathan Schutza holds a Doctor of Physical Therapy (DPT) degree and is a licensed PT. The program is 12 weeks with optional Maintenance beyond. Sessions are 10–15 minutes per day, home-based, no equipment required. The FAAM is a validated clinical tool used in physical therapy and sports medicine. 30-day satisfaction guarantee. Program works for chronic cases — no time limit, symptom-dependent pacing. The free trial is 7 days with no credit card required.
+These are claims that appear in site copy and are substantiated: Dr. Jonathan Schutza holds a Doctor of Physical Therapy (DPT) degree and is a licensed PT. The program is 12 weeks with optional Maintenance beyond. Sessions are 10–15 minutes per day, home-based, no equipment required. The FAAM is a validated clinical tool used in physical therapy and sports medicine. 30-day satisfaction guarantee. Program works for chronic cases — no time limit, symptom-dependent pacing. The free trial runs until the user completes 7 days of logging, with no credit card required.
 
 Dr. Jonathan personally monitors member progress through the in-app messaging system, provides guidance during recovery, and helps members navigate setbacks, questions, and flare-ups. This applies to all members including free trial users.
 
