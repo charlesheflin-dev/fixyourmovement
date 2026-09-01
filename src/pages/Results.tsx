@@ -105,7 +105,7 @@ function HeroSection({ data, insights, insightsLoading }: { data: ResultsData; i
           {[
             { icon: "📅", value: data.daysLogged, label: "Days Logged" },
             { icon: "👟", value: data.trialSessionsCompleted, label: "Recovery Sessions" },
-            { icon: "🔥", value: data.currentStreak, label: "Day Streak" },
+            { icon: "🔥", value: data.currentStreak, label: "Days Checked In" },
           ].map((item, i) => (
             <div key={i} className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-3 text-center">
               <p className="text-2xl mb-1">{item.icon}</p>
@@ -254,7 +254,7 @@ function AccomplishmentsSection({ data, insights, insightsLoading }: { data: Res
             { icon: "📅", value: data.trialSessionsCompleted, label: "Recovery Sessions", sub: `You completed ${data.trialSessionsCompleted} guided recovery sessions.` },
             { icon: "📊", value: data.daysLogged, label: "Symptom Check-ins", sub: "You logged your pain and symptoms every day." },
             { icon: "💪", value: data.totalReps > 0 ? data.totalReps : "—", label: "Exercise Reps", sub: "You put in the reps and gave your foot what it needs." },
-            { icon: "🔥", value: data.currentStreak, label: "Day Streak", sub: "You built consistency and kept your streak alive." },
+            { icon: "🔥", value: data.currentStreak, label: "Days Checked In", sub: "You kept showing up and checking in." },
           ].map((item, i) => (
             <div key={i} className="bg-white rounded-xl border border-slate-200 p-4 text-center shadow-sm">
               <p className="text-2xl mb-2">{item.icon}</p>
@@ -705,7 +705,7 @@ function FlatHeroSection({ data }: { data: ResultsData }) {
           {[
             { icon: "📅", value: data.daysLogged, label: "Days Logged" },
             { icon: "👟", value: data.trialSessionsCompleted, label: "Recovery Sessions" },
-            { icon: "🔥", value: data.currentStreak, label: "Day Streak" },
+            { icon: "🔥", value: data.currentStreak, label: "Days Checked In" },
           ].map((item, i) => (
             <div key={i} className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-3 text-center">
               <p className="text-2xl mb-1">{item.icon}</p>
