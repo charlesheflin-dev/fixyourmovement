@@ -11,17 +11,6 @@ function getCookie(name: string): string | null {
   return match ? decodeURIComponent(match.split("=")[1]) : null;
 }
 
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
-
 function getFaamBand(score: number): { tag: string; label: string; color: string; bg: string; border: string } {
   if (score >= 80) return { tag: "faam_high", label: "Mild Limitation", color: "#16A34A", bg: "#F0FDF4", border: "#86EFAC" };
   if (score >= 50) return { tag: "faam_moderate", label: "Moderate Limitation", color: "#D97706", bg: "#FFFBEB", border: "#FCD34D" };
@@ -196,7 +185,6 @@ export default function AssessmentResults() {
   const [error, setError] = useState(false);
   const [posterVisible, setPosterVisible] = useState(true);
 
-  const isMobile = useIsMobile();
 
   // Tracked install URL: stamps fcs_anon + install_src=session so a wall event on
   // app.fixyourmovement.com joins back to this session's funnel_events row. No-op if
@@ -396,23 +384,12 @@ export default function AssessmentResults() {
             </div>
 
             {/* Primary CTA */}
-            {isMobile ? (
-              <a
-                href={installHref}
-                className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
-              >
-                START MY PLAN &#8594;
-              </a>
-            ) : (
-              <div className="mb-3 flex flex-col items-center gap-3">
-                <img
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(installHref)}`}
-                  alt="QR code to install the app"
-                  className="w-36 h-36 rounded-xl border border-blue-200 shadow-sm"
-                />
-                <p className="text-slate-500 text-xs">Scan with your phone to install the app</p>
-              </div>
-            )}
+            <a
+              href={installHref}
+              className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-3"
+            >
+              START MY PLAN &#8594;
+            </a>
 
             <p className="text-center text-slate-400 text-sm mb-8">
               Free for 7 days of logging • No card required • Takes about a minute to set up
