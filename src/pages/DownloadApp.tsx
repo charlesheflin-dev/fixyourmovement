@@ -737,11 +737,11 @@ export default function DownloadApp() {
           <div className="bg-slate-50 rounded-2xl border border-slate-200 px-5 py-5 text-center">
             {email ? (
               <p className="text-slate-600 text-sm mb-4">
-                Want the install link sent to <span className="font-semibold text-slate-900">{email}</span>?
+                Want your sign-in link sent to <span className="font-semibold text-slate-900">{email}</span>?
               </p>
             ) : (
               <p className="text-slate-600 text-sm mb-4">
-                Want us to send the install link to your email?
+                Want us to send your sign-in link to your email?
               </p>
             )}
             {emailSent ? (
@@ -749,7 +749,7 @@ export default function DownloadApp() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <p className="text-green-700 text-sm font-semibold">Install link sent — check your inbox.</p>
+                <p className="text-green-700 text-sm font-semibold">Sign-in link sent — check your inbox.</p>
               </div>
             ) : (
               <button
@@ -758,7 +758,7 @@ export default function DownloadApp() {
                 disabled={emailLoading || !email}
                 className="w-full bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 font-semibold text-sm py-3 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {emailLoading ? "Sending…" : "Send the Download Instructions to My Email"}
+                {emailLoading ? "Sending…" : "Email Me My Sign-In Link"}
               </button>
             )}
           </div>
