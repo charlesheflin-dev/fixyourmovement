@@ -11,45 +11,6 @@ const VIDEO_ID = "b37100f8162e1ab91cf86c9e284447da";
 const VIDEO_THUMBNAIL_ID = "0a87b6a7-6fb2-48dc-9e26-aa5c134c0200";
 const VIDEO_POSTER_SRC = `https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/${VIDEO_THUMBNAIL_ID}/public`;
 
-// ─── useIsMobile ────────────────────────────────────────────────────────────────
-// User-agent based, not viewport-width based. Width (window.innerWidth < 768)
-// was the previous check and is unreliable here: a phone in landscape can
-// report >= 768px, and email links opened in an in-app browser/WebView
-// (Gmail app, etc.) can report unusual viewport metrics that don't reflect
-// the actual device. Real-world reports (2026-07-13): mobile users on the
-// download page were shown the desktop QR-code branch instead of the
-// install button. Computed synchronously in the useState initializer
-// (rather than via useEffect) so there's no one-frame flash of the wrong
-// branch before it corrects itself, and no resize listener needed since a
-// device's user-agent doesn't change when its window resizes. iPad is
-// intentionally included as mobile — this is the phone/tablet install path.
-function useIsMobile() {
-  const [isMobile] = useState(() =>
-    /Android|iPhone|iPad|iPod|Mobile|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-  );
-  return isMobile;
-}
-
-// ─── QR Code ────────────────────────────────────────────────────────────────────
-function QRCode({ url }: { url: string }) {
-  return (
-    <div className="flex flex-col items-center gap-3">
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-md p-4 inline-block">
-        <img
-          src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(url)}&color=1e3a5f&bgcolor=ffffff&qzone=1`}
-          alt="Scan to install the app"
-          width={160}
-          height={160}
-          className="rounded-lg"
-        />
-      </div>
-      <p className="text-slate-500 text-sm text-center">Scan with your phone camera to install the app</p>
-      <a href={url} className="text-blue-600 text-xs font-medium hover:underline">
-        Or open on your phone: app.fixyourmovement.com/install
-      </a>
-    </div>
-  );
-}
 
 // ─── Pill ───────────────────────────────────────────────────────────────────────
 function Pill({ children }: { children: React.ReactNode }) {
@@ -152,7 +113,6 @@ export default function DownloadApp() {
   const [objectionOpen, setObjectionOpen] = useState<number | null>(null);
   const [posterVisible, setPosterVisible] = useState(true);
 
-  const isMobile = useIsMobile();
 
   // Tracked install URL: stamps fcs_anon + install_src=session so a wall event on
   // app.fixyourmovement.com joins back to this session's funnel_events row. No-op if
@@ -763,18 +723,12 @@ export default function DownloadApp() {
             About 10–15 minutes per day. No credit card. No commitment.
           </p>
 
-          {isMobile ? (
-            <a
-              href={installHref}
-              className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-4"
-            >
-              INSTALL THE APP — START FREE →
-            </a>
-          ) : (
-            <div className="mb-6">
-              <QRCode url={installHref} />
-            </div>
-          )}
+          <a
+            href={installHref}
+            className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base text-center py-4 rounded-xl transition-colors mb-4"
+          >
+            START MY PLAN &#8594;
+          </a>
 
 <p className="text-center text-slate-500 text-sm leading-relaxed max-w-xs mx-auto mb-8">
             No card required. The trial exists because we're confident in what happens in the first week.

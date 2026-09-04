@@ -55,7 +55,7 @@ const ThankYou = () => {
                         <div className="flex items-start gap-3 bg-green-50 border border-green-200 rounded-xl px-4 py-4 mb-6 text-left">
                             <CheckCircle size={20} className="text-green-500 shrink-0 mt-0.5" />
                             <p className="text-green-800 text-base font-body leading-relaxed">
-                            If you already installed the app during your trial, you're all set. Simply open the app and continue where you left off.
+                            You're all set — just open the app and pick up right where you left off.
                             </p>
                         </div>
                         <a
