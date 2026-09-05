@@ -357,12 +357,15 @@ export default function Assessment() {
 
   const [faamScore, setFaamScore] = useState<number>(0);
   const [posterVisible, setPosterVisible] = useState(true);
+  // One-time auto-login token from create-trial-profile (post-FAAM mint). Stamped
+  // onto the install link so a just-registered user lands in-session (no OTP).
+  const [otlToken, setOtlToken] = useState<string | null>(null);
 
 
   // Tracked install URL: stamps fcs_anon + install_src=session so a wall event on
   // app.fixyourmovement.com joins back to this session's funnel_events row. No-op if
   // the anon cookie is absent.
-  const installHref = installUrlWithTracking(INSTALL_URL, { anon: getCookie("fcs_anon"), src: "session" });
+  const installHref = installUrlWithTracking(INSTALL_URL, { anon: getCookie("fcs_anon"), src: "session", otl: otlToken });
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -456,13 +459,20 @@ export default function Assessment() {
       } catch {
         // Non-fatal
       }
-      // Create trial profile — non-fatal, must run after save-assessment
+      // Create trial profile — non-fatal, must run after save-assessment. Capture the
+      // one-time auto-login token from the response so the install link can carry it
+      // (?fcs_otl=) and the user lands in-session. Any failure -> otlToken stays null
+      // -> bare install link -> normal OTP sign-in. Never blocks the funnel.
       try {
-        await fetch(CREATE_TRIAL_PROFILE_URL, {
+        const trialRes = await fetch(CREATE_TRIAL_PROFILE_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: email.replace(/ /g, "+"), anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields() }),
         });
+        const trialData = await trialRes.json().catch(() => null);
+        if (trialData && typeof trialData.otl_token === "string" && trialData.otl_token) {
+          setOtlToken(trialData.otl_token);
+        }
       } catch {
         // Non-fatal
       }

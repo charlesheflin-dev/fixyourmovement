@@ -112,12 +112,17 @@ export default function DownloadApp() {
 
   const [objectionOpen, setObjectionOpen] = useState<number | null>(null);
   const [posterVisible, setPosterVisible] = useState(true);
+  // One-time auto-login token from create-trial-profile. Captured reactively from the
+  // fire-and-forget mint below; when it lands, installHref restamps with ?fcs_otl= so a
+  // just-registered user lands in-session. If the user taps before it arrives (or it
+  // fails), the bare link -> normal OTP sign-in. Never blocks the instant screen swap.
+  const [otlToken, setOtlToken] = useState<string | null>(null);
 
 
   // Tracked install URL: stamps fcs_anon + install_src=session so a wall event on
   // app.fixyourmovement.com joins back to this session's funnel_events row. No-op if
   // the anon cookie is absent.
-  const installHref = installUrlWithTracking(INSTALL_URL, { anon: getCookie("fcs_anon"), src: "session" });
+  const installHref = installUrlWithTracking(INSTALL_URL, { anon: getCookie("fcs_anon"), src: "session", otl: otlToken });
 
   const landingLogged = useRef(false);
   const emailFocusLogged = useRef(false);
@@ -159,11 +164,20 @@ export default function DownloadApp() {
     // Mint the account now — the real create that used to run only after the
     // confirmation return. No stage_only; article + source attribution ride the body
     // (cookie survives now that there's no inbox hop), matched field-for-field.
+    // Fire-and-forget (the screen swaps instantly below); when the response lands we
+    // capture otl_token and installHref restamps with ?fcs_otl= for in-session entry.
     fetch(CREATE_TRIAL_PROFILE_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: value, anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields() }),
-    }).catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data && typeof data.otl_token === "string" && data.otl_token) {
+          setOtlToken(data.otl_token);
+        }
+      })
+      .catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
 
     logFunnelEvent("account_created", { email: value });
 
