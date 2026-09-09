@@ -11,29 +11,29 @@ export default function AssessmentCTA() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-4">
-            Free Assessment — No Cost, No Obligation
+            Free Recovery Plan — No Cost, No Obligation
           </p>
 
           <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-4">
-            Not sure where to start? Find out where you stand.
+            Not sure where to start? Get your free recovery plan.
           </h2>
 
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            Take the free Foot Capacity Assessment — a short, structured tool that helps identify what may be contributing to your foot pain and what to focus on first. 100% free. Takes about 3 minutes.
+            Answer a few quick questions and we'll build your free recovery plan — it identifies what may be contributing to your foot pain and what to focus on first. 100% free. Takes about 3 minutes.
           </p>
 
           {/* Benefits strip */}
           <div className="bg-slate-50 rounded-2xl p-5 mb-8">
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4 text-center">
-              After completing the assessment, you'll discover:
+              Your free recovery plan shows you:
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {[
-                "Which recovery profile fits your situation",
+                "Which recovery phase you start in",
                 "What may be slowing your progress",
-                "Why certain advice hasn't worked for you",
-                "How your symptoms compare to your function level",
-                "What to focus on next",
+                "Why generic advice hasn't worked for you",
+                "Where your foot function stands today",
+                "What to focus on first",
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="text-blue-600 font-bold shrink-0 mt-0.5 text-sm">→</span>
@@ -47,13 +47,13 @@ export default function AssessmentCTA() {
           <div className="rounded-2xl overflow-hidden border border-slate-200">
             <div className="px-6 py-5 flex flex-col sm:flex-row items-center gap-4" style={{ background: "#0d2550" }}>
               <p className="text-white text-sm leading-relaxed flex-1">
-                Take the Recovery Profile Assessment and the Foot and Ankle Ability Measure now and get personalized insights based on you.
+                Answer a few quick questions and we'll build your recovery plan — free, personalized to you.
               </p>
-              <a href="/lp/take-assessment"
+              <a href="/lp/download"
                 className="flex-shrink-0 text-white font-bold text-sm rounded-xl px-5 py-3 flex items-center gap-2 whitespace-nowrap transition-opacity hover:opacity-90"
                 style={{ background: "#e8531a" }}
               >
-                Start my assessments →
+                Get My Free Recovery Plan →
               </a>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 px-6 py-3 bg-white border-t border-slate-100">

@@ -66,25 +66,25 @@ export default function ExitPopup() {
             Before you go — 100% free
           </p>
           <p className="text-white text-xl font-bold leading-snug mb-1">
-            The next step isn't more guessing.
+            Don't leave without your recovery plan.
           </p>
           <p className="text-sm" style={{ color: "#93b8d8" }}>
-            It's understanding where you are right now.
+            It's free, and it's built around your answers.
           </p>
         </div>
 
         {/* Benefits strip */}
         <div className="px-6 py-4 border-b border-slate-100">
           <p className="text-center text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#4a6fa5" }}>
-            After completing the assessments, you'll discover:
+            Your free recovery plan shows you:
           </p>
           <div className="grid grid-cols-5 gap-2 text-center">
             {[
-              { icon: "🔍", label: "Which recovery profile fits your situation" },
+              { icon: "🔍", label: "Which recovery phase you start in" },
               { icon: "🐢", label: "What may be slowing your progress" },
-              { icon: "↔️", label: "Why certain advice hasn't worked for you" },
-              { icon: "📈", label: "How your symptoms compare to your function level" },
-              { icon: "✅", label: "What to focus on next" },
+              { icon: "↔️", label: "Why generic advice hasn't worked for you" },
+              { icon: "📈", label: "Where your foot function stands today" },
+              { icon: "✅", label: "What to focus on first" },
             ].map((item, i) => (
               <div key={i}>
                 <div className="text-xl mb-1">{item.icon}</div>
@@ -97,15 +97,15 @@ export default function ExitPopup() {
         {/* CTA block */}
         <div className="px-6 py-4 flex flex-col sm:flex-row items-center gap-4" style={{ background: "#0d2550" }}>
           <p className="text-white text-sm leading-relaxed flex-1">
-            Take the Recovery Profile Assessment and the Foot and Ankle Ability Measure now and get personalized insights based on you.
+            Answer a few quick questions and we'll build your recovery plan — free, personalized to you.
           </p>
           
-            <a href="/lp/take-assessment"
+            <a href="/lp/download"
             className="flex-shrink-0 text-white font-bold text-sm rounded-xl px-5 py-3 flex items-center gap-2 whitespace-nowrap transition-opacity hover:opacity-90"
             style={{ background: "#e8531a" }}
             onClick={dismiss}
           >
-            Start my assessments →
+            Get My Free Recovery Plan →
           </a>
         </div>
 
