@@ -232,7 +232,7 @@ export default function DownloadApp() {
     },
     {
       q: "How is 10 minutes a day going to do anything?",
-      a: "Consistency with the right protocol beats occasional long sessions every time. The daily log tells the app where you are, which determines what you do next. That feedback loop is what makes the difference — not the length of the session.",
+      a: "Consistency with the right protocol beats occasional long sessions every time. Your daily check-in tells the app where you are, which determines what you do next. That feedback loop is what makes the difference — not the length of the session.",
     },
   ];
 
@@ -255,7 +255,7 @@ export default function DownloadApp() {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              FREE TRIAL · LOG 7 DAYS
+              FREE RECOVERY PLAN
             </div>
           </div>
         </header>
@@ -321,7 +321,7 @@ export default function DownloadApp() {
             <div className="border-t border-slate-100 pt-6">
               <div className="grid grid-cols-3 gap-4 text-center">
                 {[
-                  { num: "1", label: "Assess", body: "Find your starting point and get personalized." },
+                  { num: "1", label: "Assess", body: "Answer a few quick questions to build your recovery plan." },
                   { num: "2", label: "Follow Your Plan", body: "Get daily guidance based on how your foot feels." },
                   { num: "3", label: "Track Progress", body: "See what's working and keep moving forward." },
                 ].map((step, i) => (
@@ -340,15 +340,15 @@ export default function DownloadApp() {
           {/* Form card */}
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4">
             <h2 className="text-3xl font-extrabold text-slate-900 text-center mb-2">
-              Get Your Free Access — Log 7 Days
+              Get Your Free Recovery Plan
             </h2>
             <p className="text-blue-600 font-semibold text-base text-center mb-2">
               Your first step is simple.
             </p>
             <p className="text-slate-500 text-sm text-center mb-6 leading-relaxed">
               Enter your name and email, and you'll go straight into the app<br />
-              — no download, nothing to install — to start your<br />
-              first week with Dr. Jonathan.
+              — no download, nothing to install — to answer a few quick<br />
+              questions and get your recovery plan from Dr. Jonathan.
             </p>
 
             <form
@@ -397,7 +397,7 @@ export default function DownloadApp() {
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-4 rounded-xl transition-colors"
               >
-                GET INSTANT ACCESS →
+                Get My Free Recovery Plan →
               </button>
 
               <div className="flex items-center justify-center gap-1.5 text-slate-400 text-xs mt-2">
@@ -460,8 +460,8 @@ export default function DownloadApp() {
                       <polyline points="9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
                     </svg>
                   ),
-                  label: "Log your pain",
-                  body: "Track your foot's response daily.",
+                  label: "Check in daily",
+                  body: "Track your foot's response at each check-in.",
                 },
                 {
                   icon: (
@@ -613,11 +613,11 @@ export default function DownloadApp() {
           {/* Second opt-in form */}
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4">
             <h2 className="text-3xl font-extrabold text-slate-900 text-center mb-2">
-              Ready to Start? Get Your Free Access
+              Ready to Start? Get Your Free Recovery Plan
             </h2>
             <p className="text-slate-500 text-sm text-center mb-6 leading-relaxed">
               Enter your name and email — you'll go straight into the app,<br />
-              no download required, to start your first week.
+              no download required, to build your recovery plan.
             </p>
 
             <form
@@ -666,7 +666,7 @@ export default function DownloadApp() {
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-4 rounded-xl transition-colors"
               >
-                GET INSTANT ACCESS →
+                Get My Free Recovery Plan →
               </button>
 
               <div className="flex items-center justify-center gap-1.5 text-slate-400 text-xs mt-2">
@@ -746,7 +746,7 @@ export default function DownloadApp() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-            <p className="text-slate-400 text-xs">Free for 7 days · Built by Dr. Jonathan Schutza, PT, DPT</p>
+            <p className="text-slate-400 text-xs">Free recovery plan · Built by Dr. Jonathan Schutza, PT, DPT</p>
           </div>
         </div>
 
