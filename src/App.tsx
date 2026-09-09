@@ -24,7 +24,6 @@ import CookieConsent from "./components/CookieConsent.tsx";
 import ExitPopup from "./components/ExitPopup.tsx";
 import EmailConfirmation from "./pages/EmailConfirmation";
 import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
-import TakeAssessment from "./pages/TakeAssessment";
 import DownloadApp from "./pages/DownloadApp";
 import Assessment from "./pages/Assessment";
 import Unsubscribed from "./pages/Unsubscribed";
@@ -130,11 +129,11 @@ const App = () => (
                   <Route path="/oldindex" element={<Index_archive />} />
                   <Route path="/oldwalkthrough" element={<Walkthrough_archive />} />
                 <Route path="/email-confirmation" element={<EmailConfirmation />} />
-                  <Route path="/lp/newsletter" element={<Navigate to="/lp/take-assessment" replace />} />
-                   <Route path="/lp/take-assessment" element={<TakeAssessment />} />
+                  <Route path="/lp/newsletter" element={<Navigate to="/lp/download" replace />} />
+                   <Route path="/lp/take-assessment" element={<Navigate to="/lp/download" replace />} />
                     <Route path="/lp/download" element={<DownloadApp />} />
                    <Route path="/assessment" element={<Assessment />} />
-                   <Route path="/start/*" element={<Navigate to="/lp/take-assessment" replace />} />
+                   <Route path="/start/*" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/unsubscribed" element={<Unsubscribed />} />
                    <Route path="/checkout" element={<Checkout />} />
                    <Route path="/survey/:userId" element={<PostTrialSurvey />} />
