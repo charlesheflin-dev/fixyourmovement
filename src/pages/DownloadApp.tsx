@@ -94,12 +94,49 @@ function logFunnelEvent(event: string, extra?: Record<string, unknown>) {
 }
 
 // ─── Main component ─────────────────────────────────────────────────────────────
+// ─── Verified account provisioning (build-spec A1/A2) ────────────────────────────
+// Calls create-trial-profile, retries transient failures, and reports whether a REAL
+// account now exists. Success = HTTP ok AND action in {created, resent}. A browser fetch
+// resolves even on HTTP 500, so res.ok must be checked explicitly — that unchecked case
+// was the source of the silent misses. Idempotent server-side, so retrying is safe.
+async function createTrialProfileVerified(value: string): Promise<{ ok: boolean; otlToken: string | null }> {
+  const body = JSON.stringify({ email: value, anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields() });
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const res = await fetch(CREATE_TRIAL_PROFILE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body,
+      });
+      if (res.ok) {
+        const data = await res.json().catch(() => null);
+        const action = data && typeof data.action === "string" ? data.action : null;
+        if (action === "created" || action === "resent") {
+          const otlToken = data && typeof data.otl_token === "string" && data.otl_token ? data.otl_token : null;
+          return { ok: true, otlToken };
+        }
+      }
+    } catch (err) {
+      console.error("[DownloadApp] create-trial-profile attempt failed:", err);
+    }
+    if (attempt < 2) await new Promise(r => setTimeout(r, 600 * (attempt + 1)));
+  }
+  return { ok: false, otlToken: null };
+}
+
 export default function DownloadApp() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const [emailSent, setEmailSent] = useState(false);
   const [emailLoading, setEmailLoading] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+
+  // Provisioning UX (build-spec A1): submitting = the create call is in flight;
+  // provisionError = the create did not confirm a real account, so stay on the form and
+  // offer a retry instead of advancing to a false "You're In".
+  const [submitting, setSubmitting] = useState(false);
+  const [provisionError, setProvisionError] = useState(false);
 
   const [objectionOpen, setObjectionOpen] = useState<number | null>(null);
   const [posterVisible, setPosterVisible] = useState(true);
@@ -138,8 +175,9 @@ export default function DownloadApp() {
     logFunnelEvent("email_field_viewed");
   };
 
-  const handleDownloadSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleDownloadSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (submitting) return;
     const form = e.currentTarget;
     const emailInput = form.querySelector('input[name="email"]') as HTMLInputElement | null;
     const value = emailInput?.value?.trim().toLowerCase();
@@ -150,30 +188,14 @@ export default function DownloadApp() {
 
     logFunnelEvent("email_submitted");
     setEmail(value);
+    setProvisionError(false);
+    setSubmitting(true);
     document.cookie = `fcs_email=${encodeURIComponent(value)}; expires=Fri, 31 Dec 2099 23:59:59 GMT; path=/; SameSite=Lax`;
-
-    // Mint the account now — the real create that used to run only after the
-    // confirmation return. No stage_only; article + source attribution ride the body
-    // (cookie survives now that there's no inbox hop), matched field-for-field.
-    // Fire-and-forget (the screen swaps instantly below); when the response lands we
-    // capture otl_token and installHref restamps with ?fcs_otl= for in-session entry.
-    fetch(CREATE_TRIAL_PROFILE_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: value, anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields() }),
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data && typeof data.otl_token === "string" && data.otl_token) {
-          setOtlToken(data.otl_token);
-        }
-      })
-      .catch(err => console.error("[DownloadApp] create-trial-profile error:", err));
-
-    logFunnelEvent("account_created", { email: value });
 
     // Background add to AWeber (main list, per the form's listname) — full-fidelity
     // replay of the form's own fields; no-cors keepalive; the native redirect is bypassed.
+    // Fired before the awaited create so a paid-intent lead is never lost, regardless of
+    // provisioning outcome (build-spec A4).
     try {
       const params = new URLSearchParams();
       new FormData(form).forEach((v, k) => params.append(k, String(v)));
@@ -187,38 +209,38 @@ export default function DownloadApp() {
       // Non-fatal
     }
 
-    // Origin attribution stage — retained until the body-path is verified on staging
-    // (build-spec change-set #3); harmless if it leaves an unconsumed staged row.
-    try {
-      fetch(CREATE_TRIAL_PROFILE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({ email: value, ...articleFields(), ...sourceFields(), stage_only: true }),
-        keepalive: true,
-      }).catch(() => {});
-    } catch {
-      // Non-fatal
-    }
+    // Mint the account — AWAIT and VERIFY (build-spec A1/A2). Advance to the install
+    // screen ONLY when the edge function confirms a real account exists; on failure, stay
+    // on the form and show a retry instead of a false "You're In".
+    const provisioned = await createTrialProfileVerified(value);
 
-    // Straight to the install screen in-session — no inbox trip.
-    setSubmitted(true);
+    if (provisioned.ok) {
+      if (provisioned.otlToken) setOtlToken(provisioned.otlToken);
+      logFunnelEvent("account_created", { email: value });
+      setSubmitting(false);
+      setSubmitted(true);
+    } else {
+      logFunnelEvent("provision_failed");
+      setSubmitting(false);
+      setProvisionError(true);
+    }
   };
 
   const handleSendEmail = async () => {
     if (emailSent || emailLoading) return;
     setEmailLoading(true);
+    setEmailError(false);
     const cleanEmail = email.trim().replace(/ /g, "+").toLowerCase();
-    try {
-      await fetch(CREATE_TRIAL_PROFILE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: cleanEmail, anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields() }),
-      });
-    } catch {
-      // Non-fatal
-    }
+    // Reuse the verified provisioning helper — by this point the account already exists
+    // (the submit path only advances on a confirmed account), so this is a link RESEND.
+    // Only show "sent" when the edge function actually confirms it (build-spec A3).
+    const sent = await createTrialProfileVerified(cleanEmail);
     setEmailLoading(false);
-    setEmailSent(true);
+    if (sent.ok) {
+      setEmailSent(true);
+    } else {
+      setEmailError(true);
+    }
   };
 
   const objections = [
@@ -393,11 +415,18 @@ export default function DownloadApp() {
                 />
               </div>
 
+              {provisionError && (
+                <p className="text-red-600 text-sm text-center font-medium">
+                  Something went wrong creating your account. Please try again.
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-4 rounded-xl transition-colors"
+                disabled={submitting}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-4 rounded-xl transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Get My Free Recovery Plan →
+                {submitting ? "Creating your account…" : "Get My Free Recovery Plan →"}
               </button>
 
               <div className="flex items-center justify-center gap-1.5 text-slate-400 text-xs mt-2">
@@ -662,11 +691,18 @@ export default function DownloadApp() {
                 />
               </div>
 
+              {provisionError && (
+                <p className="text-red-600 text-sm text-center font-medium">
+                  Something went wrong creating your account. Please try again.
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-4 rounded-xl transition-colors"
+                disabled={submitting}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-4 rounded-xl transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Get My Free Recovery Plan →
+                {submitting ? "Creating your account…" : "Get My Free Recovery Plan →"}
               </button>
 
               <div className="flex items-center justify-center gap-1.5 text-slate-400 text-xs mt-2">
@@ -760,14 +796,19 @@ export default function DownloadApp() {
               <p className="text-green-700 text-sm font-semibold">Sign-in link sent — check your inbox.</p>
             </div>
           ) : (
-            <button
-              type="button"
-              onClick={handleSendEmail}
-              disabled={emailLoading || !email}
-              className="text-slate-500 text-sm underline hover:text-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
-            >
-              {emailLoading ? "Sending…" : "On a different device? Email my sign-in link instead."}
-            </button>
+            <>
+              {emailError && (
+                <p className="text-red-600 text-sm mb-2">Couldn't send the link — please try again.</p>
+              )}
+              <button
+                type="button"
+                onClick={handleSendEmail}
+                disabled={emailLoading || !email}
+                className="text-slate-500 text-sm underline hover:text-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
+              >
+                {emailLoading ? "Sending…" : "On a different device? Email my sign-in link instead."}
+              </button>
+            </>
           )}
         </div>
 
