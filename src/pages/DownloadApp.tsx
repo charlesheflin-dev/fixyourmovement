@@ -72,6 +72,26 @@ function sourceFields(): { first_source: string | null; last_source: string | nu
     last_source:  sanitizeArticleSlug(getCookie("fcs_last_source")),
   };
 }
+// GA4 client_id contains a dot, so the source/article gate rejects it — dot-tolerant variant.
+function sanitizeClientId(v: string | null): string | null {
+  if (!v) return null;
+  const s = v.trim();
+  return /^[A-Za-z0-9._-]{1,64}$/.test(s) ? s : null;
+}
+// Ad click ids (gclid/fbclid via the source gate) + GA4 client_id, mirroring sourceFields().
+function clickIdFields(): {
+  gclid_first: string | null; gclid_last: string | null;
+  fbclid_first: string | null; fbclid_last: string | null;
+  ga_client_id: string | null;
+} {
+  return {
+    gclid_first:  sanitizeArticleSlug(getCookie("fcs_first_gclid")),
+    gclid_last:   sanitizeArticleSlug(getCookie("fcs_last_gclid")),
+    fbclid_first: sanitizeArticleSlug(getCookie("fcs_first_fbclid")),
+    fbclid_last:  sanitizeArticleSlug(getCookie("fcs_last_fbclid")),
+    ga_client_id: sanitizeClientId(getCookie("fcs_ga_client_id")),
+  };
+}
 
 // ─── Funnel-events (Change 3 Tier 1) ─────────────────────────────────────────────
 // Fire-and-forget front-funnel event to log-funnel-event, keyed by the fcs_anon cookie
@@ -100,7 +120,7 @@ function logFunnelEvent(event: string, extra?: Record<string, unknown>) {
 // resolves even on HTTP 500, so res.ok must be checked explicitly — that unchecked case
 // was the source of the silent misses. Idempotent server-side, so retrying is safe.
 async function createTrialProfileVerified(value: string): Promise<{ ok: boolean; otlToken: string | null }> {
-  const body = JSON.stringify({ email: value, anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields() });
+  const body = JSON.stringify({ email: value, anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields(), ...clickIdFields() });
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const res = await fetch(CREATE_TRIAL_PROFILE_URL, {

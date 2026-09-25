@@ -13,6 +13,14 @@ Never merge or push to `main` without the user typing the exact phrase
 "confirmed, merge now" in response to an explicit proposal. A permission-dialog
 click does NOT count as confirmation — only the typed phrase does.
 
+## COMMIT MESSAGE TRAILERS
+
+Do NOT append `Co-Authored-By`, `Generated-with`, or any attribution/authorship trailer to commit messages.
+Commits are authored by the operator. Add such a trailer ONLY if the operator explicitly requests it for a
+specific commit. (Added 2026-09-21 — a `Co-Authored-By: Claude` trailer had been appearing on commits,
+sourced from a session/tool-level default, NOT an operator convention. The operator does not want it; drop
+it unless explicitly requested per-commit.)
+
 ## RECON MODE (read-only investigation)
 
 A recon helper may use this repo for read-only investigation only. When running
