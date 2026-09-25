@@ -87,6 +87,49 @@ function SourceCapture() {
     document.cookie = `fcs_last_source=${enc}; ${attrs}`;
   }, [search]);
 
+  // Ad click ids (Google gclid + Meta fbclid). URL-safe, so the existing source gate fits.
+  // Mirrors the fcs_first/last_source seam: write-once first-touch, always-overwrite last-touch.
+  useEffect(() => {
+    const attrs = "path=/; max-age=34560000; SameSite=Lax";
+    const params = new URLSearchParams(search);
+    (["gclid", "fbclid"] as const).forEach((key) => {
+      const raw = params.get(key);
+      if (!raw) return;
+      const v = raw.trim().slice(0, 200);
+      if (!/^[A-Za-z0-9/_-]+$/.test(v)) return;
+      const enc = encodeURIComponent(v);
+      if (!document.cookie.split("; ").some(row => row.startsWith(`fcs_first_${key}=`))) {
+        document.cookie = `fcs_first_${key}=${enc}; ${attrs}`;
+      }
+      document.cookie = `fcs_last_${key}=${enc}; ${attrs}`;
+    });
+  }, [search]);
+
+  // GA4 client_id (the _ga identity). NOT a URL param and it CONTAINS A DOT, so the source
+  // gate rejects it — use a dot-tolerant gate. Ask gtag first; fall back to parsing _ga.
+  // gtag.js loads async, so tolerate window.gtag not being ready yet (no throw, no block).
+  useEffect(() => {
+    if (document.cookie.split("; ").some(row => row.startsWith("fcs_ga_client_id="))) return;
+    const attrs = "path=/; max-age=34560000; SameSite=Lax";
+    const writeClientId = (id: string) => {
+      const v = (id || "").trim();
+      if (!/^[A-Za-z0-9._-]{1,64}$/.test(v)) return;
+      if (document.cookie.split("; ").some(row => row.startsWith("fcs_ga_client_id="))) return;
+      document.cookie = `fcs_ga_client_id=${encodeURIComponent(v)}; ${attrs}`;
+    };
+    try {
+      const g = (window as any).gtag;
+      if (typeof g === "function") {
+        g("get", "G-YGDHT1TE6Y", "client_id", (id: string) => { if (id) writeClientId(id); });
+      }
+    } catch { /* gtag not ready — fall through to _ga parse */ }
+    const ga = document.cookie.split("; ").find(row => row.startsWith("_ga="));
+    if (ga) {
+      const parts = ga.split(".");
+      if (parts.length >= 4) writeClientId(`${parts[2]}.${parts[3]}`);
+    }
+  }, []);
+
   // Mint a stable first-party anon id once (funnel-events spine, Change 3 Tier 1).
   // Host-only, write-once — mirrors the fcs_first_source seam above, and SourceCapture
   // sits ahead of the routed pages so this is set before any funnel page mounts.
