@@ -25,6 +25,7 @@ import ExitPopup from "./components/ExitPopup.tsx";
 import EmailConfirmation from "./pages/EmailConfirmation";
 import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
 import DownloadApp from "./pages/DownloadApp";
+import ColdStart from "./pages/ColdStart";
 import Assessment from "./pages/Assessment";
 import Unsubscribed from "./pages/Unsubscribed";
 import Checkout from "./pages/Checkout";
@@ -175,6 +176,7 @@ const App = () => (
                   <Route path="/lp/newsletter" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/lp/take-assessment" element={<Navigate to="/lp/download" replace />} />
                     <Route path="/lp/download" element={<DownloadApp />} />
+                   <Route path="/lp/cold-start" element={<ColdStart />} />
                    <Route path="/assessment" element={<Assessment />} />
                    <Route path="/start/*" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/unsubscribed" element={<Unsubscribed />} />
