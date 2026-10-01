@@ -479,6 +479,48 @@ export default function ColdStart() {
 
   const active = TESTIMONIALS[testimonialIndex];
 
+  // Shared Block 1 hero copy — single source so the desktop and mobile compositions can
+  // never drift. Only the composition differs by breakpoint; the copy/CTA are identical.
+  const heroCopy = (
+    <>
+      <p className="text-blue-600 text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] mb-3">
+        Plantar Fasciitis Recovery At Home
+      </p>
+      <h1 className="text-[28px] leading-[1.1] sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+        <span className="text-slate-900">Trying to Get Rid of Plantar Fasciitis? </span>
+        <span className="text-blue-600">Stop Guessing What to Do Next.</span>
+      </h1>
+      <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed mb-5 max-w-md">
+        Get a structured, at-home recovery plan that guides you day by day based on how your foot is responding.
+      </p>
+
+      <div className="flex items-center gap-2.5 mb-5">
+        <ShieldCheck size={22} />
+        <div className="leading-tight">
+          <p className="text-slate-500 text-xs">Built by</p>
+          <p className="text-slate-900 font-bold text-sm sm:text-base">Dr. Jonathan Schutza, PT, DPT</p>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        onClick={scrollToForm}
+        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-base sm:text-lg px-6 py-4 rounded-xl transition-colors shadow-sm"
+      >
+        Get My Free Recovery Plan →
+      </button>
+
+      <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mt-3 text-slate-500 text-xs">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+        <span>No credit card</span><span className="text-slate-300">·</span>
+        <span>Start online</span><span className="text-slate-300">·</span>
+        <span>Nothing to install</span>
+      </div>
+    </>
+  );
+
   // ── STEP 1: PPC LANDING PAGE (Blocks 1–5) ────────────────────────────────────
   return (
     <div className="min-h-screen bg-white flex flex-col" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -503,79 +545,81 @@ export default function ColdStart() {
       <main className="flex-1 w-full">
 
         {/* ════════════ BLOCK 1 — HERO / SEARCH CONGRUENCY ════════════ */}
-        <section className="relative overflow-hidden bg-white">
-          <div className="max-w-5xl mx-auto">
+        {/* ONE continuous hero. The supplied heel/quote asset is the backdrop (whole image —
+            quote lower-left, blue underline, dominant red heel lower-right — never cropped).
+            The copy sits over its open upper-left; Dr. Jonathan dominates the upper-right with
+            faded edges, so DJ and the heel read as a single composition with no hard seam and
+            no white dead zone — not two stacked image sections. */}
+        <section className="relative bg-white">
+          <div className="relative max-w-5xl mx-auto overflow-hidden">
 
-            {/* Upper hero: copy owns the left, Dr. Jonathan owns the right (asymmetric) */}
-            <div className="relative px-5 sm:px-6 pt-8 md:pt-12">
-
-              {/* Dr. Jonathan — faded into the composition, never a hard rectangle */}
+            {/* ───── Desktop (lg+): layered composition ───── */}
+            {/* lg+ only, where the container is a fixed max-w-5xl (1024px) so the copy height
+                is constant and the padding can be tuned once. padding-top opens the upper band
+                for the copy (left) + Dr. Jonathan (right); the heel/message flows in below it,
+                so the message clears the copy with no white dead zone up top (padding, not a
+                margin, keeps the absolute copy/DJ pinned to the hero top). */}
+            <div className="relative hidden lg:block" style={{ paddingTop: "300px" }}>
+              {/* Heel + handwritten message — full supplied asset, nothing cropped; faded top
+                  edge blends up into the copy/DJ so it reads as one hero, no seam. */}
+              <img
+                src={HEEL_MESSAGE_SRC}
+                alt="The right exercise at the wrong time is still the wrong exercise."
+                className="pointer-events-none select-none relative z-0 block w-full"
+                style={{
+                  WebkitMaskImage: "linear-gradient(to top, #000 90%, transparent 100%)",
+                  maskImage: "linear-gradient(to top, #000 90%, transparent 100%)",
+                }}
+              />
+              {/* Dr. Jonathan — large, dominates the upper-right; edges faded so he is never a
+                  hard rectangle and his lower/left edges melt into the heel backdrop */}
               <img
                 src={DJ_HEADSHOT_SRC}
                 alt="Dr. Jonathan Schutza, PT, DPT"
-                className="pointer-events-none select-none absolute top-0 right-0 w-[44%] sm:w-[42%] md:w-[46%] max-w-[480px] object-cover object-top"
+                className="pointer-events-none select-none absolute top-0 right-0 z-10 w-[50%] md:w-[47%] max-w-[560px]"
                 style={{
                   WebkitMaskImage:
-                    "linear-gradient(to bottom, black 62%, transparent 100%), linear-gradient(to left, black 78%, transparent 100%)",
+                    "linear-gradient(to bottom, #000 58%, transparent 98%), linear-gradient(to left, #000 70%, transparent 100%)",
                   maskImage:
-                    "linear-gradient(to bottom, black 62%, transparent 100%), linear-gradient(to left, black 78%, transparent 100%)",
+                    "linear-gradient(to bottom, #000 58%, transparent 98%), linear-gradient(to left, #000 70%, transparent 100%)",
                   WebkitMaskComposite: "source-in",
                   maskComposite: "intersect",
                 }}
               />
-
-              <div className="relative z-10 max-w-[62%] sm:max-w-[58%] md:max-w-[56%] pb-6">
-                <p className="text-blue-600 text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] mb-3">
-                  Plantar Fasciitis Recovery At Home
-                </p>
-                <h1 className="text-[28px] leading-[1.1] sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-                  <span className="text-slate-900">Trying to Get Rid of Plantar Fasciitis? </span>
-                  <span className="text-blue-600">Stop Guessing What to Do Next.</span>
-                </h1>
-                <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed mb-5 max-w-md">
-                  Get a structured, at-home recovery plan that guides you day by day based on how your foot is responding.
-                </p>
-
-                <div className="flex items-center gap-2.5 mb-5">
-                  <ShieldCheck size={22} />
-                  <div className="leading-tight">
-                    <p className="text-slate-500 text-xs">Built by</p>
-                    <p className="text-slate-900 font-bold text-sm sm:text-base">Dr. Jonathan Schutza, PT, DPT</p>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={scrollToForm}
-                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-base sm:text-lg px-6 py-4 rounded-xl transition-colors shadow-sm"
-                >
-                  Get My Free Recovery Plan →
-                </button>
-
-                <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mt-3 text-slate-500 text-xs">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                  </svg>
-                  <span>No credit card</span><span className="text-slate-300">·</span>
-                  <span>Start online</span><span className="text-slate-300">·</span>
-                  <span>Nothing to install</span>
-                </div>
+              {/* Copy — left half, in the open upper-left above the message */}
+              <div className="absolute top-0 left-0 z-20 w-[54%] px-5 sm:px-6 pt-8 md:pt-12">
+                {heroCopy}
               </div>
             </div>
 
-            {/* Lower heel/message asset — supplied intact (heel, red cue, handwritten quote,
-                blue underline are baked in). Faded top edge + overlap blends it into Dr.
-                Jonathan above, so the two assets read as one continuous hero. */}
-            <img
-              src={HEEL_MESSAGE_SRC}
-              alt="The right exercise at the wrong time is still the wrong exercise."
-              className="relative z-0 block w-full object-cover -mt-8 sm:-mt-12 md:-mt-16 md:h-[560px]"
-              style={{
-                objectPosition: "center 40%",
-                WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 16%)",
-                maskImage: "linear-gradient(to bottom, transparent 0%, black 16%)",
-              }}
-            />
+            {/* ───── Mobile + tablet (< lg): copy first, then a blended DJ → heel composition ───── */}
+            <div className="lg:hidden px-5 sm:px-6 pt-8 max-w-3xl mx-auto">
+              {heroCopy}
+              <div className="relative mt-6">
+                {/* Heel + message — full asset, nothing cropped (entire quote preserved) */}
+                <img
+                  src={HEEL_MESSAGE_SRC}
+                  alt="The right exercise at the wrong time is still the wrong exercise."
+                  className="pointer-events-none select-none block w-full"
+                />
+                {/* Dr. Jonathan flows in from the upper-right, faded into the heel's open upper
+                    area — one composition, no hard rectangular break (DJ may crop) */}
+                <img
+                  src={DJ_HEADSHOT_SRC}
+                  alt="Dr. Jonathan Schutza, PT, DPT"
+                  className="pointer-events-none select-none absolute top-0 right-0 z-10 w-[58%] sm:w-[46%] max-w-[260px] sm:max-w-[340px]"
+                  style={{
+                    WebkitMaskImage:
+                      "linear-gradient(to bottom, #000 54%, transparent 96%), linear-gradient(to left, #000 64%, transparent 100%)",
+                    maskImage:
+                      "linear-gradient(to bottom, #000 54%, transparent 96%), linear-gradient(to left, #000 64%, transparent 100%)",
+                    WebkitMaskComposite: "source-in",
+                    maskComposite: "intersect",
+                  }}
+                />
+              </div>
+            </div>
+
           </div>
         </section>
 
