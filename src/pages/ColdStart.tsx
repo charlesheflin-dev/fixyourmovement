@@ -545,81 +545,40 @@ export default function ColdStart() {
       <main className="flex-1 w-full">
 
         {/* ════════════ BLOCK 1 — HERO / SEARCH CONGRUENCY ════════════ */}
-        {/* ONE continuous hero. The supplied heel/quote asset is the backdrop (whole image —
-            quote lower-left, blue underline, dominant red heel lower-right — never cropped).
-            The copy sits over its open upper-left; Dr. Jonathan dominates the upper-right with
-            faded edges, so DJ and the heel read as a single composition with no hard seam and
-            no white dead zone — not two stacked image sections. */}
-        <section className="relative bg-white">
-          <div className="relative max-w-5xl mx-auto overflow-hidden">
-
-            {/* ───── Desktop (lg+): layered composition ───── */}
-            {/* lg+ only, where the container is a fixed max-w-5xl (1024px) so the copy height
-                is constant and the padding can be tuned once. padding-top opens the upper band
-                for the copy (left) + Dr. Jonathan (right); the heel/message flows in below it,
-                so the message clears the copy with no white dead zone up top (padding, not a
-                margin, keeps the absolute copy/DJ pinned to the hero top). */}
-            <div className="relative hidden lg:block" style={{ paddingTop: "300px" }}>
-              {/* Heel + handwritten message — full supplied asset, nothing cropped; faded top
-                  edge blends up into the copy/DJ so it reads as one hero, no seam. */}
-              <img
-                src={HEEL_MESSAGE_SRC}
-                alt="The right exercise at the wrong time is still the wrong exercise."
-                className="pointer-events-none select-none relative z-0 block w-full"
-                style={{
-                  WebkitMaskImage: "linear-gradient(to top, #000 90%, transparent 100%)",
-                  maskImage: "linear-gradient(to top, #000 90%, transparent 100%)",
-                }}
-              />
-              {/* Dr. Jonathan — large, dominates the upper-right; edges faded so he is never a
-                  hard rectangle and his lower/left edges melt into the heel backdrop */}
-              <img
-                src={DJ_HEADSHOT_SRC}
-                alt="Dr. Jonathan Schutza, PT, DPT"
-                className="pointer-events-none select-none absolute top-0 right-0 z-10 w-[50%] md:w-[47%] max-w-[560px]"
-                style={{
-                  WebkitMaskImage:
-                    "linear-gradient(to bottom, #000 58%, transparent 98%), linear-gradient(to left, #000 70%, transparent 100%)",
-                  maskImage:
-                    "linear-gradient(to bottom, #000 58%, transparent 98%), linear-gradient(to left, #000 70%, transparent 100%)",
-                  WebkitMaskComposite: "source-in",
-                  maskComposite: "intersect",
-                }}
-              />
-              {/* Copy — left half, in the open upper-left above the message */}
-              <div className="absolute top-0 left-0 z-20 w-[54%] px-5 sm:px-6 pt-8 md:pt-12">
+        {/* Two separate production assets, never composited or blended. Desktop: clean
+            two-column hero — copy left, Dr. Jonathan as the standalone authority image right.
+            Mobile: copy → DJ stacked. Then the heel/quote asset below in normal document flow
+            as its own intentional image (full quote + blue underline + red heel preserved). No
+            masks, gradients, overlap, negative margins, or absolute positioning between the
+            two photographs. */}
+        <section className="bg-white">
+          {/* Upper hero — copy + Dr. Jonathan authority image */}
+          <div className="max-w-5xl mx-auto px-5 sm:px-6 pt-8 md:pt-12">
+            <div className="grid md:grid-cols-2 gap-7 md:gap-10 md:items-center">
+              <div className="min-w-0">
                 {heroCopy}
               </div>
-            </div>
-
-            {/* ───── Mobile + tablet (< lg): copy first, then a blended DJ → heel composition ───── */}
-            <div className="lg:hidden px-5 sm:px-6 pt-8 max-w-3xl mx-auto">
-              {heroCopy}
-              <div className="relative mt-6">
-                {/* Heel + message — full asset, nothing cropped (entire quote preserved) */}
-                <img
-                  src={HEEL_MESSAGE_SRC}
-                  alt="The right exercise at the wrong time is still the wrong exercise."
-                  className="pointer-events-none select-none block w-full"
-                />
-                {/* Dr. Jonathan flows in from the upper-right, faded into the heel's open upper
-                    area — one composition, no hard rectangular break (DJ may crop) */}
+              {/* Dr. Jonathan — standalone authority photograph, attractively cropped;
+                  never faded into or overlapping another image */}
+              <div className="min-w-0">
                 <img
                   src={DJ_HEADSHOT_SRC}
                   alt="Dr. Jonathan Schutza, PT, DPT"
-                  className="pointer-events-none select-none absolute top-0 right-0 z-10 w-[58%] sm:w-[46%] max-w-[260px] sm:max-w-[340px]"
-                  style={{
-                    WebkitMaskImage:
-                      "linear-gradient(to bottom, #000 54%, transparent 96%), linear-gradient(to left, #000 64%, transparent 100%)",
-                    maskImage:
-                      "linear-gradient(to bottom, #000 54%, transparent 96%), linear-gradient(to left, #000 64%, transparent 100%)",
-                    WebkitMaskComposite: "source-in",
-                    maskComposite: "intersect",
-                  }}
+                  className="w-full rounded-2xl object-cover object-top shadow-sm aspect-[3/2] md:aspect-[4/5]"
                 />
               </div>
             </div>
+          </div>
 
+          {/* Heel + handwritten message — the real pain moment, its OWN image in normal
+              document flow: natural aspect ratio, nearly full content width, controlled
+              spacing above and below, never a continuation of Dr. Jonathan's photo */}
+          <div className="max-w-4xl mx-auto px-5 sm:px-6 pt-8 md:pt-10 pb-2">
+            <img
+              src={HEEL_MESSAGE_SRC}
+              alt="The right exercise at the wrong time is still the wrong exercise."
+              className="w-full"
+            />
           </div>
         </section>
 
