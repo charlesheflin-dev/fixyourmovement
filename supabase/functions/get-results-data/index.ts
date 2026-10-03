@@ -74,6 +74,26 @@ if (userId) {
       .limit(1)
       .single();
 
+    // Fetch in-app FAAM scores (faam_scores, keyed by user_id): onboarding
+    // baseline + the Phase-1 Promotion milestone (phase2_start). The results
+    // page shows a measured before/after. One row per type per user in practice;
+    // order newest-first and pick one defensively. adl_score is numeric —
+    // coerce with Number() so the client comparison is numeric, not string.
+    let faamBaseline: number | null = null;
+    let faamPhase2Start: number | null = null;
+    const { data: faamRows } = await supabase
+      .from("faam_scores")
+      .select("type, adl_score, completed_at")
+      .eq("user_id", profile.id)
+      .in("type", ["baseline", "phase2_start"])
+      .order("completed_at", { ascending: false });
+    if (faamRows && faamRows.length > 0) {
+      const baselineRow = faamRows.find((r) => r.type === "baseline");
+      const phase2Row = faamRows.find((r) => r.type === "phase2_start");
+      faamBaseline = baselineRow?.adl_score != null ? Number(baselineRow.adl_score) : null;
+      faamPhase2Start = phase2Row?.adl_score != null ? Number(phase2Row.adl_score) : null;
+    }
+
     // Fetch the latest post-trial survey branch for this user, if any.
     // The survey response may have been written keyed by user_id OR by email
     // (save-survey-response allows either), so match on both. Newest wins.
@@ -173,6 +193,8 @@ if (userId) {
       archetype: assessment?.archetype ?? null,
       faamScore: assessment?.faam_score ?? null,
       faamBand: assessment?.faam_band ?? null,
+      faamBaseline,
+      faamPhase2Start,
       isTrial: profile.is_trial ?? false,
       trialStartedAt: profile.trial_started_at ?? null,
       currentStreak: profile.current_streak ?? 0,
