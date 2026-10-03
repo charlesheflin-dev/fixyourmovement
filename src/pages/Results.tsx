@@ -655,9 +655,7 @@ function FinalCtaSection({ insights, insightsLoading, branch }: { insights: Insi
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
-// Slice C: data-quality heroes + free-week offer
-
-const GRANT_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/grant-trial-extension";
+// Slice C: data-quality heroes
 
 // Shown when the user has zero logged days — no progress to report yet, so we
 // reframe honestly and route to the free week instead of a hard checkout close.
@@ -719,73 +717,6 @@ function FlatHeroSection({ data }: { data: ResultsData }) {
         <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="w-full h-12">
           <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="white" />
         </svg>
-      </div>
-    </section>
-  );
-}
-
-// Gentle-path offer: claim a free extra week. Grant is enforced server-side (one
-// per user); an already-extended or non-trial user is routed to the $47 offer.
-function FreeWeekSection({ userId, email }: { userId: string | null; email: string | null }) {
-  const [claiming, setClaiming] = useState(false);
-  const [granted, setGranted] = useState(false);
-
-  async function claim() {
-    if (claiming) return;
-    setClaiming(true);
-    try {
-      const res = await fetch(GRANT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, email, source: "results_freeweek" }),
-      });
-      const d = await res.json();
-      if (d.granted) {
-        window.gtag?.("event", "free_week_granted", { event_category: "conversion", event_label: "results_freeweek" });
-        setGranted(true);
-      } else {
-        window.location.href = "/checkout?offer=save50";
-      }
-    } catch {
-      window.location.href = "/checkout?offer=save50";
-    }
-  }
-
-  if (granted) {
-    return (
-      <section className="px-6 py-12 bg-white">
-        <div className="max-w-lg mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-5">
-            <CheckCircle size={14} />
-            Week Added
-          </div>
-          <h2 className="text-3xl font-bold text-slate-900 leading-tight mb-3">You&apos;ve Got Another Week.</h2>
-          <p className="text-slate-600 text-base leading-relaxed">
-            Done — 7 more days added. Keep logging inside the app, and your results will be waiting when you&apos;re ready.
-          </p>
-        </div>
-      </section>
-    );
-  }
-
-  return (
-    <section className="px-6 py-12 bg-white">
-      <div className="max-w-lg mx-auto text-center">
-        <h2 className="text-3xl font-bold text-slate-900 leading-tight mb-3">
-          Not Ready to Decide?<br />Take Another Week — Free.
-        </h2>
-        <p className="text-slate-600 text-base leading-relaxed mb-8">
-          You don&apos;t have to decide today. Take 7 more days on us, no charge and no card required. Keep logging, and see how much further your foot can go.
-        </p>
-        <button
-          type="button"
-          onClick={claim}
-          disabled={claiming}
-          className="inline-flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-bold text-lg py-4 rounded-xl transition-colors"
-        >
-          {claiming ? "Adding your week…" : "Add My Free Week"}
-          {!claiming && <ArrowRight size={20} />}
-        </button>
       </div>
     </section>
   );
@@ -953,15 +884,12 @@ export default function Results() {
       : (data.painDrop === null || data.painDrop <= 0)
         ? "flat"
         : "improved";
-  // Offer softens monotonically: nologs/flat (any branch) and improved+low get the
-  // free week; improved with high/medium/none keeps the existing checkout sections
-  // (which already route medium -> $47 internally). Never hardens.
-  // Gentle-path users who have NOT yet used their free week get the free-week
-  // button; those who already have (hasExtension) fall through to the $47 offer
-  // instead of being shown a "free week" they can't actually claim.
+  // Offer softens monotonically: the gentle path (nologs/flat any branch, or
+  // improved+low) is routed to the $47/save50 offer; everyone else keeps their
+  // natural survey branch (which already routes medium -> $47 internally). Never
+  // hardens. (The former "free week" trial-extension offer was removed 2026-10-03
+  // once the app-side gate stopped honoring extensions.)
   const gentlePath = resultsMode !== "improved" || data.surveyBranch === "low";
-  const showFreeWeek = gentlePath && !data.hasExtension;
-  const forceSave50 = gentlePath && data.hasExtension;
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -984,17 +912,11 @@ export default function Results() {
         {resultsMode === "improved" && <AccomplishmentsSection data={data} insights={insights} insightsLoading={insightsLoading} />}
         {resultsMode === "improved" && <RoadmapSection data={data} />}
         <DrJonathanSection />
-        {showFreeWeek
-          ? <FreeWeekSection userId={userId ?? null} email={emailParam} />
-          : (
-            <>
-              <BeforeYouDecideSection />
-              <StillNotSureSection />
-              <MemberReviewsSection />
-              <NextStepSection branch={forceSave50 ? "medium" : data.surveyBranch} />
-              <FinalCtaSection insights={insights} insightsLoading={insightsLoading} branch={forceSave50 ? "medium" : data.surveyBranch} />
-            </>
-          )}
+        <BeforeYouDecideSection />
+        <StillNotSureSection />
+        <MemberReviewsSection />
+        <NextStepSection branch={gentlePath ? "medium" : data.surveyBranch} />
+        <FinalCtaSection insights={insights} insightsLoading={insightsLoading} branch={gentlePath ? "medium" : data.surveyBranch} />
       </main>
 
       {/* Footer */}
