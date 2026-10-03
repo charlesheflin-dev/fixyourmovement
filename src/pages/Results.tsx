@@ -21,6 +21,8 @@ interface ResultsData {
   archetype: string | null;
   faamScore: number | null;
   faamBand: string | null;
+  faamBaseline: number | null;
+  faamPhase2Start: number | null;
   isTrial: boolean;
   trialStartedAt: string | null;
   currentStreak: number;
@@ -49,6 +51,48 @@ const FALLBACK_INSIGHTS: InsightsData = {
     "Your next phase is ready.",
   ],
 };
+
+// --- Foot-function (FAAM-ADL) before/after ---
+// Single source of truth for the improvement gate so the flat-hero copy swap and
+// the card never disagree. adl_score is 0-100; the pair is shown only when it
+// improved by a whole rounded point (Option A: foot function appears only as a
+// win, never flat or down. Phase-1 Promotion gates on pain/capacity, not FAAM, so
+// some promoted users have a flat/negative delta and must not see a discouraging
+// number on the upgrade page).
+function faamGain(baseline: number | null, phase2Start: number | null): number | null {
+  if (baseline == null || phase2Start == null) return null;
+  const gain = Math.round(phase2Start) - Math.round(baseline);
+  return gain >= 1 ? gain : null;
+}
+
+function FaamProgressCard({ baseline, phase2Start }: { baseline: number | null; phase2Start: number | null }) {
+  const gain = faamGain(baseline, phase2Start);
+  if (gain === null) return null;
+  const before = Math.round(baseline as number);
+  const after = Math.round(phase2Start as number);
+  return (
+    <div className="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-5 mb-5">
+      <p className="text-blue-200 text-[11px] font-semibold uppercase tracking-wide mb-3">
+        Foot Function <span className="text-blue-300 normal-case font-normal">(out of 100)</span>
+      </p>
+      <div className="grid grid-cols-3 gap-4">
+        <div className="text-center">
+          <p className="text-blue-200 text-[11px] font-semibold uppercase tracking-wide mb-1">Starting</p>
+          <p className="text-3xl font-bold text-white">{before}</p>
+        </div>
+        <div className="text-center border-x border-white/20">
+          <p className="text-green-300 text-[11px] font-semibold uppercase tracking-wide mb-1">Improvement</p>
+          <p className="text-3xl font-bold text-green-300">+{gain}</p>
+          <p className="text-green-300 text-[10px] font-bold uppercase tracking-wide">Points</p>
+        </div>
+        <div className="text-center">
+          <p className="text-blue-200 text-[11px] font-semibold uppercase tracking-wide mb-1">Now</p>
+          <p className="text-3xl font-bold text-green-300">{after}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ── Section 1: Recovery Week Complete Hero ────────────────────────────────────
 
@@ -99,6 +143,8 @@ function HeroSection({ data, insights, insightsLoading }: { data: ResultsData; i
             </div>
           </div>
         )}
+
+        <FaamProgressCard baseline={data.faamBaseline} phase2Start={data.faamPhase2Start} />
 
         {/* Accomplishment row */}
         <div className="grid grid-cols-3 gap-3 mb-8">
@@ -686,6 +732,7 @@ function NoLogsHeroSection() {
 // Shown when the user logged days but pain has not improved yet. Validate the
 // effort (never fabricate progress) and route to the free week.
 function FlatHeroSection({ data }: { data: ResultsData }) {
+  const faamImproved = faamGain(data.faamBaseline, data.faamPhase2Start) !== null;
   return (
     <section className="relative bg-gradient-to-b from-blue-600 to-blue-800 pt-10 pb-20 px-6">
       <div className="max-w-lg mx-auto text-center">
@@ -697,8 +744,13 @@ function FlatHeroSection({ data }: { data: ResultsData }) {
           Recovery Isn&apos;t<br />a Straight Line.
         </h1>
         <p className="text-blue-100 text-base leading-relaxed mb-8">
-          One week in, the numbers don&apos;t always move yet, and that&apos;s completely normal. What matters most right now is that you showed up and did the work — that consistency is exactly what recovery is built on.
+          {faamImproved
+            ? "One week in, your pain hasn't dropped yet — and that's completely normal. But your foot function is already measurably stronger. That's real progress, and showing up is what builds on it."
+            : "One week in, the numbers don't always move yet, and that's completely normal. What matters most right now is that you showed up and did the work — that consistency is exactly what recovery is built on."}
         </p>
+
+        <FaamProgressCard baseline={data.faamBaseline} phase2Start={data.faamPhase2Start} />
+
         <div className="grid grid-cols-3 gap-3 mb-8">
           {[
             { icon: "📅", value: data.daysLogged, label: "Days Logged" },
