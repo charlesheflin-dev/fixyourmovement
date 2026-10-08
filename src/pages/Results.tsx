@@ -508,7 +508,7 @@ function DrJonathanSection() {
 
         {/* Headline */}
         <h2 className="text-2xl font-bold text-slate-900 leading-tight text-center mb-5">
-          You Made It Through Recovery Week.
+          You Made It Through the Build Phase!
         </h2>
 
         {/* Supporting copy */}
