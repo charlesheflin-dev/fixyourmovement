@@ -936,12 +936,8 @@ export default function Results() {
       : (data.painDrop === null || data.painDrop <= 0)
         ? "flat"
         : "improved";
-  // Offer softens monotonically: the gentle path (nologs/flat any branch, or
-  // improved+low) is routed to the $47/save50 offer; everyone else keeps their
-  // natural survey branch (which already routes medium -> $47 internally). Never
-  // hardens. (The former "free week" trial-extension offer was removed 2026-10-03
-  // once the app-side gate stopped honoring extensions.)
-  const gentlePath = resultsMode !== "improved" || data.surveyBranch === "low";
+  // All users see the standard offer (2026-10-08). The $47/save50 routing
+  // (gentle path + survey branch) was retired along with the post-trial survey.
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -967,8 +963,8 @@ export default function Results() {
         <BeforeYouDecideSection />
         <StillNotSureSection />
         <MemberReviewsSection />
-        <NextStepSection branch={gentlePath ? "medium" : data.surveyBranch} />
-        <FinalCtaSection insights={insights} insightsLoading={insightsLoading} branch={gentlePath ? "medium" : data.surveyBranch} />
+        <NextStepSection branch={null} />
+        <FinalCtaSection insights={insights} insightsLoading={insightsLoading} branch={null} />
       </main>
 
       {/* Footer */}
