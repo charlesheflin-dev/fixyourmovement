@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -30,7 +30,6 @@ import Assessment from "./pages/Assessment";
 import Unsubscribed from "./pages/Unsubscribed";
 import Checkout from "./pages/Checkout";
 import Results from "./pages/Results";
-import PostTrialSurvey from "./pages/PostTrialSurvey";
 import AssessmentResults from "./pages/AssessmentResults";
 import AskDrJonathanPage from "./pages/AskDrJonathan";
 import GuideMorning from "./pages/GuideMorning";
@@ -145,6 +144,16 @@ function SourceCapture() {
   return null;
 }
 
+// Post-trial survey retired 2026-10-08: /survey now forwards straight to the
+// results page, preserving the original query string (e.g. ?email=...). The
+// PostTrialSurvey page + save-survey-response fn + survey tables are kept in place.
+function SurveyRedirect() {
+  const { userId } = useParams<{ userId: string }>();
+  const { search } = useLocation();
+  const target = userId ? `/results/${userId}${search}` : `/results${search}`;
+  return <Navigate to={target} replace />;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -182,8 +191,8 @@ const App = () => (
                    <Route path="/start/*" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/unsubscribed" element={<Unsubscribed />} />
                    <Route path="/checkout" element={<Checkout />} />
-                   <Route path="/survey/:userId" element={<PostTrialSurvey />} />
-                   <Route path="/survey" element={<PostTrialSurvey />} />
+                   <Route path="/survey/:userId" element={<SurveyRedirect />} />
+                   <Route path="/survey" element={<SurveyRedirect />} />
                    <Route path="/results/:userId" element={<Results />} />
                    <Route path="/results" element={<Results />} />                   <Route path="/assessment-results" element={<AssessmentResults />} />
                    <Route path="/ask" element={<AskDrJonathanPage />} />
