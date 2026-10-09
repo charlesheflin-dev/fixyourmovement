@@ -106,7 +106,7 @@ function HeroSection({ data, insights, insightsLoading }: { data: ResultsData; i
         {/* Badge */}
         <div className="inline-flex items-center gap-2 bg-green-500 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-8">
           <CheckCircle size={14} />
-          Recovery Week Complete
+          Phase 1 Complete
         </div>
 
         {/* Headline */}
@@ -554,8 +554,8 @@ function DrJonathanSection() {
         {/* Encouragement card */}
         <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-4 text-center">
           <CheckCircle size={18} className="text-green-500 mx-auto mb-2" />
-          <p className="text-green-800 text-sm font-bold mb-1">You've already proven you can stay consistent.</p>
-          <p className="text-green-700 text-sm">That's how real recovery begins.</p>
+          <p className="text-green-800 text-sm font-bold mb-1">You've already proven that you can be consistent.</p>
+          <p className="text-green-700 text-sm">That's what creates real change. Keep going.</p>
         </div>
 
       </div>
@@ -585,16 +585,6 @@ function NextStepSection() {
           You've built a strong foundation. Your personalized Phase 1 plan is ready.
         </p>
 
-        {/* Recommendation card */}
-        <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 flex items-start gap-3 mb-5">
-          <CheckCircle size={18} className="text-green-500 shrink-0 mt-0.5" />
-          <div>
-            <p className="text-green-800 text-xs font-bold uppercase tracking-wide mb-0.5">Recommended For You</p>
-            <p className="text-green-900 font-bold text-sm">Phase 1 — Build Foundation</p>
-            <p className="text-green-700 text-xs mt-0.5">Continue building strength, stability, and movement quality.</p>
-          </div>
-        </div>
-
         {/* Primary CTA */}
         <a
           href={CHECKOUT_URL}
@@ -620,7 +610,8 @@ function NextStepSection() {
 
         {/* User Journey Carousel */}
         <div className="mt-8">
-          <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-2 text-center">Every Recovery Is Different.</p>
+          <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-2 text-center">Real Member Results</p>
+          <p className="text-slate-500 text-sm text-center mb-5">These are real outcomes from active members tracked inside the app.</p>
           <UserJourneyCarousel />
         </div>
 
@@ -727,7 +718,7 @@ function FlatHeroSection({ data }: { data: ResultsData }) {
       <div className="max-w-lg mx-auto text-center">
         <div className="inline-flex items-center gap-2 bg-green-500 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-8">
           <CheckCircle size={14} />
-          Recovery Week Complete
+          Phase 1 Complete
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">
           Recovery Isn&apos;t<br />a Straight Line.
