@@ -565,9 +565,7 @@ function DrJonathanSection() {
 
 // ── Section 6: Your Next Step (Offer) ────────────────────────────────────────
 
-function NextStepSection({ branch }: { branch: string | null }) {
-  const isMedium = branch === "medium";
-  const checkoutHref = isMedium ? `${CHECKOUT_URL}?offer=save50` : CHECKOUT_URL;
+function NextStepSection() {
   return (
     <section className="py-10 px-6 bg-white border-t border-slate-100">
       <div className="max-w-lg mx-auto">
@@ -587,15 +585,6 @@ function NextStepSection({ branch }: { branch: string | null }) {
           You've built a strong foundation. Your personalized Phase 1 plan is ready.
         </p>
 
-        {isMedium && (
-          <div className="bg-blue-50 border border-blue-200 rounded-xl px-5 py-4 mb-5">
-            <p className="text-blue-900 font-bold text-base mb-2">Take 30 More Days to Decide.</p>
-            <p className="text-blue-800 text-sm leading-relaxed">
-              Seven days isn't long to be sure. So here's $50 off your first month — your next 30 days for just <span className="font-bold">$47</span>, then $97/mo until you recover, cancel anytime with a single click in the app. Use the full month to decide if the Foot Capacity System is right for you, backed by our 30-day money-back guarantee.
-            </p>
-          </div>
-        )}
-
         {/* Recommendation card */}
         <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 flex items-start gap-3 mb-5">
           <CheckCircle size={18} className="text-green-500 shrink-0 mt-0.5" />
@@ -607,12 +596,12 @@ function NextStepSection({ branch }: { branch: string | null }) {
         </div>
 
         {/* Primary CTA */}
-      <a  
-        href={checkoutHref}
-          onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: `results_offer_cta_${branch ?? "none"}` })}
+        <a
+          href={CHECKOUT_URL}
+          onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_offer_cta" })}
           className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg text-center py-4 rounded-xl transition-colors shadow-lg mb-4"
         >
-          {isMedium ? "Continue 30 days for only $47" : "Continue My Recovery"} &#8594;
+          Continue My Recovery &#8594;
         </a>
 
         {/* Trust row */}
@@ -642,8 +631,8 @@ function NextStepSection({ branch }: { branch: string | null }) {
 
 // ── Section 7: Don't Start Over. Keep Going. ─────────────────────────────────
 
-function FinalCtaSection({ insights, insightsLoading, branch }: { insights: InsightsData; insightsLoading: boolean; branch: string | null }) {
-  const checkoutHref = branch === "medium" ? `${CHECKOUT_URL}?offer=save50` : CHECKOUT_URL;
+function FinalCtaSection({ insights, insightsLoading }: { insights: InsightsData; insightsLoading: boolean }) {
+  const checkoutHref = CHECKOUT_URL;
   return (
     <section className="py-12 px-6 bg-slate-50 border-t border-slate-100">
       <div className="max-w-lg mx-auto text-center">
@@ -682,10 +671,10 @@ function FinalCtaSection({ insights, insightsLoading, branch }: { insights: Insi
         {/* Final CTA */}
         <a
           href={checkoutHref}
-          onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: `results_final_cta_${branch ?? "none"}` })}
+          onClick={() => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_final_cta" })}
           className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg py-5 rounded-xl transition-colors shadow-lg mb-3"
         >
-          {branch === "medium" ? "Continue 30 days for only $47" : "Continue My Recovery"} &#8594;
+          Continue My Recovery &#8594;
         </a>
 
         {/* Reassurance row */}
@@ -769,64 +758,6 @@ function FlatHeroSection({ data }: { data: ResultsData }) {
         <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="w-full h-12">
           <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="white" />
         </svg>
-      </div>
-    </section>
-  );
-}
-
-function BeforeYouDecideSection() {
-  const items = [
-    "Progress saved",
-    "Next phase ready",
-    "Plan adapts with you",
-    "30-Day Money-Back Guarantee",
-    "HSA/FSA may be available",
-  ];
-  return (
-    <section className="py-10 px-6 bg-white border-t border-slate-100">
-      <div className="max-w-lg mx-auto">
-        <div className="rounded-2xl border border-slate-200 shadow-sm px-6 py-6">
-          <div className="flex items-center gap-2 mb-1">
-            <Shield size={20} className="text-blue-600" />
-            <h2 className="text-xl font-bold text-slate-900">Before You Decide</h2>
-          </div>
-          <p className="text-slate-500 text-sm mb-5">Everything you&apos;ve built is ready for what&apos;s next.</p>
-          <ul className="space-y-3">
-            {items.map((item, i) => (
-              <li key={i} className="flex items-center gap-3">
-                <CheckCircle size={18} className="text-blue-600 shrink-0" />
-                <span className="text-slate-700 text-sm font-medium">{item}</span>
-              </li>
-            ))}
-          </ul>
-          <a
-            href="https://fixyourmovement.com/hsa-fsa"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 mt-4 text-xs font-medium text-blue-600 hover:underline"
-          >
-            Learn How HSA/FSA Works &#8594;
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function StillNotSureSection() {
-  return (
-    <section className="py-10 px-6 bg-white border-t border-slate-100">
-      <div className="max-w-lg mx-auto">
-        <div className="rounded-2xl border border-slate-200 shadow-sm px-6 py-6">
-          <h2 className="text-lg font-bold text-slate-900 mb-3">It&apos;s okay if you&apos;re still not sure.</h2>
-          <div className="text-slate-600 text-sm leading-relaxed space-y-2">
-            <p>After my first week, I wasn&apos;t completely sure yet.</p>
-            <p>Seven weeks later, my pain has gone from a 5/10 to about a 1/10.</p>
-            <p>I finally feel like I&apos;m making real progress instead of just managing the pain.</p>
-          </div>
-          <p className="text-slate-900 text-sm font-semibold mt-4">— Jana D.</p>
-          <p className="text-slate-400 text-xs">Original trial member</p>
-        </div>
       </div>
     </section>
   );
@@ -960,11 +891,9 @@ export default function Results() {
         {resultsMode === "improved" && <AccomplishmentsSection data={data} insights={insights} insightsLoading={insightsLoading} />}
         {resultsMode === "improved" && <RoadmapSection data={data} />}
         <DrJonathanSection />
-        <BeforeYouDecideSection />
-        <StillNotSureSection />
         <MemberReviewsSection />
-        <NextStepSection branch={null} />
-        <FinalCtaSection insights={insights} insightsLoading={insightsLoading} branch={null} />
+        <NextStepSection />
+        <FinalCtaSection insights={insights} insightsLoading={insightsLoading} />
       </main>
 
       {/* Footer */}
