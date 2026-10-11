@@ -106,7 +106,7 @@ function HeroSection({ data, insights, insightsLoading }: { data: ResultsData; i
         {/* Badge */}
         <div className="inline-flex items-center gap-2 bg-green-500 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-8">
           <CheckCircle size={14} />
-          Phase 1 Complete
+          Recovery Week Complete
         </div>
 
         {/* Headline */}
@@ -508,7 +508,7 @@ function DrJonathanSection() {
 
         {/* Headline */}
         <h2 className="text-2xl font-bold text-slate-900 leading-tight text-center mb-5">
-          You Made It Through the Build Phase!
+          You Made It Through Recovery Week.
         </h2>
 
         {/* Supporting copy */}
@@ -718,7 +718,7 @@ function FlatHeroSection({ data }: { data: ResultsData }) {
       <div className="max-w-lg mx-auto text-center">
         <div className="inline-flex items-center gap-2 bg-green-500 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-8">
           <CheckCircle size={14} />
-          Phase 1 Complete
+          Recovery Week Complete
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">
           Recovery Isn&apos;t<br />a Straight Line.
