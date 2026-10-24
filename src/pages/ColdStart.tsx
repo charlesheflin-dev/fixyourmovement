@@ -466,9 +466,15 @@ export default function ColdStart() {
         </form>
 
         {/* Browser-first reassurance — conversion-critical, not fine print */}
-        <div className="mt-5 text-center">
-          <p className={T.note}>Your first 7 check-ins are free. No credit card required.</p>
-          <p className={T.note}>Start online, with nothing to download.</p>
+        <div className="mt-3 md:mt-5 text-center">
+          <p className="text-[14px] leading-[1.45] md:text-[15px] text-slate-500">
+            <span className="block md:inline">Your first 7 check-ins are free.</span>{" "}
+            <span className="block md:inline mt-1 md:mt-0">No credit card required.</span>
+          </p>
+          <p className="text-[14px] leading-[1.45] md:text-[15px] text-slate-500 mt-1.5 md:mt-0">
+            <span className="block md:inline">Start online,</span>{" "}
+            <span className="block md:inline">with nothing to download.</span>
+          </p>
         </div>
       </div>
     );
@@ -603,10 +609,10 @@ export default function ColdStart() {
                 Exercise videos show you what to do. Assigned sets and reps tell you how much. Your daily check-ins help guide what comes next.
               </p>
 
-              <div className="flex items-center gap-2.5 mt-5">
+              <div className="flex items-center gap-2 md:gap-2.5 mt-5">
                 <ShieldCheck size={22} />
-                <p className={T.body}>
-                  Built by <span className="font-bold text-slate-900">Dr. Jonathan Schutza, PT, DPT</span>
+                <p className="text-[14px] leading-[1.4] md:text-[18px] md:leading-[1.55] text-slate-700">
+                  Built by <span className="font-bold text-slate-900">Dr. Jonathan Schutza, <span className="whitespace-nowrap">PT, DPT</span></span>
                 </p>
               </div>
 
@@ -631,8 +637,12 @@ export default function ColdStart() {
                 <blockquote className={`${T.body} mt-3`}>
                   “Huge improvements: almost no morning pain, walking/standing much longer, including at work, and much more functional around the house.”
                 </blockquote>
-                <p className={`${T.note} mt-3`}>September 8, 2026 · 10 weeks after purchase</p>
-                <p className={`${T.note} mt-1`}>Individual results vary.</p>
+                <p className="text-[14px] leading-[1.4] md:text-[15px] md:leading-[1.45] text-slate-500 mt-3">
+                  <span className="block md:inline">September 8, 2026</span>
+                  <span className="hidden md:inline"> · </span>
+                  <span className="block md:inline mt-0.5 md:mt-0">10 weeks after purchase</span>
+                </p>
+                <p className="text-[14px] leading-[1.4] md:text-[15px] md:leading-[1.45] text-slate-500 mt-2 md:mt-1">Individual results vary.</p>
               </figure>
 
               <img
@@ -662,7 +672,7 @@ export default function ColdStart() {
               <p className={`${T.body} border-l-[3px] border-blue-200 pl-4`}>
                 Walking used to clear your head. Now you dread the morning after.
               </p>
-              <p className={`${T.body} font-bold text-slate-900`}>
+              <p className={`${T.body} font-bold text-slate-900 pt-3 md:pt-0`}>
                 Getting through the day isn’t the same as enjoying it.
               </p>
               <p className={T.body}>
