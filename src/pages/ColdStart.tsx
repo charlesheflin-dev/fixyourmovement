@@ -11,10 +11,11 @@ const VIDEO_ID = "b37100f8162e1ab91cf86c9e284447da";
 const VIDEO_THUMBNAIL_ID = "0a87b6a7-6fb2-48dc-9e26-aa5c134c0200";
 const VIDEO_POSTER_SRC = `https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/${VIDEO_THUMBNAIL_ID}/public`;
 
-// Production hero assets (supplied, used intact — see implementation spec Block 1/2).
+// Production assets (supplied, used intact — v3 spec §3). The heel/message image now sits
+// in Section 4, separate from Dr. Jonathan; the phone image is the v3 sharpened asset.
 const DJ_HEADSHOT_SRC = "/images/cold/dj-headshot.jpg";
 const HEEL_MESSAGE_SRC = "/images/cold/heel-message.png";
-const PHONES_SRC = "/images/cold/phones.png";
+const PHONES_SRC = "/images/cold/phones-ppc-sharpened.png";
 
 // ─── Read cookie helper ──────────────────────────────────────────────────────────
 function getCookie(name: string): string | null {
@@ -111,7 +112,40 @@ async function createTrialProfileVerified(value: string): Promise<{ ok: boolean;
   return { ok: false, otlToken: null };
 }
 
-// ─── Testimonials (Block 4) — authentic member wording, source-of-truth content ──
+// ─── Form position (which of the two identical forms the visitor used) ───────────
+// Rides in the EXISTING funnel-event `meta` field (log-funnel-event stores any object
+// <= 2000 chars as jsonb; nothing reads meta today). Additive only — it never changes
+// which events fire or how often.
+type FormPosition = "form_top" | "form_bottom";
+const FORM_ANCHOR: Record<FormPosition, string> = {
+  form_top: "free-recovery-plan",
+  form_bottom: "free-recovery-plan-bottom",
+};
+
+// ─── Navigation-click diagnostics (GA4, existing gtag only) ──────────────────────
+// Fixed location ids only — never user content. Diagnostics, not a conversion: no
+// key-event / Ads import intended. A missing or failing gtag must never block scrolling.
+type AnchorLocation = "header_free_plan" | "hero_free_plan" | "footer_free_plan";
+function trackAnchorClick(location: AnchorLocation) {
+  try {
+    const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
+    if (typeof gtag === "function") {
+      gtag("event", "lp_anchor_click", { event_category: "navigation", event_label: location });
+    }
+  } catch {
+    // Non-fatal — analytics must never block navigation
+  }
+}
+
+function prefersReducedMotion(): boolean {
+  try {
+    return typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {
+    return false;
+  }
+}
+
+// ─── Testimonials (Section 7) — authentic member wording, source-of-truth content ─
 const TESTIMONIALS = [
   {
     initials: "BR",
@@ -136,38 +170,70 @@ const TESTIMONIALS = [
   },
 ];
 
-// ─── FAQ (Block 5) ───────────────────────────────────────────────────────────────
+// ─── FAQ (Section 9) — v3 copy ───────────────────────────────────────────────────
 const FAQS = [
   {
     q: "How do I get started?",
-    a: "Enter your email and you'll get immediate access online. Nothing needs to be downloaded to begin.",
+    a: "Enter your name and email to start online. Answer a few questions about your foot, then follow your starting plan with exercise videos and clear sets and reps. Nothing needs to be downloaded to begin.",
   },
   {
     q: "How much time does it take each day?",
-    a: "Most daily sessions take about 15–20 minutes. The goal isn't longer workouts. It's consistency with the right plan. Your check-ins help FCS guide what you do next, so you can build capacity over time instead of bouncing between random exercises.",
+    a: "Most daily sessions take about 15–20 minutes, including your exercises and check-in. The videos show you what to do, and your plan tells you how many sets and reps to complete.",
   },
   {
     q: "What if my foot flares up or I have a question?",
-    a: "FCS is designed to account for how your foot is responding. If you hit a setback, have a flare-up, or aren't sure what to do next, members can also message Dr. Jonathan for guidance.",
+    a: "Keep your pain check-ins accurate. FCS uses your responses to adjust your guidance, including easing back when your foot needs it. For questions, start with Ask Dr. Jonathan AI inside the app. You can also message Dr. Jonathan when you need his input on your situation.",
   },
   {
     q: "Do I need a credit card to start?",
-    a: "No. You can start your free recovery plan without entering a credit card.",
+    a: "No. Your first 7 check-ins are free, with no credit card required. After that, you can choose a paid plan if you’d like to continue. There’s no automatic charge.",
   },
 ];
+
+// ─── Shared type + spacing tokens (v3 §2) — one style per role across the page ───
+const T = {
+  h1: "text-[32px] min-[360px]:text-[34px] md:text-[52px] font-extrabold leading-[1.12] tracking-tight",
+  h2: "text-[28px] md:text-[38px] font-extrabold leading-[1.18] tracking-tight text-center",
+  step: "text-[18px] md:text-[20px] font-bold leading-[1.3] uppercase tracking-wide text-slate-900",
+  statement: "text-[21px] md:text-[26px] font-bold leading-[1.35] text-slate-900",
+  body: "text-[17px] md:text-[18px] leading-[1.55] text-slate-700",
+  faqQ: "text-[17px] md:text-[18px] font-semibold leading-[1.4] text-slate-900",
+  label: "text-[16px] font-semibold leading-[1.4] text-slate-900",
+  button: "text-[16px] md:text-[17px] font-bold leading-[1.3]",
+  eyebrow: "text-[12px] md:text-[13px] font-bold leading-[1.4] uppercase tracking-[0.16em] text-blue-600",
+  subtitle: "text-[14px] md:text-[16px] font-semibold leading-[1.4] text-blue-600",
+  note: "text-[15px] leading-[1.45] text-slate-500",
+  legal: "text-[14px] leading-[1.5]",
+  closing: "text-[22px] md:text-[28px] font-semibold leading-[1.35] text-slate-900",
+};
+// Mobile 20px gutters (16px at <=340px). Each section contributes half the 48/72px gap,
+// so one effective gap applies at every boundary.
+const GUTTER = "px-5 max-[340px]:px-4";
+const SECTION = `${GUTTER} py-6 md:py-9`;
+const TEXT_WIDTH = "max-w-[720px] mx-auto";
+const PRIMARY_BUTTON =
+  `${T.button} inline-flex items-center justify-center text-center min-h-[52px] px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`;
 
 // ─── Small shared marks ──────────────────────────────────────────────────────────
 function ShieldCheck({ size = 18, stroke = "#2563EB" }: { size?: number; stroke?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden="true">
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       <polyline points="9 12 11 14 15 10" />
     </svg>
   );
 }
 
-function AccentBar() {
-  return <div className="w-10 h-1 rounded-full bg-blue-600 mx-auto mb-5" />;
+function FiveStars({ size = 16 }: { size?: number }) {
+  return (
+    <div className="flex gap-0.5 text-amber-400" role="img" aria-label="Five stars">
+      {[0, 1, 2, 3, 4].map((s) => (
+        <svg key={s} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <polygon points="12 2 15 9 22 9.5 17 14.5 18.5 21.5 12 17.5 5.5 21.5 7 14.5 2 9.5 9 9" />
+        </svg>
+      ))}
+    </div>
+  );
 }
 
 // ─── Main component ─────────────────────────────────────────────────────────────
@@ -184,10 +250,15 @@ export default function ColdStart() {
   // offer a retry instead of advancing to a false "You're In".
   const [submitting, setSubmitting] = useState(false);
   const [provisionError, setProvisionError] = useState(false);
+  // Which form instance the in-flight / failed submit came from, so the loading label and
+  // the retry error show on that form only. `submitting` stays one shared guard, so the two
+  // forms can never run overlapping submits.
+  const [activeForm, setActiveForm] = useState<FormPosition | null>(null);
 
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
-  const [posterVisible, setPosterVisible] = useState(true);
+  // Video loads only on tap (lazy; never autoplays with sound on page load).
+  const [videoStarted, setVideoStarted] = useState(false);
   // One-time auto-login token from create-trial-profile. Captured reactively from the
   // fire-and-forget mint below; when it lands, installHref restamps with ?fcs_otl= so a
   // just-registered user lands in-session. If the user taps before it arrives (or it
@@ -217,17 +288,20 @@ export default function ColdStart() {
     window.scrollTo(0, 0);
   }, [submitted]);
 
-  const handleEmailFocus = () => {
+  // Once per page view (whichever form is focused first), exactly as before — the form
+  // position only annotates it.
+  const handleEmailFocus = (position: FormPosition) => {
     if (emailFocusLogged.current) return;
     emailFocusLogged.current = true;
-    logFunnelEvent("email_field_viewed");
+    logFunnelEvent("email_field_viewed", { meta: { form_position: position } });
   };
 
-  // Block 1 conversion actions (header FREE PLAN + hero CTA) smooth-scroll to the first
-  // opt-in form in Block 2 — never a new page, modal, or submission (spec §9/§10).
-  const scrollToForm = () => {
-    const el = document.getElementById("free-recovery-plan");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  // Anchor CTAs (header FREE PLAN, hero, closing) smooth-scroll to a form — never a new
+  // page, modal, or submission. Scroll first; the diagnostic event can't block it.
+  const goToForm = (position: FormPosition, location: AnchorLocation) => {
+    const el = document.getElementById(FORM_ANCHOR[position]);
+    if (el) el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
+    trackAnchorClick(location);
   };
 
   const prevTestimonial = () =>
@@ -235,7 +309,7 @@ export default function ColdStart() {
   const nextTestimonial = () =>
     setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length);
 
-  const handleDownloadSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleDownloadSubmit = async (e: React.FormEvent<HTMLFormElement>, position: FormPosition) => {
     e.preventDefault();
     if (submitting) return;
     const form = e.currentTarget;
@@ -246,9 +320,10 @@ export default function ColdStart() {
       return;
     }
 
-    logFunnelEvent("email_submitted");
+    logFunnelEvent("email_submitted", { meta: { form_position: position } });
     setEmail(value);
     setProvisionError(false);
+    setActiveForm(position);
     setSubmitting(true);
     document.cookie = `fcs_email=${encodeURIComponent(value)}; expires=Fri, 31 Dec 2099 23:59:59 GMT; path=/; SameSite=Lax`;
 
@@ -276,7 +351,7 @@ export default function ColdStart() {
 
     if (provisioned.ok) {
       if (provisioned.otlToken) setOtlToken(provisioned.otlToken);
-      logFunnelEvent("account_created", { email: value });
+      logFunnelEvent("account_created", { email: value, meta: { form_position: position } });
       setSubmitting(false);
       setSubmitted(true);
     } else {
@@ -303,90 +378,101 @@ export default function ColdStart() {
     }
   };
 
-  // ─── First / second opt-in form (identical wiring + copy; Block 2 carries the anchor) ──
-  const optInForm = (anchorId?: string) => (
-    <div
-      id={anchorId}
-      className="bg-blue-50 border border-blue-100 rounded-3xl px-5 sm:px-8 py-8 scroll-mt-4"
-    >
-      <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 text-center leading-tight mb-3">
-        Ready to Start? Get Your Free Recovery Plan
-      </h2>
-      <p className="text-slate-600 text-sm sm:text-base text-center mb-6 leading-relaxed">
-        Enter your name and email and you'll go straight into FCS, no download required, to build your recovery plan.
-      </p>
-
-      <form
-        method="post"
-        acceptCharset="UTF-8"
-        action="https://www.aweber.com/scripts/addlead.pl"
-        onSubmit={handleDownloadSubmit}
-        className="space-y-3 max-w-md mx-auto"
+  // ─── Sections 3 and 8 opt-in form — identical card, fields, button and wiring; only the
+  //     heading and introduction differ. Unique wrapper, heading and field IDs per instance. ──
+  const optInForm = (position: FormPosition) => {
+    const anchorId = FORM_ANCHOR[position];
+    const isTop = position === "form_top";
+    const isActive = activeForm === position;
+    return (
+      <div
+        id={anchorId}
+        className="max-w-[560px] mx-auto bg-blue-50 border border-blue-100 rounded-[20px] px-6 py-6 md:px-8 md:py-8 scroll-mt-6"
       >
-        <input type="hidden" name="meta_web_form_id" value="356574860" />
-        <input type="hidden" name="meta_split_id" value="" />
-        <input type="hidden" name="listname" value="awlist6958674" />
-        <input type="hidden" name="redirect" value="https://fixyourmovement.com/email-confirmation" />
-        <input type="hidden" name="meta_redirect_onlist" value="https://www.aweber.com/thankyou-coi.htm?m=text" />
-        <input type="hidden" name="meta_adtracking" value="FCS_Cold_App_Download" />
-        <input type="hidden" name="meta_message" value="1" />
-        <input type="hidden" name="meta_required" value="name,email" />
-        <input type="hidden" name="meta_tooltip" value="" />
+        <h2 id={`${anchorId}-heading`} className={T.h2}>
+          {isTop ? (
+            <>
+              <span className="block text-slate-900">Start With a Plan</span>
+              <span className="block text-blue-600">for Your Foot.</span>
+            </>
+          ) : (
+            <>
+              <span className="block text-slate-900">Give Yourself</span>
+              <span className="block text-blue-600">a Clear Next Step.</span>
+            </>
+          )}
+        </h2>
+        <p className={`${T.body} text-center mt-5`}>
+          {isTop
+            ? "Enter your name and email, answer a few questions, and get your starting exercises with video guidance and assigned sets and reps."
+            : "Start at home with guided exercises and a plan that responds to your check-ins."}
+        </p>
 
-        <div className="relative">
-          <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-          </svg>
-          <input
-            type="text"
-            name="name"
-            placeholder="First name"
-            autoComplete="given-name"
-            className="w-full pl-10 pr-4 py-4 rounded-xl border border-slate-200 bg-white text-slate-900 text-base placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
-
-        <div className="relative">
-          <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
-          </svg>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email address"
-            autoComplete="email"
-            inputMode="email"
-            onFocus={handleEmailFocus}
-            className="w-full pl-10 pr-4 py-4 rounded-xl border border-slate-200 bg-white text-slate-900 text-base placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
-
-        {provisionError && (
-          <p className="text-red-600 text-sm text-center font-medium">
-            Something went wrong creating your account. Please try again.
-          </p>
-        )}
-
-        <button
-          type="submit"
-          disabled={submitting}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-4 rounded-xl transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+        <form
+          method="post"
+          acceptCharset="UTF-8"
+          action="https://www.aweber.com/scripts/addlead.pl"
+          onSubmit={(e) => handleDownloadSubmit(e, position)}
+          aria-labelledby={`${anchorId}-heading`}
+          className="mt-6 space-y-5"
         >
-          {submitting ? "Creating your account…" : "Get My Free Recovery Plan"}
-        </button>
-      </form>
+          <input type="hidden" name="meta_web_form_id" value="356574860" />
+          <input type="hidden" name="meta_split_id" value="" />
+          <input type="hidden" name="listname" value="awlist6958674" />
+          <input type="hidden" name="redirect" value="https://fixyourmovement.com/email-confirmation" />
+          <input type="hidden" name="meta_redirect_onlist" value="https://www.aweber.com/thankyou-coi.htm?m=text" />
+          <input type="hidden" name="meta_adtracking" value="FCS_Cold_App_Download" />
+          <input type="hidden" name="meta_message" value="1" />
+          <input type="hidden" name="meta_required" value="name,email" />
+          <input type="hidden" name="meta_tooltip" value="" />
 
-      {/* Browser-first reassurance — conversion-critical, not fine print (spec §9) */}
-      <div className="mt-5 text-center">
-        <p className="text-slate-700 text-sm font-semibold">
-          Enter your email and get immediate access online.
-        </p>
-        <p className="text-slate-500 text-sm mt-1">
-          No credit card. · Nothing to download. · Start right in your browser.
-        </p>
+          <div>
+            <label htmlFor={`${anchorId}-name`} className={`${T.label} block mb-2`}>First name</label>
+            <input
+              id={`${anchorId}-name`}
+              type="text"
+              name="name"
+              autoComplete="given-name"
+              className="w-full min-h-[48px] px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 text-[16px] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+
+          <div>
+            <label htmlFor={`${anchorId}-email`} className={`${T.label} block mb-2`}>Email address</label>
+            <input
+              id={`${anchorId}-email`}
+              type="email"
+              name="email"
+              autoComplete="email"
+              inputMode="email"
+              onFocus={() => handleEmailFocus(position)}
+              className="w-full min-h-[48px] px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 text-[16px] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+
+          {provisionError && isActive && (
+            <p className="text-red-600 text-[15px] text-center font-medium" role="alert">
+              Something went wrong creating your account. Please try again.
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className={`${PRIMARY_BUTTON} w-full disabled:opacity-60 disabled:cursor-not-allowed`}
+          >
+            {submitting && isActive ? "Creating your account…" : "Start My Free Recovery Plan →"}
+          </button>
+        </form>
+
+        {/* Browser-first reassurance — conversion-critical, not fine print */}
+        <div className="mt-5 text-center">
+          <p className={T.note}>Your first 7 check-ins are free. No credit card required.</p>
+          <p className={T.note}>Start online, with nothing to download.</p>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // ── STEP 2: YOU'RE IN — GO STRAIGHT TO THE APP ───────────────────────────────
   if (submitted) {
@@ -479,63 +565,21 @@ export default function ColdStart() {
 
   const active = TESTIMONIALS[testimonialIndex];
 
-  // Shared Block 1 hero copy — single source so the desktop and mobile compositions can
-  // never drift. Only the composition differs by breakpoint; the copy/CTA are identical.
-  const heroCopy = (
-    <>
-      <p className="text-blue-600 text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] mb-3">
-        Plantar Fasciitis Recovery At Home
-      </p>
-      <h1 className="text-[28px] leading-[1.1] sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-        <span className="text-slate-900">Trying to Get Rid of Plantar Fasciitis? </span>
-        <span className="text-blue-600">Stop Guessing What to Do Next.</span>
-      </h1>
-      <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed mb-5 max-w-md">
-        Get a structured, at-home recovery plan that guides you day by day based on how your foot is responding.
-      </p>
-
-      <div className="flex items-center gap-2.5 mb-5">
-        <ShieldCheck size={22} />
-        <div className="leading-tight">
-          <p className="text-slate-500 text-xs">Built by</p>
-          <p className="text-slate-900 font-bold text-sm sm:text-base">Dr. Jonathan Schutza, PT, DPT</p>
-        </div>
-      </div>
-
-      <button
-        type="button"
-        onClick={scrollToForm}
-        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-base sm:text-lg px-6 py-4 rounded-xl transition-colors shadow-sm"
-      >
-        Get My Free Recovery Plan →
-      </button>
-
-      <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mt-3 text-slate-500 text-xs">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
-        </svg>
-        <span>No credit card</span><span className="text-slate-300">·</span>
-        <span>Start online</span><span className="text-slate-300">·</span>
-        <span>Nothing to install</span>
-      </div>
-    </>
-  );
-
-  // ── STEP 1: PPC LANDING PAGE (Blocks 1–5) ────────────────────────────────────
+  // ── STEP 1: PPC LANDING PAGE (v3 Sections 1–10) ──────────────────────────────
   return (
     <div className="min-h-screen bg-white flex flex-col" style={{ fontFamily: "Inter, sans-serif" }}>
 
-      {/* Header — no navigation, no hamburger (spec §3) */}
-      <header className="w-full bg-white border-b border-slate-200 py-3 px-5 sm:px-6">
-        <div className="max-w-5xl mx-auto flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
+      {/* Header — logo left, FREE PLAN right, no navigation / hamburger */}
+      <header className={`w-full bg-white border-b border-slate-200 py-3 ${GUTTER}`}>
+        <div className="max-w-[1120px] mx-auto flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 min-w-0">
             <img src={logo} alt="The Foot Capacity System" className="h-9 w-auto" />
             <p className="font-bold text-slate-900 text-sm sm:text-base leading-tight">Foot Capacity System</p>
           </div>
           <button
             type="button"
-            onClick={scrollToForm}
-            className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-wide px-4 py-2 rounded-full shrink-0 transition-colors"
+            onClick={() => goToForm("form_top", "header_free_plan")}
+            className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-wide px-4 py-2 min-h-[40px] rounded-full shrink-0 transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
             Free Plan
           </button>
@@ -544,205 +588,262 @@ export default function ColdStart() {
 
       <main className="flex-1 w-full">
 
-        {/* ════════════ BLOCK 1 — HERO / SEARCH CONGRUENCY ════════════ */}
-        {/* Two separate production assets, never composited or blended. Desktop: clean
-            two-column hero — copy left, Dr. Jonathan as the standalone authority image right.
-            Mobile: copy → DJ stacked. Then the heel/quote asset below in normal document flow
-            as its own intentional image (full quote + blue underline + red heel preserved). No
-            masks, gradients, overlap, negative margins, or absolute positioning between the
-            two photographs. */}
-        <section className="bg-white">
-          {/* Upper hero — copy + Dr. Jonathan authority image */}
-          <div className="max-w-5xl mx-auto px-5 sm:px-6 pt-8 md:pt-12">
-            <div className="grid md:grid-cols-2 gap-7 md:gap-10 md:items-center">
-              <div className="min-w-0">
-                {heroCopy}
-              </div>
-              {/* Dr. Jonathan — standalone authority photograph, attractively cropped;
-                  never faded into or overlapping another image */}
-              <div className="min-w-0">
-                <img
-                  src={DJ_HEADSHOT_SRC}
-                  alt="Dr. Jonathan Schutza, PT, DPT"
-                  className="w-full rounded-2xl object-cover object-top shadow-sm aspect-[3/2] md:aspect-[4/5]"
-                />
-              </div>
-            </div>
-          </div>
+        {/* ════════════ SECTION 1 — HERO ════════════ */}
+        {/* Mobile: copy → CTA → reassurance → Michelle proof → modest portrait.
+            Desktop: copy left; Michelle + smaller portrait right. No heel image here. */}
+        <section className={`${GUTTER} pt-8 pb-6 md:pt-12 md:pb-9`}>
+          <div className="max-w-[1120px] mx-auto md:grid md:grid-cols-[1.1fr_0.9fr] md:gap-12 md:items-center">
+            <div className="min-w-0">
+              <p className={`${T.eyebrow} mb-3`}>Plantar Fasciitis Recovery at Home</p>
+              <h1 className={T.h1}>
+                <span className="block text-slate-900">Stop Guessing Your Way Through Plantar Fasciitis.</span>
+                <span className="block text-blue-600">Follow a Plan That Adjusts to Your Foot.</span>
+              </h1>
+              <p className={`${T.body} mt-5`}>
+                Exercise videos show you what to do. Assigned sets and reps tell you how much. Your daily check-ins help guide what comes next.
+              </p>
 
-          {/* Heel + handwritten message — the real pain moment, its OWN image in normal
-              document flow: natural aspect ratio, nearly full content width, controlled
-              spacing above and below, never a continuation of Dr. Jonathan's photo */}
-          <div className="max-w-4xl mx-auto px-5 sm:px-6 pt-8 md:pt-10 pb-2">
-            <img
-              src={HEEL_MESSAGE_SRC}
-              alt="The right exercise at the wrong time is still the wrong exercise."
-              className="w-full"
-            />
+              <div className="flex items-center gap-2.5 mt-5">
+                <ShieldCheck size={22} />
+                <p className={T.body}>
+                  Built by <span className="font-bold text-slate-900">Dr. Jonathan Schutza, PT, DPT</span>
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => goToForm("form_top", "hero_free_plan")}
+                className={`${PRIMARY_BUTTON} w-full sm:w-auto mt-6 shadow-sm`}
+              >
+                Start My Free Recovery Plan →
+              </button>
+
+              <p className={`${T.note} mt-3`}>No credit card. Start online. Nothing to install.</p>
+            </div>
+
+            <div className="min-w-0 mt-8 md:mt-0 space-y-6">
+              {/* Michelle — abbreviated five-star proof (live text, authentic wording) */}
+              <figure className="bg-white border border-slate-200 rounded-2xl shadow-sm px-5 py-5">
+                <div className="flex items-center justify-between gap-3 flex-wrap">
+                  <figcaption className="font-bold text-slate-900 text-[16px] leading-tight">Michelle Shabason</figcaption>
+                  <FiveStars />
+                </div>
+                <blockquote className={`${T.body} mt-3`}>
+                  “Huge improvements: almost no morning pain, walking/standing much longer, including at work, and much more functional around the house.”
+                </blockquote>
+                <p className={`${T.note} mt-3`}>September 8, 2026 · 10 weeks after purchase</p>
+                <p className={`${T.note} mt-1`}>Individual results vary.</p>
+              </figure>
+
+              <img
+                src={DJ_HEADSHOT_SRC}
+                alt="Dr. Jonathan Schutza, PT, DPT"
+                className="w-full max-w-[360px] md:max-w-none mx-auto rounded-2xl object-cover object-top aspect-[3/2] shadow-sm"
+              />
+            </div>
           </div>
         </section>
 
-        {/* ════════════ BLOCK 2 — PRODUCT / HOW FCS WORKS ════════════ */}
-        <section className="bg-white px-5 sm:px-6 py-12 sm:py-16">
-          <div className="max-w-3xl mx-auto">
-            <AccentBar />
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-center leading-tight mb-4">
-              <span className="text-slate-900">Your Foot Changes.</span><br />
-              <span className="text-blue-600">Your Plan Should Too.</span>
+        {/* ════════════ SECTION 2 — RECOGNITION + PRODUCT IMAGE ════════════ */}
+        <section className={`${GUTTER} pt-6 md:pt-9`}>
+          <div className={TEXT_WIDTH}>
+            <h2 className={T.h2}>
+              <span className="block text-slate-900">Foot Pain Takes More</span>
+              <span className="block text-blue-600">Than Your Next Step.</span>
             </h2>
-            <p className="text-slate-600 text-base sm:text-lg text-center leading-relaxed mb-8 max-w-xl mx-auto">
-              Plantar fasciitis recovery isn't about finding more exercises. It's about knowing{" "}
-              <span className="font-bold text-slate-900">what your foot is ready for today and what to do next.</span>
-            </p>
 
-            {/* Product image with restrained pale-blue glow */}
-            <div className="relative flex justify-center mb-10">
-              <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
-                <div className="w-[88%] h-[72%] rounded-[50%] bg-blue-100/70 blur-2xl" />
-              </div>
+            <div className="mt-5 space-y-4">
+              <p className={`${T.body} border-l-[3px] border-blue-200 pl-4`}>
+                Two hours into your shift. Your heel is screaming. Six hours still ahead.
+              </p>
+              <p className={`${T.body} border-l-[3px] border-blue-200 pl-4`}>
+                Your kids call, “Come play!” But you’re on the sidelines again.
+              </p>
+              <p className={`${T.body} border-l-[3px] border-blue-200 pl-4`}>
+                Walking used to clear your head. Now you dread the morning after.
+              </p>
+              <p className={`${T.body} font-bold text-slate-900`}>
+                Getting through the day isn’t the same as enjoying it.
+              </p>
+              <p className={T.body}>
+                Start working toward more comfortable movement with guided sessions that take about{" "}
+                <span className="font-bold text-slate-900">15–20 minutes a day at home.</span>
+              </p>
+            </div>
+
+            <div className="mt-8 flex justify-center">
               <img
                 src={PHONES_SRC}
-                alt="The Foot Capacity System app — Today's Log, Functional Assessment, and Progress"
-                className="relative w-full max-w-lg"
+                alt="The Foot Capacity System app on three phones"
+                width={1326}
+                height={1186}
+                className="w-full max-w-[560px] h-auto"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════ SECTION 3 — THREE STEPS + FIRST FORM ════════════ */}
+        {/* Continues Section 2's explanation: ~28px from the phone image, no heading. */}
+        <section className={`${GUTTER} pt-7 pb-6 md:pt-8 md:pb-9`}>
+          <div className={TEXT_WIDTH}>
+            <ol className="space-y-6 md:space-y-7">
+              {[
+                { n: "1", label: "Check In", body: "Report your pain so your plan accounts for how your foot is feeling." },
+                { n: "2", label: "Watch and Follow", body: "Watch the exercise videos, follow your assigned sets and reps, and record what you complete." },
+                { n: "3", label: "Know What Comes Next", body: "Your check-ins help the system guide when to build up, stay steady, or ease back." },
+              ].map((step) => (
+                <li key={step.n} className="grid grid-cols-[36px_1fr] gap-x-3 items-start">
+                  <span className="w-9 h-9 rounded-full bg-blue-100 text-blue-600 font-extrabold text-[17px] flex items-center justify-center" aria-hidden="true">
+                    {step.n}
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className={T.step}>
+                      <span className="sr-only">Step {step.n}: </span>{step.label}
+                    </h3>
+                    <p className={`${T.body} mt-1`}>{step.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            {/* FIRST FORM — header FREE PLAN + hero CTA destination */}
+            <div className="mt-10 md:mt-12">
+              {optInForm("form_top")}
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════ SECTION 4 — DIFFERENCE + HEEL IMAGE ════════════ */}
+        <section className={SECTION}>
+          <div className={TEXT_WIDTH}>
+            <h2 className={T.h2}>
+              <span className="block text-slate-900">YouTube Knows What You Watched.</span>
+              <span className="block text-blue-600">It Doesn’t Know Your Foot.</span>
+            </h2>
+            <p className={`${T.body} mt-5`}>
+              Saved videos. Screenshots. Stretches. Strengthening exercises. You can collect plenty of advice and still wonder what to do tomorrow morning.
+            </p>
+            <p className={`${T.body} font-bold text-slate-900 mt-4`}>
+              Which exercise? How much? Should you progress, stay steady, or back off?
+            </p>
+
+            {/* Supplied heel/message image, complete and intact — its quote is in the asset */}
+            <div className="mt-8 flex justify-center">
+              <img
+                src={HEEL_MESSAGE_SRC}
+                alt="The right exercise at the wrong time is still the wrong exercise."
+                width={1239}
+                height={1269}
+                className="w-full max-w-[560px] h-auto"
                 loading="lazy"
               />
             </div>
 
-            {/* Three-step process */}
-            <div className="space-y-6 max-w-xl mx-auto mb-12">
-              {[
-                { n: "1", label: "Check In", body: "Track your pain and activity so FCS knows where you are." },
-                { n: "2", label: "Follow Your Plan", body: "Get a personalized plan with guided exercises, sets, and reps." },
-                { n: "3", label: "Build From There", body: "Keep checking in. FCS adjusts based on your progress and how your foot is responding." },
-              ].map((step) => (
-                <div key={step.n} className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-full bg-blue-100 text-blue-600 font-extrabold text-lg flex items-center justify-center shrink-0">
-                    {step.n}
-                  </div>
-                  <div>
-                    <p className="text-slate-900 font-bold text-sm uppercase tracking-wide mb-1">{step.label}</p>
-                    <p className="text-slate-600 text-sm sm:text-base leading-relaxed">{step.body}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* FIRST OPT-IN FORM — Block 1 CTA destination */}
-            {optInForm("free-recovery-plan")}
+            <p className={`${T.body} mt-8`}>
+              FCS brings your exercises and daily check-ins together to guide those decisions. Your plan responds to what you report, giving you a clearer next step.
+            </p>
           </div>
         </section>
 
-        {/* ════════════ BLOCK 3 — DIFFERENCE + DR. JONATHAN ════════════ */}
-        <section className="bg-slate-50 px-5 sm:px-6 py-12 sm:py-16">
-          <div className="max-w-3xl mx-auto">
-            <AccentBar />
-            <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight mb-5 text-center">
-              <span className="text-slate-900">Random Exercises</span><br />
-              <span className="text-blue-600">Aren't a Recovery Plan.</span>
-            </h2>
-            <p className="text-slate-600 text-base leading-relaxed mb-4">
-              You can find hundreds of plantar fasciitis exercises online. The hard part is knowing{" "}
-              <span className="font-bold text-slate-900">which ones make sense for your foot, how much to do, and when you're ready for more.</span>
-            </p>
-            <p className="text-slate-900 font-bold text-base mb-2">That's the difference with FCS.</p>
-            <p className="text-slate-600 text-base leading-relaxed mb-10">
-              Instead of bouncing between stretches, YouTube videos, and conflicting advice, you follow a structured recovery process built by a physical therapist who treats these problems every day.
+        {/* ════════════ SECTION 5 — DR. JONATHAN + VIDEO ════════════ */}
+        <section className={SECTION}>
+          <div className={TEXT_WIDTH}>
+            <h2 className={`${T.h2} text-slate-900`}>Meet Dr. Jonathan Schutza.</h2>
+            <p className={`${T.subtitle} text-center mt-2`}>Your Physical Therapist Behind FCS.</p>
+
+            <p className={`${T.statement} text-center mt-6`}>
+              Calming pain is one thing. Rebuilding what your foot can handle is another.
             </p>
 
-            <div className="border-t border-slate-200 pt-10">
-              <p className="text-blue-600 text-xs font-bold uppercase tracking-[0.18em] mb-2">You're Not Doing This Alone.</p>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight mb-4">
-                Meet Dr. Jonathan Schutza, PT, DPT
-              </h3>
-              <p className="text-slate-600 text-base leading-relaxed mb-4">
-                Dr. Jonathan built the Foot Capacity System around a simple idea:{" "}
-                <span className="font-bold text-slate-900">your foot needs the right amount of challenge at the right time.</span>
+            <div className="mt-6 space-y-4">
+              <p className={T.body}>
+                Dr. Jonathan Schutza, PT, DPT, built FCS to help you work toward both, with the right amount of challenge at the right time.
               </p>
-              <p className="text-slate-600 text-base leading-relaxed">
-                FCS gives you a plan to follow at home, while Dr. Jonathan regularly reviews member progress and provides guidance through the messaging system when questions, setbacks, or flare-ups come up.
+              <p className={T.body}>
+                His involvement goes beyond the exercise videos. He reviews member progress and provides individual guidance when his input is needed.
               </p>
             </div>
 
-            {/* Video introduction card (text only — no play icon here) */}
-            <div className="mt-12 mb-6 bg-blue-50 border border-blue-100 rounded-2xl px-6 py-6 text-center">
-              <p className="text-blue-600 text-xs font-bold uppercase tracking-[0.18em] mb-2">A Message From Dr. Jonathan</p>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight mb-2">
-                Why So Many People Stay Stuck
-              </h3>
-              <p className="text-slate-600 text-sm sm:text-base leading-snug max-w-sm mx-auto">
-                Most people aren't missing effort. They're missing direction.
-              </p>
-            </div>
-
-            {/* Functional video player */}
-            <div className="rounded-2xl overflow-hidden shadow-lg mb-10" style={{ position: "relative", paddingTop: "56.25%" }}>
-              <iframe
-                src={`https://customer-hene8ngxxo3eajlj.cloudflarestream.com/${VIDEO_ID}/iframe${!posterVisible ? "?autoplay=true" : ""}`}
-                style={{ border: "none", position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-                allowFullScreen
-                title="A message from Dr. Jonathan Schutza"
-              />
-              {posterVisible && (
-                <div
-                  onClick={() => setPosterVisible(false)}
-                  style={{
-                    position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-                    backgroundImage: `url(${VIDEO_POSTER_SRC})`,
-                    backgroundSize: "cover", backgroundPosition: "center",
-                    cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-                  }}
+            {/* Existing approved video — responsive 16:9, loads only when tapped */}
+            <div className="mt-8 relative w-full rounded-2xl overflow-hidden shadow-lg bg-slate-900" style={{ paddingTop: "56.25%" }}>
+              {videoStarted ? (
+                <iframe
+                  src={`https://customer-hene8ngxxo3eajlj.cloudflarestream.com/${VIDEO_ID}/iframe?autoplay=true`}
+                  style={{ border: "none", position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                  title="A message from Dr. Jonathan Schutza"
+                />
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setVideoStarted(true)}
+                  aria-label="Play the video message from Dr. Jonathan Schutza"
+                  className="absolute inset-0 w-full h-full flex items-center justify-center focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500"
                 >
-                  <div style={{
-                    width: 64, height: 64, borderRadius: "50%",
-                    backgroundColor: "rgba(255,255,255,0.9)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
-                  }}>
+                  <img
+                    src={VIDEO_POSTER_SRC}
+                    alt=""
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <span
+                    className="relative w-16 h-16 rounded-full bg-white/90 flex items-center justify-center"
+                    style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.3)" }}
+                    aria-hidden="true"
+                  >
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="#2563EB">
                       <polygon points="5,3 19,12 5,21" />
                     </svg>
-                  </div>
-                </div>
+                  </span>
+                </button>
               )}
-            </div>
-
-            {/* Closing authority card */}
-            <div className="bg-blue-50 border border-blue-100 rounded-2xl px-6 py-6 flex items-start gap-4">
-              <ShieldCheck size={32} />
-              <p className="text-blue-700 font-bold text-base sm:text-lg leading-snug">
-                You're not just getting exercises. You're getting a process backed by a real physical therapist.
-              </p>
             </div>
           </div>
         </section>
 
-        {/* ════════════ BLOCK 4 — PROOF + SECOND OPT-IN ════════════ */}
-        <section className="bg-white px-5 sm:px-6 py-12 sm:py-16">
-          <div className="max-w-3xl mx-auto">
-            <p className="text-blue-600 text-xs font-bold uppercase tracking-[0.18em] mb-3 text-center">Real Members. Measurable Progress.</p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight mb-4 text-center">
-              <span className="text-slate-900">See What Progress</span><br />
-              <span className="text-blue-600">Can Look Like.</span>
+        {/* ════════════ SECTION 6 — MEASURABLE MEMBER RESULTS ════════════ */}
+        <section className={SECTION}>
+          <div className={TEXT_WIDTH}>
+            <p className={`${T.eyebrow} text-center`}>Real Members. Measurable Progress.</p>
+            <h2 className={`${T.h2} mt-3`}>
+              <span className="block text-slate-900">See What Progress</span>
+              <span className="block text-blue-600">Can Look Like.</span>
             </h2>
-            <p className="text-slate-600 text-base text-center leading-relaxed mb-8 max-w-xl mx-auto">
-              Recovery looks different for everyone. Here's what FCS members are reporting as they build strength, improve function, and get back to the things they want to do.
+            <p className={`${T.body} text-center mt-5`}>
+              Explore changes in pain and reported foot function from FCS members. Open their stories to see where they started and how they progressed.
+            </p>
+            <p className={`${T.note} text-center mt-3`}>
+              Recovery looks different for everyone. Individual results vary.
+            </p>
+          </div>
+
+          {/* Existing member-progress component — unchanged (horizontal scroll + tap-to-open;
+              not a testimonial carousel, no arrows/dots) */}
+          <div className="max-w-[1120px] mx-auto mt-8">
+            <UserJourneyCarousel />
+          </div>
+
+          <p className={`${T.body} font-bold text-slate-900 text-center mt-6`}>
+            Tap any result to read the member’s full story.
+          </p>
+        </section>
+
+        {/* ════════════ SECTION 7 — MEMBER TESTIMONIALS ════════════ */}
+        <section className={SECTION}>
+          <div className={TEXT_WIDTH}>
+            <h2 className={T.h2}>
+              <span className="block text-slate-900">More Comfortable Mornings.</span>
+              <span className="block text-blue-600">More of Everyday Life.</span>
+            </h2>
+            <p className={`${T.body} text-center mt-5`}>
+              Members share what their progress has meant at home, at work, and in the activities they enjoy.
             </p>
 
-            {/* Existing member-progress component — unchanged (not a testimonial carousel) */}
-            <UserJourneyCarousel />
-
-            {/* Testimonial transition */}
-            <div className="pt-12 mt-4">
-              <AccentBar />
-              <p className="text-blue-600 text-xs font-bold uppercase tracking-[0.18em] mb-3 text-center">Real People. Real Experiences.</p>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight mb-8 text-center">
-                Here's What FCS Members Are Saying.
-              </h3>
-            </div>
-
-            {/* Swipeable testimonial carousel */}
-            <div className="relative mb-12">
+            {/* Existing swipeable testimonial carousel — Brittany, Jocelyn Lavoie, Karen Stone */}
+            <div className="relative mt-8">
               <button
                 type="button"
                 onClick={prevTestimonial}
@@ -761,7 +862,7 @@ export default function ColdStart() {
               </button>
 
               <div
-                className="px-9 sm:px-12"
+                className="px-11 sm:px-12"
                 onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
                 onTouchEnd={(e) => {
                   const dx = e.changedTouches[0].clientX - touchStartX.current;
@@ -785,7 +886,7 @@ export default function ColdStart() {
                   </div>
                   <div className="space-y-3 mb-4">
                     {active.body.split("\n\n").map((para, i) => (
-                      <p key={i} className="text-slate-700 text-[15px] leading-relaxed">{para}</p>
+                      <p key={i} className="text-slate-700 text-[16px] leading-relaxed">{para}</p>
                     ))}
                   </div>
                   <p className="text-slate-400 text-xs">{active.meta}</p>
@@ -800,83 +901,103 @@ export default function ColdStart() {
                     type="button"
                     onClick={() => setTestimonialIndex(i)}
                     aria-label={`Show testimonial ${i + 1}`}
+                    aria-current={i === testimonialIndex ? "true" : undefined}
                     className={`h-2 rounded-full transition-all ${i === testimonialIndex ? "w-5 bg-blue-600" : "w-2 bg-slate-300 hover:bg-slate-400"}`}
                   />
                 ))}
               </div>
             </div>
-
-            {/* SECOND / FINAL OPT-IN FORM */}
-            {optInForm()}
           </div>
         </section>
 
-        {/* ════════════ BLOCK 5 — FAQ + FOOTER ════════════ */}
-        <section className="bg-slate-50 px-5 sm:px-6 py-12 sm:py-16">
-          <div className="max-w-3xl mx-auto">
-            <AccentBar />
-            <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight mb-4 text-center">
-              <span className="text-slate-900">A Few Questions</span><br />
-              <span className="text-blue-600">Before You Start.</span>
-            </h2>
-            <p className="text-slate-600 text-base text-center leading-relaxed mb-8 max-w-md mx-auto">
-              Get the answers you need so you can feel confident taking the next step.
-            </p>
+        {/* ════════════ SECTION 8 — SECOND / FINAL FORM ════════════ */}
+        <section className={SECTION}>
+          <div className={TEXT_WIDTH}>
+            {optInForm("form_bottom")}
+          </div>
+        </section>
 
-            <div className="space-y-3">
+        {/* ════════════ SECTION 9 — FAQ ACCORDION ════════════ */}
+        <section className={SECTION}>
+          <div className={TEXT_WIDTH}>
+            <h2 className={T.h2}>
+              <span className="text-slate-900">Before You </span>
+              <span className="text-blue-600">Start.</span>
+            </h2>
+
+            {/* Single-open accordion (existing convention), chevron only, initially collapsed */}
+            <div className="mt-8 space-y-3">
               {FAQS.map((faq, i) => {
                 const open = faqOpen === i;
                 return (
-                  <div key={i} className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
-                    <button
-                      type="button"
-                      onClick={() => setFaqOpen(open ? null : i)}
-                      aria-expanded={open}
-                      aria-controls={`faq-panel-${i}`}
-                      className="w-full text-left px-4 sm:px-5 py-4 flex items-center gap-3"
-                    >
-                      <span className="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>
-                          <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-                        </svg>
-                      </span>
-                      <span className="flex-1 text-slate-900 font-bold text-sm sm:text-base leading-snug">{faq.q}</span>
-                      <svg
-                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8"
-                        strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                        style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s", flexShrink: 0 }}
+                  <div key={i} className="bg-white rounded-2xl border border-slate-200">
+                    <h3>
+                      <button
+                        type="button"
+                        id={`faq-question-${i}`}
+                        onClick={() => setFaqOpen(open ? null : i)}
+                        aria-expanded={open}
+                        aria-controls={`faq-panel-${i}`}
+                        className="w-full min-h-[56px] text-left px-5 py-4 flex items-center justify-between gap-4 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                       >
-                        <polyline points="6 9 12 15 18 9" />
-                      </svg>
-                    </button>
-                    {open && (
-                      <div id={`faq-panel-${i}`} className="px-4 sm:px-5 pb-4 pl-14 sm:pl-15">
-                        <p className="text-slate-600 text-sm sm:text-base leading-relaxed">{faq.a}</p>
+                        <span className={`${T.faqQ} flex-1 min-w-0`}>{faq.q}</span>
+                        <svg
+                          width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B"
+                          strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                          className={`shrink-0 transition-transform duration-200 motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
+                          aria-hidden="true"
+                        >
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                      </button>
+                    </h3>
+                    <div
+                      id={`faq-panel-${i}`}
+                      role="region"
+                      aria-labelledby={`faq-question-${i}`}
+                      aria-hidden={!open}
+                      className={`grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                    >
+                      <div className="overflow-hidden">
+                        <p className={`${T.body} px-5 pb-5`}>{faq.a}</p>
                       </div>
-                    )}
+                    </div>
                   </div>
                 );
               })}
             </div>
+          </div>
+        </section>
 
-            {/* Footer trust line */}
-            <div className="flex items-center justify-center gap-2 mt-14">
-              <ShieldCheck size={15} />
-              <p className="text-slate-400 text-sm">Trusted by thousands. Built by a physical therapist. Backed by science.</p>
-            </div>
+        {/* ════════════ SECTION 10 — CLOSING CTA ════════════ */}
+        <section className={`${GUTTER} pt-6 pb-10 md:pt-9 md:pb-14`}>
+          <div className={`${TEXT_WIDTH} text-center`}>
+            <p className={T.closing}>
+              A recovery plan built by a physical therapist, ready to follow at home.
+            </p>
+            <button
+              type="button"
+              onClick={() => goToForm("form_bottom", "footer_free_plan")}
+              className={`${PRIMARY_BUTTON} w-full sm:w-auto mt-6 shadow-sm`}
+            >
+              Start My Free Recovery Plan →
+            </button>
+            <p className={`${T.note} mt-3`}>No credit card required.</p>
           </div>
         </section>
       </main>
 
-      {/* Legal footer */}
-      <div className="border-t border-slate-200 bg-white py-6 px-6 text-center">
-        <p className="text-slate-400 text-xs">
-          &copy; {new Date().getFullYear()} The Foot Capacity System &middot;{" "}
+      {/* Quiet legal footer */}
+      <footer className={`border-t border-slate-200 bg-white py-6 ${GUTTER} text-center`}>
+        <p className={`${T.legal} text-slate-400`}>&copy; {new Date().getFullYear()} The Foot Capacity System</p>
+        <p className={`${T.legal} text-slate-400 mt-1`}>
           <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>
           {" "}&middot;{" "}
           <a href="/terms-of-service" className="hover:underline">Terms</a>
+          {" "}&middot;{" "}
+          <a href="/contact" className="hover:underline">Contact</a>
         </p>
-      </div>
+      </footer>
     </div>
   );
 }
