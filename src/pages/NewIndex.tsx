@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 
 const trustItems = [
-  { icon: ShieldCheck, label: "60-Day Guarantee" },
+  { icon: ShieldCheck, label: "30-Day Guarantee" },
   { icon: CheckCircle, label: "Guided Recovery From Home" },
   { icon: CheckCircle, label: "Track Progress Daily" },
   { icon: CheckCircle, label: "Lifetime Access" },
@@ -92,7 +92,7 @@ export default function NewIndex() {
 
                   {/* Primary CTA — above fold on mobile */}
                   <a
-                    href="https://fixyourmovement.com/walkthrough"
+                    href="/lp/download"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="cta-button animate-pulse-glow text-base md:text-lg"
@@ -481,7 +481,7 @@ export default function NewIndex() {
 
             <div className="flex justify-center mt-6">
               <a
-                href="https://fixyourmovement.com/walkthrough"
+                href="/lp/download"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="cta-button animate-pulse-glow text-base md:text-lg"
@@ -501,7 +501,7 @@ export default function NewIndex() {
               </span>
               <span className="flex items-center gap-1.5">
                 <CheckCircle size={13} className="text-blue-600 shrink-0" />
-                60-day guarantee
+                30-day guarantee
               </span>
               <span className="flex items-center gap-1.5">
                 <CheckCircle size={13} className="text-blue-600 shrink-0" />
@@ -741,7 +741,7 @@ export default function NewIndex() {
                   {/* Eyebrow */}
                   <div className="flex items-center justify-center gap-2 mb-4">
                     <Shield size={18} className="text-blue-600" />
-                    <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest">Our 60-Day Guarantee</p>
+                    <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest">Our 30-Day Guarantee</p>
                   </div>
 
                   {/* Primary headline */}
@@ -755,14 +755,14 @@ export default function NewIndex() {
 
                   {/* Body copy */}
                   <p className="text-slate-600 text-base leading-relaxed mb-8 max-w-lg mx-auto">
-                    Try the system for 60 days. Follow the program, track your progress, and if you do not experience meaningful improvement, we'll refund your investment. No questions asked.
+                    Try the system for 30 days. Follow the program, track your progress, and if you do not experience meaningful improvement, we'll refund your investment. No questions asked.
                   </p>
 
                   {/* 3 inline trust bullets */}
                   <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 text-sm text-slate-700">
                     <span className="flex items-center gap-2">
                       <CheckCircle size={16} className="text-blue-600 shrink-0" />
-                      60 full days to build consistency
+                      30 full days to build consistency
                     </span>
                     <span className="flex items-center gap-2">
                       <CheckCircle size={16} className="text-blue-600 shrink-0" />
@@ -907,7 +907,7 @@ export default function NewIndex() {
               Understand how guided recovery, structured progression, and daily consistency work together inside The Foot Capacity System.
             </p>
             <a
-              href="https://fixyourmovement.com/walkthrough"
+              href="/lp/download"
               target="_blank"
               rel="noopener noreferrer"
               className="cta-button animate-pulse-glow"
@@ -921,7 +921,7 @@ export default function NewIndex() {
               </span>
               <span className="flex items-center gap-1.5">
                 <CheckCircle size={13} className="text-blue-600 shrink-0" />
-                60-day guarantee
+                30-day guarantee
               </span>
               <span className="flex items-center gap-1.5">
                 <CheckCircle size={13} className="text-blue-600 shrink-0" />
@@ -959,7 +959,7 @@ export default function NewIndex() {
         }`}
       >
         <a
-          href="https://fixyourmovement.com/walkthrough"
+          href="/lp/download"
           target="_blank"
           rel="noopener noreferrer"
           className="font-semibold text-base text-white text-center w-full"

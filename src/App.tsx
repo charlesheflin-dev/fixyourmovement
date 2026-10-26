@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import TermsOfService from "./pages/TermsOfService.tsx";
 import Contact from "./pages/Contact.tsx";
@@ -13,13 +12,9 @@ import ChooseYourPlan from "./pages/ChooseYourPlan.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import RefundPolicy from "./pages/RefundPolicy.tsx";
 import EULA from "./pages/EULA.tsx";
-import Walkthrough from "./pages/Walkthrough";
 import HsaFsa from "./pages/HsaFsa";
 import DrJonathanSchutza from "./pages/DrJonathanSchutza";
 import NewIndex from "./pages/NewIndex.tsx";
-import NewWalkthrough from "./pages/NewWalkthrough.tsx";
-import Index_archive from "./pages/Index_archive_2026_05_25";
-import Walkthrough_archive from "./pages/Walkthrough_archive_2026_05_25";
 import CookieConsent from "./components/CookieConsent.tsx";
 import ExitPopup from "./components/ExitPopup.tsx";
 import EmailConfirmation from "./pages/EmailConfirmation";
@@ -166,7 +161,7 @@ const App = () => (
         <ExitPopup />
         <AskDrJonathanGlobal />
          <Routes>
-           <Route path="/" element={<Index />} />
+           <Route path="/" element={<NewIndex />} />
            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
            <Route path="/terms-of-service" element={<TermsOfService />} />
            <Route path="/contact" element={<Contact />} />
@@ -174,14 +169,9 @@ const App = () => (
             <Route path="/choose-your-plan" element={<ChooseYourPlan />} />
             <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/eula" element={<EULA />} />
-             <Route path="/walkthrough" element={<Walkthrough />} />
              <Route path="/hsa-fsa" element={<HsaFsa />} />
              <Route path="/dr-jonathan-schutza" element={<DrJonathanSchutza />} />
                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                 <Route path="/newindex" element={<NewIndex />} />
-                 <Route path="/newwalkthrough" element={<NewWalkthrough />} />
-                  <Route path="/oldindex" element={<Index_archive />} />
-                  <Route path="/oldwalkthrough" element={<Walkthrough_archive />} />
                 <Route path="/email-confirmation" element={<EmailConfirmation />} />
                   <Route path="/lp/newsletter" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/lp/take-assessment" element={<Navigate to="/lp/download" replace />} />

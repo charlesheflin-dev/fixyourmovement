@@ -87,11 +87,11 @@ export default function PostTrialSurvey() {
   const [q3, setQ3] = useState<string | null>(null);
   const [q3Other, setQ3Other] = useState("");
 
-  // Fetch — mirrors Results.tsx: userId OR ?email=, redirect to /walkthrough only on a
+  // Fetch — mirrors Results.tsx: userId OR ?email=, redirect to /lp/download only on a
   // genuine failure (no identifier, fetch error, or user-not-found). Zero-log users are
   // NOT bounced — they proceed to the survey and the reframed results (Slice C).
   useEffect(() => {
-    if (!userId && !emailParam) { window.location.href = "/walkthrough"; return; }
+    if (!userId && !emailParam) { window.location.href = "/lp/download"; return; }
     const fetchUrl = userId
       ? `${GET_RESULTS_URL}?userId=${userId}`
       : `${GET_RESULTS_URL}?email=${encodeURIComponent(emailParam!)}`;
@@ -99,7 +99,7 @@ export default function PostTrialSurvey() {
       .then((r) => r.json())
       .then((d: SurveyResultsData) => {
         if (d.error) {
-          window.location.href = "/walkthrough";
+          window.location.href = "/lp/download";
         } else {
           setData(d);
           setLoading(false);
@@ -121,7 +121,7 @@ export default function PostTrialSurvey() {
           }
         }
       })
-      .catch(() => { window.location.href = "/walkthrough"; });
+      .catch(() => { window.location.href = "/lp/download"; });
   }, [userId, emailParam]);
 
   const startingPain = data ? toNum(data.startingPain) : null;
