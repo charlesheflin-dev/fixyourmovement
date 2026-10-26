@@ -3,4 +3,5 @@
 /start/chronic     /lp/take-assessment  301
 /start/new         /lp/take-assessment  301
 /walkthrough  /  301
+/choose-your-plan  /checkout  301
 /*  /index.html  200

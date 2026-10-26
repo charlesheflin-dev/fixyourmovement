@@ -912,7 +912,7 @@ export default function NewIndex() {
               rel="noopener noreferrer"
               className="cta-button animate-pulse-glow"
             >
-              Watch The Full Guided Walkthrough
+              Start My Free Recovery Plan →
             </a>
             <div className="flex flex-wrap justify-center gap-4 mt-6 text-xs text-slate-500">
               <span className="flex items-center gap-1.5">
@@ -964,7 +964,7 @@ export default function NewIndex() {
           rel="noopener noreferrer"
           className="font-semibold text-base text-white text-center w-full"
         >
-          See Full Walkthrough →
+          See How It Works →
         </a>
       </div>
     </div>

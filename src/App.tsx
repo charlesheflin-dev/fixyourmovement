@@ -8,7 +8,6 @@ import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import TermsOfService from "./pages/TermsOfService.tsx";
 import Contact from "./pages/Contact.tsx";
 import ThankYou from "./pages/ThankYou.tsx";
-import ChooseYourPlan from "./pages/ChooseYourPlan.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import RefundPolicy from "./pages/RefundPolicy.tsx";
 import EULA from "./pages/EULA.tsx";
@@ -158,7 +157,7 @@ const App = () => (
         <ScrollToTop />
         <SourceCapture />
         <CookieConsent />
-        <ExitPopup />
+        {/* <ExitPopup /> */}
         <AskDrJonathanGlobal />
          <Routes>
            <Route path="/" element={<NewIndex />} />
@@ -166,7 +165,6 @@ const App = () => (
            <Route path="/terms-of-service" element={<TermsOfService />} />
            <Route path="/contact" element={<Contact />} />
            <Route path="/thank-you" element={<ThankYou />} />
-            <Route path="/choose-your-plan" element={<ChooseYourPlan />} />
             <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/eula" element={<EULA />} />
              <Route path="/hsa-fsa" element={<HsaFsa />} />
