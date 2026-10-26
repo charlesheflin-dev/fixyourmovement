@@ -797,7 +797,7 @@ export default function Results() {
   const [insightsLoading, setInsightsLoading] = useState(true);
 
   useEffect(() => {
-    if (!userId && !emailParam) { window.location.href = "/walkthrough"; return; }
+    if (!userId && !emailParam) { window.location.href = "/lp/download"; return; }
     const fetchUrl = userId
       ? `${GET_RESULTS_URL}?userId=${userId}`
       : `${GET_RESULTS_URL}?email=${encodeURIComponent(emailParam!)}`;
@@ -805,7 +805,7 @@ export default function Results() {
       .then((r) => r.json())
       .then((d) => {
         if (d.error) {
-          window.location.href = "/walkthrough";
+          window.location.href = "/lp/download";
         } else {
           setData(d);
           setLoading(false);
@@ -834,7 +834,7 @@ export default function Results() {
             .finally(() => setInsightsLoading(false));
         }
       })
-      .catch(() => { window.location.href = "/walkthrough"; });
+      .catch(() => { window.location.href = "/lp/download"; });
   }, [userId, emailParam]);
 
   if (loading) {

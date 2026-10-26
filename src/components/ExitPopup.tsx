@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
-const ELIGIBLE_ROUTES = ["/", "/walkthrough"];
+const ELIGIBLE_ROUTES = ["/", "/lp/download"];
 const SESSION_KEY = "fcs_exit_popup_dismissed";
-const WALKTHROUGH_HREF = "/walkthrough";
+const WALKTHROUGH_HREF = "/lp/download";
 
 export default function ExitPopup() {
   const { pathname } = useLocation();
