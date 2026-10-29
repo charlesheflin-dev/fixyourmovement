@@ -271,7 +271,7 @@ export default function AskDrJonathanPage() {
           </button>
         </div>
         <p className="mt-2 text-center text-xs text-gray-400">
-          Ask about recovery, the program, or how the app works. Dr. Jonathan reviews unanswered questions personally.
+          Ask about recovery, the program, or how the app works. Unanswered questions are reviewed to improve this assistant.
         </p>
       </div>
     </div>
