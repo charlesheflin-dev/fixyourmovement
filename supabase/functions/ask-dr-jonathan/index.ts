@@ -6,6 +6,7 @@
 // LOW_SIMILARITY_LOG_THRESHOLD is used only to set the was_answered log flag.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { RED_FLAG_PAGE_PATH, RED_FLAG_REPLY, scanForRedFlag } from "./redFlags.ts";
 
 const LOW_SIMILARITY_LOG_THRESHOLD = 0.55;
 const MAX_CHUNKS = 6;
@@ -66,7 +67,7 @@ If the user describes ANY of the following, use the escalation phrase and stop r
 - History of cancer, unexplained weight loss, systemic symptoms, or bilateral severe symptoms
 - Symptoms that do not match the classic plantar fasciitis pattern
 
-Escalation phrase: "Because your symptoms include features that are not typical of straightforward plantar fasciitis, the safest next step is to be evaluated by a licensed clinician before pushing exercises."
+Escalation phrase (secondary layer — a deterministic code-level red-flag scan runs BEFORE you and returns this same reply; this is the fallback if a red flag slips that scan): "Some of what you described isn't typical for plantar fasciitis, so the program can't guide you on it. Please pause the program and see a clinician in person to get it checked. If it's urgent, seek urgent care now. If you have chest pain, trouble breathing, or you've fainted, call your local emergency number now."
 
 ## Program References (use naturally, never pushy)
 - Always include https:// when referencing any URL so links are clickable
@@ -75,7 +76,7 @@ Escalation phrase: "Because your symptoms include features that are not typical 
 - Contact for questions outside scope: contact@fixyourmovement.com
 
 ## Key Facts — Always True Regardless of Context
-- Dr. Jonathan personally monitors all members' progress through the clinician dashboard. He reviews pain trends, flags, and patient data and actively helps members navigate setbacks, questions, and flare-ups. This applies to paid members and free trial users. Never say the program is self-guided without oversight — that is incorrect.
+- The Foot Capacity System is an app-guided program. Dr. Jonathan Schutza, PT, DPT designed its structure and the recovery rules the program follows. Do not claim that he personally monitors, reviews, or individually manages members' progress.
 - The program is 12 weeks with optional Maintenance beyond.
 - Sessions are 10–15 minutes per day, home-based, no equipment required.
 - The free trial ends when the user completes 7 days of logging (7 daily check-ins), not after a set number of calendar days — no credit card required. Someone who checks in every day finishes in about a week; someone who logs less often simply takes longer (a generous outer time limit acts as a backstop). Once they've completed their 7 logged days they see their results and decide whether to purchase. Never describe the trial as a fixed "7-day" or "30-day" period or say "30-day trial" — the trial is measured in logged days, not calendar days.
@@ -125,6 +126,31 @@ Deno.serve(async (req: Request) => {
 
     if (!openaiKey || !anthropicKey || !supabaseUrl || !supabaseServiceKey) {
       throw new Error("Missing required environment variables");
+    }
+
+    // ── Red-flag hard stop (FIX 1, Dr-J go-live check #3): deterministic keyword scan of the
+    //    visitor's message BEFORE the model is called. On a hit, return the fixed in-person-care
+    //    reply (Dr-J A-1 VERBATIM, with the emergency line) and skip the model entirely. Over-
+    //    inclusive by design. Pre-sale / anonymous ⇒ NO clinician alert, NO inbox; the hit is
+    //    logged flagged to chat_questions (non-fatal) so website red-flag hits stay visible. ──
+    if (scanForRedFlag(message)) {
+      try {
+        const sb = createClient(supabaseUrl, supabaseServiceKey);
+        await sb.from("chat_questions").insert({
+          question: message.trim(),
+          reply: RED_FLAG_REPLY,
+          was_answered: false,
+          similarity_score: 0,
+          page_path: RED_FLAG_PAGE_PATH,
+          asked_at: new Date().toISOString(),
+        });
+      } catch {
+        // Non-fatal — logging the flag must never block the safety reply.
+      }
+      return new Response(
+        JSON.stringify({ reply: RED_FLAG_REPLY, sources: [], similarity: 0 }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
     }
 
     // ── Step 1: Embed the user message ──────────────────────────────────────
