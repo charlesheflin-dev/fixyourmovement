@@ -8,6 +8,19 @@ import {
   HsaFsaStrip,
   GuaranteeCard,
   PlanDisclosure,
+  TwoLines,
+  OfferCardFrame,
+  PlanHeader,
+  CardDivider,
+  SectionEyebrow,
+  InsetPanel,
+  FeatureIntro,
+  FeatureRows,
+  BenefitChecklist,
+  PaymentSummary,
+  PrimaryCta,
+  ReassuranceLines,
+  DeclineLink,
 } from "@/components/checkout/OfferPieces";
 
 // /checkout — 3-step upsell wizard (SPEC-checkout-upsell-funnel-and-comms §6).
@@ -157,11 +170,85 @@ export default function Checkout() {
     );
   }
 
+  // ── Step 2 ($97 ownership upsell) — approved mockup + approved copy (2026-10-30). ──
+  // Restyle + relabel only. Accept -> chooseUpsell97(true) (upsell_97_yes, $497 next);
+  // decline link -> chooseUpsell97(false) (upsell_97_no, $297 next) — a FORWARD choice;
+  // ← Back -> goBack() (Step 1, no analytics). No Whop redirect or charge on this step.
+  if (step === "upsell97") {
+    return (
+      <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
+        <FunnelShell>
+          <button
+            type="button"
+            onClick={goBack}
+            className="-mb-3 self-start min-h-[44px] -ml-1 px-1 text-slate-500 hover:text-slate-700 text-sm font-semibold rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
+          >
+            ← Back
+          </button>
+          <FunnelHero
+            eyebrow="BEFORE YOU CONTINUE, ONE MORE OPTION..."
+            title={<TwoLines first="Six Payments." second="Then It's Yours to Keep." />}
+            body="Add 6 months of personal communication with Dr. Jonathan and secure lifetime access to your FCS Recovery Program for just $50 more per month."
+          />
+          <OfferCardFrame ribbon="YOUR PATH TO LIFETIME ACCESS">
+            <PlanHeader title="Your Ownership Plan" price="$97" period="per month" />
+            <div className="mt-5">
+              <InsetPanel
+                heading={<TwoLines first="Your Feet Change." second="FCS Responds." />}
+                body="Heel pain can return, even after you're feeling better. If it does, simply log back in and record your pain. FCS responds with exercises based on your current symptoms, building on your saved recovery history."
+              />
+            </div>
+            <CardDivider />
+            <FeatureIntro
+              eyebrow="PLUS, FOR YOUR FIRST 6 MONTHS"
+              heading={<TwoLines first="Questions?" second="Ask the Person Who Built FCS." />}
+              body="Wondering about an exercise, a recovery phase, or why the program works the way it does? Dr. Jonathan can explain the thinking behind FCS, helping you move forward with greater confidence."
+            />
+            <FeatureRows
+              rows={[
+                { icon: "message", label: "Two-way communication inside FCS" },
+                { icon: "mic", label: "Personal voice replies from Dr. Jonathan" },
+              ]}
+            />
+            <CardDivider />
+            <SectionEyebrow>YOUR OWNERSHIP BENEFITS</SectionEyebrow>
+            <BenefitChecklist
+              items={[
+                "Lifetime FCS access after 6 payments",
+                "Pain-responsive exercises whenever you need them",
+                "Ask Dr. Jonathan AI stays with you",
+                "Future FCS program updates included",
+              ]}
+            />
+            <PaymentSummary
+              headline="$97/month × 6"
+              total="Total investment: $582"
+              note="Then lifetime FCS access, with no more monthly fees."
+            />
+            <PrimaryCta label="Choose My $97 Ownership Plan" onClick={() => chooseUpsell97(true)} />
+            <ReassuranceLines
+              lines={[
+                "Secure checkout. Cancel anytime, right inside the app.",
+                "Lifetime access requires all 6 monthly payments.",
+              ]}
+            />
+            <DeclineLink label="No thanks, I'll keep my $47/month plan." onClick={() => chooseUpsell97(false)} />
+          </OfferCardFrame>
+          <HsaFsaStrip />
+          <GuaranteeCard />
+          <PlanDisclosure>
+            Direct communication with Dr. Jonathan is available for the first 6 months and is limited to program-related guidance. Lifetime digital access begins after completing all 6 payments.
+          </PlanDisclosure>
+        </FunnelShell>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
       <main className="max-w-xl mx-auto px-5 py-12">
 
-        {/* Back — steps 2 and 3 only (Step 1 returns its own view above). No analytics. */}
+        {/* Back — step 3 only (Steps 1 and 2 return their own views above). No analytics. */}
         <button
           type="button"
           onClick={goBack}
@@ -177,25 +264,6 @@ export default function Checkout() {
 
         {/* Step card — TEMP COPY [team to replace; Dr-J approves before public launch] */}
         <div className="rounded-2xl border-2 border-blue-600 bg-blue-50 p-6 mb-6">
-          {step === "upsell97" && (
-            <>
-              <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-3 text-center">
-                Optional: upgrade to $97/mo
-              </h1>
-              <p className="text-slate-600 text-base leading-relaxed mb-6 text-center">
-                Adds the ability to message Dr. Schutza directly.
-              </p>
-              <div className="space-y-3">
-                <button type="button" className={primaryBtn} onClick={() => chooseUpsell97(true)}>
-                  Yes, add messaging
-                </button>
-                <button type="button" className={secondaryBtn} onClick={() => chooseUpsell97(false)}>
-                  No thanks, continue at $47
-                </button>
-              </div>
-            </>
-          )}
-
           {step === "lifetime" && (
             <>
               <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-3 text-center">
