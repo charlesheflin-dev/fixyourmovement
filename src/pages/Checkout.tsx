@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
+import {
+  FunnelShell,
+  FunnelHero,
+  SavedProgressPanel,
+  OfferCard,
+  HsaFsaStrip,
+  GuaranteeCard,
+  PlanDisclosure,
+} from "@/components/checkout/OfferPieces";
 
 // /checkout — 3-step upsell wizard (SPEC-checkout-upsell-funnel-and-comms §6).
 //   offer ($47/mo) -> upsell97 (add Dr-J messaging?) -> lifetime (own it for life?) -> Whop.
@@ -100,20 +109,66 @@ export default function Checkout() {
   const secondaryBtn =
     "block w-full bg-white hover:bg-slate-50 border-2 border-slate-200 text-slate-600 font-semibold text-base py-3 rounded-xl text-center transition-colors";
 
+  // ── Step 1 ($47 offer) — approved mockup + approved copy (2026-10-30). ──
+  // CTA keeps the existing step-advance handler: it moves to Step 2 and does NOT
+  // redirect to Whop or charge anything. No analytics added (unchanged behavior).
+  if (step === "offer") {
+    return (
+      <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
+        <FunnelShell>
+          <FunnelHero
+            eyebrow="YOUR RECOVERY ROADMAP CONTINUES"
+            title="Seven Check-Ins Down. Your Recovery Is Just Getting Started."
+            body="You've put in the work and seen your progress. Now keep building the strength and confidence to get back to the life you love."
+          />
+          <SavedProgressPanel
+            heading="Your progress is saved."
+            body="Every exercise, pain score, and check-in you've logged is saved and ready when you are."
+            closing="No starting over. Pick up right where you left off."
+          />
+          <OfferCard
+            ribbon="CONTINUE YOUR RECOVERY"
+            title="Your Recovery Plan"
+            support="The full FCS program with AI support."
+            price="$47"
+            period="per month"
+            benefits={[
+              "Complete 3-phase recovery program",
+              "Daily guided exercises and video instruction",
+              "Built-in guidance for flare-ups and tougher days",
+              "Pain tracking and progress history",
+              "Ask Dr. Jonathan AI for help with your program",
+              "A plan that progresses with you",
+            ]}
+            ctaLabel="Continue My Recovery for $47/month"
+            onCta={() => setStep("upsell97")}
+            reassurance={[
+              "No long-term commitment. Secure checkout.",
+              "Cancel anytime, right inside the app.",
+            ]}
+          />
+          <HsaFsaStrip />
+          <GuaranteeCard />
+          <PlanDisclosure>
+            Includes the full FCS program and Ask Dr. Jonathan AI. Direct personal messaging with Dr. Jonathan is available through an upgraded plan.
+          </PlanDisclosure>
+        </FunnelShell>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
       <main className="max-w-xl mx-auto px-5 py-12">
 
-        {/* Back — steps 2 and 3 only (never step 1). No analytics. */}
-        {step !== "offer" && (
-          <button
-            type="button"
-            onClick={goBack}
-            className="text-slate-500 hover:text-slate-700 text-sm font-semibold mb-4"
-          >
-            ← Back
-          </button>
-        )}
+        {/* Back — steps 2 and 3 only (Step 1 returns its own view above). No analytics. */}
+        <button
+          type="button"
+          onClick={goBack}
+          className="text-slate-500 hover:text-slate-700 text-sm font-semibold mb-4"
+        >
+          ← Back
+        </button>
 
         {/* Step indicator */}
         <p className="text-blue-600 text-xs font-bold uppercase tracking-widest mb-3 text-center">
@@ -122,20 +177,6 @@ export default function Checkout() {
 
         {/* Step card — TEMP COPY [team to replace; Dr-J approves before public launch] */}
         <div className="rounded-2xl border-2 border-blue-600 bg-blue-50 p-6 mb-6">
-          {step === "offer" && (
-            <>
-              <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-3 text-center">
-                Continue your recovery — $47/mo
-              </h1>
-              <p className="text-slate-600 text-base leading-relaxed mb-6 text-center">
-                Full program + Ask DJ AI. Cancel anytime.
-              </p>
-              <button type="button" className={primaryBtn} onClick={() => setStep("upsell97")}>
-                Continue →
-              </button>
-            </>
-          )}
-
           {step === "upsell97" && (
             <>
               <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-3 text-center">
