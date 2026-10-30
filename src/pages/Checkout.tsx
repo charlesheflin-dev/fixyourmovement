@@ -59,6 +59,12 @@ export default function Checkout() {
   // The lifetime offer is DERIVED from this on every render — never stored.
   const [monthly, setMonthly] = useState<Monthly | null>(null);
 
+  // Steps swap content within one route, so reset scroll on every step change
+  // (forward and Back). Purely visual — no analytics, no flow changes.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
+
   useEffect(() => {
     try {
       const match = document.cookie.split("; ").find((c) => c.startsWith("fcs_email="));
