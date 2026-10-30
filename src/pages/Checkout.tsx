@@ -19,16 +19,23 @@ type PlanKey = keyof typeof PLAN_URLS;
 type Step = "offer" | "upsell97" | "lifetime";
 type Monthly = "base47" | "plus97";
 
+// Analytics can NEVER block navigation: any gtag failure is swallowed.
 function track(event: string, label?: string) {
-  window.gtag?.("event", event, {
-    event_category: "conversion",
-    ...(label ? { event_label: label } : {}),
-  });
+  try {
+    window.gtag?.("event", event, {
+      event_category: "conversion",
+      ...(label ? { event_label: label } : {}),
+    });
+  } catch {
+    /* GA4 failure must not stop the checkout redirect */
+  }
 }
 
 export default function Checkout() {
   const [step, setStep] = useState<Step>("offer");
-  const [monthly, setMonthly] = useState<Monthly>("base47");
+  // The $97 answer. null = not yet chosen (start, or after Back from the lifetime step).
+  // The lifetime offer is DERIVED from this on every render — never stored.
+  const [monthly, setMonthly] = useState<Monthly | null>(null);
 
   useEffect(() => {
     try {
@@ -47,7 +54,19 @@ export default function Checkout() {
   // Final redirect: keep the checkout_click event (label checkout_bridge_<plan>).
   function goToWhop(plan: PlanKey) {
     track("checkout_click", `checkout_bridge_${plan}`);
-    window.location.href = PLAN_URLS[plan];
+    window.location.assign(PLAN_URLS[plan]);
+  }
+
+  // Back navigation — emits NO GA4 events (only forward choices are tracked).
+  function goBack() {
+    if (step === "upsell97") {
+      setStep("offer");
+    } else if (step === "lifetime") {
+      // Clear the $97 answer so the member must re-choose; the lifetime offer is then
+      // recomputed from the NEW answer on the next forward step.
+      setMonthly(null);
+      setStep("upsell97");
+    }
   }
 
   function chooseUpsell97(yes: boolean) {
@@ -61,6 +80,11 @@ export default function Checkout() {
     : { plan: "297life" as PlanKey, price: "$297", body: "One payment." };
 
   function chooseLifetime(yes: boolean) {
+    if (monthly === null) {
+      // Defensive: the lifetime step needs a $97 answer — send them back to choose.
+      setStep("upsell97");
+      return;
+    }
     track(yes ? "lifetime_yes" : "lifetime_no");
     if (yes) {
       goToWhop(lifetime.plan);
@@ -79,6 +103,17 @@ export default function Checkout() {
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
       <main className="max-w-xl mx-auto px-5 py-12">
+
+        {/* Back — steps 2 and 3 only (never step 1). No analytics. */}
+        {step !== "offer" && (
+          <button
+            type="button"
+            onClick={goBack}
+            className="text-slate-500 hover:text-slate-700 text-sm font-semibold mb-4"
+          >
+            ← Back
+          </button>
+        )}
 
         {/* Step indicator */}
         <p className="text-blue-600 text-xs font-bold uppercase tracking-widest mb-3 text-center">
