@@ -74,6 +74,25 @@ export function BenefitChecklist({ items }: { items: string[] }) {
   );
 }
 
+// Calendar tile + title/support + right-aligned price (the $47 card header; reused by $297).
+export function IconPlanHeader({ title, support, price, period }: { title: string; support: string; price: string; period: string }) {
+  return (
+    <div className="flex items-start gap-3 max-[359px]:gap-2.5">
+      <div className="w-11 h-11 max-[359px]:w-9 max-[359px]:h-9 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-blue-100 flex items-center justify-center" aria-hidden="true">
+        <Calendar className="w-6 h-6 max-[359px]:w-5 max-[359px]:h-5 text-blue-600" strokeWidth={2} />
+      </div>
+      <div className="min-w-0 flex-1">
+        <h2 className="text-slate-900 text-lg sm:text-xl font-bold leading-tight">{title}</h2>
+        <p className="text-slate-500 text-sm leading-snug mt-1">{support}</p>
+      </div>
+      <div className="shrink-0 text-right">
+        <p className="text-blue-600 text-[40px] max-[359px]:text-[34px] sm:text-[44px] font-extrabold leading-none tracking-tight">{price}</p>
+        <p className="text-slate-500 text-sm leading-tight mt-1">{period}</p>
+      </div>
+    </div>
+  );
+}
+
 export function OfferCard({
   ribbon,
   title,
@@ -101,19 +120,7 @@ export function OfferCard({
         {ribbon}
       </span>
 
-      <div className="flex items-start gap-3 max-[359px]:gap-2.5">
-        <div className="w-11 h-11 max-[359px]:w-9 max-[359px]:h-9 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-blue-100 flex items-center justify-center" aria-hidden="true">
-          <Calendar className="w-6 h-6 max-[359px]:w-5 max-[359px]:h-5 text-blue-600" strokeWidth={2} />
-        </div>
-        <div className="min-w-0 flex-1">
-          <h2 className="text-slate-900 text-lg sm:text-xl font-bold leading-tight">{title}</h2>
-          <p className="text-slate-500 text-sm leading-snug mt-1">{support}</p>
-        </div>
-        <div className="shrink-0 text-right">
-          <p className="text-blue-600 text-[40px] max-[359px]:text-[34px] sm:text-[44px] font-extrabold leading-none tracking-tight">{price}</p>
-          <p className="text-slate-500 text-sm leading-tight mt-1">{period}</p>
-        </div>
-      </div>
+      <IconPlanHeader title={title} support={support} price={price} period={period} />
 
       <div className="my-4 h-px bg-slate-200" />
 
@@ -253,17 +260,62 @@ export function PrimaryCta({ label, onClick }: { label: string; onClick: () => v
   );
 }
 
-export function ReassuranceLines({ lines }: { lines: string[] }) {
+export function ReassuranceLines({ lines, lock = true }: { lines: string[]; lock?: boolean }) {
   return (
     <div className="mt-3.5 text-center text-slate-500 text-[13px] leading-snug space-y-0.5">
       {lines.map((line, i) => (
         <p key={line}>
-          {i === 0 && <Lock className="inline-block w-3.5 h-3.5 mr-1.5 -mt-0.5 text-slate-500" strokeWidth={2.25} aria-hidden="true" />}
+          {lock && i === 0 && <Lock className="inline-block w-3.5 h-3.5 mr-1.5 -mt-0.5 text-slate-500" strokeWidth={2.25} aria-hidden="true" />}
           {line}
         </p>
       ))}
     </div>
   );
+}
+
+// ── Pieces added for Step 3 ($297 lifetime); reusable for $497. ──
+
+// Pale-blue inset with the progress-bars tile on the left (same tile as SavedProgressPanel).
+// Heading and body share one column to the right of the tile; equal outer padding.
+export function IconInsetPanel({ heading, body }: { heading: ReactNode; body: string }) {
+  return (
+    <section className="grid grid-cols-[48px_minmax(0,1fr)] max-[359px]:grid-cols-[40px_minmax(0,1fr)] gap-x-4 max-[359px]:gap-x-3 rounded-2xl bg-blue-50 px-5 py-5 max-[359px]:px-4">
+      <div className="w-12 h-12 max-[359px]:w-10 max-[359px]:h-10 rounded-xl bg-blue-100 flex items-center justify-center" aria-hidden="true">
+        <ProgressBarsIcon />
+      </div>
+      <div className="min-w-0">
+        <h3 className="text-slate-900 text-xl font-bold leading-[1.2] mb-[13px]">{heading}</h3>
+        <p className="text-slate-700 text-[15px] leading-normal">{body}</p>
+      </div>
+    </section>
+  );
+}
+
+type PriceColumn = { label: string; amount: string; note: string };
+
+// Two equal columns in one pale-blue inset; stacks under 360px rather than truncating.
+// `highlight` is the recommended column (blue); the other is muted navy.
+export function PriceComparison({ left, right, footnote }: { left: PriceColumn; right: PriceColumn; footnote: string }) {
+  const col = (c: PriceColumn, highlight: boolean, extra: string) => (
+    <div className={`text-center px-2 py-1 ${extra}`}>
+      <p className="text-slate-900 text-[15px] font-semibold leading-snug">{c.label}</p>
+      <p className={`mt-1 text-[34px] font-extrabold leading-none tracking-tight ${highlight ? "text-blue-600" : "text-slate-800"}`}>{c.amount}</p>
+      <p className="mt-1.5 text-slate-500 text-[13px] leading-snug">{c.note}</p>
+    </div>
+  );
+  return (
+    <section className="rounded-2xl bg-blue-50 px-4 py-4">
+      <div className="grid grid-cols-2 max-[359px]:grid-cols-1">
+        {col(left, false, "max-[359px]:pb-3")}
+        {col(right, true, "border-l border-blue-200 max-[359px]:border-l-0 max-[359px]:border-t max-[359px]:pt-3")}
+      </div>
+      <p className="mt-3.5 text-center text-slate-600 text-[13px] leading-snug">{footnote}</p>
+    </section>
+  );
+}
+
+export function CenteredNote({ children }: { children: ReactNode }) {
+  return <p className="mt-5 mb-1 px-1 text-center text-slate-600 text-sm leading-normal">{children}</p>;
 }
 
 // Quiet underlined decline — a FORWARD choice (caller passes the handler), not Back.

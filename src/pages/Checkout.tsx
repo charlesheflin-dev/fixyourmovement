@@ -21,6 +21,10 @@ import {
   PrimaryCta,
   ReassuranceLines,
   DeclineLink,
+  IconPlanHeader,
+  IconInsetPanel,
+  PriceComparison,
+  CenteredNote,
 } from "@/components/checkout/OfferPieces";
 
 // /checkout — 3-step upsell wizard (SPEC-checkout-upsell-funnel-and-comms §6).
@@ -245,6 +249,76 @@ export default function Checkout() {
           <PlanDisclosure>
             Direct communication with Dr. Jonathan is available for the first 6 months and is limited to program-related guidance. Lifetime digital access begins after completing all 6 payments.
           </PlanDisclosure>
+        </FunnelShell>
+      </div>
+    );
+  }
+
+  // ── Step 3, $297 branch (declined $97) — approved mockup + approved copy (2026-10-30). ──
+  // Branch = the existing derived `lifetime` selector (unchanged). Restyle + relabel only:
+  // CTA -> chooseLifetime(true), decline link -> chooseLifetime(false) (both TERMINAL Whop
+  // redirects, unchanged), ← Back -> goBack() (Step 2 + clears the $97 answer). The $497
+  // branch still renders the temp view below. No bottom disclosure here (pending owner OK).
+  if (step === "lifetime" && lifetime.plan === "297life") {
+    return (
+      <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
+        <FunnelShell>
+          <button
+            type="button"
+            onClick={goBack}
+            className="-mb-3 self-start min-h-[44px] -ml-1 px-1 text-slate-500 hover:text-slate-700 text-sm font-semibold rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
+          >
+            ← Back
+          </button>
+          <FunnelHero
+            eyebrow="YOUR LIFETIME OPTION"
+            title={<TwoLines first="Take the Pressure Off" second="Your Recovery." />}
+            body="Recovery takes time. You shouldn't feel rushed to make the most of your program before another monthly payment comes due. For $297, FCS is yours for life."
+          />
+          <OfferCardFrame ribbon="YOUR PATH TO LIFETIME ACCESS">
+            <IconPlanHeader
+              title="Your Lifetime FCS Plan"
+              support="A complete recovery program yours for life."
+              price="$297"
+              period="one time"
+            />
+            <div className="mt-5 mb-6">
+              <IconInsetPanel
+                heading={<TwoLines first="No Rush." second="No Renewals." />}
+                body="Follow your recovery program at the pace it was designed for. Keep building strength when you're feeling better. And if heel pain returns, your FCS program is ready whenever you are."
+              />
+            </div>
+            <SectionEyebrow>YOURS FOR THE LONG HAUL</SectionEyebrow>
+            <BenefitChecklist
+              items={[
+                "Complete FCS plantar fasciitis recovery program",
+                "Exercises for recovery, strength, and ongoing maintenance",
+                "Pain tracking, progress history, and Ask Dr. Jonathan AI",
+                "Lifetime access with no recurring payments",
+              ]}
+            />
+            <CardDivider />
+            <SectionEyebrow>BY MONTH 7, LIFETIME COSTS LESS.</SectionEyebrow>
+            <PriceComparison
+              left={{ label: "$47 Monthly", amount: "$329", note: "7 monthly payments" }}
+              right={{ label: "$297 Lifetime", amount: "$297", note: "One payment" }}
+              footnote="And your lifetime access continues without another subscription charge."
+            />
+            <CenteredNote>
+              As FCS expands, our pricing will increase. Secure lifetime access to the current plantar fasciitis program at today's $297 price.
+            </CenteredNote>
+            <PrimaryCta label="Choose My $297 Lifetime Plan" onClick={() => chooseLifetime(true)} />
+            <ReassuranceLines
+              lock={false}
+              lines={[
+                "One payment. Secure checkout. No recurring fees.",
+                "Includes Ask Dr. Jonathan AI, not direct personal communication with Dr. Jonathan.",
+              ]}
+            />
+            <DeclineLink label="No thanks, I'll keep my $47/month plan." onClick={() => chooseLifetime(false)} />
+          </OfferCardFrame>
+          <HsaFsaStrip />
+          <GuaranteeCard />
         </FunnelShell>
       </div>
     );
