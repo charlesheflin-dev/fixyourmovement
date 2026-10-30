@@ -1,14 +1,34 @@
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
 
-const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
-const MONTHLY_URL = "https://whop.com/checkout/plan_myAABQ8dqq8W3";
-const ONETIME_URL = "https://whop.com/checkout/plan_f7hnKFT1vq0zb";
+// /checkout — 3-step upsell wizard (SPEC-checkout-upsell-funnel-and-comms §6).
+//   offer ($47/mo) -> upsell97 (add Dr-J messaging?) -> lifetime (own it for life?) -> Whop.
+// Plans: $47/mo + $297 lifetime = NO doctor messaging; $97/mo + $497 lifetime = messaging.
+// ALL COPY BELOW IS TEMP COPY [team to replace; Dr-J approves before public launch].
 
-type Plan = "monthly" | "onetime";
+const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
+
+const PLAN_URLS = {
+  "47mo": "https://whop.com/checkout/plan_89RParoVzvYz8",
+  "97mo": "https://whop.com/checkout/plan_myAABQ8dqq8W3",
+  "297life": "https://whop.com/checkout/plan_oJj9EDt0XArGD",
+  "497life": "https://whop.com/checkout/plan_QSKUiZJdvkf1E",
+} as const;
+
+type PlanKey = keyof typeof PLAN_URLS;
+type Step = "offer" | "upsell97" | "lifetime";
+type Monthly = "base47" | "plus97";
+
+function track(event: string, label?: string) {
+  window.gtag?.("event", event, {
+    event_category: "conversion",
+    ...(label ? { event_label: label } : {}),
+  });
+}
 
 export default function Checkout() {
-  const [selected, setSelected] = useState<Plan>("monthly");
+  const [step, setStep] = useState<Step>("offer");
+  const [monthly, setMonthly] = useState<Monthly>("base47");
 
   useEffect(() => {
     try {
@@ -24,148 +44,100 @@ export default function Checkout() {
     } catch {}
   }, []);
 
-  const checkoutUrl = selected === "monthly" ? MONTHLY_URL : ONETIME_URL;
+  // Final redirect: keep the checkout_click event (label checkout_bridge_<plan>).
+  function goToWhop(plan: PlanKey) {
+    track("checkout_click", `checkout_bridge_${plan}`);
+    window.location.href = PLAN_URLS[plan];
+  }
+
+  function chooseUpsell97(yes: boolean) {
+    track(yes ? "upsell_97_yes" : "upsell_97_no");
+    setMonthly(yes ? "plus97" : "base47");
+    setStep("lifetime");
+  }
+
+  const lifetime = monthly === "plus97"
+    ? { plan: "497life" as PlanKey, price: "$497", body: "One payment. Keeps direct doctor messaging." }
+    : { plan: "297life" as PlanKey, price: "$297", body: "One payment." };
+
+  function chooseLifetime(yes: boolean) {
+    track(yes ? "lifetime_yes" : "lifetime_no");
+    if (yes) {
+      goToWhop(lifetime.plan);
+    } else {
+      goToWhop(monthly === "plus97" ? "97mo" : "47mo");
+    }
+  }
+
+  const stepNumber = step === "offer" ? 1 : step === "upsell97" ? 2 : 3;
+
+  const primaryBtn =
+    "block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-4 rounded-xl text-center transition-colors";
+  const secondaryBtn =
+    "block w-full bg-white hover:bg-slate-50 border-2 border-slate-200 text-slate-600 font-semibold text-base py-3 rounded-xl text-center transition-colors";
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
       <main className="max-w-xl mx-auto px-5 py-12">
 
-        {/* Header */}
-        <div className="text-center mb-8">
-          <p className="text-blue-600 text-xs font-bold uppercase tracking-widest mb-3">Choose Your Path</p>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-3">
-            Start Building Stronger Feet Today
-          </h1>
-          <p className="text-slate-500 text-base leading-relaxed">
-            Choose the option that fits your recovery journey.<br />
-            Both include the complete Foot Capacity System.
-          </p>
-        </div>
+        {/* Step indicator */}
+        <p className="text-blue-600 text-xs font-bold uppercase tracking-widest mb-3 text-center">
+          Step {stepNumber} of 3
+        </p>
 
-        {/* Plan cards */}
-        <div className="space-y-4 mb-6">
+        {/* Step card — TEMP COPY [team to replace; Dr-J approves before public launch] */}
+        <div className="rounded-2xl border-2 border-blue-600 bg-blue-50 p-6 mb-6">
+          {step === "offer" && (
+            <>
+              <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-3 text-center">
+                Continue your recovery — $47/mo
+              </h1>
+              <p className="text-slate-600 text-base leading-relaxed mb-6 text-center">
+                Full program + Ask DJ AI. Cancel anytime.
+              </p>
+              <button type="button" className={primaryBtn} onClick={() => setStep("upsell97")}>
+                Continue →
+              </button>
+            </>
+          )}
 
-          {/* Monthly Recovery Plan */}
-          <button
-            type="button"
-            onClick={() => setSelected("monthly")}
-            className={`w-full text-left rounded-2xl border-2 p-6 transition-all relative ${
-              selected === "monthly"
-                ? "border-blue-600 bg-blue-50"
-                : "border-slate-200 bg-white hover:border-slate-300"
-            }`}
-          >
-            {/* Most Flexible badge */}
-            <div className="absolute -top-3 left-5">
-              <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-                Most Flexible
-              </span>
-            </div>
-
-            <div className="flex items-start gap-4 mt-1">
-              {/* Radio */}
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${
-                selected === "monthly" ? "border-blue-600" : "border-slate-300"
-              }`}>
-                {selected === "monthly" && (
-                  <div className="w-2.5 h-2.5 rounded-full bg-blue-600" />
-                )}
+          {step === "upsell97" && (
+            <>
+              <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-3 text-center">
+                Optional: upgrade to $97/mo
+              </h1>
+              <p className="text-slate-600 text-base leading-relaxed mb-6 text-center">
+                Adds the ability to message Dr. Schutza directly.
+              </p>
+              <div className="space-y-3">
+                <button type="button" className={primaryBtn} onClick={() => chooseUpsell97(true)}>
+                  Yes, add messaging
+                </button>
+                <button type="button" className={secondaryBtn} onClick={() => chooseUpsell97(false)}>
+                  No thanks, continue at $47
+                </button>
               </div>
+            </>
+          )}
 
-              {/* Icon */}
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${
-                selected === "monthly" ? "bg-blue-100" : "bg-slate-100"
-              }`}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={selected === "monthly" ? "#2563EB" : "#94A3B8"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                  <line x1="16" y1="2" x2="16" y2="6" />
-                  <line x1="8" y1="2" x2="8" y2="6" />
-                  <line x1="3" y1="10" x2="21" y2="10" />
-                </svg>
+          {step === "lifetime" && (
+            <>
+              <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-3 text-center">
+                Own it for life — {lifetime.price}
+              </h1>
+              <p className="text-slate-600 text-base leading-relaxed mb-6 text-center">
+                {lifetime.body}
+              </p>
+              <div className="space-y-3">
+                <button type="button" className={primaryBtn} onClick={() => chooseLifetime(true)}>
+                  Yes, make it lifetime
+                </button>
+                <button type="button" className={secondaryBtn} onClick={() => chooseLifetime(false)}>
+                  No thanks
+                </button>
               </div>
-
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-slate-900 font-extrabold text-lg leading-snug">Monthly Recovery Plan</p>
-                  <div className="text-right shrink-0">
-                    <p className={`font-extrabold text-3xl leading-none ${selected === "monthly" ? "text-blue-600" : "text-slate-900"}`}>$97</p>
-                    <p className={`text-xs font-semibold mt-0.5 ${selected === "monthly" ? "text-blue-500" : "text-slate-500"}`}>per month</p>
-                  </div>
-                </div>
-                <p className="text-slate-600 text-sm leading-relaxed mt-2 mb-4">
-                  Stay with the program while it's helping you move toward the life you miss. Cancel anytime inside the app with one tap.
-                </p>
-                <div className={`border-t pt-4 ${selected === "monthly" ? "border-blue-200" : "border-slate-100"}`}>
-                  <div className="flex items-start gap-2">
-                    <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    </div>
-                    <div className="text-slate-600 text-sm leading-relaxed">
-                      <p className="font-semibold text-slate-800 mb-1">Your monthly plan has a finish line.</p>
-                      <p className="italic">If your journey takes six months, you can keep using the Foot Capacity System from there without an ongoing monthly plan.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </button>
-
-          {/* Lifetime Access */}
-          <button
-            type="button"
-            onClick={() => setSelected("onetime")}
-            className={`w-full text-left rounded-2xl border-2 p-6 transition-all relative ${
-              selected === "onetime"
-                ? "border-blue-600 bg-blue-50"
-                : "border-slate-200 bg-white hover:border-slate-300"
-            }`}
-          >
-            {/* Best Value badge */}
-            <div className="absolute -top-3 left-5">
-              <span className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-                Best Value
-              </span>
-            </div>
-
-            <div className="flex items-start gap-4 mt-1">
-              {/* Radio */}
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${
-                selected === "onetime" ? "border-blue-600" : "border-slate-300"
-              }`}>
-                {selected === "onetime" && (
-                  <div className="w-2.5 h-2.5 rounded-full bg-blue-600" />
-                )}
-              </div>
-
-              {/* Icon */}
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${
-                selected === "onetime" ? "bg-green-100" : "bg-slate-100"
-              }`}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={selected === "onetime" ? "#16A34A" : "#94A3B8"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  <polyline points="9 12 11 14 15 10" />
-                </svg>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-slate-900 font-extrabold text-lg leading-snug">Lifetime Access</p>
-                  <div className="text-right shrink-0">
-                    <p className={`font-extrabold text-3xl leading-none ${selected === "onetime" ? "text-blue-600" : "text-slate-900"}`}>$397</p>
-                    <p className={`text-xs font-semibold mt-0.5 ${selected === "onetime" ? "text-blue-500" : "text-slate-500"}`}>one time</p>
-                  </div>
-                </div>
-                <p className="text-slate-600 text-sm leading-relaxed mt-2">
-                  One payment. Full access to the complete 12-week Foot Capacity System, plus future improvements and updates. No monthly plan.
-                </p>
-              </div>
-            </div>
-          </button>
-
+            </>
+          )}
         </div>
 
         {/* HSA/FSA Callout */}
@@ -173,20 +145,6 @@ export default function Checkout() {
           <p className="text-slate-800 text-sm font-semibold">✅ HSA/FSA funds may be eligible*</p>
           <p className="text-slate-500 text-xs leading-relaxed">Check with your plan administrator to determine your eligibility.</p>
         </div>
-
-        {/* CTA Button */}
-        <a
-          href={checkoutUrl}
-          className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-4 rounded-xl text-center transition-colors mb-4"
-          onClick={() => window.gtag?.('event', 'checkout_click', {
-            event_category: 'conversion',
-            event_label: `checkout_bridge_${selected}`,
-          })}
-        >
-          {selected === "monthly"
-            ? "Continue Monthly — $97/month →"
-            : "Unlock Lifetime Access — $397 →"}
-        </a>
 
         {/* Trust strip */}
         <div className="flex justify-center gap-5 text-xs text-slate-400 mb-8">
