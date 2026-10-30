@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import logo from "@/assets/logo.png";
 import {
   FunnelShell,
   FunnelHero,
@@ -25,6 +24,8 @@ import {
   IconInsetPanel,
   PriceComparison,
   CenteredNote,
+  FeaturePanel,
+  InsetNote,
 } from "@/components/checkout/OfferPieces";
 
 // /checkout — 3-step upsell wizard (SPEC-checkout-upsell-funnel-and-comms §6).
@@ -124,13 +125,6 @@ export default function Checkout() {
       goToWhop(monthly === "plus97" ? "97mo" : "47mo");
     }
   }
-
-  const stepNumber = step === "offer" ? 1 : step === "upsell97" ? 2 : 3;
-
-  const primaryBtn =
-    "block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-4 rounded-xl text-center transition-colors";
-  const secondaryBtn =
-    "block w-full bg-white hover:bg-slate-50 border-2 border-slate-200 text-slate-600 font-semibold text-base py-3 rounded-xl text-center transition-colors";
 
   // ── Step 1 ($47 offer) — approved mockup + approved copy (2026-10-30). ──
   // CTA keeps the existing step-advance handler: it moves to Step 2 and does NOT
@@ -324,84 +318,82 @@ export default function Checkout() {
     );
   }
 
+  // ── Step 3, $497 branch (accepted $97) — approved mockup + approved copy (2026-10-30). ──
+  // Every earlier view returned above, so this is step "lifetime" with lifetime.plan
+  // "497life" (the existing derived selector, unchanged). Restyle + relabel only:
+  // CTA -> chooseLifetime(true) (lifetime_yes, $497 Whop), decline link -> chooseLifetime(false)
+  // (lifetime_no, $97/mo Whop — keeps $97, not $47); both TERMINAL, unchanged.
+  // ← Back -> goBack() (Step 2 + clears the $97 answer).
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
-      <main className="max-w-xl mx-auto px-5 py-12">
-
-        {/* Back — step 3 only (Steps 1 and 2 return their own views above). No analytics. */}
+      <FunnelShell>
         <button
           type="button"
           onClick={goBack}
-          className="text-slate-500 hover:text-slate-700 text-sm font-semibold mb-4"
+          className="-mb-3 self-start min-h-[44px] -ml-1 px-1 text-slate-500 hover:text-slate-700 text-sm font-semibold rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
         >
           ← Back
         </button>
-
-        {/* Step indicator */}
-        <p className="text-blue-600 text-xs font-bold uppercase tracking-widest mb-3 text-center">
-          Step {stepNumber} of 3
-        </p>
-
-        {/* Step card — TEMP COPY [team to replace; Dr-J approves before public launch] */}
-        <div className="rounded-2xl border-2 border-blue-600 bg-blue-50 p-6 mb-6">
-          {step === "lifetime" && (
-            <>
-              <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-3 text-center">
-                Own it for life — {lifetime.price}
-              </h1>
-              <p className="text-slate-600 text-base leading-relaxed mb-6 text-center">
-                {lifetime.body}
-              </p>
-              <div className="space-y-3">
-                <button type="button" className={primaryBtn} onClick={() => chooseLifetime(true)}>
-                  Yes, make it lifetime
-                </button>
-                <button type="button" className={secondaryBtn} onClick={() => chooseLifetime(false)}>
-                  No thanks
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* HSA/FSA Callout */}
-        <div className="flex flex-col items-center text-center bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-5">
-          <p className="text-slate-800 text-sm font-semibold">✅ HSA/FSA funds may be eligible*</p>
-          <p className="text-slate-500 text-xs leading-relaxed">Check with your plan administrator to determine your eligibility.</p>
-        </div>
-
-        {/* Trust strip */}
-        <div className="flex justify-center gap-5 text-xs text-slate-400 mb-8">
-          <span>🛡️ 30-Day Guarantee</span>
-          <span>🔒 Secure Checkout</span>
-          <span>↩️ Cancel Monthly Anytime</span>
-        </div>
-
-        {/* Guarantee box */}
-        <div className="rounded-2xl border border-slate-200 overflow-hidden">
-          <div className="flex items-center gap-4 px-6 py-5">
-            <div className="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                <polyline points="9 12 11 14 15 10" />
-              </svg>
-            </div>
-            <div className="flex-1">
-              <p className="text-slate-900 font-bold text-base leading-snug">Walk Pain Free, Or It's Free</p>
-              <p className="text-blue-600 font-semibold text-sm">30-Day Money-Back Guarantee</p>
-            </div>
-            <div className="shrink-0 hidden sm:block">
-              <img src={logo} alt="FCS" className="h-10 w-auto" />
-            </div>
+        <FunnelHero
+          eyebrow="BEFORE YOU FINALIZE YOUR PLAN"
+          title={<TwoLines first="You've Chosen Lifetime." second="Now Make It Even Better." />}
+          body="You've already committed to your long-term recovery. Now you can enjoy the same 6 months of personal communication with Dr. Jonathan, save $85, and become part of what's next for FCS."
+        />
+        <OfferCardFrame ribbon="SAVE $85 ON YOUR OWNERSHIP PLAN">
+          <IconPlanHeader
+            title="Premium Lifetime"
+            support="One payment. Yours for life."
+            price="$497"
+            period="one time"
+          />
+          <div className="mt-5 mb-6">
+            <PriceComparison
+              heading="Same Benefits. Lower Total Cost."
+              left={{ label: "$97 × 6", amount: "$582", note: "Ownership plan" }}
+              right={{ label: "Pay once", amount: "$497", note: "Premium Lifetime" }}
+              savings="You Save $85"
+            />
           </div>
-          <div className="border-t border-slate-100 px-6 py-4">
-            <p className="text-slate-600 text-sm leading-relaxed text-center">
-              Try the Foot Capacity System for 30 days. If it's not the right fit, simply email us within 30 days and we'll refund your investment. No complicated forms. No hoops to jump through.
-            </p>
-          </div>
-        </div>
-
-      </main>
+          <SectionEyebrow>EVERYTHING YOU CHOSE IS INCLUDED</SectionEyebrow>
+          <BenefitChecklist
+            items={[
+              "Lifetime FCS program access and future updates",
+              "6 months of direct communication with Dr. Jonathan",
+              "Ask Dr. Jonathan AI and your saved recovery history",
+            ]}
+          />
+          <CardDivider />
+          <FeaturePanel
+            eyebrow="AN EARLY-ADOPTER BENEFIT"
+            heading="Help Shape What's Next."
+            paragraphs={[
+              "Your FCS program focuses on plantar fasciitis recovery. Our upcoming Foot Resilience Library will take you beyond Phase 3, with resources designed to maintain strength, build resilience, and help you stay active doing the things you love.",
+              "You'll be among the first invited to explore it, share your experiences, and help shape what we build. Your lifetime access to the new library is included at no additional charge.",
+            ]}
+            checks={[
+              "Early previews and opportunities to share your ideas",
+              "Grandfathered Foot Resilience Library access at no additional charge",
+            ]}
+          />
+          <InsetNote>
+            Premium Lifetime pricing will start at $697 when the Foot Resilience Library launches. As an early member, your $497 purchase includes the library at no additional charge.
+          </InsetNote>
+          <PrimaryCta label="Choose My $497 Premium Lifetime Plan" onClick={() => chooseLifetime(true)} />
+          <ReassuranceLines
+            lock={false}
+            lines={[
+              "One secure payment. No monthly fees.",
+              "Direct communication with Dr. Jonathan lasts 6 months.",
+            ]}
+          />
+          <DeclineLink label="No thanks, I'll keep my $97/month ownership plan." onClick={() => chooseLifetime(false)} />
+        </OfferCardFrame>
+        <HsaFsaStrip />
+        <GuaranteeCard />
+        <PlanDisclosure>
+          Includes the full FCS program, Ask Dr. Jonathan AI, and 6 months of direct personal communication with Dr. Jonathan.
+        </PlanDisclosure>
+      </FunnelShell>
     </div>
   );
 }

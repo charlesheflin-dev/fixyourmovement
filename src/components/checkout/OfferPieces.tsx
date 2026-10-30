@@ -74,10 +74,12 @@ export function BenefitChecklist({ items }: { items: string[] }) {
   );
 }
 
-// Calendar tile + title/support + right-aligned price (the $47 card header; reused by $297).
+// Calendar tile + title/support + right-aligned price (the $47 card header; reused by $297/$497).
+// Below 320px CSS width (e.g. 200% zoom) the price drops to its own line instead of
+// overlapping the title; at 320px and up the rendering is unchanged.
 export function IconPlanHeader({ title, support, price, period }: { title: string; support: string; price: string; period: string }) {
   return (
-    <div className="flex items-start gap-3 max-[359px]:gap-2.5">
+    <div className="flex items-start gap-3 max-[359px]:gap-2.5 max-[319px]:flex-wrap">
       <div className="w-11 h-11 max-[359px]:w-9 max-[359px]:h-9 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-blue-100 flex items-center justify-center" aria-hidden="true">
         <Calendar className="w-6 h-6 max-[359px]:w-5 max-[359px]:h-5 text-blue-600" strokeWidth={2} />
       </div>
@@ -85,7 +87,7 @@ export function IconPlanHeader({ title, support, price, period }: { title: strin
         <h2 className="text-slate-900 text-lg sm:text-xl font-bold leading-tight">{title}</h2>
         <p className="text-slate-500 text-sm leading-snug mt-1">{support}</p>
       </div>
-      <div className="shrink-0 text-right">
+      <div className="shrink-0 text-right max-[319px]:basis-full max-[319px]:text-left">
         <p className="text-blue-600 text-[40px] max-[359px]:text-[34px] sm:text-[44px] font-extrabold leading-none tracking-tight">{price}</p>
         <p className="text-slate-500 text-sm leading-tight mt-1">{period}</p>
       </div>
@@ -160,10 +162,12 @@ export function TwoLines({ first, second }: { first: string; second: string }) {
 
 // Same border/radius/ribbon as OfferCard, but the body is composed by the caller.
 // mt-6 (vs OfferCard's mt-3) gives ~30px visible clearance from the hero text to the ribbon.
+// Below 320px CSS width (e.g. 200% zoom on a phone) the ribbon may wrap instead of overflowing
+// the page; at 320px and up the rendering is unchanged.
 export function OfferCardFrame({ ribbon, children }: { ribbon: string; children: ReactNode }) {
   return (
-    <section className="relative mt-6 rounded-[18px] border-2 border-blue-600 bg-white px-4 max-[359px]:px-3.5 pt-7 pb-3 sm:px-6">
-      <span className="absolute -top-[13px] left-4 sm:left-5 rounded-full bg-blue-600 px-3 py-1 text-white text-[11px] sm:text-xs font-bold uppercase tracking-[0.08em] leading-none whitespace-nowrap">
+    <section className="relative mt-6 rounded-[18px] border-2 border-blue-600 bg-white px-4 max-[359px]:px-3.5 pt-7 max-[319px]:pt-11 pb-3 sm:px-6">
+      <span className="absolute -top-[13px] left-4 sm:left-5 max-[319px]:left-3 max-[319px]:right-3 max-[319px]:text-center max-[319px]:leading-tight max-[319px]:whitespace-normal rounded-full bg-blue-600 px-3 py-1 text-white text-[11px] sm:text-xs font-bold uppercase tracking-[0.08em] leading-none whitespace-nowrap">
         {ribbon}
       </span>
       {children}
@@ -295,7 +299,21 @@ type PriceColumn = { label: string; amount: string; note: string };
 
 // Two equal columns in one pale-blue inset; stacks under 360px rather than truncating.
 // `highlight` is the recommended column (blue); the other is muted navy.
-export function PriceComparison({ left, right, footnote }: { left: PriceColumn; right: PriceColumn; footnote: string }) {
+// Optional (added for $497): a centered `heading` above the columns, and a green `savings`
+// banner below them. $297 passes neither, so its output is unchanged.
+export function PriceComparison({
+  left,
+  right,
+  footnote,
+  heading,
+  savings,
+}: {
+  left: PriceColumn;
+  right: PriceColumn;
+  footnote?: string;
+  heading?: string;
+  savings?: string;
+}) {
   const col = (c: PriceColumn, highlight: boolean, extra: string) => (
     <div className={`text-center px-2 py-1 ${extra}`}>
       <p className="text-slate-900 text-[15px] font-semibold leading-snug">{c.label}</p>
@@ -305,12 +323,62 @@ export function PriceComparison({ left, right, footnote }: { left: PriceColumn; 
   );
   return (
     <section className="rounded-2xl bg-blue-50 px-4 py-4">
+      {heading && <h3 className="mb-3.5 text-center text-blue-600 text-lg font-bold leading-snug">{heading}</h3>}
       <div className="grid grid-cols-2 max-[359px]:grid-cols-1">
         {col(left, false, "max-[359px]:pb-3")}
         {col(right, true, "border-l border-blue-200 max-[359px]:border-l-0 max-[359px]:border-t max-[359px]:pt-3")}
       </div>
-      <p className="mt-3.5 text-center text-slate-600 text-[13px] leading-snug">{footnote}</p>
+      {savings && (
+        <p className="mt-3.5 rounded-xl border border-green-200 bg-green-50 px-3 py-2 text-center text-green-700 text-lg font-bold leading-snug">
+          {savings}
+        </p>
+      )}
+      {footnote && <p className="mt-3.5 text-center text-slate-600 text-[13px] leading-snug">{footnote}</p>}
     </section>
+  );
+}
+
+// ── Pieces added for Step 3 ($497 premium lifetime). ──
+
+// Pale-blue inset: eyebrow, progress-bars tile ABOVE the heading (no icon gutter), heading,
+// paragraphs and checks all on one left edge. Gaps: heading->para 13px, para->para 14px,
+// last para->checks 16px. Equal left/right padding.
+export function FeaturePanel({
+  eyebrow,
+  heading,
+  paragraphs,
+  checks,
+}: {
+  eyebrow: string;
+  heading: string;
+  paragraphs: string[];
+  checks: string[];
+}) {
+  return (
+    <section className="rounded-2xl bg-blue-50 px-5 py-5 max-[359px]:px-4">
+      <SectionEyebrow>{eyebrow}</SectionEyebrow>
+      <div className="mb-3 w-12 h-12 max-[359px]:w-10 max-[359px]:h-10 rounded-xl bg-blue-100 flex items-center justify-center" aria-hidden="true">
+        <ProgressBarsIcon />
+      </div>
+      <h3 className="text-slate-900 text-xl font-bold leading-[1.2] mb-[13px]">{heading}</h3>
+      <div className="space-y-3.5">
+        {paragraphs.map((p) => (
+          <p key={p} className="text-slate-700 text-[15px] leading-normal">{p}</p>
+        ))}
+      </div>
+      <div className="mt-4">
+        <BenefitChecklist items={checks} />
+      </div>
+    </section>
+  );
+}
+
+// Centered note in a soft pale-blue inset (the $497 future-price statement).
+export function InsetNote({ children }: { children: ReactNode }) {
+  return (
+    <p className="mt-5 mb-5 rounded-2xl bg-blue-50 px-4 py-4 text-center text-slate-600 text-sm leading-normal">
+      {children}
+    </p>
   );
 }
 
