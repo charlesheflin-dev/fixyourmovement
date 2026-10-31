@@ -23,6 +23,7 @@ import ColdStart from "./pages/ColdStart";
 import Assessment from "./pages/Assessment";
 import Unsubscribed from "./pages/Unsubscribed";
 import Checkout from "./pages/Checkout";
+import Upgrade from "./pages/Upgrade";
 import Results from "./pages/Results";
 import AssessmentResults from "./pages/AssessmentResults";
 import AskDrJonathanPage from "./pages/AskDrJonathan";
@@ -179,6 +180,7 @@ const App = () => (
                    <Route path="/start/*" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/unsubscribed" element={<Unsubscribed />} />
                    <Route path="/checkout" element={<Checkout />} />
+                   <Route path="/upgrade" element={<Upgrade />} />
                    <Route path="/survey/:userId" element={<SurveyRedirect />} />
                    <Route path="/survey" element={<SurveyRedirect />} />
                    <Route path="/results/:userId" element={<Results />} />

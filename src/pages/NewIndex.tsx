@@ -70,6 +70,17 @@ export default function NewIndex() {
           </div>
 
           <div className="relative container mx-auto px-6 max-w-5xl">
+            {/* App Login — top right of the home page (the home page has no shared header). */}
+            <div className="flex justify-end -mt-4 mb-2 md:-mt-10 md:mb-4">
+              <a
+                href="https://app.fixyourmovement.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[44px] items-center rounded-xl bg-blue-600 px-5 text-white text-sm font-semibold transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300 focus-visible:ring-offset-2"
+              >
+                App Login
+              </a>
+            </div>
             <div className="flex flex-col lg:flex-row lg:items-center lg:gap-12">
 
               {/* Left column — headline, sub, CTA, trust row */}
@@ -947,7 +958,7 @@ export default function NewIndex() {
           <a href="/refund-policy" className="hover:text-slate-600 transition-colors">Refund Policy</a>
           <a href="/eula" className="hover:text-slate-600 transition-colors">EULA</a>
           <a href="/contact" className="hover:text-slate-600 transition-colors">Contact</a>
-          <a href="https://members.fixyourmovement.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Patient App</a>
+          <a href="https://app.fixyourmovement.com/" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Foot Capacity System App Login</a>
         </div>
         </div>
       </footer>

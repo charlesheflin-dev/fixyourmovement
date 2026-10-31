@@ -1,14 +1,74 @@
 import { useState, useEffect } from "react";
-import logo from "@/assets/logo.png";
+import {
+  FunnelShell,
+  FunnelHero,
+  SavedProgressPanel,
+  OfferCard,
+  HsaFsaStrip,
+  GuaranteeCard,
+  PlanDisclosure,
+  TwoLines,
+  OfferCardFrame,
+  PlanHeader,
+  CardDivider,
+  SectionEyebrow,
+  InsetPanel,
+  FeatureIntro,
+  FeatureRows,
+  BenefitChecklist,
+  PaymentSummary,
+  PrimaryCta,
+  ReassuranceLines,
+  DeclineLink,
+  IconPlanHeader,
+  IconInsetPanel,
+  PriceComparison,
+  CenteredNote,
+  FeaturePanel,
+  InsetNote,
+} from "@/components/checkout/OfferPieces";
+
+// /checkout — 3-step upsell wizard (SPEC-checkout-upsell-funnel-and-comms §6).
+//   offer ($47/mo) -> upsell97 (add Dr-J messaging?) -> lifetime (own it for life?) -> Whop.
+// Plans: $47/mo + $297 lifetime = NO doctor messaging; $97/mo + $497 lifetime = messaging.
+// ALL COPY BELOW IS TEMP COPY [team to replace; Dr-J approves before public launch].
 
 const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
-const MONTHLY_URL = "https://whop.com/checkout/plan_myAABQ8dqq8W3";
-const ONETIME_URL = "https://whop.com/checkout/plan_f7hnKFT1vq0zb";
 
-type Plan = "monthly" | "onetime";
+const PLAN_URLS = {
+  "47mo": "https://whop.com/checkout/plan_89RParoVzvYz8",
+  "97mo": "https://whop.com/checkout/plan_myAABQ8dqq8W3",
+  "297life": "https://whop.com/checkout/plan_oJj9EDt0XArGD",
+  "497life": "https://whop.com/checkout/plan_QSKUiZJdvkf1E",
+} as const;
+
+type PlanKey = keyof typeof PLAN_URLS;
+type Step = "offer" | "upsell97" | "lifetime";
+type Monthly = "base47" | "plus97";
+
+// Analytics can NEVER block navigation: any gtag failure is swallowed.
+function track(event: string, label?: string) {
+  try {
+    window.gtag?.("event", event, {
+      event_category: "conversion",
+      ...(label ? { event_label: label } : {}),
+    });
+  } catch {
+    /* GA4 failure must not stop the checkout redirect */
+  }
+}
 
 export default function Checkout() {
-  const [selected, setSelected] = useState<Plan>("monthly");
+  const [step, setStep] = useState<Step>("offer");
+  // The $97 answer. null = not yet chosen (start, or after Back from the lifetime step).
+  // The lifetime offer is DERIVED from this on every render — never stored.
+  const [monthly, setMonthly] = useState<Monthly | null>(null);
+
+  // Steps swap content within one route, so reset scroll on every step change
+  // (forward and Back). Purely visual — no analytics, no flow changes.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
 
   useEffect(() => {
     try {
@@ -24,202 +84,316 @@ export default function Checkout() {
     } catch {}
   }, []);
 
-  const checkoutUrl = selected === "monthly" ? MONTHLY_URL : ONETIME_URL;
+  // Final redirect: keep the checkout_click event (label checkout_bridge_<plan>).
+  function goToWhop(plan: PlanKey) {
+    track("checkout_click", `checkout_bridge_${plan}`);
+    window.location.assign(PLAN_URLS[plan]);
+  }
 
+  // Back navigation — emits NO GA4 events (only forward choices are tracked).
+  function goBack() {
+    if (step === "upsell97") {
+      setStep("offer");
+    } else if (step === "lifetime") {
+      // Clear the $97 answer so the member must re-choose; the lifetime offer is then
+      // recomputed from the NEW answer on the next forward step.
+      setMonthly(null);
+      setStep("upsell97");
+    }
+  }
+
+  function chooseUpsell97(yes: boolean) {
+    track(yes ? "upsell_97_yes" : "upsell_97_no");
+    setMonthly(yes ? "plus97" : "base47");
+    setStep("lifetime");
+  }
+
+  const lifetime = monthly === "plus97"
+    ? { plan: "497life" as PlanKey, price: "$497", body: "One payment. Keeps direct doctor messaging." }
+    : { plan: "297life" as PlanKey, price: "$297", body: "One payment." };
+
+  function chooseLifetime(yes: boolean) {
+    if (monthly === null) {
+      // Defensive: the lifetime step needs a $97 answer — send them back to choose.
+      setStep("upsell97");
+      return;
+    }
+    track(yes ? "lifetime_yes" : "lifetime_no");
+    if (yes) {
+      goToWhop(lifetime.plan);
+    } else {
+      goToWhop(monthly === "plus97" ? "97mo" : "47mo");
+    }
+  }
+
+  // ── Step 1 ($47 offer) — approved mockup + approved copy (2026-10-30). ──
+  // CTA keeps the existing step-advance handler: it moves to Step 2 and does NOT
+  // redirect to Whop or charge anything. No analytics added (unchanged behavior).
+  if (step === "offer") {
+    return (
+      <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
+        <FunnelShell>
+          <FunnelHero
+            eyebrow="YOUR RECOVERY ROADMAP CONTINUES"
+            title="Seven Check-Ins Down. Your Recovery Is Just Getting Started."
+            body="You've put in the work and seen your progress. Now keep building the strength and confidence to get back to the life you love."
+          />
+          <SavedProgressPanel
+            heading="Your progress is saved."
+            body="Every exercise, pain score, and check-in you've logged is saved and ready when you are."
+            closing="No starting over. Pick up right where you left off."
+          />
+          <OfferCard
+            ribbon="CONTINUE YOUR RECOVERY"
+            title="Your Recovery Plan"
+            support="The full FCS program with AI support."
+            price="$47"
+            period="per month"
+            benefits={[
+              "Complete 3-phase recovery program",
+              "Daily guided exercises and video instruction",
+              "Built-in guidance for flare-ups and tougher days",
+              "Pain tracking and progress history",
+              "Ask Dr. Jonathan AI for help with your program",
+              "A plan that progresses with you",
+            ]}
+            ctaLabel="Continue My Recovery for $47/month"
+            onCta={() => setStep("upsell97")}
+            reassurance={[
+              "No long-term commitment. Secure checkout.",
+              "Cancel anytime, right inside the app.",
+            ]}
+          />
+          <HsaFsaStrip />
+          <GuaranteeCard />
+          <PlanDisclosure>
+            Includes the full FCS program and Ask Dr. Jonathan AI. Direct personal messaging with Dr. Jonathan is available through an upgraded plan.
+          </PlanDisclosure>
+        </FunnelShell>
+      </div>
+    );
+  }
+
+  // ── Step 2 ($97 ownership upsell) — approved mockup + approved copy (2026-10-30). ──
+  // Restyle + relabel only. Accept -> chooseUpsell97(true) (upsell_97_yes, $497 next);
+  // decline link -> chooseUpsell97(false) (upsell_97_no, $297 next) — a FORWARD choice;
+  // ← Back -> goBack() (Step 1, no analytics). No Whop redirect or charge on this step.
+  if (step === "upsell97") {
+    return (
+      <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
+        <FunnelShell>
+          <button
+            type="button"
+            onClick={goBack}
+            className="-mb-3 self-start min-h-[44px] -ml-1 px-1 text-slate-500 hover:text-slate-700 text-sm font-semibold rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
+          >
+            ← Back
+          </button>
+          <FunnelHero
+            eyebrow="BEFORE YOU CONTINUE, ONE MORE OPTION..."
+            title={<TwoLines first="Six Payments." second="Then It's Yours to Keep." />}
+            body="Add 6 months of personal communication with Dr. Jonathan and secure lifetime access to your FCS Recovery Program for just $50 more per month."
+          />
+          <OfferCardFrame ribbon="YOUR PATH TO LIFETIME ACCESS">
+            <PlanHeader title="Your Ownership Plan" price="$97" period="per month" />
+            <div className="mt-5">
+              <InsetPanel
+                heading={<TwoLines first="Your Feet Change." second="FCS Responds." />}
+                body="Heel pain can return, even after you're feeling better. If it does, simply log back in and record your pain. FCS responds with exercises based on your current symptoms, building on your saved recovery history."
+              />
+            </div>
+            <CardDivider />
+            <FeatureIntro
+              eyebrow="PLUS, FOR YOUR FIRST 6 MONTHS"
+              heading={<TwoLines first="Questions?" second="Ask the Person Who Built FCS." />}
+              body="Wondering about an exercise, a recovery phase, or why the program works the way it does? Dr. Jonathan can explain the thinking behind FCS, helping you move forward with greater confidence."
+            />
+            <FeatureRows
+              rows={[
+                { icon: "message", label: "Two-way communication inside FCS" },
+                { icon: "mic", label: "Personal voice replies from Dr. Jonathan" },
+              ]}
+            />
+            <CardDivider />
+            <SectionEyebrow>YOUR OWNERSHIP BENEFITS</SectionEyebrow>
+            <BenefitChecklist
+              items={[
+                "Lifetime FCS access after 6 payments",
+                "Pain-responsive exercises whenever you need them",
+                "Ask Dr. Jonathan AI stays with you",
+                "Future FCS program updates included",
+              ]}
+            />
+            <PaymentSummary
+              headline="$97/month × 6"
+              total="Total investment: $582"
+              note="Then lifetime FCS access, with no more monthly fees."
+            />
+            <PrimaryCta label="Choose My $97 Ownership Plan" onClick={() => chooseUpsell97(true)} />
+            <ReassuranceLines
+              lines={[
+                "Secure checkout. Cancel anytime, right inside the app.",
+                "Lifetime access requires all 6 monthly payments.",
+              ]}
+            />
+            <DeclineLink label="No thanks, I'll keep my $47/month plan." onClick={() => chooseUpsell97(false)} />
+          </OfferCardFrame>
+          <HsaFsaStrip />
+          <GuaranteeCard />
+          <PlanDisclosure>
+            Direct communication with Dr. Jonathan is available for the first 6 months and is limited to program-related guidance. Lifetime digital access begins after completing all 6 payments.
+          </PlanDisclosure>
+        </FunnelShell>
+      </div>
+    );
+  }
+
+  // ── Step 3, $297 branch (declined $97) — approved mockup + approved copy (2026-10-30). ──
+  // Branch = the existing derived `lifetime` selector (unchanged). Restyle + relabel only:
+  // CTA -> chooseLifetime(true), decline link -> chooseLifetime(false) (both TERMINAL Whop
+  // redirects, unchanged), ← Back -> goBack() (Step 2 + clears the $97 answer). The $497
+  // branch still renders the temp view below. No bottom disclosure here (pending owner OK).
+  if (step === "lifetime" && lifetime.plan === "297life") {
+    return (
+      <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
+        <FunnelShell>
+          <button
+            type="button"
+            onClick={goBack}
+            className="-mb-3 self-start min-h-[44px] -ml-1 px-1 text-slate-500 hover:text-slate-700 text-sm font-semibold rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
+          >
+            ← Back
+          </button>
+          <FunnelHero
+            eyebrow="YOUR LIFETIME OPTION"
+            title={<TwoLines first="Take the Pressure Off" second="Your Recovery." />}
+            body="Recovery takes time. You shouldn't feel rushed to make the most of your program before another monthly payment comes due. For $297, FCS is yours for life."
+          />
+          <OfferCardFrame ribbon="YOUR PATH TO LIFETIME ACCESS">
+            <IconPlanHeader
+              title="Your Lifetime FCS Plan"
+              support="A complete recovery program yours for life."
+              price="$297"
+              period="one time"
+            />
+            <div className="mt-5 mb-6">
+              <IconInsetPanel
+                heading={<TwoLines first="No Rush." second="No Renewals." />}
+                body="Follow your recovery program at the pace it was designed for. Keep building strength when you're feeling better. And if heel pain returns, your FCS program is ready whenever you are."
+              />
+            </div>
+            <SectionEyebrow>YOURS FOR THE LONG HAUL</SectionEyebrow>
+            <BenefitChecklist
+              items={[
+                "Complete FCS plantar fasciitis recovery program",
+                "Exercises for recovery, strength, and ongoing maintenance",
+                "Pain tracking, progress history, and Ask Dr. Jonathan AI",
+                "Lifetime access with no recurring payments",
+              ]}
+            />
+            <CardDivider />
+            <SectionEyebrow>BY MONTH 7, LIFETIME COSTS LESS.</SectionEyebrow>
+            <PriceComparison
+              left={{ label: "$47 Monthly", amount: "$329", note: "7 monthly payments" }}
+              right={{ label: "$297 Lifetime", amount: "$297", note: "One payment" }}
+              footnote="And your lifetime access continues without another subscription charge."
+            />
+            <CenteredNote>
+              As FCS expands, our pricing will increase. Secure lifetime access to the current plantar fasciitis program at today's $297 price.
+            </CenteredNote>
+            <PrimaryCta label="Choose My $297 Lifetime Plan" onClick={() => chooseLifetime(true)} />
+            <ReassuranceLines
+              lock={false}
+              lines={[
+                "One payment. Secure checkout. No recurring fees.",
+                "Includes Ask Dr. Jonathan AI, not direct personal communication with Dr. Jonathan.",
+              ]}
+            />
+            <DeclineLink label="No thanks, I'll keep my $47/month plan." onClick={() => chooseLifetime(false)} />
+          </OfferCardFrame>
+          <HsaFsaStrip />
+          <GuaranteeCard />
+        </FunnelShell>
+      </div>
+    );
+  }
+
+  // ── Step 3, $497 branch (accepted $97) — approved mockup + approved copy (2026-10-30). ──
+  // Every earlier view returned above, so this is step "lifetime" with lifetime.plan
+  // "497life" (the existing derived selector, unchanged). Restyle + relabel only:
+  // CTA -> chooseLifetime(true) (lifetime_yes, $497 Whop), decline link -> chooseLifetime(false)
+  // (lifetime_no, $97/mo Whop — keeps $97, not $47); both TERMINAL, unchanged.
+  // ← Back -> goBack() (Step 2 + clears the $97 answer).
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
-      <main className="max-w-xl mx-auto px-5 py-12">
-
-        {/* Header */}
-        <div className="text-center mb-8">
-          <p className="text-blue-600 text-xs font-bold uppercase tracking-widest mb-3">Choose Your Path</p>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-3">
-            Start Building Stronger Feet Today
-          </h1>
-          <p className="text-slate-500 text-base leading-relaxed">
-            Choose the option that fits your recovery journey.<br />
-            Both include the complete Foot Capacity System.
-          </p>
-        </div>
-
-        {/* Plan cards */}
-        <div className="space-y-4 mb-6">
-
-          {/* Monthly Recovery Plan */}
-          <button
-            type="button"
-            onClick={() => setSelected("monthly")}
-            className={`w-full text-left rounded-2xl border-2 p-6 transition-all relative ${
-              selected === "monthly"
-                ? "border-blue-600 bg-blue-50"
-                : "border-slate-200 bg-white hover:border-slate-300"
-            }`}
-          >
-            {/* Most Flexible badge */}
-            <div className="absolute -top-3 left-5">
-              <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-                Most Flexible
-              </span>
-            </div>
-
-            <div className="flex items-start gap-4 mt-1">
-              {/* Radio */}
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${
-                selected === "monthly" ? "border-blue-600" : "border-slate-300"
-              }`}>
-                {selected === "monthly" && (
-                  <div className="w-2.5 h-2.5 rounded-full bg-blue-600" />
-                )}
-              </div>
-
-              {/* Icon */}
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${
-                selected === "monthly" ? "bg-blue-100" : "bg-slate-100"
-              }`}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={selected === "monthly" ? "#2563EB" : "#94A3B8"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                  <line x1="16" y1="2" x2="16" y2="6" />
-                  <line x1="8" y1="2" x2="8" y2="6" />
-                  <line x1="3" y1="10" x2="21" y2="10" />
-                </svg>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-slate-900 font-extrabold text-lg leading-snug">Monthly Recovery Plan</p>
-                  <div className="text-right shrink-0">
-                    <p className={`font-extrabold text-3xl leading-none ${selected === "monthly" ? "text-blue-600" : "text-slate-900"}`}>$97</p>
-                    <p className={`text-xs font-semibold mt-0.5 ${selected === "monthly" ? "text-blue-500" : "text-slate-500"}`}>per month</p>
-                  </div>
-                </div>
-                <p className="text-slate-600 text-sm leading-relaxed mt-2 mb-4">
-                  Stay with the program while it's helping you move toward the life you miss. Cancel anytime inside the app with one tap.
-                </p>
-                <div className={`border-t pt-4 ${selected === "monthly" ? "border-blue-200" : "border-slate-100"}`}>
-                  <div className="flex items-start gap-2">
-                    <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    </div>
-                    <div className="text-slate-600 text-sm leading-relaxed">
-                      <p className="font-semibold text-slate-800 mb-1">Your monthly plan has a finish line.</p>
-                      <p className="italic">If your journey takes six months, you can keep using the Foot Capacity System from there without an ongoing monthly plan.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </button>
-
-          {/* Lifetime Access */}
-          <button
-            type="button"
-            onClick={() => setSelected("onetime")}
-            className={`w-full text-left rounded-2xl border-2 p-6 transition-all relative ${
-              selected === "onetime"
-                ? "border-blue-600 bg-blue-50"
-                : "border-slate-200 bg-white hover:border-slate-300"
-            }`}
-          >
-            {/* Best Value badge */}
-            <div className="absolute -top-3 left-5">
-              <span className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-                Best Value
-              </span>
-            </div>
-
-            <div className="flex items-start gap-4 mt-1">
-              {/* Radio */}
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${
-                selected === "onetime" ? "border-blue-600" : "border-slate-300"
-              }`}>
-                {selected === "onetime" && (
-                  <div className="w-2.5 h-2.5 rounded-full bg-blue-600" />
-                )}
-              </div>
-
-              {/* Icon */}
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${
-                selected === "onetime" ? "bg-green-100" : "bg-slate-100"
-              }`}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={selected === "onetime" ? "#16A34A" : "#94A3B8"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  <polyline points="9 12 11 14 15 10" />
-                </svg>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-slate-900 font-extrabold text-lg leading-snug">Lifetime Access</p>
-                  <div className="text-right shrink-0">
-                    <p className={`font-extrabold text-3xl leading-none ${selected === "onetime" ? "text-blue-600" : "text-slate-900"}`}>$397</p>
-                    <p className={`text-xs font-semibold mt-0.5 ${selected === "onetime" ? "text-blue-500" : "text-slate-500"}`}>one time</p>
-                  </div>
-                </div>
-                <p className="text-slate-600 text-sm leading-relaxed mt-2">
-                  One payment. Full access to the complete 12-week Foot Capacity System, plus future improvements and updates. No monthly plan.
-                </p>
-              </div>
-            </div>
-          </button>
-
-        </div>
-
-        {/* HSA/FSA Callout */}
-        <div className="flex flex-col items-center text-center bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-5">
-          <p className="text-slate-800 text-sm font-semibold">✅ HSA/FSA funds may be eligible*</p>
-          <p className="text-slate-500 text-xs leading-relaxed">Check with your plan administrator to determine your eligibility.</p>
-        </div>
-
-        {/* CTA Button */}
-        <a
-          href={checkoutUrl}
-          className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-4 rounded-xl text-center transition-colors mb-4"
-          onClick={() => window.gtag?.('event', 'checkout_click', {
-            event_category: 'conversion',
-            event_label: `checkout_bridge_${selected}`,
-          })}
+      <FunnelShell>
+        <button
+          type="button"
+          onClick={goBack}
+          className="-mb-3 self-start min-h-[44px] -ml-1 px-1 text-slate-500 hover:text-slate-700 text-sm font-semibold rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
         >
-          {selected === "monthly"
-            ? "Continue Monthly — $97/month →"
-            : "Unlock Lifetime Access — $397 →"}
-        </a>
-
-        {/* Trust strip */}
-        <div className="flex justify-center gap-5 text-xs text-slate-400 mb-8">
-          <span>🛡️ 30-Day Guarantee</span>
-          <span>🔒 Secure Checkout</span>
-          <span>↩️ Cancel Monthly Anytime</span>
-        </div>
-
-        {/* Guarantee box */}
-        <div className="rounded-2xl border border-slate-200 overflow-hidden">
-          <div className="flex items-center gap-4 px-6 py-5">
-            <div className="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                <polyline points="9 12 11 14 15 10" />
-              </svg>
-            </div>
-            <div className="flex-1">
-              <p className="text-slate-900 font-bold text-base leading-snug">Walk Pain Free, Or It's Free</p>
-              <p className="text-blue-600 font-semibold text-sm">30-Day Money-Back Guarantee</p>
-            </div>
-            <div className="shrink-0 hidden sm:block">
-              <img src={logo} alt="FCS" className="h-10 w-auto" />
-            </div>
+          ← Back
+        </button>
+        <FunnelHero
+          eyebrow="BEFORE YOU FINALIZE YOUR PLAN"
+          title={<TwoLines first="You've Chosen Lifetime." second="Now Make It Even Better." />}
+          body="You've already committed to your long-term recovery. Now you can enjoy the same 6 months of personal communication with Dr. Jonathan, save $85, and become part of what's next for FCS."
+        />
+        <OfferCardFrame ribbon="SAVE $85 ON YOUR OWNERSHIP PLAN">
+          <IconPlanHeader
+            title="Premium Lifetime"
+            support="One payment. Yours for life."
+            price="$497"
+            period="one time"
+          />
+          <div className="mt-5 mb-6">
+            <PriceComparison
+              heading="Same Benefits. Lower Total Cost."
+              left={{ label: "$97 × 6", amount: "$582", note: "Ownership plan" }}
+              right={{ label: "Pay once", amount: "$497", note: "Premium Lifetime" }}
+              savings="You Save $85"
+            />
           </div>
-          <div className="border-t border-slate-100 px-6 py-4">
-            <p className="text-slate-600 text-sm leading-relaxed text-center">
-              Try the Foot Capacity System for 30 days. If it's not the right fit, simply email us within 30 days and we'll refund your investment. No complicated forms. No hoops to jump through.
-            </p>
-          </div>
-        </div>
-
-      </main>
+          <SectionEyebrow>EVERYTHING YOU CHOSE IS INCLUDED</SectionEyebrow>
+          <BenefitChecklist
+            items={[
+              "Lifetime FCS program access and future updates",
+              "6 months of direct communication with Dr. Jonathan",
+              "Ask Dr. Jonathan AI and your saved recovery history",
+            ]}
+          />
+          <CardDivider />
+          <FeaturePanel
+            eyebrow="AN EARLY-ADOPTER BENEFIT"
+            heading="Help Shape What's Next."
+            paragraphs={[
+              "Your FCS program focuses on plantar fasciitis recovery. Our upcoming Foot Resilience Library will take you beyond Phase 3, with resources designed to maintain strength, build resilience, and help you stay active doing the things you love.",
+              "You'll be among the first invited to explore it, share your experiences, and help shape what we build. Your lifetime access to the new library is included at no additional charge.",
+            ]}
+            checks={[
+              "Early previews and opportunities to share your ideas",
+              "Grandfathered Foot Resilience Library access at no additional charge",
+            ]}
+          />
+          <InsetNote>
+            Premium Lifetime pricing will start at $697 when the Foot Resilience Library launches. As an early member, your $497 purchase includes the library at no additional charge.
+          </InsetNote>
+          <PrimaryCta label="Choose My $497 Premium Lifetime Plan" onClick={() => chooseLifetime(true)} />
+          <ReassuranceLines
+            lock={false}
+            lines={[
+              "One secure payment. No monthly fees.",
+              "Direct communication with Dr. Jonathan lasts 6 months.",
+            ]}
+          />
+          <DeclineLink label="No thanks, I'll keep my $97/month ownership plan." onClick={() => chooseLifetime(false)} />
+        </OfferCardFrame>
+        <HsaFsaStrip />
+        <GuaranteeCard />
+        <PlanDisclosure>
+          Includes the full FCS program, Ask Dr. Jonathan AI, and 6 months of direct personal communication with Dr. Jonathan.
+        </PlanDisclosure>
+      </FunnelShell>
     </div>
   );
 }
