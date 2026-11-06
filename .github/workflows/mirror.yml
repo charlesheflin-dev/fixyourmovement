@@ -1,0 +1,38 @@
+name: Mirror to read-only copy
+
+on:
+  push:
+    branches: ["main"]
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: mirror-sync
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  mirror:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out main (full working tree)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Build a code-only snapshot (no .github) and push to mirror
+        run: |
+          set -e
+          rm -rf .github
+          rm -rf .git
+          git init -q
+          git checkout -q -b main
+          git config user.name "mirror-bot"
+          git config user.email "mirror-bot@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Mirror snapshot of main (code only, no .github)"
+          git push --force "https://x-access-token:${{ secrets.MIRROR_TOKEN }}@github.com/charlesheflin-dev/fixyourmovement-mirror.git" main
