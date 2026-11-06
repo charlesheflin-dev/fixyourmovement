@@ -31,7 +31,6 @@ import {
 // /checkout wizard. The card bodies use the same OfferPieces + approved copy as /checkout's
 // $97 and $497 views (KEEP-IN-SYNC with Checkout.tsx if that copy changes).
 
-const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
 const APP_URL = "https://app.fixyourmovement.com/";
 
 const PLAN_URLS = {
@@ -64,17 +63,6 @@ export default function Upgrade() {
 
   useEffect(() => {
     track("upgrade_visited");
-    try {
-      const match = document.cookie.split("; ").find((c) => c.startsWith("fcs_email="));
-      if (!match) return;
-      const email = decodeURIComponent(match.split("=")[1]);
-      if (!email) return;
-      fetch(WORKER_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, checkout_tag: "checkout_visited" }),
-      }).catch(() => {});
-    } catch {}
   }, []);
 
   // Final redirect (label upgrade_bridge_<plan>, distinct from /checkout's checkout_bridge_*).
