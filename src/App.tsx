@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { initMetaPixel, trackPageView } from "./lib/metaPixel";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -149,6 +150,20 @@ function SurveyRedirect() {
   return <Navigate to={target} replace />;
 }
 
+// Meta Pixel: init once on mount (bails if VITE_META_PIXEL_ID is empty OR the first
+// page of the session is a sensitive route), then fire a manual, route-gated PageView
+// on each route change. Inside BrowserRouter so useLocation works. Mirrors SourceCapture.
+function MetaPixelTracker() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    initMetaPixel();
+  }, []);
+  useEffect(() => {
+    trackPageView(pathname);
+  }, [pathname]);
+  return null;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -157,6 +172,7 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <SourceCapture />
+        <MetaPixelTracker />
         <CookieConsent />
         {/* <ExitPopup /> */}
         <AskDrJonathanGlobal />
