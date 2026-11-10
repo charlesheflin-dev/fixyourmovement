@@ -32,6 +32,38 @@ function sourceFields(): { first_source: string | null; last_source: string | nu
     last_source:  sanitizeArticleSlug(getCookie("fcs_last_source")),
   };
 }
+// Meta Pixel cookies (_fbc/_fbp) for CAPI match quality — RAW values (they contain
+// '.', so they must NOT pass through the slug sanitizer); keys omitted entirely when
+// absent so we never send empty strings. Additive: no await, same POST, never blocks.
+function metaMatchKeys(): Record<string, string> {
+  const out: Record<string, string> = {};
+  const fbc = getCookie("_fbc");
+  const fbp = getCookie("_fbp");
+  if (fbc) out._fbc = fbc;
+  if (fbp) out._fbp = fbp;
+  return out;
+}
+// GA4 client_id contains a dot, so the source/article gate rejects it — dot-tolerant variant.
+function sanitizeClientId(v: string | null): string | null {
+  if (!v) return null;
+  const s = v.trim();
+  return /^[A-Za-z0-9._-]{1,64}$/.test(s) ? s : null;
+}
+// Ad click ids (gclid/fbclid via the source gate) + GA4 client_id, mirroring ColdStart/DownloadApp.
+// Added for CAPI parity: without a stored fbclid, Day-1/Purchase CAPI can't match assessment-funnel users.
+function clickIdFields(): {
+  gclid_first: string | null; gclid_last: string | null;
+  fbclid_first: string | null; fbclid_last: string | null;
+  ga_client_id: string | null;
+} {
+  return {
+    gclid_first:  sanitizeArticleSlug(getCookie("fcs_first_gclid")),
+    gclid_last:   sanitizeArticleSlug(getCookie("fcs_last_gclid")),
+    fbclid_first: sanitizeArticleSlug(getCookie("fcs_first_fbclid")),
+    fbclid_last:  sanitizeArticleSlug(getCookie("fcs_last_fbclid")),
+    ga_client_id: sanitizeClientId(getCookie("fcs_ga_client_id")),
+  };
+}
 
 // ─── Funnel-events (Change 3 Tier 1) ─────────────────────────────────────────────
 // Assessment-funnel account_created tick. The other assessment events (landing_reached,
@@ -467,7 +499,7 @@ export default function Assessment() {
         const trialRes = await fetch(CREATE_TRIAL_PROFILE_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.replace(/ /g, "+"), anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields() }),
+          body: JSON.stringify({ email: email.replace(/ /g, "+"), anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields(), ...clickIdFields(), ...metaMatchKeys() }),
         });
         const trialData = await trialRes.json().catch(() => null);
         if (trialData && typeof trialData.otl_token === "string" && trialData.otl_token) {

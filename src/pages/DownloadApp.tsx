@@ -92,6 +92,17 @@ function clickIdFields(): {
     ga_client_id: sanitizeClientId(getCookie("fcs_ga_client_id")),
   };
 }
+// Meta Pixel cookies (_fbc/_fbp) for CAPI match quality — RAW values (they contain
+// '.', so they must NOT pass through the slug sanitizer); keys omitted entirely when
+// absent so we never send empty strings. Additive: no await, same POST, never blocks.
+function metaMatchKeys(): Record<string, string> {
+  const out: Record<string, string> = {};
+  const fbc = getCookie("_fbc");
+  const fbp = getCookie("_fbp");
+  if (fbc) out._fbc = fbc;
+  if (fbp) out._fbp = fbp;
+  return out;
+}
 
 // ─── Funnel-events (Change 3 Tier 1) ─────────────────────────────────────────────
 // Fire-and-forget front-funnel event to log-funnel-event, keyed by the fcs_anon cookie
@@ -120,7 +131,7 @@ function logFunnelEvent(event: string, extra?: Record<string, unknown>) {
 // resolves even on HTTP 500, so res.ok must be checked explicitly — that unchecked case
 // was the source of the silent misses. Idempotent server-side, so retrying is safe.
 async function createTrialProfileVerified(value: string): Promise<{ ok: boolean; otlToken: string | null }> {
-  const body = JSON.stringify({ email: value, anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields(), ...clickIdFields() });
+  const body = JSON.stringify({ email: value, anon_id: getCookie("fcs_anon"), ...articleFields(), ...sourceFields(), ...clickIdFields(), ...metaMatchKeys() });
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const res = await fetch(CREATE_TRIAL_PROFILE_URL, {
