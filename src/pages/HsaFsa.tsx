@@ -293,7 +293,7 @@ export default function HsaFsa() {
               <div className="bg-white rounded-2xl border border-slate-200 p-7 mb-8">
                 <p className="text-slate-400 text-xs font-semibold uppercase tracking-widest mb-3">Example Only</p>
                 <p className="text-slate-600 text-base leading-relaxed">
-                  Someone in a 24% combined federal and state tax bracket using HSA or FSA funds for a $397 Lifetime Access membership could see approximately $95 in tax savings. This is an illustration only. Actual savings vary based on your individual tax situation and your HSA or FSA plan.
+                  Someone in a 24% combined federal and state tax bracket using HSA or FSA funds for a $497 Lifetime Access membership could see approximately $119 in tax savings. This is an illustration only. Actual savings vary based on your individual tax situation and your HSA or FSA plan.
                 </p>
               </div>
 
