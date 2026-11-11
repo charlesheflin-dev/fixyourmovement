@@ -1,3 +1,7 @@
+import { EXPERIMENTS_BY_PATH, EXPERIMENT_PREFIXES } from "./_data/experiments.js"
+import { findRunningExperiment } from "./_lib/expCore.js"
+import { handleExperiment } from "./_lib/experiments.js"
+
 export async function onRequest(context) {
 
 const request = context.request
@@ -55,6 +59,17 @@ for (const bot of aiBots) {
 if (ua.includes(bot)) {
 console.log("AI crawler detected:", bot, url.hostname, url.pathname)
 }
+}
+
+/*
+LANDING-PAGE A/B EXPERIMENTS (spec SPEC-lp-ab-testing.md §3 B2 W3)
+Only an exact registry path (or /start/* prefix) whose entry is status "running" is
+handed to the assignment helper; everything else falls through exactly as before.
+*/
+
+const experiment = findRunningExperiment(url.pathname, EXPERIMENTS_BY_PATH, EXPERIMENT_PREFIXES)
+if (experiment) {
+return handleExperiment(context, experiment)
 }
 
 return context.next()
