@@ -44,21 +44,48 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <!-- Additional SEO Meta Tags -->
+  <script>
+    (function () {
+      try {
+        var p = window.location.pathname;
+        if (!/^\/(results|survey)(\/|$)/.test(p)) return;
+        window.__fcsSensitive = true;
+        var u = new URL(window.location.href), keys = [];
+        u.searchParams.forEach(function (v, k) { if (k.toLowerCase() === "email") keys.push(k); });
+        if (keys.length) {
+          var stashed = false;
+          try { sessionStorage.setItem("fcs_results_email", u.searchParams.get(keys[0]) || ""); stashed = true; } catch (e) {}
+          if (stashed) {
+            keys.forEach(function (k) { u.searchParams.delete(k); });
+            history.replaceState(history.state, "", u.pathname + u.search + u.hash);
+          }
+        }
+        var q = new URLSearchParams();
+        new URL(window.location.href).searchParams.forEach(function (v, k) { if (/^utm_/i.test(k)) q.append(k, v); });
+        var qs = q.toString();
+        window.__fcsGaCfg = { page_location: window.location.origin + "/results" + (qs ? "?" + qs : "") };
+        var m = document.createElement("meta"); m.name = "referrer"; m.content = "origin"; document.head.appendChild(m);
+        var r = document.createElement("meta"); r.name = "robots"; r.content = "noindex, nofollow"; document.head.appendChild(r);
+      } catch (e) {}
+    })();
+  </script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YGDHT1TE6Y"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-YGDHT1TE6Y');
+    gtag('config', 'G-YGDHT1TE6Y', window.__fcsGaCfg || {});
   </script>
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
+    if (!window.__fcsSensitive) {
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "wvndy6rvsx");
+    }
   </script>
   <meta name="theme-color" content="#2563EB" />
   <meta name="msapplication-TileColor" content="#2563EB" />

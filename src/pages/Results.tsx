@@ -790,7 +790,9 @@ function MemberReviewsSection() {
 export default function Results() {
   const { userId } = useParams<{ userId: string }>();
   const [searchParams] = useSearchParams();
-  const emailParam = searchParams.get("email")?.replace(/ /g, "+") ?? null;
+  // Release 2a: index.html strips ?email= from the address bar before analytics load and stashes it per-tab.
+  const stashedEmail = (() => { try { return sessionStorage.getItem("fcs_results_email"); } catch { return null; } })();
+  const emailParam = (searchParams.get("email") ?? stashedEmail)?.replace(/ /g, "+") || null;
   const [data, setData] = useState<ResultsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [insights, setInsights] = useState<InsightsData>(FALLBACK_INSIGHTS);
