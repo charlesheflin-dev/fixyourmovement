@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 import { installUrlWithTracking } from "@/lib/installTracking";
+import { variantFor, withExperimentMeta } from "@/experiments/exp";
+import { DL_HERO_EXPERIMENT, downloadHero } from "@/experiments/heroCopy";
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
@@ -108,7 +110,8 @@ function metaMatchKeys(): Record<string, string> {
 // Fire-and-forget front-funnel event to log-funnel-event, keyed by the fcs_anon cookie
 // minted app-wide in App.tsx. keepalive so it survives navigation; never blocks UX; a
 // dead endpoint can't harm the funnel. account_created carries the raw email (server
-// hashes it — never stored raw).
+// hashes it — never stored raw). A/B experiment meta (exp/v/src) merges into `meta`
+// only while an experiment is running; otherwise the body is unchanged.
 function logFunnelEvent(event: string, extra?: Record<string, unknown>) {
   try {
     const anon_id = getCookie("fcs_anon");
@@ -116,7 +119,7 @@ function logFunnelEvent(event: string, extra?: Record<string, unknown>) {
     fetch(LOG_FUNNEL_EVENT_URL, {
       method: "POST",
       headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify({ anon_id, funnel: "download", event, ...extra }),
+      body: JSON.stringify(withExperimentMeta({ anon_id, funnel: "download", event }, extra)),
       keepalive: true,
     }).catch(() => {});
   } catch {
@@ -185,6 +188,9 @@ export default function DownloadApp() {
 
   const landingLogged = useRef(false);
   const emailFocusLogged = useRef(false);
+
+  // A/B hero (spec §3 B2 W6): control unless the edge assigned this page's experiment.
+  const hero = downloadHero(variantFor(DL_HERO_EXPERIMENT));
 
   useEffect(() => {
     if (landingLogged.current) return;
@@ -318,10 +324,10 @@ export default function DownloadApp() {
           {/* Headline — white card */}
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4">
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-4">
-              Recovery Shouldn't<br />Require A Waiting Room.
+              {hero.headline}
             </h1>
             <p className="text-slate-600 text-lg leading-relaxed">
-              Just a daily recovery plan from Dr. Jonathan<br className="hidden sm:block" /> delivered directly to your phone.
+              {hero.subhead}
             </p>
           </div>
 

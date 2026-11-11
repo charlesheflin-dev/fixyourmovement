@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 import { installUrlWithTracking } from "@/lib/installTracking";
+import { variantFor, withExperimentMeta } from "@/experiments/exp";
+import { CS_HERO_EXPERIMENT, coldStartHero } from "@/experiments/heroCopy";
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
@@ -77,7 +79,8 @@ function metaMatchKeys(): Record<string, string> {
 // Fire-and-forget front-funnel event to log-funnel-event, keyed by the fcs_anon cookie
 // minted app-wide in App.tsx. keepalive so it survives navigation; never blocks UX; a
 // dead endpoint can't harm the funnel. account_created carries the raw email (server
-// hashes it — never stored raw).
+// hashes it — never stored raw). A/B experiment meta (exp/v/src) merges into `meta`
+// (alongside form_position) only while an experiment is running; otherwise unchanged.
 function logFunnelEvent(event: string, extra?: Record<string, unknown>) {
   try {
     const anon_id = getCookie("fcs_anon");
@@ -85,7 +88,7 @@ function logFunnelEvent(event: string, extra?: Record<string, unknown>) {
     fetch(LOG_FUNNEL_EVENT_URL, {
       method: "POST",
       headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify({ anon_id, funnel: "download_cold", event, ...extra }),
+      body: JSON.stringify(withExperimentMeta({ anon_id, funnel: "download_cold", event }, extra)),
       keepalive: true,
     }).catch(() => {});
   } catch {
@@ -284,6 +287,9 @@ export default function ColdStart() {
   const landingLogged = useRef(false);
   const emailFocusLogged = useRef(false);
   const touchStartX = useRef(0);
+
+  // A/B hero (spec §3 B2 W6): control unless the edge assigned this page's experiment.
+  const hero = coldStartHero(variantFor(CS_HERO_EXPERIMENT));
 
   useEffect(() => {
     if (landingLogged.current) return;
@@ -613,11 +619,10 @@ export default function ColdStart() {
             <div className="min-w-0">
               <p className={`${T.eyebrow} mb-3`}>Plantar Fasciitis Recovery at Home</p>
               <h1 className={T.h1}>
-                <span className="block text-slate-900">Stop Guessing Your Way Through Plantar Fasciitis.</span>
-                <span className="block text-blue-600">Follow a Plan That Adjusts to Your Foot.</span>
+                {hero.headline}
               </h1>
               <p className={`${T.body} mt-5`}>
-                Exercise videos show you what to do. Assigned sets and reps tell you how much. Your daily check-ins help guide what comes next.
+                {hero.subhead}
               </p>
 
               <div className="flex items-center gap-2 md:gap-2.5 mt-5">
