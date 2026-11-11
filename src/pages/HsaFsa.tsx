@@ -536,6 +536,7 @@ export default function HsaFsa() {
             <a href="/terms-of-service" className="hover:text-slate-600 transition-colors">Terms of Service</a>
             <a href="/refund-policy" className="hover:text-slate-600 transition-colors">Refund Policy</a>
             <a href="/eula" className="hover:text-slate-600 transition-colors">EULA</a>
+            <a href="/dr-jonathan-schutza" className="hover:text-slate-600 transition-colors">About Dr. Schutza</a>
             <a href="/contact" className="hover:text-slate-600 transition-colors">Contact</a>
             <a href="https://app.fixyourmovement.com/" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Patient App</a>
           </div>

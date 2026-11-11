@@ -74,6 +74,18 @@ function sourceFields(): { first_source: string | null; last_source: string | nu
     last_source:  sanitizeArticleSlug(getCookie("fcs_last_source")),
   };
 }
+// Per-source visitor attribution (punch-list Part B): this landing's ?source= tag, stored
+// as meta.source on landing_reached. Incoming URL tag wins (URLSearchParams.get = first
+// occurrence, matching SourceCapture); fallback = the fcs_last_source cookie. Same slug gate
+// (<=200, [A-Za-z0-9/_-]); "hsa" is an internal nav marker, never a source. Key is `source`,
+// NOT `src` — `src` belongs to the A/B experiment meta (exp.ts / 078 RPC).
+function landingSource(): string | null {
+  let fromUrl: string | null = null;
+  try { fromUrl = sanitizeArticleSlug(new URLSearchParams(window.location.search).get("source")); } catch { /* ignore */ }
+  if (fromUrl && fromUrl !== "hsa") return fromUrl;
+  const fromCookie = sanitizeArticleSlug(getCookie("fcs_last_source"));
+  return fromCookie && fromCookie !== "hsa" ? fromCookie : null;
+}
 // GA4 client_id contains a dot, so the source/article gate rejects it — dot-tolerant variant.
 function sanitizeClientId(v: string | null): string | null {
   if (!v) return null;
@@ -195,7 +207,8 @@ export default function DownloadApp() {
   useEffect(() => {
     if (landingLogged.current) return;
     landingLogged.current = true;
-    logFunnelEvent("landing_reached");
+    const source = landingSource();
+    logFunnelEvent("landing_reached", source ? { meta: { source } } : undefined);
   }, []);
 
   // When the install screen replaces the opt-in page, reset scroll to top —

@@ -12,6 +12,7 @@ const Footer = () => {
           <Link to="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</Link>
           <Link to="/refund-policy" className="hover:text-primary transition-colors">Refund Policy</Link>
           <Link to="/eula" className="hover:text-primary transition-colors">EULA</Link>
+          <Link to="/dr-jonathan-schutza" className="hover:text-primary transition-colors">About Dr. Schutza</Link>
           <Link to="/contact" className="hover:text-primary transition-colors">Contact</Link>
         </div>
         <p className="mt-4 text-sm text-muted-foreground/70 max-w-lg mx-auto">

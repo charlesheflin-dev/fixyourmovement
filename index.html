@@ -44,21 +44,48 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <!-- Additional SEO Meta Tags -->
+  <script>
+    (function () {
+      try {
+        var p = window.location.pathname;
+        if (!/^\/(results|survey)(\/|$)/.test(p)) return;
+        window.__fcsSensitive = true;
+        var u = new URL(window.location.href), keys = [];
+        u.searchParams.forEach(function (v, k) { if (k.toLowerCase() === "email") keys.push(k); });
+        if (keys.length) {
+          var stashed = false;
+          try { sessionStorage.setItem("fcs_results_email", u.searchParams.get(keys[0]) || ""); stashed = true; } catch (e) {}
+          if (stashed) {
+            keys.forEach(function (k) { u.searchParams.delete(k); });
+            history.replaceState(history.state, "", u.pathname + u.search + u.hash);
+          }
+        }
+        var q = new URLSearchParams();
+        new URL(window.location.href).searchParams.forEach(function (v, k) { if (/^utm_/i.test(k)) q.append(k, v); });
+        var qs = q.toString();
+        window.__fcsGaCfg = { page_location: window.location.origin + "/results" + (qs ? "?" + qs : "") };
+        var m = document.createElement("meta"); m.name = "referrer"; m.content = "origin"; document.head.appendChild(m);
+        var r = document.createElement("meta"); r.name = "robots"; r.content = "noindex, nofollow"; document.head.appendChild(r);
+      } catch (e) {}
+    })();
+  </script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YGDHT1TE6Y"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-YGDHT1TE6Y');
+    gtag('config', 'G-YGDHT1TE6Y', window.__fcsGaCfg || {});
   </script>
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
+    if (!window.__fcsSensitive) {
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "wvndy6rvsx");
+    }
   </script>
   <meta name="theme-color" content="#2563EB" />
   <meta name="msapplication-TileColor" content="#2563EB" />
@@ -67,35 +94,76 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "The Foot Capacity System",
-      "image": "https://fixyourmovement.com/og-image.png",
-      "description": "A structured 12-week program by Dr. Jonathan Schutza, PT, DPT. Rebuild foot strength, restore tissue capacity, and break the cycle of chronic foot pain from home.",
-      "brand": {
-        "@type": "Brand",
-        "name": "The Foot Capacity System"
-      },
-      "offers": {
-        "@type": "Offer",
-        "url": "https://fixyourmovement.com/",
-        "price": "297.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "priceValidUntil": "2026-12-31"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "150"
-      },
-      "creator": {
-        "@type": "Person",
-        "name": "Dr. Jonathan Schutza, PT, DPT",
-        "jobTitle": "Doctor of Physical Therapy",
-        "description": "Licensed physical therapist specializing in biomechanics-driven rehabilitation for chronic foot pain"
-      }
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://fixyourmovement.com/#organization",
+          "name": "The Foot Capacity System",
+          "alternateName": "Foot Capacity System",
+          "legalName": "Back At It Physical Therapy, LLC",
+          "url": "https://fixyourmovement.com/",
+          "email": "contact@fixyourmovement.com"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://fixyourmovement.com/dr-jonathan-schutza#person",
+          "name": "Dr. Jonathan Schutza, PT, DPT",
+          "jobTitle": "Doctor of Physical Therapy",
+          "url": "https://fixyourmovement.com/dr-jonathan-schutza"
+        },
+        {
+          "@type": "Product",
+          "@id": "https://fixyourmovement.com/#product",
+          "name": "The Foot Capacity System",
+          "image": "https://fixyourmovement.com/og-image.png",
+          "description": "A guided home recovery program for plantar fasciitis and heel pain, created by Dr. Jonathan Schutza, PT, DPT. Three phases over about 12 weeks, with daily guided exercises, pain tracking, flare-up guidance, and Ask Dr. Jonathan AI in the Foot Capacity System app.",
+          "brand": {
+            "@type": "Brand",
+            "name": "The Foot Capacity System"
+          },
+          "manufacturer": { "@id": "https://fixyourmovement.com/#organization" },
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Recovery Plan: $47 per month",
+              "description": "Full program with Ask Dr. Jonathan AI. Billed monthly. Does not include direct messaging with Dr. Jonathan.",
+              "price": "47.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "url": "https://fixyourmovement.com/checkout"
+            },
+            {
+              "@type": "Offer",
+              "name": "Ownership Plan: $97 per month for 6 months, then lifetime access",
+              "description": "Six monthly payments of $97 ($582 total), then lifetime program access with no further charges. Includes 6 months of direct messaging with Dr. Jonathan.",
+              "price": "97.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "url": "https://fixyourmovement.com/checkout"
+            },
+            {
+              "@type": "Offer",
+              "name": "Lifetime: $297 one-time",
+              "description": "One payment for lifetime program access with Ask Dr. Jonathan AI. Does not include direct messaging with Dr. Jonathan.",
+              "price": "297.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "url": "https://fixyourmovement.com/checkout"
+            },
+            {
+              "@type": "Offer",
+              "name": "Premium Lifetime: $497 one-time",
+              "description": "One payment for lifetime program access, Ask Dr. Jonathan AI, and 6 months of direct messaging with Dr. Jonathan.",
+              "price": "497.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "url": "https://fixyourmovement.com/checkout"
+            }
+          ]
+        }
+      ]
     }
-    </script>
+  </script>
 </head>
 
 <body>

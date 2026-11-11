@@ -709,6 +709,7 @@ export default function NewIndex() {
                    <div className="space-y-4 text-slate-600 text-base leading-relaxed">
                      <p><span className="text-blue-600 font-semibold">Dr. Jonathan Schutza, PT, DPT</span> is a licensed physical therapist who built this system around one core belief: lasting recovery requires structure, not just symptom management.</p>
                      <p>His approach focuses on progressive movement and guided consistency — helping people rebuild strength and confidence from home, at their own pace.</p>
+                     <p><a href="/dr-jonathan-schutza" className="text-blue-600 font-semibold hover:underline">View credentials and license details →</a></p>
                      <div className="space-y-3 mt-2">
                        <div className="flex items-center gap-3">
                          <div className="bg-blue-50 rounded-full p-2 shrink-0">
@@ -957,6 +958,7 @@ export default function NewIndex() {
           <a href="/terms-of-service" className="hover:text-slate-600 transition-colors">Terms of Service</a>
           <a href="/refund-policy" className="hover:text-slate-600 transition-colors">Refund Policy</a>
           <a href="/eula" className="hover:text-slate-600 transition-colors">EULA</a>
+          <a href="/dr-jonathan-schutza" className="hover:text-slate-600 transition-colors">About Dr. Schutza</a>
           <a href="/contact" className="hover:text-slate-600 transition-colors">Contact</a>
           <a href="https://app.fixyourmovement.com/" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Foot Capacity System App Login</a>
         </div>
