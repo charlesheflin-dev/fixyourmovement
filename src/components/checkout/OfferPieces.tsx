@@ -230,7 +230,7 @@ export function FeatureRows({ rows }: { rows: { icon: keyof typeof FEATURE_ICONS
             <span className="w-11 h-11 max-[359px]:w-[38px] max-[359px]:h-[38px] rounded-full bg-blue-100 flex items-center justify-center" aria-hidden="true">
               <Icon className="w-[22px] h-[22px] text-blue-600" strokeWidth={2} />
             </span>
-            <span className="text-slate-800 text-[15px] leading-snug">{label}</span>
+            <span className="text-slate-800 text-[15px] leading-snug max-[319px]:break-words">{label}</span>
           </li>
         );
       })}
