@@ -64,7 +64,7 @@ describe("_middleware.js with the REAL registry (both experiments running)", () 
     expect(res.headers.get("cache-control")).toBe("private, no-store");
   });
 
-  it.each(["/", "/lp/other", "/hsa-fsa"])(
+  it.each(["/", "/checkout", "/hsa-fsa"])(
     "%s (not in registry): passes straight through — same response object, no cookie, no script, no new headers",
     async (path) => {
       const upstream = shellResponse();

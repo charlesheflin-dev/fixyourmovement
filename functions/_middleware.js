@@ -1,6 +1,7 @@
 import { EXPERIMENTS_BY_PATH, EXPERIMENT_PREFIXES } from "./_data/experiments.js"
 import { findRunningExperiment } from "./_lib/expCore.js"
 import { handleExperiment } from "./_lib/experiments.js"
+import { hardNotFound } from "./_lib/notFound.js"
 
 export async function onRequest(context) {
 
@@ -72,6 +73,12 @@ if (experiment) {
 return handleExperiment(context, experiment)
 }
 
-return context.next()
+/*
+REAL 404 FOR UNKNOWN PATHS (SPEC-ai-discoverability-fixes item 8)
+The SPA fallback answers every path with 200 + index.html. Paths the app does not serve now get
+status 404 (same shell body; React renders NotFound). Known paths: functions/_data/spaRoutes.js.
+*/
+
+return hardNotFound(request, url, await context.next())
 
 }
