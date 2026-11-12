@@ -405,7 +405,7 @@ export default function HsaFsa() {
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Yes. Many administrators allow reimbursement after you've already completed your purchase.</AccordionContent>
               </AccordionItem>
               <AccordionItem value="faq-11" className="border-b border-slate-200 pb-1">
-                <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">Does Lifetime Access differ from the Monthly Recovery Plan?</AccordionTrigger>
+                <AccordionTrigger className="text-left text-base font-semibold text-slate-900 hover:no-underline py-4">Does my plan choice (monthly or one-time) affect HSA/FSA eligibility?</AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-base leading-relaxed pb-5">Eligibility decisions are made by your administrator according to your individual benefits plan.</AccordionContent>
               </AccordionItem>
               <AccordionItem value="faq-12" className="border-b border-slate-200 pb-1">

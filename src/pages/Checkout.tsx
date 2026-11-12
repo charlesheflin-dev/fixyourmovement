@@ -31,7 +31,6 @@ import {
 // /checkout — 3-step upsell wizard (SPEC-checkout-upsell-funnel-and-comms §6).
 //   offer ($47/mo) -> upsell97 (add Dr-J messaging?) -> lifetime (own it for life?) -> Whop.
 // Plans: $47/mo + $297 lifetime = NO doctor messaging; $97/mo + $497 lifetime = messaging.
-// ALL COPY BELOW IS TEMP COPY [team to replace; Dr-J approves before public launch].
 
 const WORKER_URL = "https://fcs-archetype-worker.charles-heflin.workers.dev";
 
@@ -252,7 +251,7 @@ export default function Checkout() {
   // Branch = the existing derived `lifetime` selector (unchanged). Restyle + relabel only:
   // CTA -> chooseLifetime(true), decline link -> chooseLifetime(false) (both TERMINAL Whop
   // redirects, unchanged), ← Back -> goBack() (Step 2 + clears the $97 answer). The $497
-  // branch still renders the temp view below. No bottom disclosure here (pending owner OK).
+  // branch renders below. No bottom disclosure here (pending owner OK).
   if (step === "lifetime" && lifetime.plan === "297life") {
     return (
       <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
