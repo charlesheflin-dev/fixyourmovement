@@ -140,7 +140,8 @@ function SourceCapture() {
 
 // Post-trial survey retired 2026-10-08: /survey now forwards straight to the
 // results page, preserving the original query string (e.g. ?email=...). The
-// PostTrialSurvey page + save-survey-response fn + survey tables are kept in place.
+// PostTrialSurvey page was deleted 2026-11-12 (no route had rendered it since the
+// retirement); the save-survey-response fn source + survey tables are kept in place.
 function SurveyRedirect() {
   const { userId } = useParams<{ userId: string }>();
   const { search } = useLocation();
