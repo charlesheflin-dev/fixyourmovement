@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { CheckCircle, TrendingUp, Map, Video, ArrowRight, Shield, Zap, Infinity } from "lucide-react";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
@@ -854,20 +854,44 @@ function ResultsFallback() {
 export default function Results() {
   const { userId } = useParams<{ userId: string }>();
   const validId = userId && UUID_RE.test(userId) ? userId : null;
+  // EMAIL-LINK SUNSET 2027-01-11: ?email= lookups kept for old emails already in
+  // inboxes (operator decision 2026-11-12). On/after 2027-01-11 remove the email
+  // path here and deploy get-results-data id-only.
+  // Release 2a: index.html strips ?email= from the address bar before analytics load and stashes it per-tab.
+  const [searchParams] = useSearchParams();
+  const stashedEmail = (() => { try { return sessionStorage.getItem("fcs_results_email"); } catch { return null; } })();
+  const emailParam = (searchParams.get("email") ?? stashedEmail)?.replace(/ /g, "+") || null;
   const [data, setData] = useState<ResultsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [insights, setInsights] = useState<InsightsData>(FALLBACK_INSIGHTS);
   const [insightsLoading, setInsightsLoading] = useState(true);
 
-  // Release 2c-A: results load by id only; clear any email stashed by the 2a stopgap.
+  // EMAIL-LINK SUNSET 2027-01-11: backstop for the index.html R2a stopgap (same
+  // logic) — if an email key is still in the address bar, stash it per-tab and
+  // strip it from the visible URL so it stays out of analytics.
   useEffect(() => {
-    try { sessionStorage.removeItem("fcs_results_email"); } catch {}
+    try {
+      const u = new URL(window.location.href);
+      const keys: string[] = [];
+      u.searchParams.forEach((v, k) => { if (k.toLowerCase() === "email") keys.push(k); });
+      if (keys.length) {
+        let stashed = false;
+        try { sessionStorage.setItem("fcs_results_email", u.searchParams.get(keys[0]) || ""); stashed = true; } catch {}
+        if (stashed) {
+          keys.forEach((k) => u.searchParams.delete(k));
+          history.replaceState(history.state, "", u.pathname + u.search + u.hash);
+        }
+      }
+    } catch {}
   }, []);
 
   useEffect(() => {
-    if (!validId) { setNotFound(true); setLoading(false); return; }
-    fetch(`${GET_RESULTS_URL}?userId=${encodeURIComponent(validId)}`)
+    if (!validId && !emailParam) { setNotFound(true); setLoading(false); return; }
+    const fetchUrl = validId
+      ? `${GET_RESULTS_URL}?userId=${encodeURIComponent(validId)}`
+      : `${GET_RESULTS_URL}?email=${encodeURIComponent(emailParam!)}`;
+    fetch(fetchUrl)
       .then((r) => r.json())
       .then((d) => {
         if (d.error) {
@@ -902,7 +926,7 @@ export default function Results() {
         }
       })
       .catch(() => { setNotFound(true); setLoading(false); });
-  }, [validId]);
+  }, [validId, emailParam]);
 
   if (loading) {
     return (

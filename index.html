@@ -52,8 +52,17 @@
         window.__fcsSensitive = true;
         var u = new URL(window.location.href), keys = [];
         u.searchParams.forEach(function (v, k) { if (k.toLowerCase() === "email") keys.push(k); });
-        if (keys.length) { keys.forEach(function (k) { u.searchParams.delete(k); }); history.replaceState(history.state, "", u.pathname + u.search + u.hash); }
-        try { sessionStorage.removeItem("fcs_results_email"); } catch (e) {}
+        // EMAIL-LINK SUNSET 2027-01-11: ?email= lookups kept for old emails already in
+        // inboxes (operator decision 2026-11-12). On/after 2027-01-11 remove the email
+        // path here and deploy get-results-data id-only.
+        if (keys.length) {
+          var stashed = false;
+          try { sessionStorage.setItem("fcs_results_email", u.searchParams.get(keys[0]) || ""); stashed = true; } catch (e) {}
+          if (stashed) {
+            keys.forEach(function (k) { u.searchParams.delete(k); });
+            history.replaceState(history.state, "", u.pathname + u.search + u.hash);
+          }
+        }
         var q = new URLSearchParams();
         new URL(window.location.href).searchParams.forEach(function (v, k) { if (/^utm_/i.test(k)) q.append(k, v); });
         var qs = q.toString();
