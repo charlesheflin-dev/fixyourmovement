@@ -1,0 +1,20 @@
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.clarity.ms https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://imagedelivery.net https://www.facebook.com https://*.google-analytics.com https://*.googletagmanager.com https://*.doubleclick.net https://www.google.com https://*.clarity.ms https://c.bing.com; connect-src 'self' https://zsdmnapwxlimktqrnmii.supabase.co https://fcs-archetype-worker.charles-heflin.workers.dev https://www.aweber.com https://api.web3forms.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://*.googletagmanager.com https://*.doubleclick.net https://www.google.com https://*.clarity.ms https://c.bing.com https://www.facebook.com https://connect.facebook.net; frame-src https://customer-hene8ngxxo3eajlj.cloudflarestream.com; media-src 'self' blob: https://customer-hene8ngxxo3eajlj.cloudflarestream.com; form-action 'self' https://www.aweber.com; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; report-uri /csp-report
+
+/results
+  X-Robots-Tag: noindex, nofollow
+
+/results/*
+  X-Robots-Tag: noindex, nofollow
+
+/survey
+  X-Robots-Tag: noindex, nofollow
+
+/survey/*
+  X-Robots-Tag: noindex, nofollow
+
+/assessment-results
+  X-Robots-Tag: noindex, nofollow
