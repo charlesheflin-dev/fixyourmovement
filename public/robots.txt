@@ -1,16 +1,15 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
+# Search engines and AI crawlers are welcome.
+# One group only: a crawler obeys only its most specific User-agent group,
+# so every rule below must live under "*" to apply to all crawlers.
 User-agent: *
 Allow: /
+Disallow: /results
+Disallow: /survey
+Disallow: /assessment-results
+Disallow: /upgrade
+Disallow: /thank-you
+Disallow: /email-confirmation
+Disallow: /unsubscribed
 
 Sitemap: https://fixyourmovement.com/sitemap.xml
+Sitemap: https://fixyourmovement.com/blog/sitemap.xml

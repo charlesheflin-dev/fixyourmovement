@@ -129,7 +129,7 @@ export default function Upgrade() {
             <PrimaryCta label="Unlock Messaging with Dr. Jonathan" onClick={continueTo497} />
             <ReassuranceLines
               lines={[
-                "Secure checkout. Cancel anytime, right inside the app.",
+                "No charge yet. You'll see one more option before secure checkout.",
                 "Lifetime access requires all 6 monthly payments.",
               ]}
             />
