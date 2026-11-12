@@ -10,6 +10,11 @@ import { RED_FLAG_PAGE_PATH, RED_FLAG_REPLY, scanForRedFlag } from "./redFlags.t
 
 const LOW_SIMILARITY_LOG_THRESHOLD = 0.55;
 const MAX_CHUNKS = 6;
+const MAX_BODY_CHARS = 32_000;
+const MAX_MESSAGE_CHARS = 2000;
+const MAX_HISTORY_ITEMS = 6;
+const MAX_HISTORY_CONTENT_CHARS = 3000;
+const MAX_PAGE_PATH_CHARS = 200;
 
 const ALLOWED_ORIGINS = [
   "https://fixyourmovement.com",
@@ -110,10 +115,40 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    const { message, history = [], page_path = null } = await req.json();
+    // ── Input caps (misc-sec-2): public LLM endpoint — bound body, message, history,
+    //    page_path, and coerce types before anything reaches OpenAI/Anthropic/the DB.
+    //    Caps sit above every real usage: longest logged question 1,069 chars (n=3,504),
+    //    longest reply 2,294; the widget sends the last 4 history turns.
+    const rawBody = await req.text();
+    if (rawBody.length > MAX_BODY_CHARS) {
+      return new Response(JSON.stringify({ error: "Request too large" }), {
+        status: 413,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const parsed = JSON.parse(rawBody) ?? {};
+    const message = typeof parsed.message === "string" ? parsed.message : "";
+    const page_path = typeof parsed.page_path === "string" ? parsed.page_path.slice(0, MAX_PAGE_PATH_CHARS) : null;
+    const historyIn: unknown[] = Array.isArray(parsed.history) ? parsed.history.slice(-MAX_HISTORY_ITEMS) : [];
+    const history: { role: "user" | "assistant"; content: string }[] = [];
+    for (const m of historyIn) {
+      const role = (m as { role?: unknown })?.role;
+      const content = (m as { content?: unknown })?.content;
+      if ((role === "user" || role === "assistant") && typeof content === "string" && content.trim().length > 0) {
+        history.push({ role, content: content.slice(0, MAX_HISTORY_CONTENT_CHARS) });
+      }
+    }
+    // The conversation must open with a user turn.
+    while (history.length > 0 && history[0].role === "assistant") history.shift();
 
-    if (!message || typeof message !== "string" || message.trim().length === 0) {
+    if (message.trim().length === 0) {
       return new Response(JSON.stringify({ error: "Message is required" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (message.trim().length > MAX_MESSAGE_CHARS) {
+      return new Response(JSON.stringify({ error: "Message is too long" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -217,10 +252,7 @@ Deno.serve(async (req: Request) => {
 
     // ── Step 5: Build conversation history for Claude ────────────────────────
     const conversationMessages = [
-      ...(history as { role: string; content: string }[]).map((m) => ({
-        role: m.role as "user" | "assistant",
-        content: m.content,
-      })),
+      ...history,
       {
         role: "user" as const,
         content: message.trim(),
