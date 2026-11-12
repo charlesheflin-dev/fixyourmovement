@@ -21,12 +21,10 @@ import EmailConfirmation from "./pages/EmailConfirmation";
 import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
 import DownloadApp from "./pages/DownloadApp";
 import ColdStart from "./pages/ColdStart";
-import Assessment from "./pages/Assessment";
 import Unsubscribed from "./pages/Unsubscribed";
 import Checkout from "./pages/Checkout";
 import Upgrade from "./pages/Upgrade";
 import Results from "./pages/Results";
-import AssessmentResults from "./pages/AssessmentResults";
 import AskDrJonathanPage from "./pages/AskDrJonathan";
 import GuideMorning from "./pages/GuideMorning";
 import GuideToughDay from "./pages/GuideToughDay";
@@ -192,7 +190,8 @@ const App = () => (
                    <Route path="/lp/take-assessment" element={<Navigate to="/lp/download" replace />} />
                     <Route path="/lp/download" element={<DownloadApp />} />
                    <Route path="/lp/cold-start" element={<ColdStart />} />
-                   <Route path="/assessment" element={<Assessment />} />
+                   {/* Assessment funnel retired - old /assessment links land on /lp/download */}
+                   <Route path="/assessment" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/start/*" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/unsubscribed" element={<Unsubscribed />} />
                    <Route path="/checkout" element={<Checkout />} />
@@ -200,7 +199,7 @@ const App = () => (
                    <Route path="/survey/:userId" element={<SurveyRedirect />} />
                    <Route path="/survey" element={<SurveyRedirect />} />
                    <Route path="/results/:userId" element={<Results />} />
-                   <Route path="/results" element={<Results />} />                   <Route path="/assessment-results" element={<AssessmentResults />} />
+                   <Route path="/results" element={<Results />} />                   <Route path="/assessment-results" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/ask" element={<AskDrJonathanPage />} />
                     <Route path="/guide/morning" element={<GuideMorning />} />
                     <Route path="/guide/tough-day" element={<GuideToughDay />} />

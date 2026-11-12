@@ -46,9 +46,11 @@ export function isSensitivePath(pathname: string): boolean {
   return /^\/results(\/|$)/.test(pathname) || /^\/survey(\/|$)/.test(pathname);
 }
 
-// True when the CURRENT url carries an `email` query param (any case). Funnel URLs like
-// /assessment?email= and /assessment-results?email= read the email from the query and
-// never strip it, so firing there would send the address to Meta via dl=location.href.
+// True when the CURRENT url carries an `email` query param (any case). Any URL still
+// carrying ?email= (e.g. an old email link that has not been stripped yet) would send the
+// address to Meta via dl=location.href if a pixel fired there. (The retired assessment
+// funnel's /assessment and /assessment-results, which read ?email=, now redirect to
+// /lp/download.)
 // Guards init + every event, on top of the path skip above.
 function urlHasEmailParam(): boolean {
   if (typeof window === "undefined" || !window.location || !window.location.search) return false;
