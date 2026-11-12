@@ -8,6 +8,7 @@ const ALLOWED_ORIGINS = [
   "https://fixyourmovement.com",
   "https://preview.fixyourmovement.com",
   "https://app.fixyourmovement.com",
+  "https://staging.fixyourmovement.com",
 ];
 function getAllowedOrigin(request) {
   const origin = request.headers.get("Origin") || "";
@@ -19,10 +20,10 @@ const AWEBER_API_BASE = "https://api.aweber.com/1.0";
 // Server-only tags may be applied only by callers presenting X-FCS-Worker-Key.
 // Browser tags / FAAM / archetype calls are allowed from their known origins.
 // Enforcement is OFF unless the enforce env flag is "1" (observe-only: log).
-const SERVER_ONLY_TAGS = ["customer", "trial_pass_97", "techissue_07032026", "trial_reoffer_nolog", "trial_reoffer_lapsed"];
+const SERVER_ONLY_TAGS = ["customer", "trial_pass_97", "techissue_07032026", "trial_reoffer_nolog", "trial_reoffer_lapsed", "inactive_cleanup"];
 const BROWSER_TAG_ORIGINS = {
   checkout_visited: ["https://fixyourmovement.com", "https://preview.fixyourmovement.com"],
-  trial_accepted: ["https://app.fixyourmovement.com"],
+  trial_accepted: ["https://app.fixyourmovement.com", "https://staging.fixyourmovement.com"],
 };
 const SITE_ORIGINS = ["https://fixyourmovement.com", "https://preview.fixyourmovement.com"];
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
