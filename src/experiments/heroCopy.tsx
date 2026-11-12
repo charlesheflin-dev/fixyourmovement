@@ -29,18 +29,33 @@ const COLD_START_CONTROL: HeroCopy = {
   subhead: <>Exercise videos show you what to do. Assigned sets and reps tell you how much. Your daily check-ins help guide what comes next.</>,
 };
 
+// Variant "b" challenger copy (spec §5.3). Approved by Dr. Schutza 2026-11-12 — verbatim;
+// do not edit wording without his sign-off.
+const DOWNLOAD_B: HeroCopy = {
+  headline: <>Get the Recovery Plan Dr. Jonathan Uses — Free, on Your Phone.</>,
+  subhead: <>The same daily plan he uses with his patients, adjusted to how your foot feels each day.</>,
+};
+
+// Approved by Dr. Schutza 2026-11-12. Same span structure/classes as control; body <p>
+// copy is unchanged from control.
+const COLD_START_B: HeroCopy = {
+  headline: (
+    <>
+      <span className="block text-slate-900">Get Back to Walking Without Thinking About Your Heel.</span>
+      <span className="block text-blue-600">Follow a Daily Plan That Adjusts to Your Foot.</span>
+    </>
+  ),
+  subhead: COLD_START_CONTROL.subhead,
+};
+
 const DOWNLOAD_HERO: Record<string, HeroCopy> = {
   control: DOWNLOAD_CONTROL,
-  // TODO(spec §5.3): variant "b" = Dr. Schutza's approved challenger wording — PENDING.
-  // Until he signs off, "b" falls back to control and the registry entry stays "off".
-  b: DOWNLOAD_CONTROL,
+  b: DOWNLOAD_B,
 };
 
 const COLD_START_HERO: Record<string, HeroCopy> = {
   control: COLD_START_CONTROL,
-  // TODO(spec §5.3): variant "b" = Dr. Schutza's approved challenger wording — PENDING.
-  // Until he signs off, "b" falls back to control and the registry entry stays "off".
-  b: COLD_START_CONTROL,
+  b: COLD_START_B,
 };
 
 function pick(table: Record<string, HeroCopy>, variant: string | null | undefined): HeroCopy {
