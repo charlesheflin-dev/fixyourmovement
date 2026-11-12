@@ -1,0 +1,47 @@
+# The Foot Capacity System
+
+> A guided home recovery program for plantar fasciitis and heel pain, delivered through the Foot Capacity System app. Created by Dr. Jonathan Schutza, PT, DPT, a licensed physical therapist. The program runs in three phases over about 12 weeks, with daily guided exercises, pain tracking, flare-up guidance, and Ask Dr. Jonathan AI.
+
+## What it is
+
+- A structured, app-based home program for plantar fasciitis and heel pain.
+- Three phases, about 12 weeks.
+- Daily guided exercises with video instruction, pain tracking and progress history, built-in guidance for flare-ups and tougher days, and Ask Dr. Jonathan AI for questions about the program.
+- The app is not a diagnosis tool and does not replace an in-person medical evaluation.
+
+## Getting started
+
+- Free to start: sign up with an email address. No payment details are needed to begin.
+- After 7 logged days of check-ins, members choose a paid plan to continue.
+
+## Plans and prices (US dollars)
+
+All four plans are listed at https://fixyourmovement.com/checkout. Checkout is processed by Whop.
+
+- Recovery Plan: $47 per month. Full program with Ask Dr. Jonathan AI. Bills monthly until cancelled. Does not include direct messaging with Dr. Jonathan.
+- Ownership Plan: $97 per month for 6 payments, then lifetime program access with no further charges. Includes 6 months of direct messaging with Dr. Jonathan.
+- Lifetime: $297 one-time payment for lifetime program access with Ask Dr. Jonathan AI. Does not include direct messaging with Dr. Jonathan.
+- Premium Lifetime: $497 one-time payment for lifetime program access, Ask Dr. Jonathan AI, and 6 months of direct messaging with Dr. Jonathan.
+
+HSA/FSA: many plans reimburse qualified healthcare expenses; the plan administrator decides eligibility. Details: https://fixyourmovement.com/hsa-fsa
+
+## Refunds
+
+- Refund terms: https://fixyourmovement.com/refund-policy
+
+## Key pages
+
+- [Home](https://fixyourmovement.com/): program overview
+- [Plans and checkout](https://fixyourmovement.com/checkout): all four plans and prices
+- [Dr. Jonathan Schutza, PT, DPT](https://fixyourmovement.com/dr-jonathan-schutza): credentials and licensure
+- [HSA/FSA information](https://fixyourmovement.com/hsa-fsa): reimbursement documentation
+- [Contact](https://fixyourmovement.com/contact)
+- [Refund policy](https://fixyourmovement.com/refund-policy)
+- [Privacy policy](https://fixyourmovement.com/privacy-policy)
+- [Terms of service](https://fixyourmovement.com/terms-of-service)
+- [Member app](https://app.fixyourmovement.com/)
+
+## Articles
+
+- [Blog](https://fixyourmovement.com/blog/): foot and ankle articles
+- [Blog sitemap](https://fixyourmovement.com/blog/sitemap.xml): full article list
