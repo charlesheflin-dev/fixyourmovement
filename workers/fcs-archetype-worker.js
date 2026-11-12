@@ -15,6 +15,32 @@ function getAllowedOrigin(request) {
 }
 const AWEBER_API_BASE = "https://api.aweber.com/1.0";
 
+// ── Caller gate ───────────────────────────────────────────────────────────────
+// Server-only tags may be applied only by callers presenting X-FCS-Worker-Key.
+// Browser tags / FAAM / archetype calls are allowed from their known origins.
+// Enforcement is OFF unless the enforce env flag is "1" (observe-only: log).
+const SERVER_ONLY_TAGS = ["customer", "trial_pass_97", "techissue_07032026", "trial_reoffer_nolog", "trial_reoffer_lapsed"];
+const BROWSER_TAG_ORIGINS = {
+  checkout_visited: ["https://fixyourmovement.com", "https://preview.fixyourmovement.com"],
+  trial_accepted: ["https://app.fixyourmovement.com"],
+};
+const SITE_ORIGINS = ["https://fixyourmovement.com", "https://preview.fixyourmovement.com"];
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const VALID_CHECKOUT_TAGS = [...SERVER_ONLY_TAGS, ...Object.keys(BROWSER_TAG_ORIGINS)];
+
+// "ok" = correct key, "bad" = header present but wrong, "none" = header absent.
+async function authState(request, env) {
+  const provided = request.headers.get("X-FCS-Worker-Key");
+  if (provided === null) return "none";
+  const expected = env.FCS_WORKER_KEY;
+  if (!expected) return "bad";
+  const enc = new TextEncoder();
+  const a = enc.encode(provided);
+  const b = enc.encode(expected);
+  if (a.byteLength !== b.byteLength) return "bad";
+  return crypto.subtle.timingSafeEqual(a, b) ? "ok" : "bad";
+}
+
 function determineArchetype(answers) {
   const { q1, q2, q3, q4, q5 } = answers;
 
@@ -94,7 +120,7 @@ async function findSubscriber(accessToken, accountId, listId, email) {
   const responseText = await response.text();
 
   if (!response.ok) {
-    throw new Error(`Subscriber lookup failed: ${response.status} — ${responseText}`);
+    throw new Error(`Subscriber lookup failed: ${response.status}`);
   }
 
   const data = JSON.parse(responseText);
@@ -125,56 +151,35 @@ async function applyTag(accessToken, subscriberUrl, tag) {
 
   const updateResponseText = await updateResponse.text();
   if (!updateResponse.ok) {
-    throw new Error(`Failed to apply tag: ${updateResponse.status} — ${updateResponseText}`);
+    throw new Error(`Failed to apply tag: ${updateResponse.status}`);
   }
 
   return true;
 }
 
-async function migrateToMainList(accessToken, accountId, downloadListId, mainListId, email) {
-  // Find the subscriber on the download/holding list (awlist6961315)
-  const subscriber = await findSubscriber(accessToken, accountId, downloadListId, email);
-
-  if (!subscriber) {
-    throw new Error(`Subscriber not found on download list for migration: ${email}`);
-  }
-
-  // Use the AWeber Move endpoint — moves subscriber without sending a new verification message,
-  // preserving their confirmed status on the destination list.
-  const subscriberUrl = subscriber.self_link.startsWith("http")
-    ? subscriber.self_link
-    : `https://api.aweber.com${subscriber.self_link}`;
-
-  const mainListLink = `${AWEBER_API_BASE}/accounts/${accountId}/lists/${mainListId}`;
-
-  const formBody = new URLSearchParams();
-  formBody.append("ws.op", "move");
-  formBody.append("list_link", mainListLink);
-
-  const response = await fetch(subscriberUrl, {
-    method: "POST",
+// Sets one AWeber custom field on an existing subscriber (JSON PATCH on self_link).
+// Throws with the status only — never echoes the subscriber/email.
+async function setCustomField(accessToken, selfLink, name, value) {
+  const fullUrl = selfLink.startsWith("http") ? selfLink : `https://api.aweber.com${selfLink}`;
+  const res = await fetch(fullUrl, {
+    method: "PATCH",
     headers: {
       "Authorization": `Bearer ${accessToken}`,
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
     },
-    body: formBody.toString(),
+    body: JSON.stringify({ custom_fields: { [name]: value } }),
   });
-
-  const responseText = await response.text();
-
-  // 201 = moved successfully
-  if (!response.ok) {
-    throw new Error(`Failed to move subscriber to main list: ${response.status} — ${responseText}`);
+  if (!res.ok) {
+    throw new Error(`Failed to set custom field: ${res.status}`);
   }
-
-  return { status: response.status, body: responseText };
+  return true;
 }
 
 async function confirmSubscriber(accessToken, accountId, mainListId, email) {
   const subscriber = await findSubscriber(accessToken, accountId, mainListId, email);
 
   if (!subscriber) {
-    throw new Error(`Subscriber not found: ${email}`);
+    throw new Error("Subscriber not found");
   }
 
   const fullUrl = subscriber.self_link.startsWith("http")
@@ -195,7 +200,7 @@ async function confirmSubscriber(accessToken, accountId, mainListId, email) {
 
   if (!patchResponse.ok) {
     const errText = await patchResponse.text();
-    throw new Error(`Failed to confirm subscriber: ${patchResponse.status} — ${errText}`);
+    throw new Error(`Failed to confirm subscriber: ${patchResponse.status}`);
   }
 
   return true;
@@ -208,7 +213,7 @@ export default {
         headers: {
           "Access-Control-Allow-Origin": getAllowedOrigin(request),
           "Access-Control-Allow-Methods": "POST, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization, X-FCS-Worker-Key",
         },
       });
     }
@@ -237,77 +242,45 @@ export default {
         });
       }
 
-      // ── migrate_to_main_list branch ─────────────────────────────────────────
-      // Called from DownloadApp.tsx on ?access=true after email confirmation.
-      // Adds the confirmed subscriber directly to awlist6958674 (main list)
-      // with status=subscribed, bypassing double opt-in since they already confirmed.
-      // AWeber automation then removes them from awlist6961315 (download list).
-      if (body.action === "migrate_to_main_list") {
-        const accessToken = await refreshAccessToken(env);
-        const accountId = await getAccountId(accessToken);
-        const downloadListId = env.AWEBER_DOWNLOAD_LIST_ID.replace("awlist", "");
-        const mainListId = env.AWEBER_LIST_ID.replace("awlist", "");
-        await migrateToMainList(accessToken, accountId, downloadListId, mainListId, email);
-        return new Response(JSON.stringify({ success: true }), {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": getAllowedOrigin(request),
-          },
-        });
-      }
-
-      // ── confirm_all_unconfirmed branch ─────────────────────────────────────
-      // ONE-TIME BACKFILL: confirms all unconfirmed subscribers on awlist6958674.
-      // Run once via backfill-confirm-subscribers.js then remove this branch.
-      if (body.action === "confirm_subscriber") {
-        const accessToken = await refreshAccessToken(env);
-        const accountId = await getAccountId(accessToken);
-        const mainListId = env.AWEBER_LIST_ID.replace("awlist", "");
-        await confirmSubscriber(accessToken, accountId, mainListId, email);
-        return new Response(JSON.stringify({ success: true }), {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": getAllowedOrigin(request),
-          },
-        });
-      }
-
-      // ── get_unconfirmed branch ──────────────────────────────────────────────
-      // ONE-TIME BACKFILL: returns all unconfirmed emails on awlist6958674.
-      // Called by backfill-confirm-subscribers.js then remove this branch.
-      if (body.action === "get_unconfirmed") {
-        const accessToken = await refreshAccessToken(env);
-        const accountId = await getAccountId(accessToken);
-        const mainListId = env.AWEBER_LIST_ID.replace("awlist", "");
-        const emails = [];
-        let start = 0;
-        const size = 100;
-        while (true) {
-          const url = `${AWEBER_API_BASE}/accounts/${accountId}/lists/${mainListId}/subscribers?ws.op=find&status=unconfirmed&ws.start=${start}&ws.size=${size}`;
-          const res = await fetch(url, { headers: { "Authorization": `Bearer ${accessToken}` } });
-          if (!res.ok) {
-            const text = await res.text();
-            throw new Error(`Failed to fetch unconfirmed: ${res.status} — ${text}`);
-          }
-          const data = JSON.parse(await res.text());
-          const entries = data.entries || [];
-          entries.forEach(s => emails.push(s.email));
-          if (entries.length < size) break;
-          start += size;
+      // ── Caller gate (before any AWeber call) ────────────────────────────────
+      // Mirrors the branch order below: valid checkout_tag, then faam_tag, then answers.
+      // Logs the decision only — never the email.
+      const auth = await authState(request, env);
+      const origin = request.headers.get("Origin") || "";
+      const ENFORCE = env.FCS_WORKER_ENFORCE === "1";
+      let gateKind = null;
+      let gateTag = null;
+      let allowed = true;
+      if (body.checkout_tag && VALID_CHECKOUT_TAGS.includes(body.checkout_tag)) {
+        gateKind = "checkout_tag";
+        gateTag = body.checkout_tag;
+        if (SERVER_ONLY_TAGS.includes(gateTag)) {
+          allowed = auth === "ok";
+        } else {
+          allowed = auth === "ok" || BROWSER_TAG_ORIGINS[gateTag].includes(origin);
         }
-        return new Response(JSON.stringify({ success: true, emails }), {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": getAllowedOrigin(request),
-          },
-        });
+      } else if (faam_tag) {
+        gateKind = "faam_tag";
+        gateTag = faam_tag;
+        allowed = auth === "ok" || SITE_ORIGINS.includes(origin);
+      } else if (answers) {
+        gateKind = "answers";
+        allowed = auth === "ok" || SITE_ORIGINS.includes(origin);
+      }
+      if (gateKind) {
+        console.log(JSON.stringify({ kind: gateKind, tag: gateTag, auth, origin, allowed }));
+        if (!allowed && ENFORCE) {
+          return new Response(JSON.stringify({ error: "Forbidden" }), {
+            status: 403,
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": getAllowedOrigin(request),
+            },
+          });
+        }
       }
 
       // ── checkout_tag branch ─────────────────────────────────────────────────
-      const VALID_CHECKOUT_TAGS = ["checkout_visited", "trial_accepted", "customer", "trial_pass_97", "techissue_07032026", "trial_reoffer_nolog", "trial_reoffer_lapsed"];
       if (body.checkout_tag && VALID_CHECKOUT_TAGS.includes(body.checkout_tag)) {
         const accessToken = await refreshAccessToken(env);
         const accountId = await getAccountId(accessToken);
@@ -324,7 +297,17 @@ export default {
             await confirmSubscriber(accessToken, accountId, listId, email);
             subscriber.status = "subscribed";
           } catch (err) {
-            console.log(`[Worker] confirm-then-tag failed for ${email}: ${err.message}`);
+            console.log(`[Worker] confirm-then-tag failed: ${err.message}`);
+          }
+        }
+
+        // Authenticated server callers may pass results_uid (profile id) — stored on the
+        // subscriber as fcs_uid so email links can use /results/{fcs_uid}. Never blocks the tag.
+        if (subscriber && auth === "ok" && typeof body.results_uid === "string" && UUID_RE.test(body.results_uid)) {
+          try {
+            await setCustomField(accessToken, subscriber.self_link, "fcs_uid", body.results_uid);
+          } catch (err) {
+            console.error(`fcs_uid set failed: ${err.message}`);
           }
         }
 
@@ -333,7 +316,7 @@ export default {
           await applyTag(accessToken, subscriber.self_link, body.checkout_tag);
           tagged = true;
         } else if (subscriber) {
-          console.log(`[Worker] Skipped tag "${body.checkout_tag}" for ${email} — subscriber status is "${subscriber.status}", not "subscribed".`);
+          console.log(`[Worker] Skipped tag "${body.checkout_tag}" — subscriber status is "${subscriber.status}", not "subscribed".`);
         }
         return new Response(JSON.stringify({ success: true, tagged, reason: tagged ? null : (subscriber ? "status_not_subscribed" : "not_found_on_main_list") }), {
           status: 200,
@@ -453,7 +436,8 @@ export default {
       });
 
     } catch (error) {
-      return new Response(JSON.stringify({ error: error.message }), {
+      console.error(error.message);
+      return new Response(JSON.stringify({ error: "Upstream error" }), {
         status: 500,
         headers: {
           "Content-Type": "application/json",

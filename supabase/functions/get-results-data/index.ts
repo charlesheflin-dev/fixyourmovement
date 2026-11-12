@@ -6,6 +6,8 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "GET, OPTIONS",
 };
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -21,10 +23,9 @@ Deno.serve(async (req) => {
   try {
    const url = new URL(req.url);
    const userId = url.searchParams.get("userId");
-   const emailParam = url.searchParams.get("email");
 
-   if (!userId && !emailParam) {
-     return new Response(JSON.stringify({ error: "userId or email is required" }), {
+   if (!userId || !UUID_RE.test(userId)) {
+     return new Response(JSON.stringify({ error: "userId is required" }), {
        status: 400,
        headers: { ...corsHeaders, "Content-Type": "application/json" },
      });
@@ -35,28 +36,12 @@ Deno.serve(async (req) => {
      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
    );
 
-   // Fetch profile — by userId or by email
-   let profile: any = null;
-   let profileError: any = null;
-
-if (userId) {
-      const result = await supabase
-        .from("profiles")
-        .select("id, email, display_name, current_phase, current_week, start_date, starting_pain_score, token_tier, is_trial, trial_started_at, current_streak")
-        .eq("id", userId)
-        .single();
-      profile = result.data;
-      profileError = result.error;
-    } else {
-      const normalizedEmail = emailParam!.replace(/ /g, "+").toLowerCase();
-      const result = await supabase
-        .from("profiles")
-        .select("id, email, display_name, current_phase, current_week, start_date, starting_pain_score, token_tier, is_trial, trial_started_at, current_streak")
-        .eq("email", normalizedEmail)
-        .single();
-      profile = result.data;
-      profileError = result.error;
-    }
+   // Fetch profile by id only (Release 2c-A)
+   const { data: profile, error: profileError } = await supabase
+     .from("profiles")
+     .select("id, current_phase, current_week, start_date, starting_pain_score, trial_started_at, current_streak")
+     .eq("id", userId)
+     .single();
 
    if (profileError || !profile) {
      return new Response(JSON.stringify({ error: "User not found" }), {
@@ -64,15 +49,6 @@ if (userId) {
        headers: { ...corsHeaders, "Content-Type": "application/json" },
      });
    }
-
-    // Fetch assessment responses keyed to email
-    const { data: assessment } = await supabase
-      .from("assessment_responses")
-      .select("archetype, faam_score, faam_band, hook_answers, created_at")
-      .eq("email", profile.email.toLowerCase())
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .single();
 
     // Fetch in-app FAAM scores (faam_scores, keyed by user_id): onboarding
     // baseline + the Phase-1 Promotion milestone (phase2_start). The results
@@ -92,35 +68,6 @@ if (userId) {
       const phase2Row = faamRows.find((r) => r.type === "phase2_start");
       faamBaseline = baselineRow?.adl_score != null ? Number(baselineRow.adl_score) : null;
       faamPhase2Start = phase2Row?.adl_score != null ? Number(phase2Row.adl_score) : null;
-    }
-
-    // Fetch the latest post-trial survey branch for this user, if any.
-    // The survey response may have been written keyed by user_id OR by email
-    // (save-survey-response allows either), so match on both. Newest wins.
-    // No survey row is the normal case (anyone reaching /results without taking
-    // the survey) — leave surveyBranch null and the page keeps its default behavior.
-    let surveyBranch: string | null = null;
-    const { data: surveyRows } = await supabase
-      .from("survey_responses")
-      .select("branch, completed_at")
-      .or(`user_id.eq.${profile.id},email.eq.${profile.email.toLowerCase()}`)
-      .order("completed_at", { ascending: false })
-      .limit(1);
-    if (surveyRows && surveyRows.length > 0) {
-      surveyBranch = surveyRows[0].branch ?? null;
-    }
-
-    // Whether this user has already used their one free-week extension. The
-    // results page reads this so it never offers "another free week" to someone
-    // who's already had one — they get the $47 offer directly instead.
-    let hasExtension = false;
-    const { data: extRows } = await supabase
-      .from("trial_extensions")
-      .select("user_id")
-      .eq("user_id", profile.id)
-      .limit(1);
-    if (extRows && extRows.length > 0) {
-      hasExtension = true;
     }
 
     // Fetch daily logs — last 30 submitted logs
@@ -182,24 +129,15 @@ if (userId) {
 
     // Sanitized payload — no PII beyond what the page needs
     const payload = {
-      userId: profile.id,
-      displayName: profile.display_name,
       currentPhase: profile.current_phase,
       currentWeek: profile.current_week,
       daysLogged: submittedLogs.length,
       startingPain,
       latestPain,
       painDrop,
-      archetype: assessment?.archetype ?? null,
-      faamScore: assessment?.faam_score ?? null,
-      faamBand: assessment?.faam_band ?? null,
       faamBaseline,
       faamPhase2Start,
-      isTrial: profile.is_trial ?? false,
-      trialStartedAt: profile.trial_started_at ?? null,
       currentStreak: profile.current_streak ?? 0,
-      surveyBranch,
-      hasExtension,
       trialSessionsCompleted,
       totalReps,
       painTimeline: submittedLogs.map((l) => ({

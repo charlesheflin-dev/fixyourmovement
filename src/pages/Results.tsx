@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { CheckCircle, TrendingUp, Map, Video, ArrowRight, Shield, Zap, Infinity } from "lucide-react";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
@@ -7,27 +7,20 @@ import logo from "@/assets/logo.png";
 
 const GET_RESULTS_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-results-data";
 const CHECKOUT_URL = "/checkout";
+const APP_URL = "https://app.fixyourmovement.com/";
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const INSIGHTS_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/generate-results-insights";
 
 interface ResultsData {
-  userId: string;
-  displayName: string | null;
   currentPhase: number;
   currentWeek: number;
   daysLogged: number;
   startingPain: number | null;
   latestPain: number | null;
   painDrop: number | null;
-  archetype: string | null;
-  faamScore: number | null;
-  faamBand: string | null;
   faamBaseline: number | null;
   faamPhase2Start: number | null;
-  isTrial: boolean;
-  trialStartedAt: string | null;
   currentStreak: number;
-  surveyBranch: string | null;
-  hasExtension: boolean;
   trialSessionsCompleted: number;
   totalReps: number;
   painTimeline: { date: string; pain: number | null; capacity: number | null }[];
@@ -787,27 +780,99 @@ function MemberReviewsSection() {
   );
 }
 
+// Page chrome — shared by the results page and the fallback below.
+function ResultsHeader() {
+  return (
+    <>
+      {/* Header — logo only, no CTA per spec */}
+      <header className="border-b border-slate-100 py-4 px-6 bg-white">
+        <div className="max-w-lg mx-auto">
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="FCS" className="h-8 w-auto" />
+            <span className="text-slate-900 font-bold text-base leading-tight tracking-tight">The Foot Capacity System</span>
+          </div>
+        </div>
+      </header>
+    </>
+  );
+}
+
+function ResultsFooter() {
+  return (
+    <>
+      {/* Footer */}
+      <footer className="py-10 border-t border-slate-100">
+        <div className="max-w-lg mx-auto px-6 text-center">
+          <p className="text-slate-400 text-sm">&#169; {new Date().getFullYear()} The Foot Capacity System by Dr. Jonathan Schutza, PT, DPT. All rights reserved.</p>
+          <div className="mt-4 flex items-center justify-center gap-6 text-sm text-slate-400 flex-wrap">
+            <a href="/privacy-policy" className="hover:text-slate-600 transition-colors">Privacy Policy</a>
+            <a href="/terms-of-service" className="hover:text-slate-600 transition-colors">Terms of Service</a>
+            <a href="/refund-policy" className="hover:text-slate-600 transition-colors">Refund Policy</a>
+            <a href="/contact" className="hover:text-slate-600 transition-colors">Contact</a>
+          </div>
+          <p className="mt-4 text-xs text-slate-300 max-w-lg mx-auto">
+            This program is for educational purposes and is not a substitute for personalized medical advice. Consult your healthcare provider before beginning any exercise program.
+          </p>
+        </div>
+      </footer>
+    </>
+  );
+}
+
+// Release 2c-A: shown when the link has no valid id or the lookup fails —
+// replaces the old redirect to the download landing page.
+function ResultsFallback() {
+  return (
+    <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
+      <ResultsHeader />
+      <main>
+        <section className="py-16 px-6 bg-white">
+          <div className="max-w-lg mx-auto text-center">
+            <h1 className="text-3xl font-bold text-slate-900 leading-tight mb-4">
+              Your progress lives in your app
+            </h1>
+            <p className="text-slate-500 text-base leading-relaxed mb-8">
+              This link didn&apos;t open your results. Open the app to see your pain trend, the days you&apos;ve logged, and where you are in the program.
+            </p>
+            <a
+              href={APP_URL}
+              className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg text-center py-4 rounded-xl transition-colors shadow-lg mb-4"
+            >
+              Open My App
+            </a>
+            <a href={CHECKOUT_URL} className="text-blue-600 hover:text-blue-700 text-sm font-semibold underline">
+              See membership options
+            </a>
+          </div>
+        </section>
+      </main>
+      <ResultsFooter />
+    </div>
+  );
+}
+
 export default function Results() {
   const { userId } = useParams<{ userId: string }>();
-  const [searchParams] = useSearchParams();
-  // Release 2a: index.html strips ?email= from the address bar before analytics load and stashes it per-tab.
-  const stashedEmail = (() => { try { return sessionStorage.getItem("fcs_results_email"); } catch { return null; } })();
-  const emailParam = (searchParams.get("email") ?? stashedEmail)?.replace(/ /g, "+") || null;
+  const validId = userId && UUID_RE.test(userId) ? userId : null;
   const [data, setData] = useState<ResultsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
   const [insights, setInsights] = useState<InsightsData>(FALLBACK_INSIGHTS);
   const [insightsLoading, setInsightsLoading] = useState(true);
 
+  // Release 2c-A: results load by id only; clear any email stashed by the 2a stopgap.
   useEffect(() => {
-    if (!userId && !emailParam) { window.location.href = "/lp/download"; return; }
-    const fetchUrl = userId
-      ? `${GET_RESULTS_URL}?userId=${userId}`
-      : `${GET_RESULTS_URL}?email=${encodeURIComponent(emailParam!)}`;
-    fetch(fetchUrl)
+    try { sessionStorage.removeItem("fcs_results_email"); } catch {}
+  }, []);
+
+  useEffect(() => {
+    if (!validId) { setNotFound(true); setLoading(false); return; }
+    fetch(`${GET_RESULTS_URL}?userId=${encodeURIComponent(validId)}`)
       .then((r) => r.json())
       .then((d) => {
         if (d.error) {
-          window.location.href = "/lp/download";
+          setNotFound(true);
+          setLoading(false);
         } else {
           setData(d);
           setLoading(false);
@@ -836,8 +901,8 @@ export default function Results() {
             .finally(() => setInsightsLoading(false));
         }
       })
-      .catch(() => { window.location.href = "/lp/download"; });
-  }, [userId, emailParam]);
+      .catch(() => { setNotFound(true); setLoading(false); });
+  }, [validId]);
 
   if (loading) {
     return (
@@ -850,7 +915,7 @@ export default function Results() {
     );
   }
 
-  if (!data) return null;
+  if (notFound || !data) return <ResultsFallback />;
 
   // Slice C — render by data quality. daysLogged 0 -> nologs; logged but no pain
   // improvement -> flat; otherwise improved.
@@ -866,15 +931,7 @@ export default function Results() {
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
 
-      {/* Header — logo only, no CTA per spec */}
-      <header className="border-b border-slate-100 py-4 px-6 bg-white">
-        <div className="max-w-lg mx-auto">
-          <div className="flex items-center gap-3">
-            <img src={logo} alt="FCS" className="h-8 w-auto" />
-            <span className="text-slate-900 font-bold text-base leading-tight tracking-tight">The Foot Capacity System</span>
-          </div>
-        </div>
-      </header>
+      <ResultsHeader />
 
       <main>
         {resultsMode === "improved" && <HeroSection data={data} insights={insights} insightsLoading={insightsLoading} />}
@@ -889,21 +946,7 @@ export default function Results() {
         <FinalCtaSection insights={insights} insightsLoading={insightsLoading} />
       </main>
 
-      {/* Footer */}
-      <footer className="py-10 border-t border-slate-100">
-        <div className="max-w-lg mx-auto px-6 text-center">
-          <p className="text-slate-400 text-sm">&#169; {new Date().getFullYear()} The Foot Capacity System by Dr. Jonathan Schutza, PT, DPT. All rights reserved.</p>
-          <div className="mt-4 flex items-center justify-center gap-6 text-sm text-slate-400 flex-wrap">
-            <a href="/privacy-policy" className="hover:text-slate-600 transition-colors">Privacy Policy</a>
-            <a href="/terms-of-service" className="hover:text-slate-600 transition-colors">Terms of Service</a>
-            <a href="/refund-policy" className="hover:text-slate-600 transition-colors">Refund Policy</a>
-            <a href="/contact" className="hover:text-slate-600 transition-colors">Contact</a>
-          </div>
-          <p className="mt-4 text-xs text-slate-300 max-w-lg mx-auto">
-            This program is for educational purposes and is not a substitute for personalized medical advice. Consult your healthcare provider before beginning any exercise program.
-          </p>
-        </div>
-      </footer>
+      <ResultsFooter />
 
     </div>
   );
