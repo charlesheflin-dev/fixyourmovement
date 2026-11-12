@@ -84,13 +84,44 @@ describe("heroCopy — control is byte-identical to today's hero", () => {
     },
   );
 
-  it("variant b falls back to control until Dr. Schutza's wording lands (spec §5.3)", () => {
-    expect(renderDownload("b")).toBe(dlOriginal);
-    expect(renderColdStart("b")).toBe(csOriginal);
-  });
-
   it("experiment ids match the edge registry", () => {
     expect(DL_HERO_EXPERIMENT).toBe("dl-hero-01");
     expect(CS_HERO_EXPERIMENT).toBe("cs-hero-01");
+  });
+});
+
+// Variant "b" = Dr. Schutza's approved challenger wording (2026-11-12), rendered inside the
+// same page wrappers. Strings are asserted character-for-character (em dash = U+2014).
+describe("heroCopy — variant b renders the approved challenger copy", () => {
+  it("download b: exact headline + subhead, no <br>", () => {
+    const html = renderDownload("b");
+    expect(html).toBe(
+      '<h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-4">' +
+        "Get the Recovery Plan Dr. Jonathan Uses — Free, on Your Phone." +
+        "</h1>" +
+        '<p class="text-slate-600 text-lg leading-relaxed">' +
+        "The same daily plan he uses with his patients, adjusted to how your foot feels each day." +
+        "</p>",
+    );
+    expect(html).not.toContain("<br");
+  });
+
+  it("cold-start b: two H1 spans with control classes; body <p> identical to control", () => {
+    const html = renderColdStart("b");
+    expect(html).toBe(
+      `<h1 class="${T_H1}">` +
+        '<span class="block text-slate-900">Get Back to Walking Without Thinking About Your Heel.</span>' +
+        '<span class="block text-blue-600">Follow a Daily Plan That Adjusts to Your Foot.</span>' +
+        "</h1>" +
+        `<p class="${T_BODY} mt-5">` +
+        "Exercise videos show you what to do. Assigned sets and reps tell you how much. Your daily check-ins help guide what comes next." +
+        "</p>",
+    );
+    expect(coldStartHero("b").subhead).toBe(coldStartHero("control").subhead);
+  });
+
+  it("b differs from control on both pages", () => {
+    expect(renderDownload("b")).not.toBe(renderDownload("control"));
+    expect(renderColdStart("b")).not.toBe(renderColdStart("control"));
   });
 });

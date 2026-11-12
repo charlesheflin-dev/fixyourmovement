@@ -11,8 +11,8 @@
 // `experiment` MUST equal the lp_experiments.id row in the app DB. A new test gets a
 // NEW experiment id (=> new cookie name => visitors re-randomize).
 // Ids and variant names must match /^[a-z0-9-]{1,40}$/ (validated before use).
-const DL = { experiment: "dl-hero-01", status: "off", variants: ["control", "b"], weights: [50, 50] };
-const CS = { experiment: "cs-hero-01", status: "off", variants: ["control", "b"], weights: [50, 50] };
+const DL = { experiment: "dl-hero-01", status: "running", variants: ["control", "b"], weights: [50, 50] };
+const CS = { experiment: "cs-hero-01", status: "running", variants: ["control", "b"], weights: [50, 50] };
 
 export const EXPERIMENTS_BY_PATH = {
   "/lp/download": DL, "/lp/take-assessment": DL, "/lp/newsletter": DL,   // aliases → DL (spec §2)

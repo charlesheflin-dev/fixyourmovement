@@ -47,9 +47,25 @@ function makeContext(path: string, headers: Record<string, string> = {}, method 
   return { context: { request, next: nextFn }, nextFn, seen };
 }
 
-describe("_middleware.js with the REAL registry (both experiments off)", () => {
-  it.each(["/lp/download", "/lp/cold-start", "/lp/take-assessment", "/lp/newsletter", "/start/x"])(
-    "%s: passes straight through — same response object, no cookie, no script, no new headers",
+describe("_middleware.js with the REAL registry (both experiments running)", () => {
+  it.each([
+    ["/lp/download", "dl-hero-01"],
+    ["/lp/take-assessment", "dl-hero-01"],
+    ["/lp/newsletter", "dl-hero-01"],
+    ["/start/x", "dl-hero-01"],
+    ["/lp/cold-start", "cs-hero-01"],
+  ])("%s: assigns %s — injects script, sets cookie, private no-store", async (path, id) => {
+    const { context } = makeContext(path);
+    const res = await onRequest(context);
+    const html = await res.text();
+    const m = html.match(new RegExp(`window\\.__FCS_EXP__=\\{"e":"${id}","v":"(control|b)"\\}`));
+    expect(m).not.toBeNull();
+    expect(res.headers.get("set-cookie")).toMatch(new RegExp(`^fcs_exp_${id}=${m![1]};`));
+    expect(res.headers.get("cache-control")).toBe("private, no-store");
+  });
+
+  it.each(["/", "/lp/other", "/hsa-fsa"])(
+    "%s (not in registry): passes straight through — same response object, no cookie, no script, no new headers",
     async (path) => {
       const upstream = shellResponse();
       const { context, nextFn } = makeContext(path, { "if-none-match": "\"abc\"" }, "GET", async () => upstream);

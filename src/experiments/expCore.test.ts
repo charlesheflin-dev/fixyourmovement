@@ -15,18 +15,24 @@ import {
 } from "../../functions/_lib/expCore.js";
 import { EXPERIMENTS_BY_PATH, EXPERIMENT_PREFIXES } from "../../functions/_data/experiments.js";
 
-describe("registry (functions/_data/experiments.js) — shipped OFF", () => {
-  it.each(["/lp/download", "/lp/cold-start", "/lp/take-assessment", "/lp/newsletter", "/start/x", "/start/frustrated"])(
-    "real registry: %s → no experiment (status off)",
-    (path) => {
-      expect(findRunningExperiment(path, EXPERIMENTS_BY_PATH, EXPERIMENT_PREFIXES)).toBeNull();
-    },
-  );
+describe("registry (functions/_data/experiments.js) — both experiments RUNNING", () => {
+  it.each([
+    ["/lp/download", "dl-hero-01"],
+    ["/lp/take-assessment", "dl-hero-01"],
+    ["/lp/newsletter", "dl-hero-01"],
+    ["/start/x", "dl-hero-01"],
+    ["/start/frustrated", "dl-hero-01"],
+    ["/lp/cold-start", "cs-hero-01"],
+  ])("real registry: %s → running experiment %s", (path, id) => {
+    const e = findRunningExperiment(path, EXPERIMENTS_BY_PATH, EXPERIMENT_PREFIXES);
+    expect(e).not.toBeNull();
+    expect(e!.experiment).toBe(id);
+  });
 
-  it("every entry is off and structurally valid", () => {
+  it("every entry is running and structurally valid", () => {
     const entries = [...Object.values(EXPERIMENTS_BY_PATH), ...EXPERIMENT_PREFIXES.map((p) => p[1])];
     for (const e of entries) {
-      expect(e.status).toBe("off");
+      expect(e.status).toBe("running");
       expect(isValidConfig(e)).toBe(true);
     }
   });
