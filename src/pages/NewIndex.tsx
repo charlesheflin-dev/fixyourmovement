@@ -963,6 +963,9 @@ export default function NewIndex() {
           <a href="https://app.fixyourmovement.com/" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Foot Capacity System App Login</a>
         </div>
         </div>
+        <p className="max-w-5xl mx-auto px-6 mt-4 text-slate-400 text-xs text-center md:text-left">
+          This program is for educational purposes and is not a substitute for personalized medical advice. Consult your healthcare provider before beginning any exercise program.
+        </p>
       </footer>
 
       {/* ── Sticky Mobile CTA ────────────────────────────────────────── */}
