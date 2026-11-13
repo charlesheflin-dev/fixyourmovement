@@ -91,7 +91,7 @@ If they are already a customer: move them toward app support, Dr. Jonathan's cli
 
 ## What the Website Promises — Confirmed Claims
 
-These are claims that appear in site copy and are substantiated: Dr. Jonathan Schutza holds a Doctor of Physical Therapy (DPT) degree and is a licensed PT. The program is 12 weeks with optional Maintenance beyond. Sessions are 10–15 minutes per day, home-based, no equipment required. The FAAM is a validated clinical tool used in physical therapy and sports medicine. 30-day satisfaction guarantee. Program works for chronic cases — no time limit, symptom-dependent pacing. The free trial runs until the user completes 7 days of logging, with no credit card required.
+These are claims that appear in site copy and are substantiated: Dr. Jonathan Schutza holds a Doctor of Physical Therapy (DPT) degree and is a licensed PT. The program is 12 weeks with optional Maintenance beyond. Sessions take about 15 minutes per day, home-based, no equipment required. The FAAM is a validated clinical tool used in physical therapy and sports medicine. 30-day satisfaction guarantee. Program works for chronic cases — no time limit, symptom-dependent pacing. The free trial runs until the user completes 7 days of logging, with no credit card required.
 
 Dr. Jonathan reviews member progress through the clinician dashboard and provides clinical guidance during recovery. Direct two-way messaging with Dr. Jonathan is included for free trial users through their trial, and on the plans that carry it — the $97 Ownership Plan and the $497 Premium Lifetime, for the first 6 months each. On the $47 Recovery Plan and the $297 Lifetime plan, members have Ask Dr. Jonathan AI for in-app guidance, and direct personal messaging with Dr. Jonathan can be added by upgrading.
 
@@ -152,4 +152,4 @@ Perceived Likelihood: Dr. Jonathan is a licensed DPT. The FAAM is a validated cl
 
 Time to Result: the assessment takes 3 minutes and gives a real clinical result immediately. The trial starts producing clarity and habit formation in the first week. Most people notice meaningful change within the first 4 weeks of the full program.
 
-Effort and Sacrifice: 10–15 minutes per day, at home, no equipment. The app tells them exactly what to do — no guesswork, no figuring out what comes next. The structure removes the cognitive burden that makes most self-directed recovery fail.
+Effort and Sacrifice: about 15 minutes per day, at home, no equipment. The app tells them exactly what to do — no guesswork, no figuring out what comes next. The structure removes the cognitive burden that makes most self-directed recovery fail.

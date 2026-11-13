@@ -133,6 +133,6 @@ The system is not a replacement for a clinical evaluation when one is needed. Me
 
 "I'm already in week 4 — shouldn't I be in Phase 2 by now?" Phase advancement is based on tolerance and capacity, not weeks elapsed. Some chronic cases spend 6 to 10 weeks in Phase 1 before advancing. Staying longer in Phase 1 is the right clinical decision if flare-ups are still frequent.
 
-"I only have 10–15 minutes — is that enough?" The program is designed to fit into a realistic daily routine. Consistency over time matters more than any individual session length.
+"I only have about 15 minutes a day — is that enough?" The program is designed to fit into a realistic daily routine. Consistency over time matters more than any individual session length.
 
 "What if my diagnosis is different from plantar fasciitis?" The progressive loading principles apply to a broad range of foot and ankle overuse conditions. If the member has a specific concern about their diagnosis, they should bring it to the Ask Dr. Jonathan feature or consult with their care provider directly.

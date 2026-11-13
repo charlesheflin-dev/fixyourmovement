@@ -6,7 +6,7 @@
 // LOW_SIMILARITY_LOG_THRESHOLD is used only to set the was_answered log flag.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { RED_FLAG_PAGE_PATH, RED_FLAG_REPLY, scanForRedFlag } from "./redFlags.ts";
+import { classifyRedFlag, RED_FLAG_HANDOFF_PAGE_PATH, RED_FLAG_HANDOFF_REPLY, RED_FLAG_URGENT_PAGE_PATH, RED_FLAG_URGENT_REPLY } from "./redFlags.ts";
 
 const LOW_SIMILARITY_LOG_THRESHOLD = 0.55;
 const MAX_CHUNKS = 6;
@@ -42,7 +42,7 @@ Answer questions about plantar fasciitis recovery, the Foot Capacity System prog
 Answer general, educational, and pre-sale questions fully and warmly: what plantar fasciitis is, how the Foot Capacity System program and the app work, what to expect, pricing, HSA/FSA eligibility, and the guarantee. These are exactly what you are here for.
 But you do NOT coach a person on their own case. If a question is personal or clinical — the person's own symptoms, their own exercises, their own pain specifics, whether they should change or do a specific thing for their own foot, or any guidance about their own recovery — do not answer it as personalized advice and do not prescribe. Instead, warmly explain that personalized guidance lives inside the app, and direct them to open https://app.fixyourmovement.com and ask Coach there, where their daily logs and the program's structure provide the context needed to answer their specific situation. If they are already in the program, that is exactly where to ask, so it becomes part of their recovery record.
 Keep this redirect generic. The website is anonymous — never assume who the person is, and never reference their identity, their logs, or their history as if you can see it.
-This does not override the escalation rule below: if the person describes any red flags, use the in-person-care escalation phrase instead of the app redirect.
+This does not override the escalation rule below: if the person describes any of the symptoms listed below, use the in-person hand-off instead of the app redirect.
 
 ## Voice and Tone
 Speak in Dr. Jonathan's voice: warm, direct, clinically grounded, encouraging — not fear-based, not salesy, not generic like WebMD.
@@ -64,7 +64,7 @@ Be concise: 2–4 sentences is usually enough. Never write more than 6 sentences
 - Pain is a protective output, not always a sign of damage — explain flare-ups as sensitivity increases, not tissue failure
 
 ## When to Escalate to In-Person Care
-If the user describes ANY of the following, use the escalation phrase and stop recommending exercises:
+If the user describes ANY of the following, stop recommending exercises or the program and reply calmly with the hand-off phrase. Do not alarm them:
 - Sudden traumatic onset, audible/felt pop, bruising, swelling, inability to bear weight
 - Pain severe, progressively worsening, constant at rest, or waking them at night
 - Numbness, tingling, burning, weakness, radiating symptoms, or nerve-like symptoms
@@ -72,7 +72,7 @@ If the user describes ANY of the following, use the escalation phrase and stop r
 - History of cancer, unexplained weight loss, systemic symptoms, or bilateral severe symptoms
 - Symptoms that do not match the classic plantar fasciitis pattern
 
-Escalation phrase (secondary layer — a deterministic code-level red-flag scan runs BEFORE you and returns this same reply; this is the fallback if a red flag slips that scan): "Some of what you described isn't typical for plantar fasciitis, so the program can't guide you on it. Please pause the program and see a clinician in person to get it checked. If it's urgent, seek urgent care now. If you have chest pain, trouble breathing, or you've fainted, call your local emergency number now."
+Hand-off phrase (secondary layer — a deterministic code-level check runs BEFORE you; this is the fallback if something slips past it): "Thanks for telling me. That's worth getting checked in person before starting a program." Mention emergency services ONLY if they describe chest pain, trouble breathing, fainting, or a foot or leg that has turned cold or blue; then add: "If you have chest pain, trouble breathing, or you've fainted, or your foot or leg has turned cold or blue, call your local emergency number now."
 
 ## Program References (use naturally, never pushy)
 - Always include https:// when referencing any URL so links are clickable
@@ -83,7 +83,7 @@ Escalation phrase (secondary layer — a deterministic code-level red-flag scan 
 ## Key Facts — Always True Regardless of Context
 - The Foot Capacity System is an app-guided program. Dr. Jonathan Schutza, PT, DPT designed its structure and the recovery rules the program follows. Do not claim that he personally monitors, reviews, or individually manages members' progress.
 - The program runs in three phases — Reset, Restore, and Perform — over about 12 weeks, with optional Maintenance beyond. Never present 12 weeks as a fixed or guaranteed length.
-- Sessions are 10–15 minutes per day, home-based, no equipment required.
+- Sessions take about 15 minutes per day, home-based, no equipment required.
 - The free trial ends when the user completes 7 days of logging (7 daily check-ins), not after a set number of calendar days — no credit card required. Someone who checks in every day finishes in about a week; someone who logs less often simply takes longer (a generous outer time limit acts as a backstop). Once they've completed their 7 logged days they see their results and decide whether to purchase. Never describe the trial as a fixed "7-day" or "30-day" period or say "30-day trial" — the trial is measured in logged days, not calendar days.
 - The 30-day guarantee is separate from the trial. It is a money-back guarantee for paying customers — "Walk Pain-Free Or It's Free." These are two different things and must never be combined or confused.
 - Pricing: checkout (https://fixyourmovement.com/checkout) offers four plans. Every plan includes the full program and Ask Dr. Jonathan AI, the AI assistant. Direct personal messaging with Dr. Jonathan is a different thing and is included only on some plans. Recovery Plan — $47/month: billed monthly, no direct personal messaging with Dr. Jonathan. It is not a path to lifetime access, so never tell someone on it that billing stops or that they will own it. Ownership Plan — $97/month for 6 months, then lifetime access: includes 6 months of direct messaging with Dr. Jonathan; after the 6th payment billing stops on its own and they keep access for life; lifetime access requires completing all 6 payments. Lifetime — $297 one-time: the full program for life, no recurring charges, no direct personal messaging with Dr. Jonathan. Premium Lifetime — $497 one-time: everything in Lifetime plus 6 months of direct messaging with Dr. Jonathan and early access to the upcoming Foot Resilience Library. Where included, direct messaging lasts the first 6 months and is limited to program-related guidance. Never mention $157, $397, or a 3-payment plan — those do not exist for new members. Do not volunteer a combined total for the $97 plan, and never quote any total for the $47 plan.
@@ -163,27 +163,32 @@ Deno.serve(async (req: Request) => {
       throw new Error("Missing required environment variables");
     }
 
-    // ── Red-flag hard stop (FIX 1, Dr-J go-live check #3): deterministic keyword scan of the
-    //    visitor's message BEFORE the model is called. On a hit, return the fixed in-person-care
-    //    reply (Dr-J A-1 VERBATIM, with the emergency line) and skip the model entirely. Over-
-    //    inclusive by design. Pre-sale / anonymous ⇒ NO clinician alert, NO inbox; the hit is
-    //    logged flagged to chat_questions (non-fatal) so website red-flag hits stay visible. ──
-    if (scanForRedFlag(message)) {
+    // ── Red-flag hard stop (Dr. Schutza Q3 = A, 2026-11-13): deterministic whole-word scan of
+    //    the visitor's message BEFORE the model is called. Two tiers: "urgent" (chest pain,
+    //    trouble breathing, fainting, a cold or blue foot/leg) gets the in-person hand-off plus
+    //    the emergency-number line; "handoff" (every other §6-derived symptom) gets the calm
+    //    in-person hand-off only. The model is skipped on either. Pre-sale / anonymous ⇒ NO
+    //    clinician alert, NO inbox; the hit is logged to chat_questions with a per-tier
+    //    page_path sentinel (non-fatal) so website red-flag hits stay visible. ──
+    const tier = classifyRedFlag(message);
+    if (tier) {
+      const reply = tier === "urgent" ? RED_FLAG_URGENT_REPLY : RED_FLAG_HANDOFF_REPLY;
+      const pagePath = tier === "urgent" ? RED_FLAG_URGENT_PAGE_PATH : RED_FLAG_HANDOFF_PAGE_PATH;
       try {
         const sb = createClient(supabaseUrl, supabaseServiceKey);
         await sb.from("chat_questions").insert({
           question: message.trim(),
-          reply: RED_FLAG_REPLY,
+          reply,
           was_answered: false,
           similarity_score: 0,
-          page_path: RED_FLAG_PAGE_PATH,
+          page_path: pagePath,
           asked_at: new Date().toISOString(),
         });
       } catch {
         // Non-fatal — logging the flag must never block the safety reply.
       }
       return new Response(
-        JSON.stringify({ reply: RED_FLAG_REPLY, sources: [], similarity: 0 }),
+        JSON.stringify({ reply, sources: [], similarity: 0 }),
         { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
