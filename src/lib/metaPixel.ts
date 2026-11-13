@@ -40,10 +40,15 @@ declare global {
   }
 }
 
-// Routes whose URL could carry a health-adjacent identifier (the :userId param).
+// Routes whose URL could carry a health-adjacent identifier (the :userId param), plus the
+// public symptom page /when-to-get-seen-in-person (health content; Meta health-data rules).
 // Never fire ANY pixel event while on these.
 export function isSensitivePath(pathname: string): boolean {
-  return /^\/results(\/|$)/.test(pathname) || /^\/survey(\/|$)/.test(pathname);
+  return (
+    /^\/results(\/|$)/.test(pathname) ||
+    /^\/survey(\/|$)/.test(pathname) ||
+    /^\/when-to-get-seen-in-person(\/|$)/i.test(pathname)
+  );
 }
 
 // True when the CURRENT url carries an `email` query param (any case). Any URL still

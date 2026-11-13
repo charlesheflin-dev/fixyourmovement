@@ -206,7 +206,7 @@ const FAQS = [
   },
   {
     q: "How much time does it take each day?",
-    a: "Most daily sessions take about 15–20 minutes, including your exercises and check-in. The videos show you what to do, and your plan tells you how many sets and reps to complete.",
+    a: "Most daily sessions take about 15 minutes, including your exercises and check-in. The videos show you what to do, and your plan tells you how many sets and reps to complete.",
   },
   {
     q: "What if my foot flares up or I have a question?",
@@ -708,7 +708,7 @@ export default function ColdStart() {
               </p>
               <p className={T.body}>
                 Start working toward more comfortable movement with guided sessions that take about{" "}
-                <span className="font-bold text-slate-900">15–20 minutes a day at home.</span>
+                <span className="font-bold text-slate-900">15 minutes a day at home.</span>
               </p>
             </div>
 

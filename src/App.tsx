@@ -32,6 +32,8 @@ const AskDrJonathanPage = lazy(() => import("./pages/AskDrJonathan"));
 const GuideMorning = lazy(() => import("./pages/GuideMorning"));
 const GuideToughDay = lazy(() => import("./pages/GuideToughDay"));
 const GuideNext = lazy(() => import("./pages/GuideNext"));
+const FootCapacitySystem = lazy(() => import("./pages/FootCapacitySystem"));
+const WhenToGetSeenInPerson = lazy(() => import("./pages/WhenToGetSeenInPerson"));
 const AskDrJonathan = lazy(() => import("./components/AskDrJonathan.tsx"));
 
 function AskDrJonathanGlobal() {
@@ -213,6 +215,8 @@ const App = () => (
                     <Route path="/guide/morning" element={<GuideMorning />} />
                     <Route path="/guide/tough-day" element={<GuideToughDay />} />
                     <Route path="/guide/next" element={<GuideNext />} />
+                    <Route path="/foot-capacity-system" element={<FootCapacitySystem />} />
+                    <Route path="/when-to-get-seen-in-person" element={<WhenToGetSeenInPerson />} />
                     <Route path="*" element={<NotFound />} />
          </Routes>
         </Suspense>

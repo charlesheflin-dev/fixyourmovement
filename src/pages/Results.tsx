@@ -816,6 +816,9 @@ function ResultsFooter() {
           <p className="mt-4 text-xs text-slate-300 max-w-lg mx-auto">
             This program is for educational purposes and is not a substitute for personalized medical advice. Consult your healthcare provider before beginning any exercise program.
           </p>
+          <p className="mt-2 text-xs text-slate-400">
+            <a href="/when-to-get-seen-in-person" className="underline hover:text-slate-600 transition-colors">When to get seen in person</a>
+          </p>
         </div>
       </footer>
     </>
