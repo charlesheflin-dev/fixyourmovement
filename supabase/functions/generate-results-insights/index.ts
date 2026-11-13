@@ -87,4 +87,24 @@ Write copy for exactly these 4 fields. Return ONLY valid JSON, no markdown, no e
       ],
     });
 
-    const raw =
+    const raw = message.content
+      .filter((b: any) => b.type === "text")
+      .map((b: any) => b.text)
+      .join("");
+
+    const clean = raw.replace(/```json|```/g, "").trim();
+    const insights = JSON.parse(clean);
+
+    return new Response(JSON.stringify(insights), {
+      status: 200,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+
+  } catch (err) {
+    console.error("generate-results-insights error:", err);
+    return new Response(JSON.stringify({ error: "Failed to generate insights" }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+});

@@ -1,37 +1,38 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { initMetaPixel, trackPageView } from "./lib/metaPixel";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
-import TermsOfService from "./pages/TermsOfService.tsx";
-import Contact from "./pages/Contact.tsx";
-import ThankYou from "./pages/ThankYou.tsx";
-import NotFound from "./pages/NotFound.tsx";
-import RefundPolicy from "./pages/RefundPolicy.tsx";
-import EULA from "./pages/EULA.tsx";
-import HsaFsa from "./pages/HsaFsa";
-import DrJonathanSchutza from "./pages/DrJonathanSchutza";
-import NewIndex from "./pages/NewIndex.tsx";
 import CookieConsent from "./components/CookieConsent.tsx";
 import ExitPopup from "./components/ExitPopup.tsx";
-import EmailConfirmation from "./pages/EmailConfirmation";
 import FCSNewsletterJoin from "./pages/FCSNewsletterJoin";
-import DownloadApp from "./pages/DownloadApp";
+// /lp/cold-start is the paid-ad landing page: it stays in the main bundle so it draws
+// without waiting on a second download. Every other page is code-split (2026-11-12
+// mobile-speed fix: the single 1.28 MB bundle carried all ~30 pages to every visitor).
 import ColdStart from "./pages/ColdStart";
-import Assessment from "./pages/Assessment";
-import Unsubscribed from "./pages/Unsubscribed";
-import Checkout from "./pages/Checkout";
-import Upgrade from "./pages/Upgrade";
-import Results from "./pages/Results";
-import AssessmentResults from "./pages/AssessmentResults";
-import AskDrJonathanPage from "./pages/AskDrJonathan";
-import GuideMorning from "./pages/GuideMorning";
-import GuideToughDay from "./pages/GuideToughDay";
-import GuideNext from "./pages/GuideNext";
-import AskDrJonathan from "./components/AskDrJonathan.tsx";
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService.tsx"));
+const Contact = lazy(() => import("./pages/Contact.tsx"));
+const ThankYou = lazy(() => import("./pages/ThankYou.tsx"));
+const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+const RefundPolicy = lazy(() => import("./pages/RefundPolicy.tsx"));
+const EULA = lazy(() => import("./pages/EULA.tsx"));
+const HsaFsa = lazy(() => import("./pages/HsaFsa"));
+const DrJonathanSchutza = lazy(() => import("./pages/DrJonathanSchutza"));
+const NewIndex = lazy(() => import("./pages/NewIndex.tsx"));
+const EmailConfirmation = lazy(() => import("./pages/EmailConfirmation"));
+const DownloadApp = lazy(() => import("./pages/DownloadApp"));
+const Unsubscribed = lazy(() => import("./pages/Unsubscribed"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const Upgrade = lazy(() => import("./pages/Upgrade"));
+const Results = lazy(() => import("./pages/Results"));
+const AskDrJonathanPage = lazy(() => import("./pages/AskDrJonathan"));
+const GuideMorning = lazy(() => import("./pages/GuideMorning"));
+const GuideToughDay = lazy(() => import("./pages/GuideToughDay"));
+const GuideNext = lazy(() => import("./pages/GuideNext"));
+const AskDrJonathan = lazy(() => import("./components/AskDrJonathan.tsx"));
 
 function AskDrJonathanGlobal() {
   const { pathname } = useLocation();
@@ -46,7 +47,11 @@ function AskDrJonathanGlobal() {
     "/lp/cold-start",
   ];
   if (excluded.some((path) => pathname.startsWith(path))) return null;
-  return <AskDrJonathan />;
+  return (
+    <Suspense fallback={null}>
+      <AskDrJonathan />
+    </Suspense>
+  );
 }
 
 const queryClient = new QueryClient();
@@ -142,7 +147,8 @@ function SourceCapture() {
 
 // Post-trial survey retired 2026-10-08: /survey now forwards straight to the
 // results page, preserving the original query string (e.g. ?email=...). The
-// PostTrialSurvey page + save-survey-response fn + survey tables are kept in place.
+// PostTrialSurvey page was deleted 2026-11-12 (no route had rendered it since the
+// retirement); the save-survey-response fn source + survey tables are kept in place.
 function SurveyRedirect() {
   const { userId } = useParams<{ userId: string }>();
   const { search } = useLocation();
@@ -176,6 +182,7 @@ const App = () => (
         <CookieConsent />
         {/* <ExitPopup /> */}
         <AskDrJonathanGlobal />
+        <Suspense fallback={null}>
          <Routes>
            <Route path="/" element={<NewIndex />} />
            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -192,7 +199,8 @@ const App = () => (
                    <Route path="/lp/take-assessment" element={<Navigate to="/lp/download" replace />} />
                     <Route path="/lp/download" element={<DownloadApp />} />
                    <Route path="/lp/cold-start" element={<ColdStart />} />
-                   <Route path="/assessment" element={<Assessment />} />
+                   {/* Assessment funnel retired - old /assessment links land on /lp/download */}
+                   <Route path="/assessment" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/start/*" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/unsubscribed" element={<Unsubscribed />} />
                    <Route path="/checkout" element={<Checkout />} />
@@ -200,13 +208,14 @@ const App = () => (
                    <Route path="/survey/:userId" element={<SurveyRedirect />} />
                    <Route path="/survey" element={<SurveyRedirect />} />
                    <Route path="/results/:userId" element={<Results />} />
-                   <Route path="/results" element={<Results />} />                   <Route path="/assessment-results" element={<AssessmentResults />} />
+                   <Route path="/results" element={<Results />} />                   <Route path="/assessment-results" element={<Navigate to="/lp/download" replace />} />
                    <Route path="/ask" element={<AskDrJonathanPage />} />
                     <Route path="/guide/morning" element={<GuideMorning />} />
                     <Route path="/guide/tough-day" element={<GuideToughDay />} />
                     <Route path="/guide/next" element={<GuideNext />} />
                     <Route path="*" element={<NotFound />} />
          </Routes>
+        </Suspense>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

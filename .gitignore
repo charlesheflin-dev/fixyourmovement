@@ -25,3 +25,5 @@ dist-ssr
 supabase/functions/get-assessment-results/
 
 .env
+recon-out/
+deno.lock

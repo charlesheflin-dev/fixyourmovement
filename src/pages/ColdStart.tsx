@@ -15,9 +15,11 @@ const VIDEO_POSTER_SRC = `https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/${VID
 
 // Production assets (supplied, used intact — v3 spec §3). The heel/message image now sits
 // in Section 4, separate from Dr. Jonathan; the phone image is the v3 sharpened asset.
-const DJ_HEADSHOT_SRC = "/images/cold/dj-headshot.jpg";
-const HEEL_MESSAGE_SRC = "/images/cold/heel-message.png";
-const PHONES_SRC = "/images/cold/phones-ppc-sharpened.png";
+// WebP re-exports (2026-11-12 mobile-speed fix): same images resized to 2x display width,
+// ~3.1 MB -> ~161 KB total. The original .jpg/.png files stay in public/ untouched.
+const DJ_HEADSHOT_SRC = "/images/cold/dj-headshot.webp";
+const HEEL_MESSAGE_SRC = "/images/cold/heel-message.webp";
+const PHONES_SRC = "/images/cold/phones-ppc-sharpened.webp";
 
 // ─── Read cookie helper ──────────────────────────────────────────────────────────
 function getCookie(name: string): string | null {
@@ -714,8 +716,8 @@ export default function ColdStart() {
               <img
                 src={PHONES_SRC}
                 alt="The Foot Capacity System app on three phones"
-                width={1326}
-                height={1186}
+                width={1120}
+                height={1002}
                 className="w-full max-w-[560px] h-auto"
                 loading="lazy"
               />
@@ -773,8 +775,8 @@ export default function ColdStart() {
               <img
                 src={HEEL_MESSAGE_SRC}
                 alt="The right exercise at the wrong time is still the wrong exercise."
-                width={1239}
-                height={1269}
+                width={1120}
+                height={1147}
                 className="w-full max-w-[560px] h-auto"
                 loading="lazy"
               />

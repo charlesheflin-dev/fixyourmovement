@@ -677,7 +677,9 @@ function FinalCtaSection({ insights, insightsLoading }: { insights: InsightsData
 // Slice C: data-quality heroes
 
 // Shown when the user has zero logged days — no progress to report yet, so we
-// reframe honestly and route to the free week instead of a hard checkout close.
+// reframe honestly instead of showing results. The page then continues to the
+// same standard offer as every mode (NextStepSection + FinalCtaSection ->
+// /checkout); the free week this used to route to was removed 2026-10-03.
 function NoLogsHeroSection() {
   return (
     <section className="relative bg-gradient-to-b from-blue-600 to-blue-800 pt-10 pb-20 px-6">
@@ -703,7 +705,8 @@ function NoLogsHeroSection() {
 }
 
 // Shown when the user logged days but pain has not improved yet. Validate the
-// effort (never fabricate progress) and route to the free week.
+// effort (never fabricate progress). The page then continues to the same
+// standard offer as every mode (NextStepSection + FinalCtaSection -> /checkout).
 function FlatHeroSection({ data }: { data: ResultsData }) {
   const faamImproved = faamGain(data.faamBaseline, data.faamPhase2Start) !== null;
   return (
