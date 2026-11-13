@@ -79,6 +79,13 @@ describe("_middleware.js with the REAL registry (both experiments running)", () 
     },
   );
 
+  it("SEO-tool crawlers are no longer blocked (Charles 3, 2026-11-13): AhrefsBot on / gets 200", async () => {
+    const { context, nextFn } = makeContext("/", { "user-agent": "Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)" });
+    const res = await onRequest(context);
+    expect(res.status).toBe(200);
+    expect(nextFn).toHaveBeenCalledTimes(1);
+  });
+
   it("trailing-slash 301 still runs first", async () => {
     const { context, nextFn } = makeContext("/lp/download/");
     const res = await onRequest(context);
