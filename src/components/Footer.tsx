@@ -19,6 +19,9 @@ const Footer = () => {
           This program is for educational purposes and is not a substitute for personalized
           medical advice. Consult your healthcare provider before beginning any exercise program.
         </p>
+        <p className="mt-2 text-sm text-muted-foreground/70">
+          <Link to="/when-to-get-seen-in-person" className="underline hover:text-primary transition-colors">When to get seen in person</Link>
+        </p>
       </div>
     </footer>
   );

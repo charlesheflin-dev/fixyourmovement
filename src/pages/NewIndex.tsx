@@ -71,7 +71,13 @@ export default function NewIndex() {
 
           <div className="relative container mx-auto px-6 max-w-5xl">
             {/* App Login — top right of the home page (the home page has no shared header). */}
-            <div className="flex justify-end -mt-4 mb-2 md:-mt-10 md:mb-4">
+            <div className="flex items-center justify-end gap-4 -mt-4 mb-2 md:-mt-10 md:mb-4">
+              <a
+                href="/foot-capacity-system"
+                className="inline-flex min-h-[44px] items-center text-slate-700 text-sm font-semibold underline-offset-4 transition-colors hover:text-blue-700 hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300 focus-visible:ring-offset-2 rounded"
+              >
+                Plans &amp; pricing
+              </a>
               <a
                 href="https://app.fixyourmovement.com/"
                 target="_blank"
@@ -877,7 +883,7 @@ export default function NewIndex() {
                   How much time does the system take each day?
                 </AccordionTrigger>
                 <AccordionContent className="text-slate-600 text-sm leading-relaxed pb-5">
-                  Most daily sessions take around 10 to 15 minutes. The system is designed to fit into normal life without becoming overwhelming.
+                  Most daily sessions take around 15 minutes. The system is designed to fit into normal life without becoming overwhelming.
                 </AccordionContent>
               </AccordionItem>
 
@@ -954,6 +960,7 @@ export default function NewIndex() {
             © {new Date().getFullYear()} The Foot Capacity System. All rights reserved.
           </p>
     <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 justify-center md:justify-end">
+          <a href="/foot-capacity-system" className="hover:text-slate-600 transition-colors">Plans &amp; pricing</a>
           <a href="/privacy-policy" className="hover:text-slate-600 transition-colors">Privacy Policy</a>
           <a href="/terms-of-service" className="hover:text-slate-600 transition-colors">Terms of Service</a>
           <a href="/refund-policy" className="hover:text-slate-600 transition-colors">Refund Policy</a>
@@ -965,6 +972,9 @@ export default function NewIndex() {
         </div>
         <p className="max-w-5xl mx-auto px-6 mt-4 text-slate-400 text-xs text-center md:text-left">
           This program is for educational purposes and is not a substitute for personalized medical advice. Consult your healthcare provider before beginning any exercise program.
+        </p>
+        <p className="max-w-5xl mx-auto px-6 mt-2 text-slate-400 text-xs text-center md:text-left">
+          <a href="/when-to-get-seen-in-person" className="underline hover:text-slate-600 transition-colors">When to get seen in person</a>
         </p>
       </footer>
 

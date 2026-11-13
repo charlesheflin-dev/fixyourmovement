@@ -24,25 +24,6 @@ if (!isSubdirPage && url.pathname.length > 1 && url.pathname.endsWith("/")) {
 }
 
 /*
-BLOCK OBVIOUS BAD SEO BOTS
-
-*/
-
-const blockedBots = [
-"AhrefsBot",
-"MJ12bot",
-"DotBot",
-"SemrushBot",
-"BLEXBot"
-]
-
-for (const bot of blockedBots) {
-if (ua.includes(bot)) {
-return new Response("Forbidden", { status: 403 })
-}
-}
-
-/*
 LOG AI CRAWLERS
 
 */

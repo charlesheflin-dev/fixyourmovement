@@ -13,7 +13,7 @@ const ctx = (path: string, method = "GET", upstream: Response = html()) => ({
 });
 
 describe("real 404 for unknown paths", () => {
-  it.each(["/does-not-exist", "/foot-capacity-system", "/lp/other", "/checkout/extra", "/dr-jonathan-schutza.html"])(
+  it.each(["/does-not-exist", "/foot-capacity", "/lp/other", "/checkout/extra", "/dr-jonathan-schutza.html"])(
     "%s -> 404, shell body kept, noindex", async (p) => {
       const res = await onRequest(ctx(p));
       expect(res.status).toBe(404);
@@ -21,7 +21,8 @@ describe("real 404 for unknown paths", () => {
       expect(await res.text()).toBe(SHELL);
     });
   it.each(["/", "/checkout", "/Checkout", "/hsa-fsa", "/results/abc-123", "/survey/abc", "/guide/next",
-           "/bonuses", "/bonuses/daily-habit-builder", "/support", "/blog/some-article"])(
+           "/bonuses", "/bonuses/daily-habit-builder", "/support", "/blog/some-article",
+           "/foot-capacity-system", "/when-to-get-seen-in-person"])(
     "%s -> upstream unchanged", async (p) => {
       const upstream = html();
       expect(await onRequest(ctx(p, "GET", upstream))).toBe(upstream);

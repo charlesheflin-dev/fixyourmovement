@@ -1,67 +1,58 @@
 // ASK-DR-JONATHAN (website) — redFlags.ts — deterministic red-flag hard stop for the public
-// pre-sale assistant (Dr-J go-live check #3, 2026-10-28). On a keyword hit the visitor gets the
-// FIXED in-person-care reply (Dr-J A-1 VERBATIM, incl. the emergency-number line) and the model
-// is NEVER called. Pre-sale / anonymous context ⇒ NO clinician alert and NO messages/inbox (there
-// is no patient relationship); the hit MAY be logged to chat_questions flagged via RED_FLAG_PAGE_PATH.
+// pre-sale assistant.
 //
-// Matching is a deterministic keyword/phrase scan (NOT an LLM classifier), deliberately
-// OVER-INCLUSIVE: a false positive only shows a "see a clinician" message (low harm); a false
-// negative misses a red flag. Err toward false positives.
+// Dr. Schutza decision 2026-11-13 (Q3 = A): concerning symptoms get a CALM in-person hand-off;
+// the emergency line is kept ONLY for truly urgent words (chest pain, trouble breathing,
+// fainting, a cold or blue foot or leg). Two tiers, two fixed replies.
 //
-// ⚠️ GOVERNED DUPLICATE / KEEP IN SYNC with the APP repo's
-// supabase/functions/coach-outreach/redFlags.ts (foot-capacity-tracker-app). RED_FLAG_REPLY is
-// byte-identical to the app's, and RED_FLAG_URGENT_CARE / RED_FLAG_CONTACT_SOON / the keyword set
-// mirror Dr-J's §6 wording verbatim. Edge fns across the two repos cannot share a module — if the
-// §6 list, the reply, or the keyword set changes in the app, change it here too. Do NOT reword.
+// On any hit the model is NEVER called. Pre-sale / anonymous context => NO clinician alert and
+// NO messages/inbox (there is no patient relationship); the hit MAY be logged to chat_questions,
+// flagged by tier via the page_path sentinels below.
+//
+// Matching is a deterministic WHOLE-WORD / WHOLE-PHRASE scan (NOT an LLM classifier), so "numb"
+// no longer matches "number", "pop" no longer matches "popular", etc. Still deliberately broad:
+// a false positive only shows a calm "get it checked in person" message.
+//
+// This is the ONLY copy of this logic. The app repo's src/constants/redFlags.ts holds the §6
+// DISPLAY lists only and is not mirrored here (the app's coach-outreach copy was removed).
 
-export const RED_FLAG_URGENT_CARE: readonly string[] = [
-  "Chest pain, shortness of breath or fainting",
-  "One leg much more swollen, red or warm than the other",
-  "A foot or leg that turns pale, blue, cool or numb",
-  "Sudden foot drop, or you can't control the foot",
-  "A pop or crack, then severe pain, and you can't put weight on it",
-  "Pain far worse than expected, with extreme swelling",
-  "Signs of infection: fever, red streaks, pus or a foul smell",
-];
+// Calm hand-off (Dr. Schutza's approved example wording, 2026-11-13).
+export const RED_FLAG_HANDOFF_REPLY =
+  "Thanks for telling me. That's worth getting checked in person before starting a program.";
 
-export const RED_FLAG_CONTACT_SOON: readonly string[] = [
-  "Night pain that keeps waking you up",
-  "Unexplained fever or weight loss",
-  "Pain getting steadily worse for no clear reason",
-  "Constant pain at rest, not tied to activity",
-  "Numbness, tingling, burning or shooting pain that doesn't go away",
-  "A wound or sore that isn't healing",
-  "Diabetes, poor circulation, neuropathy or recent surgery",
-  "A history of cancer",
-  "Severe symptoms in both feet",
-  "Symptoms that don't fit typical plantar fasciitis",
-];
+// Urgent tier: the hand-off plus the Dr-J A-1 emergency line, with the cold/blue clause
+// (approved by Dr. Schutza 2026-11-13).
+export const RED_FLAG_URGENT_REPLY =
+  "That's worth getting checked in person before starting a program. If you have chest pain, trouble breathing, or you've fainted, or your foot or leg has turned cold or blue, call your local emergency number now.";
 
-// Dr-J A-1 VERBATIM (2026-10-28 Approval Packet) — byte-identical to the app's RED_FLAG_REPLY,
-// including the added emergency-number line.
-export const RED_FLAG_REPLY =
-  "Some of what you described isn't typical for plantar fasciitis, so the program can't guide you on it. Please pause the program and see a clinician in person to get it checked. If it's urgent, seek urgent care now. If you have chest pain, trouble breathing, or you've fainted, call your local emergency number now.";
+// page_path sentinels used to FLAG website red-flag rows in chat_questions (no schema change).
+// The urgent sentinel keeps the historical value so existing history continues; note that any
+// saved query counting it now counts URGENT hits only.
+export const RED_FLAG_URGENT_PAGE_PATH = "ask-dr-jonathan-redflag";
+export const RED_FLAG_HANDOFF_PAGE_PATH = "ask-dr-jonathan-handoff";
 
-// page_path sentinel used to FLAG a website red-flag row in chat_questions (no schema change).
-// Distinct from the app's "coach-redflag-msg" so website pre-sale hits are filterable.
-export const RED_FLAG_PAGE_PATH = "ask-dr-jonathan-redflag";
-
-// Over-inclusive keyword/phrase set derived from §6. Lowercased-substring match over the
-// visitor's normalized text. NOT visitor-facing copy — a detection heuristic, false-positive
-// biased by design. Keep roughly in step with §6 (and the app copy) when the list changes.
-const RED_FLAG_KEYWORDS: readonly string[] = [
-  // Urgent tier
-  "chest pain", "shortness of breath", "short of breath", "can't breathe", "cant breathe",
+// Urgent phrases. Bare "faint" is deliberately excluded ("a faint ache" is not an emergency),
+// as is plural "cold feet" (an everyday complaint and an idiom).
+export const RED_FLAG_URGENT_PHRASES: readonly string[] = [
+  "chest pain", "chest pains",
+  "short of breath", "shortness of breath",
+  "can't breathe", "cant breathe", "cannot breathe",
   "trouble breathing", "difficulty breathing", "hard to breathe",
-  "faint", "fainted", "passed out", "pass out", "blacked out",
-  "swollen", "swelling", "pale", "turning blue", "blue foot", "cold foot", "foot is cold",
-  "cool foot", "numb",
+  "fainted", "fainting", "feel faint", "felt faint",
+  "passed out", "pass out", "blacked out",
+  "cold foot", "foot is cold", "foot feels cold", "foot went cold", "foot turned cold",
+  "blue foot", "foot is blue", "foot turned blue", "foot is turning blue",
+  "toes are blue", "toes turned blue", "turning blue", "turned blue",
+];
+
+// Calm hand-off phrases (derived from §6). NOT visitor-facing copy — a detection heuristic.
+export const RED_FLAG_HANDOFF_PHRASES: readonly string[] = [
+  "swollen", "swelling", "pale", "cool foot", "numb",
   "foot drop", "can't control", "cant control", "can't move my foot",
   "pop", "popped", "crack", "snap",
   "can't put weight", "cant put weight", "can't bear weight", "cant bear weight",
   "can't stand on it", "can't walk on it",
   "infection", "infected", "pus", "fever", "red streak", "foul smell", "foul odor",
-  // Contact-soon tier
   "night pain", "wakes me", "waking me", "wake me up", "wakes me up",
   "weight loss", "losing weight", "lost weight",
   "pain at rest", "constant pain", "rest pain",
@@ -71,9 +62,24 @@ const RED_FLAG_KEYWORDS: readonly string[] = [
   "cancer", "tumor", "tumour", "both feet", "both my feet", "both heels",
 ];
 
-// True if the visitor's free text contains any red-flag keyword/phrase. Deliberately broad.
-export function scanForRedFlag(text: string): boolean {
-  if (!text) return false;
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function buildMatcher(phrases: readonly string[]): RegExp {
+  return new RegExp("\\b(?:" + phrases.map(escapeRegExp).join("|") + ")\\b");
+}
+
+const URGENT_RE = buildMatcher(RED_FLAG_URGENT_PHRASES);
+const HANDOFF_RE = buildMatcher(RED_FLAG_HANDOFF_PHRASES);
+
+export type RedFlagTier = "urgent" | "handoff";
+
+// Classify the visitor's free text. Urgent is checked first. null = no red flag.
+export function classifyRedFlag(text: string): RedFlagTier | null {
+  if (!text) return null;
   const t = text.toLowerCase().replace(/[‘’]/g, "'");
-  return RED_FLAG_KEYWORDS.some((k) => t.includes(k));
+  if (URGENT_RE.test(t)) return "urgent";
+  if (HANDOFF_RE.test(t)) return "handoff";
+  return null;
 }

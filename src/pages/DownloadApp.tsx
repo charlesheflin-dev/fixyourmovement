@@ -303,7 +303,7 @@ export default function DownloadApp() {
       a: "Flare-ups are expected. The app doesn't punish them — it adjusts. There's a built-in Calm Mode that reduces load temporarily without losing your progress. You keep moving forward even on hard days.",
     },
     {
-      q: "How is 10 minutes a day going to do anything?",
+      q: "How is 15 minutes a day going to do anything?",
       a: "Consistency with the right protocol beats occasional long sessions every time. Your daily check-in tells the app where you are, which determines what you do next. That feedback loop is what makes the difference — not the length of the session.",
     },
   ];
@@ -485,6 +485,7 @@ export default function DownloadApp() {
                 </svg>
                 No credit card. No spam. Your email stays private.
               </div>
+              <p className="text-slate-500 text-xs text-center mt-1">Free for your first 7 check-ins, then choose a plan.</p>
             </form>
           </div>
 
