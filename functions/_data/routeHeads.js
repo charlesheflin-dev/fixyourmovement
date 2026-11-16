@@ -19,4 +19,6 @@ export const ROUTE_HEADS = {
     description: "How the Foot Capacity System works and what it costs. Free for your first 7 check-ins, then choose a plan: $47/month, $97/month for 6 months, or $297 or $497 one time.", dropSchema: false },
   "/when-to-get-seen-in-person": { title: "When to Get Seen in Person for Foot or Heel Pain | The Foot Capacity System",
     description: "The symptoms Dr. Jonathan Schutza, PT, DPT, tells Foot Capacity System members to stop for and get checked in person, word for word from the app.", dropSchema: true },
+  "/testimonials": { title: "Member Testimonials | The Foot Capacity System",
+    description: "What Foot Capacity System members shared about their foot and heel pain recovery, in their own words. Selected examples shared with permission; individual results vary.", dropSchema: true },
 };

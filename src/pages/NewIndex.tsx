@@ -642,6 +642,9 @@ export default function NewIndex() {
 
             {/* Disclaimer */}
             <p className="text-xs text-slate-400 text-center mt-6">Results vary. These are real experiences from people who followed the system and stayed consistent.</p>
+            <p className="text-sm text-center mt-3">
+              <a href="/testimonials" className="text-blue-600 font-semibold hover:underline">See all member stories →</a>
+            </p>
 
             {/* Closing quote */}
             <div className="max-w-3xl mx-auto text-center mt-8">

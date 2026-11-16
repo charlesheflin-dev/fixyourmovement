@@ -27,6 +27,7 @@ const ROUTES = [
   ["/refund-policy", "refund-policy.html"],
   ["/dr-jonathan-schutza", "dr-jonathan-schutza.html"],
   ["/when-to-get-seen-in-person", "when-to-get-seen-in-person.html"],
+  ["/testimonials", "testimonials.html"],
   ["/checkout", "checkout.html"],
 ];
 
