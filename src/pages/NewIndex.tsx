@@ -118,11 +118,6 @@ export default function NewIndex() {
                   </a>
 
                   <div className="flex items-center gap-3 mt-4 mb-2 justify-center lg:justify-start">
-                    <div className="flex -space-x-2">
-                      <div className="w-8 h-8 rounded-full bg-blue-200 border-2 border-white flex items-center justify-center text-blue-700 text-xs font-bold">A</div>
-                      <div className="w-8 h-8 rounded-full bg-blue-300 border-2 border-white flex items-center justify-center text-blue-800 text-xs font-bold">B</div>
-                      <div className="w-8 h-8 rounded-full bg-blue-400 border-2 border-white flex items-center justify-center text-white text-xs font-bold">C</div>
-                    </div>
                     <p className="text-slate-500 text-xs">Trusted by people dealing with chronic foot and heel pain.</p>
                   </div>
 
