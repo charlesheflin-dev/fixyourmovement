@@ -3,6 +3,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { CheckCircle, TrendingUp, Map, Video, ArrowRight, Shield, Zap, Infinity } from "lucide-react";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
+import MemberStories from "@/components/MemberStories";
 import logo from "@/assets/logo.png";
 
 const GET_RESULTS_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-results-data";
@@ -974,6 +975,8 @@ export default function Results() {
         <MemberReviewsSection />
         <NextStepSection />
         <FinalCtaSection insights={insights} insightsLoading={insightsLoading} />
+        {/* Member Stories (2026-11-16) — every mode, after the final CTA; same /checkout target + label */}
+        <MemberStories cta={{ label: "Continue My Recovery →", href: CHECKOUT_URL, onClick: () => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_stories_cta" }) }} />
       </main>
 
       <ResultsFooter />

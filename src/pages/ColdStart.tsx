@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
+import MemberStories from "@/components/MemberStories";
 import { installUrlWithTracking } from "@/lib/installTracking";
 import { variantFor, withExperimentMeta } from "@/experiments/exp";
 import { CS_HERO_EXPERIMENT, coldStartHero } from "@/experiments/heroCopy";
@@ -153,7 +154,7 @@ const FORM_ANCHOR: Record<FormPosition, string> = {
 // ─── Navigation-click diagnostics (GA4, existing gtag only) ──────────────────────
 // Fixed location ids only — never user content. Diagnostics, not a conversion: no
 // key-event / Ads import intended. A missing or failing gtag must never block scrolling.
-type AnchorLocation = "header_free_plan" | "hero_free_plan" | "footer_free_plan";
+type AnchorLocation = "header_free_plan" | "hero_free_plan" | "footer_free_plan" | "stories_free_plan";
 function trackAnchorClick(location: AnchorLocation) {
   try {
     const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
@@ -1026,6 +1027,11 @@ export default function ColdStart() {
             <p className={`${T.note} mt-3`}>No credit card required.</p>
           </div>
         </section>
+
+        {/* Member Stories (2026-11-16) — pre-signup view only; CTA smooth-scrolls to the bottom form */}
+        <MemberStories
+          cta={{ label: "Start My Free Recovery Plan →", onClick: () => goToForm("form_bottom", "stories_free_plan") }}
+        />
       </main>
 
       {/* Quiet legal footer */}

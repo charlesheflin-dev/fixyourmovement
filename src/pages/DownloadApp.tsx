@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
 import UserJourneyCarousel from "@/components/UserJourneyCarousel";
+import MemberStories from "@/components/MemberStories";
 import { installUrlWithTracking } from "@/lib/installTracking";
 import { variantFor, withExperimentMeta } from "@/experiments/exp";
 import { DL_HERO_EXPERIMENT, downloadHero } from "@/experiments/heroCopy";
@@ -12,6 +13,21 @@ const INSTALL_URL = "https://app.fixyourmovement.com/install";
 const VIDEO_ID = "b37100f8162e1ab91cf86c9e284447da";
 const VIDEO_THUMBNAIL_ID = "0a87b6a7-6fb2-48dc-9e26-aa5c134c0200";
 const VIDEO_POSTER_SRC = `https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/${VIDEO_THUMBNAIL_ID}/public`;
+// Anchor on the second opt-in form card; the Member Stories CTA scrolls here (2026-11-16).
+const BOTTOM_FORM_ID = "free-recovery-plan-bottom";
+
+// Same smooth-scroll mechanism as /lp/cold-start's anchor CTAs (instant when reduced motion is set).
+function scrollToBottomForm() {
+  const el = document.getElementById(BOTTOM_FORM_ID);
+  if (!el) return;
+  let reduce = false;
+  try {
+    reduce = typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {
+    reduce = false;
+  }
+  el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+}
 
 
 // ─── Pill ───────────────────────────────────────────────────────────────────────
@@ -691,7 +707,7 @@ export default function DownloadApp() {
           </div>
 
           {/* Second opt-in form */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4">
+          <div id={BOTTOM_FORM_ID} className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4 scroll-mt-6">
             <h2 className="text-3xl font-extrabold text-slate-900 text-center mb-2">
               Ready to Start? Get Your Free Recovery Plan
             </h2>
@@ -774,6 +790,9 @@ export default function DownloadApp() {
           </div>
 
         </main>
+
+        {/* Member Stories (2026-11-16) — pre-signup view only; CTA scrolls to the second opt-in form */}
+        <MemberStories cta={{ label: "Get My Free Recovery Plan →", onClick: scrollToBottomForm }} />
 
         {/* Footer */}
         <div className="border-t border-slate-200 bg-white py-6 px-6 text-center">
