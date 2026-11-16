@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
-import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 import MemberStories from "@/components/MemberStories";
+import MemberStoriesPreview, { PREVIEW_TESTIMONIAL_IDS } from "@/components/MemberStoriesPreview";
 import { installUrlWithTracking } from "@/lib/installTracking";
 import { variantFor, withExperimentMeta } from "@/experiments/exp";
 import { CS_HERO_EXPERIMENT, coldStartHero } from "@/experiments/heroCopy";
@@ -855,22 +855,18 @@ export default function ColdStart() {
               <span className="block text-blue-600">Can Look Like.</span>
             </h2>
             <p className={`${T.body} text-center mt-5`}>
-              Explore changes in pain and reported foot function from FCS members. Open their stories to see where they started and how they progressed.
+              Real stories from FCS members, in their own words.
             </p>
             <p className={`${T.note} text-center mt-3`}>
               Recovery looks different for everyone. Individual results vary.
             </p>
           </div>
 
-          {/* Existing member-progress component — unchanged (horizontal scroll + tap-to-open;
-              not a testimonial carousel, no arrows/dots) */}
+          {/* Named member-story preview (2026-11-16) — replaces the aliased carousel; "Read more" scrolls to
+              the full Member Stories section at the bottom of <main> */}
           <div className="max-w-[1120px] mx-auto mt-8">
-            <UserJourneyCarousel />
+            <MemberStoriesPreview moreTargetId="member-stories" />
           </div>
-
-          <p className={`${T.body} font-bold text-slate-900 text-center mt-6`}>
-            Tap any result to read the member’s full story.
-          </p>
         </section>
 
         {/* ════════════ SECTION 7 — MEMBER TESTIMONIALS ════════════ */}
@@ -1030,6 +1026,7 @@ export default function ColdStart() {
 
         {/* Member Stories (2026-11-16) — pre-signup view only; CTA smooth-scrolls to the bottom form */}
         <MemberStories
+          excludeIds={PREVIEW_TESTIMONIAL_IDS}
           cta={{ label: "Start My Free Recovery Plan →", onClick: () => goToForm("form_bottom", "stories_free_plan") }}
         />
       </main>

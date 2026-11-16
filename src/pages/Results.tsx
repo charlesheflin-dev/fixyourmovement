@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { CheckCircle, TrendingUp, Map, Video, ArrowRight, Shield, Zap, Infinity } from "lucide-react";
-import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 import MemberStories from "@/components/MemberStories";
+import MemberStoriesPreview, { PREVIEW_TESTIMONIAL_IDS } from "@/components/MemberStoriesPreview";
 import logo from "@/assets/logo.png";
 
 const GET_RESULTS_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/get-results-data";
@@ -602,11 +602,11 @@ function NextStepSection() {
           ))}
         </div>
 
-        {/* User Journey Carousel */}
+        {/* Member Stories preview (2026-11-16) — named stories; replaces the aliased carousel */}
         <div className="mt-8">
-          <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-2 text-center">Real Member Results</p>
-          <p className="text-slate-500 text-sm text-center mb-5">These are real outcomes from active members tracked inside the app.</p>
-          <UserJourneyCarousel />
+          <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-2 text-center">Real Member Stories</p>
+          <p className="text-slate-500 text-sm text-center mb-5">In their own words, shared with permission.</p>
+          <MemberStoriesPreview moreTargetId="member-stories" />
         </div>
 
       </div>
@@ -976,7 +976,7 @@ export default function Results() {
         <NextStepSection />
         <FinalCtaSection insights={insights} insightsLoading={insightsLoading} />
         {/* Member Stories (2026-11-16) — every mode, after the final CTA; same /checkout target + label */}
-        <MemberStories cta={{ label: "Continue My Recovery →", href: CHECKOUT_URL, onClick: () => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_stories_cta" }) }} />
+        <MemberStories excludeIds={PREVIEW_TESTIMONIAL_IDS} cta={{ label: "Continue My Recovery →", href: CHECKOUT_URL, onClick: () => window.gtag?.("event", "checkout_click", { event_category: "conversion", event_label: "results_stories_cta" }) }} />
       </main>
 
       <ResultsFooter />

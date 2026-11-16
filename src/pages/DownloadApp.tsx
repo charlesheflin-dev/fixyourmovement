@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
-import UserJourneyCarousel from "@/components/UserJourneyCarousel";
 import MemberStories from "@/components/MemberStories";
+import MemberStoriesPreview, { PREVIEW_TESTIMONIAL_IDS } from "@/components/MemberStoriesPreview";
 import { installUrlWithTracking } from "@/lib/installTracking";
 import { variantFor, withExperimentMeta } from "@/experiments/exp";
 import { DL_HERO_EXPERIMENT, downloadHero } from "@/experiments/heroCopy";
@@ -667,11 +667,11 @@ export default function DownloadApp() {
             </InfoCard>
           </div>
 
-          {/* User Journey Carousel */}
+          {/* Member Stories preview (2026-11-16) — named stories; replaces the aliased carousel */}
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-8 mb-4">
-            <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-2 text-center">Real Member Results</p>
-            <p className="text-slate-500 text-sm text-center mb-5">These are real outcomes from active members tracked inside the app.</p>
-            <UserJourneyCarousel />
+            <p className="text-blue-600 text-[13px] font-semibold uppercase tracking-widest mb-2 text-center">Real Member Stories</p>
+            <p className="text-slate-500 text-sm text-center mb-5">In their own words, shared with permission.</p>
+            <MemberStoriesPreview moreTargetId="member-stories" />
           </div>
 
           {/* FAQ / objections */}
@@ -792,7 +792,7 @@ export default function DownloadApp() {
         </main>
 
         {/* Member Stories (2026-11-16) — pre-signup view only; CTA scrolls to the second opt-in form */}
-        <MemberStories cta={{ label: "Get My Free Recovery Plan →", onClick: scrollToBottomForm }} />
+        <MemberStories excludeIds={PREVIEW_TESTIMONIAL_IDS} cta={{ label: "Get My Free Recovery Plan →", onClick: scrollToBottomForm }} />
 
         {/* Footer */}
         <div className="border-t border-slate-200 bg-white py-6 px-6 text-center">

@@ -46,6 +46,19 @@ describe("MemberStories", () => {
     for (const t of TESTIMONIALS) expect(c.textContent).toContain(t.name);
   });
 
+  it("excludeIds removes those stories and the Show more count reflects the reduced list", () => {
+    const ex = TESTIMONIALS.slice(0, 3).map((t) => t.id);
+    const rest = TESTIMONIALS.filter((t) => !ex.includes(t.id));
+    const c = mount(<MemberStories excludeIds={ex} cta={{ label: "Go", href: "/x" }} />);
+    expect(cards(c)).toBe(6);
+    const more = buttonByText(c, `Show more stories (${rest.length - 6})`);
+    expect(more).not.toBeNull();
+    click(more!);
+    expect(cards(c)).toBe(rest.length);
+    const captions = Array.from(c.querySelectorAll("figure.break-inside-avoid figcaption")).map((f) => f.textContent);
+    for (const t of TESTIMONIALS.slice(0, 3)) expect(captions.some((x) => x?.includes(t.name))).toBe(false);
+  });
+
   it("respects initialCount and hides the button when everything is shown", () => {
     const c = mount(<MemberStories initialCount={TESTIMONIALS.length} cta={{ label: "Go", href: "/x" }} />);
     expect(cards(c)).toBe(TESTIMONIALS.length);
