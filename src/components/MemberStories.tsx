@@ -20,8 +20,15 @@ type Props = {
   /** "h1" only on /testimonials, where this section is the page. */
   headingAs?: "h1" | "h2";
   initialCount?: number;
-  cta: MemberStoriesCta;
+  /** Omit to render no CTA (e.g. /hsa-fsa, whose section already carries its own checkout link). */
+  cta?: MemberStoriesCta;
   showPermissionLine?: boolean;
+  /** Outer element id — MemberStoriesPreview's "Read more member stories" scrolls here. */
+  id?: string;
+  /** Hide the eyebrow + heading when the host section already has its own heading (e.g. /hsa-fsa). */
+  hideHeading?: boolean;
+  /** Testimonial ids to leave out (already shown by a MemberStoriesPreview on the same page). Videos unaffected. */
+  excludeIds?: string[];
 };
 
 const DEFAULT_HEADING = "What Members Shared After Following The System";
@@ -69,10 +76,14 @@ export default function MemberStories({
   initialCount = 6,
   cta,
   showPermissionLine = true,
+  id = "member-stories",
+  hideHeading = false,
+  excludeIds,
 }: Props) {
   const [expanded, setExpanded] = useState(false);
-  const total = TESTIMONIALS.length;
-  const shown = expanded ? TESTIMONIALS : TESTIMONIALS.slice(0, Math.max(0, initialCount));
+  const list = excludeIds?.length ? TESTIMONIALS.filter((t) => !excludeIds.includes(t.id)) : TESTIMONIALS;
+  const total = list.length;
+  const shown = expanded ? list : list.slice(0, Math.max(0, initialCount));
   const remaining = total - shown.length;
   const Heading = headingAs;
   const headingClass =
@@ -81,15 +92,26 @@ export default function MemberStories({
       : "font-display text-3xl md:text-4xl font-bold text-slate-900 leading-snug mb-4";
 
   return (
-    <section aria-labelledby="member-stories-heading" className="w-full bg-slate-50 py-12 md:py-16">
+    <section
+      id={id}
+      aria-labelledby={hideHeading ? undefined : "member-stories-heading"}
+      aria-label={hideHeading ? "Member stories" : undefined}
+      className="w-full bg-slate-50 py-12 md:py-16"
+    >
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-        <div className="max-w-3xl mx-auto text-center mb-10">
-          <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Member Stories</p>
-          <Heading id="member-stories-heading" className={headingClass}>
-            {heading}
-          </Heading>
-          {showPermissionLine && <p className="text-slate-600 text-base leading-relaxed">{PERMISSION_LINE}</p>}
-        </div>
+        {(!hideHeading || showPermissionLine) && (
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            {!hideHeading && (
+              <>
+                <p className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-3">Member Stories</p>
+                <Heading id="member-stories-heading" className={headingClass}>
+                  {heading}
+                </Heading>
+              </>
+            )}
+            {showPermissionLine && <p className="text-slate-600 text-base leading-relaxed">{PERMISSION_LINE}</p>}
+          </div>
+        )}
 
         <div className="flex flex-col sm:flex-row sm:justify-center gap-8 mb-10">
           {VIDEO_TESTIMONIALS.map((v) => (
@@ -117,17 +139,19 @@ export default function MemberStories({
           </div>
         )}
 
-        <div className="mt-10 text-center">
-          {cta.href ? (
-            <a href={cta.href} onClick={cta.onClick} className={CTA_CLASS}>
-              {cta.label}
-            </a>
-          ) : (
-            <button type="button" onClick={cta.onClick} className={CTA_CLASS}>
-              {cta.label}
-            </button>
-          )}
-        </div>
+        {cta && (
+          <div className="mt-10 text-center">
+            {cta.href ? (
+              <a href={cta.href} onClick={cta.onClick} className={CTA_CLASS}>
+                {cta.label}
+              </a>
+            ) : (
+              <button type="button" onClick={cta.onClick} className={CTA_CLASS}>
+                {cta.label}
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

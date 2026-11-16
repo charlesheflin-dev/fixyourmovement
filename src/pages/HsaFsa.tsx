@@ -4,7 +4,7 @@ import { Check } from "lucide-react";
 import logo from "@/assets/logo.png";
 import headshot from "@/assets/dj-head-2.jpg";
 import receiptPreview from "@/assets/receipt-provider-preview.png";
-import UserJourneyCarousel from "@/components/UserJourneyCarousel";
+import MemberStories from "@/components/MemberStories";
 
 const CHECKOUT_URL = "/checkout";
 
@@ -253,12 +253,12 @@ export default function HsaFsa() {
               <div className="space-y-4 text-slate-600 text-lg leading-relaxed">
                 <p>Recovery looks different for everyone.</p>
                 <p>Some members experience meaningful improvements within weeks, while others make steady progress over a longer period. The Foot Capacity System helps members track that progress over time rather than relying on guesswork.</p>
-                <p>Below are examples of real member progress recorded inside the Foot Capacity System.</p>
+                <p>Below are stories from real members, in their own words, shared with permission.</p>
               </div>
             </motion.div>
 
             <div className="my-8">
-              <UserJourneyCarousel />
+              <MemberStories hideHeading />
             </div>
 
             <p className="text-slate-500 text-base leading-relaxed mb-8">
