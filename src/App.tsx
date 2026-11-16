@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
 import { initMetaPixel, trackPageView } from "./lib/metaPixel";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -172,12 +172,15 @@ function MetaPixelTracker() {
   return null;
 }
 
-const App = () => (
+// The router is a prop so scripts/prerender.mjs can render the same tree under a StaticRouter at
+// build time (SPEC-ai-discoverability-fixes item 7). Browsers always get BrowserRouter.
+type RouterComponent = (props: { children: ReactNode }) => JSX.Element;
+const App = ({ Router = BrowserRouter as RouterComponent }: { Router?: RouterComponent }) => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <Router>
         <ScrollToTop />
         <SourceCapture />
         <MetaPixelTracker />
@@ -220,7 +223,7 @@ const App = () => (
                     <Route path="*" element={<NotFound />} />
          </Routes>
         </Suspense>
-      </BrowserRouter>
+      </Router>
     </TooltipProvider>
   </QueryClientProvider>
 );
