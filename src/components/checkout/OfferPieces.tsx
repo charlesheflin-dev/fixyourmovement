@@ -429,8 +429,8 @@ export function GuaranteeCard() {
           </svg>
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-slate-900 text-base font-bold leading-snug">Walk Pain Free, Or It's Free</p>
-          <p className="text-blue-600 text-sm font-semibold leading-snug">30-Day Money-Back Guarantee</p>
+          <p className="text-slate-900 text-base font-bold leading-snug">30-Day Money-Back Guarantee</p>
+          <p className="text-blue-600 text-sm font-semibold leading-snug">On every plan</p>
         </div>
         {/* Existing FCS logo asset, unchanged (src/assets/logo.png — same file the live checkout uses). */}
         <img src={logo} alt="FCS" className="h-10 w-auto shrink-0" />

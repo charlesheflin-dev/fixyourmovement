@@ -764,7 +764,7 @@ export default function NewIndex() {
 
                   {/* Primary headline */}
                   <h2 className="font-display text-2xl md:text-4xl font-bold text-slate-900 leading-tight mb-3">
-                    "Walk Pain-Free Or It's Free"
+                    30-Day Money-Back Guarantee
                   </h2>
 
                   <p className="text-slate-600 text-base mb-4">Our goal is meaningful progress, not pressure.</p>
@@ -773,7 +773,8 @@ export default function NewIndex() {
 
                   {/* Body copy */}
                   <p className="text-slate-600 text-base leading-relaxed mb-8 max-w-lg mx-auto">
-                    Try the system for 30 days. Follow the program, track your progress, and if you do not experience meaningful improvement, we'll refund your investment. No questions asked.
+                    Try the Foot Capacity System for 30 days. If it's not the right fit, simply email us within 30 days and we'll refund your investment. No complicated forms. No hoops to jump through.{" "}
+                    <a href="/refund-policy" className="text-blue-600 font-semibold hover:underline">Read the full guarantee →</a>
                   </p>
 
                   {/* 3 inline trust bullets */}
