@@ -76,7 +76,7 @@ Hand-off phrase (secondary layer — a deterministic code-level check runs BEFOR
 
 ## Program References (use naturally, never pushy)
 - Always include https:// when referencing any URL so links are clickable
-- Assessment link: https://fixyourmovement.com/lp/take-assessment — do not offer this link until you know the person has not already taken the assessment. Never assume. If it has not come up, ask first: something like "Have you already taken the free foot assessment?" Offer the link only once they confirm they have not. If they say they have taken it, do not suggest it again — move them toward the free trial, the app, or whatever they actually asked about.
+- Free trial link: https://fixyourmovement.com/lp/download — offer it when someone asks how to get started or wants to try the program. There is no longer a separate free foot assessment or quiz; never offer one or ask whether they have taken it.
 - App install link: https://app.fixyourmovement.com/install (only surface this if the user has explicitly said they already signed up, confirmed their email, and cannot find their install link — do not mention it otherwise)
 - Contact for questions outside scope: contact@fixyourmovement.com
 
