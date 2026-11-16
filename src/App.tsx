@@ -34,6 +34,7 @@ const GuideToughDay = lazy(() => import("./pages/GuideToughDay"));
 const GuideNext = lazy(() => import("./pages/GuideNext"));
 const FootCapacitySystem = lazy(() => import("./pages/FootCapacitySystem"));
 const WhenToGetSeenInPerson = lazy(() => import("./pages/WhenToGetSeenInPerson"));
+const Testimonials = lazy(() => import("./pages/Testimonials"));
 const AskDrJonathan = lazy(() => import("./components/AskDrJonathan.tsx"));
 
 function AskDrJonathanGlobal() {
@@ -220,6 +221,7 @@ const App = ({ Router = BrowserRouter as RouterComponent }: { Router?: RouterCom
                     <Route path="/guide/next" element={<GuideNext />} />
                     <Route path="/foot-capacity-system" element={<FootCapacitySystem />} />
                     <Route path="/when-to-get-seen-in-person" element={<WhenToGetSeenInPerson />} />
+                    <Route path="/testimonials" element={<Testimonials />} />
                     <Route path="*" element={<NotFound />} />
          </Routes>
         </Suspense>
