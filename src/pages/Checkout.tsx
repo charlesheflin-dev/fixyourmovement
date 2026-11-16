@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import {
   FunnelShell,
   FunnelHero,
@@ -51,7 +51,28 @@ function track(event: string, label?: string) {
   }
 }
 
+// Cold vs. trial-finisher audience for the step-1 hero (AI-discoverability item 20, 2026-11-16).
+// /checkout was built for people who just finished the 7 free check-ins (they arrive from /results,
+// the trial-results email, or AWeber emails: same-site or EMPTY referrer). A visitor is treated as
+// COLD only when we know it: ?source=hsa (the /hsa-fsa page link) or a referrer from another site
+// (search, AI answers, social). Everyone else keeps the approved trial-finisher copy unchanged.
+// The server/prerender snapshot is the trial copy, so hydration matches the prerendered HTML and a
+// cold visitor switches to the neutral hero right after hydration (no hydration error).
+function isColdVisitor(): boolean {
+  try {
+    if (new URLSearchParams(window.location.search).get("source") === "hsa") return true;
+    const ref = document.referrer;
+    if (!ref) return false;
+    const host = new URL(ref).hostname;
+    return !(host === "fixyourmovement.com" || host.endsWith(".fixyourmovement.com"));
+  } catch {
+    return false;
+  }
+}
+const noSubscribe = () => () => {};
+
 export default function Checkout() {
+  const cold = useSyncExternalStore(noSubscribe, isColdVisitor, () => false);
   const [step, setStep] = useState<Step>("offer");
   // The $97 answer. null = not yet chosen (start, or after Back from the lifetime step).
   // The lifetime offer is DERIVED from this on every render — never stored.
@@ -126,18 +147,29 @@ export default function Checkout() {
     return (
       <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, sans-serif" }}>
         <FunnelShell>
-          <FunnelHero
-            eyebrow="YOUR RECOVERY ROADMAP CONTINUES"
-            title="Seven Check-Ins Down. Your Recovery Is Just Getting Started."
-            body="You've put in the work and seen your progress. Now keep building the strength and confidence to get back to the life you love."
-          />
-          <SavedProgressPanel
-            heading="Your progress is saved."
-            body="Every exercise, pain score, and check-in you've logged is saved and ready when you are."
-            closing="No starting over. Pick up right where you left off."
-          />
+          {cold ? (
+            // Cold-visitor hero — PENDING CHARLES APPROVAL (2026-11-16).
+            <FunnelHero
+              eyebrow="THE FOOT CAPACITY SYSTEM"
+              title="Your At-Home Recovery Plan Starts Here."
+              body="A guided program from Dr. Jonathan Schutza to rebuild foot and ankle strength from home, about 15 minutes a day, one check-in at a time."
+            />
+          ) : (
+            <FunnelHero
+              eyebrow="YOUR RECOVERY ROADMAP CONTINUES"
+              title="Seven Check-Ins Down. Your Recovery Is Just Getting Started."
+              body="You've put in the work and seen your progress. Now keep building the strength and confidence to get back to the life you love."
+            />
+          )}
+          {!cold && (
+            <SavedProgressPanel
+              heading="Your progress is saved."
+              body="Every exercise, pain score, and check-in you've logged is saved and ready when you are."
+              closing="No starting over. Pick up right where you left off."
+            />
+          )}
           <OfferCard
-            ribbon="CONTINUE YOUR RECOVERY"
+            ribbon={cold ? "START YOUR RECOVERY" : "CONTINUE YOUR RECOVERY"}
             title="Your Recovery Plan"
             support="The full FCS program with AI support."
             price="$47"
@@ -150,7 +182,7 @@ export default function Checkout() {
               "Ask Dr. Jonathan AI for help with your program",
               "A plan that progresses with you",
             ]}
-            ctaLabel="Continue My Recovery for $47/month"
+            ctaLabel={cold ? "Start My Recovery for $47/month" : "Continue My Recovery for $47/month"}
             onCta={() => setStep("upsell97")}
             reassurance={[
               "No long-term commitment. Secure checkout.",
