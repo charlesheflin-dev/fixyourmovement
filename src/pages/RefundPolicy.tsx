@@ -16,9 +16,9 @@ const RefundPolicy = () => {
                     <div className="space-y-8 font-body text-lg text-muted-foreground leading-relaxed">
                         <section>
                             <h2 className="font-display text-xl md:text-2xl text-primary font-semibold mb-1">
-                                Walk Pain Free, Or It's Free
+                                30-Day Money-Back Guarantee
                             </h2>
-                            <p className="text-slate-700 text-sm font-semibold uppercase tracking-widest mb-4">30-Day Money-Back Guarantee</p>
+                            <p className="text-slate-700 text-sm font-semibold uppercase tracking-widest mb-4">On every plan</p>
                             <p className="mb-4">
                                 Back At It Physical Therapy, LLC, doing business as Foot Capacity System, stands behind the Foot Capacity System and wants you to feel confident giving it a genuine try.
                             </p>
@@ -57,6 +57,7 @@ const RefundPolicy = () => {
                                 <li>Access to the program may be revoked after a refund has been processed</li>
                                 <li>We reserve the right to deny refunds in cases of fraudulent activity, abuse of this Refund Policy, or repeated refund requests associated with multiple purchases or accounts</li>
                                 <li>Refunds apply only to purchases made directly from Foot Capacity System or FixYourMovement.com. Purchases made through authorized third-party marketplaces or providers are subject to the refund policies of those providers, where applicable</li>
+                                <li>Purchases made through our own checkout at FixYourMovement.com, which is processed by Whop, are purchases made directly from Foot Capacity System and are covered by this guarantee</li>
                             </ul>
                             <p className="mt-4">
                                 This guarantee is intended to support genuine users who give the system a fair opportunity while protecting the integrity of the platform.

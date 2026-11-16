@@ -11,7 +11,7 @@ export const ROUTE_HEADS = {
   "/contact": { title: "Contact | The Foot Capacity System",
     description: "Questions about the Foot Capacity System program or your purchase? Email contact@fixyourmovement.com.", dropSchema: true },
   "/refund-policy": { title: "Refund Policy | The Foot Capacity System",
-    description: "Refund terms for the Foot Capacity System.", dropSchema: true },   // guarantee build may replace the description
+    description: "30-day money-back guarantee on every Foot Capacity System plan: try it for 30 days, and if it's not the right fit, email us within 30 days for a refund.", dropSchema: true },
   "/privacy-policy": { title: "Privacy Policy | The Foot Capacity System", description: "How the Foot Capacity System collects, uses and protects your information.", dropSchema: true },
   "/terms-of-service": { title: "Terms of Service | The Foot Capacity System", description: "Terms of service for the Foot Capacity System website and app.", dropSchema: true },
   "/eula": { title: "End User License Agreement | The Foot Capacity System", description: "End user license agreement for the Foot Capacity System app.", dropSchema: true },
