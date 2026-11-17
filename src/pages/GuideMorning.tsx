@@ -12,10 +12,10 @@ const WELCOME_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8cf4
 const WELCOME_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8cf48502ce340cf217db3899968b4e27/watch";
 const M1_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/eb06e05baab20f1da9741ed09e09f7b3/iframe";
 const M1_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/eb06e05baab20f1da9741ed09e09f7b3/watch";
-const M2_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8dfbb75935b048365be71eca379fdb17/iframe";
-const M2_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8dfbb75935b048365be71eca379fdb17/watch";
-const M3_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/d06210e4b1cf219341a652c07c2dbf4d/iframe";
-const M3_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/d06210e4b1cf219341a652c07c2dbf4d/watch";
+const M2_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/d06210e4b1cf219341a652c07c2dbf4d/iframe";
+const M2_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/d06210e4b1cf219341a652c07c2dbf4d/watch";
+const M3_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8dfbb75935b048365be71eca379fdb17/iframe";
+const M3_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8dfbb75935b048365be71eca379fdb17/watch";
 
 export default function GuideMorning() {
   const [video, setVideo] = useState<{ src: string; fallback: string } | null>(null);
