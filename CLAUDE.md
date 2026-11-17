@@ -5,7 +5,7 @@ Never use `npm run build` alone — fails CSS compilation silently.
 bun.lockb must stay committed.
 
 Key files:
-- src/components/UserJourneyCarousel.tsx — success stories carousel, alias-named patient data
+- src/data/testimonials.ts — approved named member testimonials (single source for /testimonials, MemberStories, MemberStoriesPreview). The aliased UserJourneyCarousel was retired and deleted 2026-11-16.
 
 ## GIT MAIN-BRANCH PROTECTION
 
