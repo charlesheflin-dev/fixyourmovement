@@ -35,6 +35,7 @@ const GuideNext = lazy(() => import("./pages/GuideNext"));
 const FootCapacitySystem = lazy(() => import("./pages/FootCapacitySystem"));
 const WhenToGetSeenInPerson = lazy(() => import("./pages/WhenToGetSeenInPerson"));
 const Testimonials = lazy(() => import("./pages/Testimonials"));
+const ProgramsCompared = lazy(() => import("./pages/ProgramsCompared"));
 const AskDrJonathan = lazy(() => import("./components/AskDrJonathan.tsx"));
 
 function AskDrJonathanGlobal() {
@@ -222,6 +223,7 @@ const App = ({ Router = BrowserRouter as RouterComponent }: { Router?: RouterCom
                     <Route path="/foot-capacity-system" element={<FootCapacitySystem />} />
                     <Route path="/when-to-get-seen-in-person" element={<WhenToGetSeenInPerson />} />
                     <Route path="/testimonials" element={<Testimonials />} />
+                    <Route path="/best-at-home-plantar-fasciitis-programs" element={<ProgramsCompared />} />
                     <Route path="*" element={<NotFound />} />
          </Routes>
         </Suspense>

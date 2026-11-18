@@ -21,4 +21,7 @@ export const ROUTE_HEADS = {
     description: "The symptoms Dr. Jonathan Schutza, PT, DPT, tells Foot Capacity System members to stop for and get checked in person, word for word from the app.", dropSchema: true },
   "/testimonials": { title: "Member Testimonials | The Foot Capacity System",
     description: "What Foot Capacity System members shared about their foot and heel pain recovery, in their own words. Selected examples shared with permission; individual results vary.", dropSchema: true },
+  // Fair comparison page (SPEC-ai-discoverability-fixes item 24, 2026-11-18).
+  "/best-at-home-plantar-fasciitis-programs": { title: "Best At-Home Plantar Fasciitis Programs: How to Choose",
+    description: "A fair comparison of at-home plantar fasciitis options: the Foot Capacity System, E3 Rehab, Vivobarefoot, free videos, physical therapy and supportive devices. Written by the FCS team.", dropSchema: true },
 };

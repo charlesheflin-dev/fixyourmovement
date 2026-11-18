@@ -9,7 +9,7 @@ export const SPA_EXACT = [
   "/lp/take-assessment", "/lp/download", "/lp/cold-start", "/assessment", "/assessment-results",
   "/unsubscribed", "/checkout", "/upgrade", "/survey", "/results", "/ask",
   "/guide/morning", "/guide/tough-day", "/guide/next", "/foot-capacity-system",
-  "/when-to-get-seen-in-person", "/testimonials",
+  "/when-to-get-seen-in-person", "/testimonials", "/best-at-home-plantar-fasciitis-programs",
 ];
 export const SPA_PREFIXES = ["/start/", "/survey/", "/results/"];
 // Real static HTML (Pretty URLs: /support = support.html, /bonuses/*) and the blog: exact or below.

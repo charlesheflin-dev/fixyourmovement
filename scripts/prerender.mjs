@@ -29,6 +29,7 @@ const ROUTES = [
   ["/when-to-get-seen-in-person", "when-to-get-seen-in-person.html"],
   ["/testimonials", "testimonials.html"],
   ["/checkout", "checkout.html"],
+  ["/best-at-home-plantar-fasciitis-programs", "best-at-home-plantar-fasciitis-programs.html"],
 ];
 
 const ROOT_DIV = '<div id="root"></div>';
