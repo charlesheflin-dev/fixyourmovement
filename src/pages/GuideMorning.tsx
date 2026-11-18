@@ -8,14 +8,14 @@ import "@/components/guide/guide.css";
 // copied /images/guide/* assets, internal links routed via react-router, and the
 // reference's vanilla-JS click-to-play modal reproduced with VideoModal.
 
-const WELCOME_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8cf48502ce340cf217db3899968b4e27/iframe";
-const WELCOME_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8cf48502ce340cf217db3899968b4e27/watch";
+const WELCOME_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/570eb7de7c60dbdd4dfa302d2792fdb4/iframe";
+const WELCOME_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/570eb7de7c60dbdd4dfa302d2792fdb4/watch";
 const M1_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/eb06e05baab20f1da9741ed09e09f7b3/iframe";
 const M1_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/eb06e05baab20f1da9741ed09e09f7b3/watch";
-const M2_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/d06210e4b1cf219341a652c07c2dbf4d/iframe";
-const M2_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/d06210e4b1cf219341a652c07c2dbf4d/watch";
-const M3_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8dfbb75935b048365be71eca379fdb17/iframe";
-const M3_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8dfbb75935b048365be71eca379fdb17/watch";
+const M2_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8dfbb75935b048365be71eca379fdb17/iframe";
+const M2_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/8dfbb75935b048365be71eca379fdb17/watch";
+const M3_SRC = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/d06210e4b1cf219341a652c07c2dbf4d/iframe";
+const M3_FALLBACK = "https://customer-hene8ngxxo3eajlj.cloudflarestream.com/d06210e4b1cf219341a652c07c2dbf4d/watch";
 
 export default function GuideMorning() {
   const [video, setVideo] = useState<{ src: string; fallback: string } | null>(null);
@@ -100,34 +100,34 @@ export default function GuideMorning() {
               </article>
 
               <article className="movement-card">
-                <button className="movement-visual js-video" onClick={() => openVideo(M2_SRC, M2_FALLBACK)} aria-label="Play Great Toe Flexion Isometric video">
-                  <img src="/images/guide/02-great-toe-flexion-isometric.jpg" alt="Dr. Jonathan demonstrating the Great Toe Flexion Isometric" />
+                <button className="movement-visual js-video" onClick={() => openVideo(M2_SRC, M2_FALLBACK)} aria-label="Play Seated Heel Raise video">
+                  <img src="/images/guide/02-seated-heel-raise.jpg" alt="Dr. Jonathan demonstrating the Seated Heel Raise" />
                 </button>
                 <div className="movement-content">
                   <div className="movement-number">Movement 02</div>
-                  <h3>Great Toe Flexion Isometric</h3>
-                  <p>Wake up the muscles of your big toe and arch before standing, introducing a small amount of muscular activity before you take that first step.</p>
-                  <div className="dosage">
-                    <span className="dosage-label">Do This</span>
-                    <strong>Press down and hold for 3 seconds<br />Repeat 10–20 times</strong>
-                  </div>
-                  <button className="watch-link js-video" onClick={() => openVideo(M2_SRC, M2_FALLBACK)} aria-label="Watch Great Toe Flexion Isometric">Watch <span>→</span></button>
-                </div>
-              </article>
-
-              <article className="movement-card">
-                <button className="movement-visual js-video" onClick={() => openVideo(M3_SRC, M3_FALLBACK)} aria-label="Play Seated Heel Raise video">
-                  <img src="/images/guide/03-seated-heel-raise.jpg" alt="Dr. Jonathan demonstrating the Seated Heel Raise" />
-                </button>
-                <div className="movement-content">
-                  <div className="movement-number">Movement 03</div>
                   <h3>Seated Heel Raise</h3>
                   <p>Gently load your calf and the bottom of your foot while you're still seated, helping prepare those tissues for the transition to standing.</p>
                   <div className="dosage">
                     <span className="dosage-label">Do This</span>
                     <strong>10–20 repetitions<br />Or continue for about 1 minute if you prefer not to count</strong>
                   </div>
-                  <button className="watch-link js-video" onClick={() => openVideo(M3_SRC, M3_FALLBACK)} aria-label="Watch Seated Heel Raise">Watch <span>→</span></button>
+                  <button className="watch-link js-video" onClick={() => openVideo(M2_SRC, M2_FALLBACK)} aria-label="Watch Seated Heel Raise">Watch <span>→</span></button>
+                </div>
+              </article>
+
+              <article className="movement-card">
+                <button className="movement-visual js-video" onClick={() => openVideo(M3_SRC, M3_FALLBACK)} aria-label="Play Great Toe Flexion Isometric video">
+                  <img src="/images/guide/03-great-toe-flexion-isometric.jpg" alt="Dr. Jonathan demonstrating the Great Toe Flexion Isometric" />
+                </button>
+                <div className="movement-content">
+                  <div className="movement-number">Movement 03</div>
+                  <h3>Great Toe Flexion Isometric</h3>
+                  <p>Wake up the muscles of your big toe and arch before standing, introducing a small amount of muscular activity before you take that first step.</p>
+                  <div className="dosage">
+                    <span className="dosage-label">Do This</span>
+                    <strong>Press down and hold for 3 seconds<br />Repeat 10–20 times</strong>
+                  </div>
+                  <button className="watch-link js-video" onClick={() => openVideo(M3_SRC, M3_FALLBACK)} aria-label="Watch Great Toe Flexion Isometric">Watch <span>→</span></button>
                 </div>
               </article>
 
