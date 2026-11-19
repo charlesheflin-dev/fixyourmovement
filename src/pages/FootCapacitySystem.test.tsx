@@ -13,10 +13,13 @@ const html = renderToStaticMarkup(
 
 describe("/foot-capacity-system explainer", () => {
   it.each(["$47", "$97", "$582", "$297", "$497", "About 15 minutes a day", "7 check-ins", "30-day",
-           "Three phases, about 12 weeks.", "Every plan includes a 30-day money-back guarantee."])(
+           "Try It First.", "No credit card. No password. No countdown clock.", "TRY EVERYTHING FREE",
+           "Three phases, at your own pace.", "30-DAY MONEY-BACK GUARANTEE", "Now See the Program.",
+           "Nothing to buy today. Just your first step.", "How HSA/FSA reimbursement works"])(
     "contains %s", (s) => { expect(html).toContain(s); });
 
-  it.each(["$157", "$397", "$697", "Seven Check-Ins Down", 'href="/checkout', "equipment", "Walk Pain Free"])(
+  it.each(["$157", "$397", "$697", "Seven Check-Ins Down", 'href="/checkout', "equipment", "Walk Pain Free",
+           "Secure checkout", "direct communication", "Paying with an HSA", "Total investment"])(
     "does not contain %s", (s) => { expect(html).not.toContain(s); });
 
   it("every CTA goes to /lp/download with no ?source=", () => {
@@ -24,6 +27,12 @@ describe("/foot-capacity-system explainer", () => {
     expect(ctas.length).toBe(2);
     for (const href of ctas) expect(href).toBe("/lp/download");
     expect(html).not.toContain("?source=");
+  });
+
+  it("returning-user line sits under both CTAs and links to the app, not a buy page", () => {
+    expect(html.split("Already finished your free check-ins?").length - 1).toBe(2);
+    expect(html.split('href="https://app.fixyourmovement.com/install"').length - 1).toBe(2);
+    expect(html).not.toMatch(/whop\.com/i);
   });
 
   it.each(["/when-to-get-seen-in-person", "/refund-policy", "/hsa-fsa", "/dr-jonathan-schutza"])(
