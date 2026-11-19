@@ -146,10 +146,10 @@ export default function FootCapacitySystem() {
             <br />
             <span className="text-blue-600">Try It First.</span>
           </h1>
-          <p className="text-slate-600 text-base sm:text-[17px] leading-normal">
+          <p className="text-center text-slate-600 text-base sm:text-[17px] leading-normal">
             There's no buy button on this page, and that's on purpose. We're confident in the Foot Capacity System, Dr. Jonathan Schutza's guided home program for plantar fasciitis and heel pain, and we'd rather you experience it before you spend a dollar.
           </p>
-          <ul className="mt-4 space-y-2.5">
+          <ul className="mt-4 space-y-2.5 rounded-2xl border border-slate-200 bg-white px-4 py-4 sm:px-5">
             {HERO_POINTS.map(([lead, rest]) => (
               <li key={lead} className="grid grid-cols-[22px_minmax(0,1fr)] gap-x-3 items-start">
                 <span className="mt-px w-[22px] h-[22px] rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center" aria-hidden="true">✓</span>
@@ -166,11 +166,11 @@ export default function FootCapacitySystem() {
         </header>
 
         {/* 2. How it works */}
-        <Panel>
-          <h2 className="text-slate-900 text-xl font-bold leading-snug mb-4">How It Works</h2>
-          <div className="flex flex-col gap-4">
+        <section className="mt-4">
+          <h2 className="text-center text-slate-900 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight mb-4">How It Works</h2>
+          <div className="flex flex-col gap-3">
             {STEPS.map((step) => (
-              <div key={step.label} className="flex items-start gap-3">
+              <div key={step.label} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-4 sm:px-5">
                 <IconTile icon={step.icon} />
                 <div className="min-w-0">
                   <p className="text-slate-900 text-[15px] font-bold leading-snug">{step.label}</p>
@@ -179,7 +179,7 @@ export default function FootCapacitySystem() {
               </div>
             ))}
           </div>
-        </Panel>
+        </section>
 
         {/* 3. Try everything free */}
         <Panel>
@@ -204,7 +204,7 @@ export default function FootCapacitySystem() {
         </section>
 
         {/* 4b. Lifetime line */}
-        <p className="text-center text-slate-700 text-[15px] leading-snug px-1">
+        <p className="text-slate-700 text-[15px] leading-snug px-1">
           <strong className="text-slate-900">Keep Dr. Jonathan's program in your pocket.</strong> This isn't a course you finish and lose. With an ownership or lifetime plan, it stays on your phone, ready whenever your feet need it: after a flare-up, before a new activity, or years from now.
         </p>
 
@@ -213,7 +213,12 @@ export default function FootCapacitySystem() {
           <Panel key={plan.title}>
             <IconPlanHeader title={plan.title} support={plan.support} price={plan.price} period={plan.period} />
             <CardDivider />
-            {plan.lead && <p className="mb-2.5 text-slate-900 text-[15px] font-bold leading-snug">{plan.lead}</p>}
+            {plan.lead && (
+              <div className="mb-2.5 grid grid-cols-[22px_minmax(0,1fr)] gap-x-3 items-start">
+                <span className="mt-px w-[22px] h-[22px] rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center" aria-hidden="true">✓</span>
+                <span className="text-slate-900 text-[15px] font-bold leading-snug">{plan.lead}</span>
+              </div>
+            )}
             <BenefitChecklist items={plan.lines} />
           </Panel>
         ))}
@@ -272,7 +277,7 @@ export default function FootCapacitySystem() {
         />
 
         {/* 8. Closing */}
-        <div className="mt-4 text-center">
+        <div className="mt-4 rounded-2xl bg-blue-50 px-4 py-8 sm:px-8 text-center">
           <h2 className="text-slate-900 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
             You've Seen the Prices.
             <br />
