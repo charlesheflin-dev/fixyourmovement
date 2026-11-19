@@ -29,6 +29,12 @@ describe("/foot-capacity-system explainer", () => {
     expect(html).not.toContain("?source=");
   });
 
+  it("returning-user line sits under both CTAs and links to the app, not a buy page", () => {
+    expect(html.split("Already finished your free check-ins?").length - 1).toBe(2);
+    expect(html.split('href="https://app.fixyourmovement.com/"').length - 1).toBe(2);
+    expect(html).not.toMatch(/whop\.com/i);
+  });
+
   it.each(["/when-to-get-seen-in-person", "/refund-policy", "/hsa-fsa", "/dr-jonathan-schutza"])(
     "links to %s", (p) => { expect(html).toContain(`href="${p}"`); });
 });

@@ -17,6 +17,10 @@ const CTA_HREF = "/lp/download";
 const CTA_CLASS =
   "flex w-full min-h-[54px] items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-center text-white text-base sm:text-lg font-bold leading-snug transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300 focus-visible:ring-offset-2";
 const LINK_CLASS = "text-blue-600 font-semibold hover:underline";
+// Returning-user line (Matt's addendum A, 2026-11-19). Same app URL the /results "Open My App" button
+// uses: the web app routes a signed-out visitor to sign-in and a signed-in one to Today, where the pay
+// gate offers the plans. NOT a buy link — never /checkout or Whop.
+const APP_URL = "https://app.fixyourmovement.com/";
 
 const HERO_POINTS: [string, string][] = [
   ["Start free.", "Your first 7 check-ins are on us."],
@@ -96,6 +100,15 @@ function StartCta() {
   );
 }
 
+function ReturningUserLine() {
+  return (
+    <p className="mt-2 text-center text-slate-400 text-[13px] italic leading-snug">
+      Already finished your free check-ins?{" "}
+      <a href={APP_URL} className="underline hover:text-slate-600">Open the Foot Capacity System app</a> to choose your plan. Your progress is saved and waiting.
+    </p>
+  );
+}
+
 function Panel({ children }: { children: ReactNode }) {
   return <section className="rounded-2xl border border-slate-200 bg-white px-4 py-5 sm:px-6">{children}</section>;
 }
@@ -162,6 +175,7 @@ export default function FootCapacitySystem() {
           <div className="mt-5">
             <StartCta />
             <p className="mt-3 text-center text-slate-500 text-sm leading-snug">No credit card. No password. No countdown clock.</p>
+            <ReturningUserLine />
           </div>
         </header>
 
@@ -291,6 +305,7 @@ export default function FootCapacitySystem() {
             <StartCta />
           </div>
           <p className="mt-3 text-slate-900 text-[15px] font-bold leading-snug">Nothing to buy today. Just your first step.</p>
+          <ReturningUserLine />
         </div>
       </main>
 
