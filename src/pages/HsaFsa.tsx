@@ -6,7 +6,23 @@ import headshot from "@/assets/dj-head-2.jpg";
 import receiptPreview from "@/assets/receipt-provider-preview.png";
 import MemberStories from "@/components/MemberStories";
 
-const CHECKOUT_URL = "/checkout";
+// 2026-11-19 (Matt's spec hsa-fsa-page-try-it-first.md): the website never sells directly. Every visitor
+// here is treated as cold: try the program first (7 free check-ins), buy later at the in-app pay gate.
+// No link to /checkout or any payment page. Trial CTAs go to /lp/cold-start with NO ?source= (cold-start
+// ignores source=hsa anyway; a tag would overwrite the visitor's real source). Post-gate visitors (AWeber
+// email) get the returning-user line -> app /install (current sign-in; /get-access is retired).
+const PRICING_URL = "/foot-capacity-system";
+const TRIAL_URL = "/lp/cold-start";
+const APP_URL = "https://app.fixyourmovement.com/install";
+
+function ReturningUserLine() {
+  return (
+    <p className="mt-3 text-slate-400 text-[13px] italic leading-snug">
+      Already finished your free check-ins?{" "}
+      <a href={APP_URL} className="underline hover:text-slate-600">Open the Foot Capacity System app</a> to choose your plan. Your progress is saved and waiting.
+    </p>
+  );
+}
 
 export default function HsaFsa() {
   return (
@@ -31,22 +47,22 @@ export default function HsaFsa() {
               </h1>
 
               <p className="text-slate-600 text-lg leading-relaxed mb-5">
-                Learn how HSA and FSA reimbursement typically works, what documentation you'll receive, and what to expect before and after your purchase.
+                Learn how HSA and FSA reimbursement typically works, what documentation you'll receive, and what to expect before and after you choose a plan.
               </p>
               <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                Whether you're considering Lifetime Access or the Monthly Recovery Plan, this page answers the questions we hear most often and explains the process in plain English.
+                Whether you're considering a monthly or a lifetime plan, this page answers the questions we hear most often and explains the process in plain English.
+              </p>
+              <p className="text-slate-600 text-lg leading-relaxed mb-8">
+                <strong className="text-slate-900">Your first 7 check-ins are free.</strong> Try the program first, then choose a plan inside the app if it's working for you. Everything on this page applies when you do.
               </p>
 
               <div className="mb-8">
-                <p className="text-slate-500 text-base leading-relaxed mb-1">Already know what you need?</p>
+                <p className="text-slate-500 text-base leading-relaxed mb-1">Want to see the prices?</p>
                 <a
-                  href={CHECKOUT_URL}
-                  target="_self"
-                  rel="noopener noreferrer"
-                  onClick={() => window.gtag?.('event', 'checkout_click', { event_category: 'conversion', event_label: 'hsa_hero' })}
+                  href={PRICING_URL}
                   className="inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors"
                 >
-                  View Membership Options →
+                  See Plans &amp; Pricing →
                 </a>
               </div>
 
@@ -102,7 +118,7 @@ export default function HsaFsa() {
                 Your Receipt &amp; Provider Information PDF
               </h2>
               <div className="space-y-5 text-slate-600 text-lg leading-relaxed mb-10">
-                <p>Every Foot Capacity System membership includes a Receipt &amp; Provider Information PDF delivered automatically after purchase.</p>
+                <p>Every Foot Capacity System plan includes a Receipt &amp; Provider Information PDF delivered automatically after purchase.</p>
                 <p>This document combines your purchase receipt with additional provider information that some HSA and FSA administrators may request during the reimbursement process.</p>
                 <p>Because every plan is different, documentation requirements can vary. We created this resource to help simplify that process whenever additional information is requested.</p>
               </div>
@@ -181,7 +197,7 @@ export default function HsaFsa() {
 
               <div className="flex flex-col md:flex-row md:gap-6">
                 {[
-                  { n: "1", title: "Purchase the Foot Capacity System", body: "Purchase your Foot Capacity System membership." },
+                  { n: "1", title: "Try it free, then choose a plan", body: "Start with 7 free check-ins. If it's working for you, choose a plan inside the app." },
                   { n: "2", title: "Receive Your Receipt & Provider Information PDF", body: "Receive your Receipt & Provider Information PDF automatically by email." },
                   { n: "3", title: "Submit Your Request", body: "Submit your documentation according to your HSA or FSA administrator's reimbursement process." },
                   { n: "4", title: "Administrator Review", body: "Your administrator reviews the submission and determines reimbursement based on your individual plan." },
@@ -266,14 +282,13 @@ export default function HsaFsa() {
             </p>
 
             <a
-              href={CHECKOUT_URL}
-              target="_self"
-              rel="noopener noreferrer"
-              onClick={() => window.gtag?.('event', 'checkout_click', { event_category: 'conversion', event_label: 'hsa_progress' })}
+              href={TRIAL_URL}
+              onClick={() => window.gtag?.('event', 'trial_cta_click', { event_category: 'engagement', event_label: 'hsa_progress' })}
               className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
             >
-              Get Lifetime Access →
+              Start My Free Recovery Plan →
             </a>
+            <ReturningUserLine />
           </div>
         </section>
 
@@ -293,7 +308,7 @@ export default function HsaFsa() {
               <div className="bg-white rounded-2xl border border-slate-200 p-7 mb-8">
                 <p className="text-slate-400 text-xs font-semibold uppercase tracking-widest mb-3">Example Only</p>
                 <p className="text-slate-600 text-base leading-relaxed">
-                  Someone in a 24% combined federal and state tax bracket using HSA or FSA funds for a $497 Lifetime Access membership could see approximately $119 in tax savings. This is an illustration only. Actual savings vary based on your individual tax situation and your HSA or FSA plan.
+                  Someone in a 24% combined federal and state tax bracket using HSA or FSA funds for a $497 Premium Lifetime plan could see approximately $119 in tax savings. This is an illustration only. Actual savings vary based on your individual tax situation and your HSA or FSA plan.
                 </p>
               </div>
 
@@ -466,22 +481,23 @@ export default function HsaFsa() {
         <section className="py-16 md:py-24 bg-white border-t border-slate-100">
           <div className="max-w-3xl mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">Invest in Your Recovery with Confidence</p>
+              <p className="text-blue-600 text-[14px] font-semibold uppercase tracking-[0.08em] mb-4">Try It First</p>
               <h2 className="font-display text-3xl md:text-[2.5rem] font-bold text-slate-900 leading-tight mb-6">
                 Ready When You Are.
               </h2>
               <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                Whether you choose Lifetime Access or the Monthly Recovery Plan, you'll automatically receive your Receipt &amp; Provider Information PDF after purchase, along with full access to the Foot Capacity System.
+                Start with 7 free check-ins. If it's working for you, choose a plan inside the app. Your Receipt &amp; Provider Information PDF arrives automatically by email after purchase.
               </p>
 
               <p className="text-slate-900 font-semibold text-base mb-4">Everything You'll Receive</p>
               <ul className="space-y-3 mb-10">
                 {[
+                  "7 free check-ins before you choose a plan",
                   "Full access to the Foot Capacity System",
                   "Your Receipt & Provider Information PDF delivered automatically by email",
                   "Evidence-based rehabilitation guidance developed by a licensed physical therapist",
-                  "Lifetime updates with the Lifetime Membership",
-                  "Monthly Recovery Plan option available",
+                  "Lifetime updates with lifetime plans",
+                  "Monthly and lifetime plans available",
                   "30-Day Money-Back Guarantee",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
@@ -492,18 +508,18 @@ export default function HsaFsa() {
               </ul>
 
               <a
-                href="https://fixyourmovement.com/checkout?source=hsa"
-                target="_self"
-                rel="noopener noreferrer"
-                onClick={() => window.gtag?.('event', 'checkout_click', { event_category: 'conversion', event_label: 'hsa_final' })}
+                href={TRIAL_URL}
+                onClick={() => window.gtag?.('event', 'trial_cta_click', { event_category: 'engagement', event_label: 'hsa_final' })}
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-5 rounded-xl text-xl transition-colors"
-                data-source="hsa"
               >
-                Choose My Membership →
+                Start My Free Recovery Plan →
               </a>
+              <p className="mt-3 text-slate-500 text-base leading-relaxed">No credit card. No password. No countdown clock.</p>
+              <ReturningUserLine />
 
               <p className="text-slate-500 text-base leading-relaxed mt-6">
-                Compare Lifetime Access and the Monthly Recovery Plan, then choose the option that fits your recovery journey.
+                Want to compare plans first?{" "}
+                <a href={PRICING_URL} className="text-blue-600 font-semibold hover:text-blue-700 transition-colors">See Plans &amp; Pricing →</a>
               </p>
               <p className="text-slate-500 text-base leading-relaxed mt-4">
                 Questions before you purchase? We're happy to help. Contact us anytime.

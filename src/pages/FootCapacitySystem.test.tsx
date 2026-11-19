@@ -19,13 +19,13 @@ describe("/foot-capacity-system explainer", () => {
     "contains %s", (s) => { expect(html).toContain(s); });
 
   it.each(["$157", "$397", "$697", "Seven Check-Ins Down", 'href="/checkout', "equipment", "Walk Pain Free",
-           "Secure checkout", "direct communication", "Paying with an HSA", "Total investment"])(
+           "Secure checkout", "direct communication", "Paying with an HSA", "Total investment", 'href="/lp/download'])(
     "does not contain %s", (s) => { expect(html).not.toContain(s); });
 
-  it("every CTA goes to /lp/download with no ?source=", () => {
+  it("every CTA goes to /lp/cold-start with no ?source= (addendum B)", () => {
     const ctas = [...html.matchAll(/<a[^>]*href="([^"]*)"[^>]*>Start My Free Recovery Plan/g)].map((m) => m[1]);
     expect(ctas.length).toBe(2);
-    for (const href of ctas) expect(href).toBe("/lp/download");
+    for (const href of ctas) expect(href).toBe("/lp/cold-start");
     expect(html).not.toContain("?source=");
   });
 
