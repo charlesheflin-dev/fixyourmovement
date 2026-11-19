@@ -1,104 +1,128 @@
 import type { ReactNode } from "react";
+import { Activity, ClipboardCheck, HeartPulse, Info, ShieldCheck, Stethoscope, TrendingUp, type LucideIcon } from "lucide-react";
 import logo from "@/assets/logo.png";
-import {
-  BenefitChecklist,
-  CardDivider,
-  FunnelHero,
-  HsaFsaStrip,
-  IconPlanHeader,
-  PlanDisclosure,
-  SectionEyebrow,
-} from "@/components/checkout/OfferPieces";
+import { BenefitChecklist, CardDivider, IconPlanHeader, PlanDisclosure, SectionEyebrow } from "@/components/checkout/OfferPieces";
 import { RED_FLAG_INTRO } from "@/lib/redFlags";
 
-// Public explainer + plans page (Charles 4, 2026-11-13): the homepage "Plans & pricing" link
-// lands here. Non-members never see /checkout (Charles 5), so this page NEVER links to it —
-// every CTA is a plain anchor to /lp/download with no ?source= (SourceCapture's write-once
-// first-source cookie must not be muddied). Copy is reused from live site text; the
-// equipment line and the Playbook-sourced "how it works" lines are deliberately left out
-// pending Dr. Schutza. Head is set at the edge: functions/foot-capacity-system.js.
+// Public explainer + plans page. 2026-11-19 rewrite to Matt's approved spec "Don't Buy It Yet. Try It
+// First." (Downloads/pricing-page-try-it-first.md): the page shows prices but NEVER a buy link — the
+// only purchase path is the in-app pay gate after 7 check-ins. Non-members never see /checkout
+// (Charles 5), so this page never links to it. Every CTA is a plain anchor to /lp/download with no
+// ?source= (SourceCapture's write-once first-source cookie must not be muddied) — unchanged.
+// Prices/terms match the /checkout wizard ($47, $97 x 6 = $582, $297, $497; messaging on $97/$497).
+// Safety text is RED_FLAG_INTRO, word for word. No equipment line (pending Dr. Schutza).
+// Head is set at the edge: functions/foot-capacity-system.js (title unchanged).
 
 const CTA_HREF = "/lp/download";
 const CTA_CLASS =
   "flex w-full min-h-[54px] items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-center text-white text-base sm:text-lg font-bold leading-snug transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300 focus-visible:ring-offset-2";
-const TRIAL_LINE = "Free for your first 7 check-ins, then choose a plan.";
+const LINK_CLASS = "text-blue-600 font-semibold hover:underline";
 
-const STEPS = [
-  { num: "1", label: "Assess", body: "Answer a few quick questions to build your recovery plan." },
-  { num: "2", label: "Follow Your Plan", body: "Get daily guidance based on how your foot feels." },
-  { num: "3", label: "Track Progress", body: "See what's working and keep moving forward." },
+const HERO_POINTS: [string, string][] = [
+  ["Start free.", "Your first 7 check-ins are on us."],
+  ["Go at your own pace.", "Your check-ins don't have to be on consecutive days."],
+  ["Then decide.", "See the prices below, then choose a plan inside the app if it's working for you."],
 ];
 
-const EVERY_PLAN = [
-  "Complete 3-phase recovery program",
-  "Daily guided exercises and video instruction",
+const STEPS: { icon: LucideIcon; label: string; body: string }[] = [
+  { icon: ClipboardCheck, label: "Assess", body: "Answer a few quick questions to build your recovery plan." },
+  { icon: Activity, label: "Follow Your Plan", body: "Get daily guidance based on how your foot feels. About 15 minutes a day." },
+  {
+    icon: TrendingUp,
+    label: "Track Progress",
+    body: "See what's working and keep moving forward. Everything you log during your free check-ins carries over when you choose a plan.",
+  },
+];
+
+const TRY_FREE = [
+  "The complete 3-phase recovery program, at your own pace",
+  "Daily guided exercises with video instruction",
   "Built-in guidance for flare-ups and tougher days",
-  "Pain tracking and progress history",
+  "Pain tracking and your full progress history",
   "Ask Dr. Jonathan AI for help with your program",
-  "A plan that progresses with you",
+  "A plan that progresses as your foot gets stronger",
 ];
+
+const YOURS = "Yours to come back to, anytime your feet need it.";
 
 const PLANS = [
   {
     title: "Recovery Plan",
-    support: "The full FCS program with AI support.",
+    support: "The full program with Ask Dr. Jonathan AI.",
     price: "$47",
     period: "per month",
-    lines: [
-      "Bills monthly until cancelled.",
-      "Cancel anytime, right inside the app.",
-      "Does not include direct messaging with Dr. Jonathan.",
-    ],
+    lead: null,
+    lines: ["Billed monthly. Cancel anytime, right inside the app.", "Does not include direct messaging with Dr. Jonathan."],
   },
   {
     title: "Ownership Plan",
-    support: "$97/month × 6",
+    support: "Pay over 6 months, then it's yours for life.",
     price: "$97",
     period: "per month",
+    lead: YOURS,
     lines: [
-      "Total investment: $582",
-      "Then lifetime FCS access, with no more monthly fees.",
+      "$582 total over 6 payments, then no more monthly fees.",
       "Lifetime access requires all 6 monthly payments.",
       "Includes 6 months of direct messaging with Dr. Jonathan.",
     ],
   },
   {
     title: "Lifetime",
-    support: "A complete recovery program yours for life.",
+    support: "The complete program, yours for life.",
     price: "$297",
     period: "one time",
-    lines: [
-      "One payment. Secure checkout. No recurring fees.",
-      "Includes Ask Dr. Jonathan AI, not direct personal communication with Dr. Jonathan.",
-    ],
+    lead: YOURS,
+    lines: ["One payment. No recurring fees.", "Includes Ask Dr. Jonathan AI, not direct messaging with Dr. Jonathan."],
   },
   {
     title: "Premium Lifetime",
-    support: "One payment. Yours for life.",
+    support: "Lifetime access, plus 6 months with Dr. Jonathan.",
     price: "$497",
     period: "one time",
+    lead: YOURS,
     lines: [
-      "Lifetime FCS program access and future updates",
-      "6 months of direct communication with Dr. Jonathan",
-      "Ask Dr. Jonathan AI and your saved recovery history",
+      "Lifetime program access and future updates.",
+      "6 months of direct messaging with Dr. Jonathan.",
+      "Ask Dr. Jonathan AI and your saved recovery history.",
     ],
   },
 ];
 
 function StartCta() {
   return (
-    <div className="mt-6">
-      <a href={CTA_HREF} className={CTA_CLASS}>
-        Start My Free Recovery Plan →
-      </a>
-      <p className="mt-3 text-center text-slate-600 text-sm leading-snug">{TRIAL_LINE}</p>
-      <p className="mt-1 text-center text-slate-500 text-sm leading-snug">No password to set up. No credit card.</p>
-    </div>
+    <a href={CTA_HREF} className={CTA_CLASS}>
+      Start My Free Recovery Plan →
+    </a>
   );
 }
 
 function Panel({ children }: { children: ReactNode }) {
   return <section className="rounded-2xl border border-slate-200 bg-white px-4 py-5 sm:px-6">{children}</section>;
+}
+
+function IconTile({ icon: Icon }: { icon: LucideIcon }) {
+  return (
+    <div className="w-11 h-11 shrink-0 rounded-xl bg-blue-100 flex items-center justify-center" aria-hidden="true">
+      <Icon className="w-6 h-6 text-blue-600" strokeWidth={2} />
+    </div>
+  );
+}
+
+function TrustCard({ icon, eyebrow, body, href, link }: { icon: LucideIcon; eyebrow: string; body: string; href: string; link: string }) {
+  return (
+    <Panel>
+      <div className="flex items-start gap-3">
+        <IconTile icon={icon} />
+        <div className="min-w-0">
+          <SectionEyebrow>{eyebrow}</SectionEyebrow>
+          <p className="text-slate-700 text-[15px] leading-snug">{body}</p>
+          <p className="mt-2 text-sm">
+            <a href={href} className={LINK_CLASS}>{link}</a>
+          </p>
+        </div>
+      </div>
+    </Panel>
+  );
 }
 
 export default function FootCapacitySystem() {
@@ -113,113 +137,155 @@ export default function FootCapacitySystem() {
         </div>
       </div>
 
-      <main className="mx-auto w-full max-w-[600px] px-4 max-[359px]:px-3 pt-8 pb-12 sm:px-6 flex flex-col gap-5">
+      <main className="mx-auto w-full max-w-[600px] px-4 max-[359px]:px-3 pt-6 pb-12 sm:px-6 sm:pt-8 flex flex-col gap-5">
         {/* 1. Hero */}
-        <div>
-          <FunnelHero
-            eyebrow="PLANS & PRICING"
-            title="How The Foot Capacity System Works"
-            body="A guided home recovery program for plantar fasciitis and heel pain, created by Dr. Jonathan Schutza, PT, DPT. Three phases over about 12 weeks, with daily guided exercises, pain tracking, flare-up guidance, and Ask Dr. Jonathan AI in the Foot Capacity System app."
-          />
-          <StartCta />
-        </div>
+        <header>
+          <p className="text-center text-blue-600 text-xs font-bold uppercase tracking-[0.12em] leading-snug mb-2.5">PLANS &amp; PRICING</p>
+          <h1 className="text-center text-slate-900 text-[30px] sm:text-4xl font-extrabold tracking-tight leading-[1.12] mb-3">
+            Don't Buy It Yet.
+            <br />
+            <span className="text-blue-600">Try It First.</span>
+          </h1>
+          <p className="text-slate-600 text-base sm:text-[17px] leading-normal">
+            There's no buy button on this page, and that's on purpose. We're confident in the Foot Capacity System, Dr. Jonathan Schutza's guided home program for plantar fasciitis and heel pain, and we'd rather you experience it before you spend a dollar.
+          </p>
+          <ul className="mt-4 space-y-2.5">
+            {HERO_POINTS.map(([lead, rest]) => (
+              <li key={lead} className="grid grid-cols-[22px_minmax(0,1fr)] gap-x-3 items-start">
+                <span className="mt-px w-[22px] h-[22px] rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center" aria-hidden="true">✓</span>
+                <span className="text-slate-800 text-[15px] leading-snug">
+                  <strong>{lead}</strong> {rest}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5">
+            <StartCta />
+            <p className="mt-3 text-center text-slate-500 text-sm leading-snug">No credit card. No password. No countdown clock.</p>
+          </div>
+        </header>
 
-        {/* 2. Start free */}
+        {/* 2. How it works */}
         <Panel>
-          <SectionEyebrow>START FREE</SectionEyebrow>
-          <div className="grid grid-cols-3 gap-4 text-center">
+          <h2 className="text-slate-900 text-xl font-bold leading-snug mb-4">How It Works</h2>
+          <div className="flex flex-col gap-4">
             {STEPS.map((step) => (
-              <div key={step.num}>
-                <div className="mx-auto mb-2 w-9 h-9 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center">{step.num}</div>
-                <p className="text-slate-900 text-sm font-bold leading-snug">{step.label}</p>
-                <p className="mt-1 text-slate-500 text-[13px] leading-snug">{step.body}</p>
+              <div key={step.label} className="flex items-start gap-3">
+                <IconTile icon={step.icon} />
+                <div className="min-w-0">
+                  <p className="text-slate-900 text-[15px] font-bold leading-snug">{step.label}</p>
+                  <p className="mt-0.5 text-slate-600 text-[15px] leading-snug">{step.body}</p>
+                </div>
               </div>
             ))}
           </div>
-          <CardDivider />
-          <p className="text-slate-900 text-[15px] font-bold leading-snug">Your progress is saved.</p>
-          <p className="mt-1 text-slate-600 text-[15px] leading-snug">
-            Every exercise, pain score, and check-in you've logged is saved and ready when you are.
-          </p>
         </Panel>
 
-        {/* 3. Every plan includes */}
+        {/* 3. Try everything free */}
         <Panel>
-          <SectionEyebrow>EVERY PLAN INCLUDES</SectionEyebrow>
-          <BenefitChecklist items={EVERY_PLAN} />
-          <p className="mt-4 text-slate-700 text-[15px] font-semibold leading-snug">About 15 minutes a day.</p>
+          <SectionEyebrow>TRY EVERYTHING FREE</SectionEyebrow>
+          <p className="text-slate-900 text-[15px] font-bold leading-snug mb-3">Your 7 free check-ins unlock the full system.</p>
+          <BenefitChecklist items={TRY_FREE} />
+          <p className="mt-4 text-slate-600 text-[15px] italic leading-snug">Every plan includes all of the above.</p>
         </Panel>
 
-        {/* 4. Choose your plan */}
-        <div>
-          <h2 className="text-slate-900 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight text-center mt-4 mb-1">
-            Choose your plan
-          </h2>
-          <p className="text-center text-slate-600 text-[15px] leading-snug">
-            You choose your plan inside the app after your 7 free check-ins.
-          </p>
-        </div>
+        {/* 4a. Info box */}
+        <section className="mt-4 flex gap-3 rounded-2xl border border-blue-200 bg-blue-50 p-4 sm:p-5">
+          <Info className="w-6 h-6 shrink-0 text-blue-600 mt-0.5" strokeWidth={2} aria-hidden="true" />
+          <div className="min-w-0">
+            <h2 className="text-slate-900 text-lg font-bold leading-tight">Here Are Our Prices. But First, Give Us a Try.</h2>
+            <p className="mt-2 text-slate-700 text-[15px] leading-snug">
+              We believe you should experience the program before deciding whether it's worth your money. Start with your 7 free check-ins, explore the exercises, and track your progress at your own pace. After your seventh check-in, you'll choose a plan inside the app.
+            </p>
+            <p className="mt-2 text-slate-900 text-[15px] font-bold leading-snug">
+              See the prices now. Experience the program first. Decide afterward.
+            </p>
+          </div>
+        </section>
+
+        {/* 4b. Lifetime line */}
+        <p className="text-center text-slate-700 text-[15px] leading-snug px-1">
+          <strong className="text-slate-900">Keep Dr. Jonathan's program in your pocket.</strong> This isn't a course you finish and lose. With an ownership or lifetime plan, it stays on your phone, ready whenever your feet need it: after a flare-up, before a new activity, or years from now.
+        </p>
+
+        {/* 4c. Price cards — no buttons */}
         {PLANS.map((plan) => (
           <Panel key={plan.title}>
             <IconPlanHeader title={plan.title} support={plan.support} price={plan.price} period={plan.period} />
             <CardDivider />
+            {plan.lead && <p className="mb-2.5 text-slate-900 text-[15px] font-bold leading-snug">{plan.lead}</p>}
             <BenefitChecklist items={plan.lines} />
           </Panel>
         ))}
         <PlanDisclosure>
-          Direct communication with Dr. Jonathan is available for the first 6 months and is limited to program-related guidance.
+          Direct messaging with Dr. Jonathan is available for the first 6 months and is limited to program-related guidance.
         </PlanDisclosure>
-        <HsaFsaStrip />
-        <p className="text-center text-sm">
-          <a href="/hsa-fsa" className="text-blue-600 font-semibold hover:underline">Paying with an HSA or FSA →</a>
-        </p>
 
-        {/* 5. How it works */}
+        {/* 5. HSA/FSA */}
+        <section className="rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-center">
+          <p className="flex items-center justify-center gap-2 text-slate-900 text-sm font-bold leading-snug">
+            <span className="w-5 h-5 shrink-0 rounded bg-green-500 flex items-center justify-center text-white text-xs" aria-hidden="true">✓</span>
+            HSA/FSA funds may be eligible*
+          </p>
+          <p className="mt-1 text-slate-600 text-[13px] leading-snug">
+            When you choose a plan after your free check-ins, you'll receive a receipt with provider information to help with reimbursement. Check with your plan administrator to confirm eligibility.
+          </p>
+          <p className="mt-2 text-sm">
+            <a href="/hsa-fsa" className={LINK_CLASS}>How HSA/FSA reimbursement works →</a>
+          </p>
+        </section>
+
+        {/* 6. What to expect */}
         <Panel>
-          <SectionEyebrow>HOW IT WORKS</SectionEyebrow>
-          <p className="text-slate-900 text-[15px] font-bold leading-snug">Three phases, about 12 weeks.</p>
+          <SectionEyebrow>WHAT TO EXPECT</SectionEyebrow>
+          <p className="text-slate-900 text-[15px] font-bold leading-snug">Three phases, at your own pace.</p>
+          <p className="mt-1 text-slate-600 text-[15px] leading-snug">
+            The three phases are designed to take about 12 weeks. That's a starting point, not a finish line.
+          </p>
           <p className="mt-3 text-slate-900 text-[15px] font-bold leading-snug">What if I have a flare-up?</p>
           <p className="mt-1 text-slate-600 text-[15px] leading-snug">
-            Flare-ups are expected. The app doesn't punish them — it adjusts. There's a built-in Calm Mode that reduces load temporarily without losing your progress. You keep moving forward even on hard days.
+            Flare-ups are expected. The app doesn't punish them, it adjusts. A built-in Calm Mode temporarily reduces the load without losing your progress, so you keep moving forward even on hard days.
           </p>
         </Panel>
 
-        {/* 6. Guarantee */}
-        <Panel>
-          <p className="text-slate-900 text-[15px] font-semibold leading-snug">
-            Every plan includes a 30-day money-back guarantee.
-          </p>
-          <p className="mt-2 text-sm">
-            <a href="/refund-policy" className="text-blue-600 font-semibold hover:underline">Read the refund policy →</a>
-          </p>
-        </Panel>
+        {/* 7. Trust cards */}
+        <TrustCard
+          icon={ShieldCheck}
+          eyebrow="30-DAY MONEY-BACK GUARANTEE"
+          body="Try it free first. If you decide to buy, you're still covered by a 30-day money-back guarantee."
+          href="/refund-policy"
+          link="Read the refund policy →"
+        />
+        <TrustCard
+          icon={Stethoscope}
+          eyebrow="WHO BUILT IT"
+          body="Created by Dr. Jonathan Schutza, PT, DPT, a licensed physical therapist who specializes in foot and ankle rehabilitation."
+          href="/dr-jonathan-schutza"
+          link="View credentials and license details →"
+        />
+        <TrustCard
+          icon={HeartPulse}
+          eyebrow="SAFETY"
+          body={RED_FLAG_INTRO}
+          href="/when-to-get-seen-in-person"
+          link="See when to get seen in person →"
+        />
 
-        {/* 7. Who built it */}
-        <Panel>
-          <SectionEyebrow>WHO BUILT IT</SectionEyebrow>
-          <p className="text-slate-700 text-[15px] leading-snug">
-            Created by Dr. Jonathan Schutza, PT, DPT, a licensed physical therapist.
-          </p>
-          <p className="mt-2 text-sm">
-            <a href="/dr-jonathan-schutza" className="text-blue-600 font-semibold hover:underline">View credentials and license details →</a>
-          </p>
-        </Panel>
-
-        {/* 8. Safety */}
-        <Panel>
-          <SectionEyebrow>SAFETY</SectionEyebrow>
-          <p className="text-slate-700 text-[15px] leading-snug">{RED_FLAG_INTRO}</p>
-          <p className="mt-2 text-sm">
-            <a href="/when-to-get-seen-in-person" className="text-blue-600 font-semibold hover:underline">See when to get seen in person →</a>
-          </p>
-        </Panel>
-
-        {/* 9. Final CTA */}
-        <div className="mt-4">
-          <h2 className="text-slate-900 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight text-center">
-            Ready to Start? Get Your Free Recovery Plan
+        {/* 8. Closing */}
+        <div className="mt-4 text-center">
+          <h2 className="text-slate-900 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
+            You've Seen the Prices.
+            <br />
+            <span className="text-blue-600">Now See the Program.</span>
           </h2>
-          <StartCta />
+          <p className="mt-3 text-slate-900 text-[15px] font-semibold leading-snug">No insurance approval. No copays. No clinic visits.</p>
+          <p className="mt-1 text-slate-600 text-[15px] leading-snug">
+            Start with 7 free check-ins, explore the guided exercises, and see whether this at-home approach fits your life.
+          </p>
+          <div className="mt-5">
+            <StartCta />
+          </div>
+          <p className="mt-3 text-slate-900 text-[15px] font-bold leading-snug">Nothing to buy today. Just your first step.</p>
         </div>
       </main>
 
