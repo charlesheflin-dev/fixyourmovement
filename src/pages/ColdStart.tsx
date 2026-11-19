@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
 import MemberStories from "@/components/MemberStories";
 import MemberStoriesPreview, { PREVIEW_TESTIMONIAL_IDS } from "@/components/MemberStoriesPreview";
+import { TESTIMONIALS as MEMBER_STORIES } from "@/data/testimonials";
 import { installUrlWithTracking } from "@/lib/installTracking";
 import { variantFor, withExperimentMeta } from "@/experiments/exp";
 import { CS_HERO_EXPERIMENT, coldStartHero } from "@/experiments/heroCopy";
@@ -175,30 +176,24 @@ function prefersReducedMotion(): boolean {
   }
 }
 
-// ─── Testimonials (Section 7) — authentic member wording, source-of-truth content ─
-const TESTIMONIALS = [
-  {
-    initials: "BR",
-    name: "Brittany",
-    meta: "Written July 15, 2026 · 15 days after purchase",
-    body:
-      "I am so happy that I found Dr Jonathan's program and app! I have been at it 3 weeks and have had so much progress already. I have gone from hobbling around all day everyday for the last 4 months to walking normally with very little pain. I was constantly looking online for exercises and tricks to help my foot feel better - there is so much out there and so much conflicting advice. It wasn't until I started using The Foot Capacity System that I really started getting better. The app is clear and straightforward and adjusts to how my foot feels each day. I do my exercises each day and then move on with my day knowing I've done what I need to so that I keep progressing. I have gained so much confidence and strength already. I know I am going to be able to meet my goal. Thank you Dr. Jonathan!",
-  },
-  {
-    initials: "JL",
-    name: "Jocelyn Lavoie",
-    meta: "Report written August 23, 2026 · 10 weeks after purchase",
-    body:
-      "I feel like I should have a party. Today was my first full day with next to no pain. At most 0.5/10 when I first got up this morning. First time in over a year!! It's so weird that my brain isn't really processing it.\n\nAll that to say a HUGE THANK YOU for everything!! What you've built here is amazing, it works and I couldn't be happier with the results up to now. Thank you!!",
-  },
-  {
-    initials: "KS",
-    name: "Karen Stone",
-    meta: "Feedback shared September 26, 2026 · Nearly 3 months after joining",
-    body:
-      "I just finished a spin class and during the class I realized I had no pain.\n\nI have been taking a HIIT class, doing my regular workouts, climbing stairs, biking, walking...all pain free.\n\nFor some reason it hit me this morning.\n\nThank you so much for this program!",
-  },
-];
+// ─── Testimonials (Section 7) — carousel, read from src/data/testimonials.ts (exact published text) ─
+// 2026-11-19 (Charles): de-duplicated. The carousel used to show Brittany, Jocelyn Lavoie and Karen Stone,
+// all of whom also appear in the "Real Member Stories" preview or the full Member Stories list. It now
+// shows three stories that are NOT in the preview, and the full list hides them (STORIES_EXCLUDE_IDS), so
+// no member story appears twice on this page. Michelle Shabason (hero proof card) is hidden from the full
+// list for the same reason.
+const CAROUSEL_IDS = ["karen-stone", "sara-lozano-arcas", "lisa-padgett"];
+const initialsOf = (name: string) => {
+  const w = name.split(/\s+/).filter(Boolean);
+  return ((w[0]?.[0] ?? "") + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase();
+};
+const TESTIMONIALS = CAROUSEL_IDS.map((id) => {
+  const t = MEMBER_STORIES.find((m) => m.id === id);
+  if (!t) throw new Error(`ColdStart carousel: unknown testimonial id ${id}`);
+  return { id: t.id, initials: initialsOf(t.name), name: t.name, meta: t.meta ?? "", body: t.quote };
+});
+const HERO_PROOF_ID = "michelle-shabason";
+const STORIES_EXCLUDE_IDS = [...PREVIEW_TESTIMONIAL_IDS, HERO_PROOF_ID, ...CAROUSEL_IDS];
 
 // ─── FAQ (Section 9) — v3 copy ───────────────────────────────────────────────────
 const FAQS = [
@@ -884,7 +879,7 @@ export default function ColdStart() {
               Members share what their progress has meant at home, at work, and in the activities they enjoy.
             </p>
 
-            {/* Existing swipeable testimonial carousel — Brittany, Jocelyn Lavoie, Karen Stone */}
+            {/* Swipeable testimonial carousel — Karen Stone, Sara Lozano Arcas, Lisa Padgett (not repeated elsewhere) */}
             <div className="relative mt-8">
               <button
                 type="button"
@@ -931,7 +926,7 @@ export default function ColdStart() {
                       <p key={i} className="text-slate-700 text-[16px] leading-relaxed">{para}</p>
                     ))}
                   </div>
-                  <p className="text-slate-400 text-xs">{active.meta}</p>
+                  {active.meta && <p className="text-slate-400 text-xs">{active.meta}</p>}
                 </div>
               </div>
 
@@ -939,7 +934,7 @@ export default function ColdStart() {
               <div className="flex items-center justify-center gap-2 mt-5">
                 {TESTIMONIALS.map((t, i) => (
                   <button
-                    key={t.initials}
+                    key={t.id}
                     type="button"
                     onClick={() => setTestimonialIndex(i)}
                     aria-label={`Show testimonial ${i + 1}`}
@@ -1038,7 +1033,7 @@ export default function ColdStart() {
 
         {/* Member Stories (2026-11-16) — pre-signup view only; CTA smooth-scrolls to the bottom form */}
         <MemberStories
-          excludeIds={PREVIEW_TESTIMONIAL_IDS}
+          excludeIds={STORIES_EXCLUDE_IDS}
           cta={{ label: "Start My Free Recovery Plan →", onClick: () => goToForm("form_bottom", "stories_free_plan") }}
         />
       </main>

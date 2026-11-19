@@ -71,6 +71,15 @@ describe("/testimonials", () => {
     }
   });
 
+  it("archived entries (verbatim from a retired page block, now the record) are exactly the expected set", () => {
+    const archived = TESTIMONIALS.filter((t) => t.origin === "archived");
+    expect(archived.map((t) => t.id).sort()).toEqual(["brittany", "jocelyn-lavoie", "karen-stone"]);
+    for (const t of archived) {
+      for (const para of t.quote.split("\n\n")) expect(para, t.id).toBe(para.trim());
+      expect(html, t.id).toContain(esc(t.quote.split("\n\n")[0]));
+    }
+  });
+
   it("renders both video testimonials as tap-to-load posters (no iframe in the prerender)", () => {
     for (const v of VIDEO_TESTIMONIALS) {
       expect(html, v.id).toContain(`${STREAM_CUSTOMER}/${v.streamId}/thumbnails/thumbnail.jpg`);
@@ -82,7 +91,7 @@ describe("/testimonials", () => {
 
   it("every quote is copied verbatim from text the site already publishes", () => {
     for (const t of TESTIMONIALS) {
-      if (t.origin === "submitted") continue; // transcribed from supplied screenshots; checked above
+      if (t.origin === "submitted" || t.origin === "archived") continue; // no live source page; checked above
       for (const para of t.quote.split("\n\n")) expect(SOURCES, t.id).toContain(norm(para));
       if (t.emphasis) expect(t.quote, t.id).toContain(t.emphasis);
       if (t.closing) expect(SOURCES, t.id).toContain(norm(t.closing));

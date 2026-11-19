@@ -39,8 +39,10 @@ export type Testimonial = {
   closing?: string;
   /** Optional exact date/context line the live page shows under the quote. */
   meta?: string;
-  /** "submitted" = transcribed from a supplied screenshot/card; no live source page to verify against. */
-  origin?: "submitted";
+  /** "submitted" = transcribed from a supplied screenshot/card; no live source page to verify against.
+   *  "archived" = copied verbatim from a page that no longer hard-codes it (the /lp/cold-start carousel
+   *  before 2026-11-19, website commit b79a019); this entry is now the record. */
+  origin?: "submitted" | "archived";
 };
 
 export type VideoTestimonial = {
@@ -75,20 +77,23 @@ export const TESTIMONIALS: Testimonial[] = [
       "As a busy mom of three, I honestly didn't know if I'd ever get rid of my plantar fasciitis. It started after I had my third baby, and after dealing with it for almost two years, I was getting pretty discouraged. I even went through other physical therapy programs, but it just didn't get me where I wanted to be.\n\nThen I found Dr. Schutza's Foot Capacity Program, and it's been such a different experience. I'm about seven weeks in, and my pain has gone from around a 5/10 to about a 1/10. I finally feel like I'm making real progress instead of just managing the pain. As long as I keep up with the exercises, I'm confident this is something I'm actually going to beat.\n\nOne of the biggest reasons this program works for me is that it fits into real life. I can do the exercises at home while my kids are playing, and I don't have to find childcare or drive to appointments. That alone has made it so much easier to stay consistent.\n\nI also love that if I have a question or something doesn't feel right, I can message Dr. Schutza through the app, and he always gets back to me quickly. Having that kind of support has made a huge difference.\n\nI've tried other programs that focused on stretching or temporary relief, but this is the first one that's really helped me build the strength and capacity my feet were missing. I'm so grateful I found this program, and I'd recommend it to anyone who's been struggling with plantar fasciitis and feels like they've tried everything.",
     meta: "Original trial member",
   },
-  // src/pages/ColdStart.tsx — TESTIMONIALS
+  // ARCHIVED — was src/pages/ColdStart.tsx TESTIMONIALS (carousel) until 2026-11-19 (b79a019)
   {
     id: "jocelyn-lavoie",
     name: "Jocelyn Lavoie",
     source: "app_member",
+    origin: "archived",
     quote:
       "I feel like I should have a party. Today was my first full day with next to no pain. At most 0.5/10 when I first got up this morning. First time in over a year!! It's so weird that my brain isn't really processing it.\n\nAll that to say a HUGE THANK YOU for everything!! What you've built here is amazing, it works and I couldn't be happier with the results up to now. Thank you!!",
     meta: "Report written August 23, 2026 · 10 weeks after purchase",
   },
-  // src/pages/ColdStart.tsx — TESTIMONIALS (also src/pages/DrJonathanSchutza.tsx + src/pages/Results.tsx REVIEWS)
+  // ARCHIVED meta — quote is also in src/pages/DrJonathanSchutza.tsx + src/pages/Results.tsx REVIEWS; the meta line
+  // lived only in the /lp/cold-start carousel until 2026-11-19 (b79a019)
   {
     id: "brittany",
     name: "Brittany",
     source: "app_member",
+    origin: "archived",
     quote:
       "I am so happy that I found Dr Jonathan's program and app! I have been at it 3 weeks and have had so much progress already. I have gone from hobbling around all day everyday for the last 4 months to walking normally with very little pain. I was constantly looking online for exercises and tricks to help my foot feel better - there is so much out there and so much conflicting advice. It wasn't until I started using The Foot Capacity System that I really started getting better. The app is clear and straightforward and adjusts to how my foot feels each day. I do my exercises each day and then move on with my day knowing I've done what I need to so that I keep progressing. I have gained so much confidence and strength already. I know I am going to be able to meet my goal. Thank you Dr. Jonathan!",
     meta: "Written July 15, 2026 · 15 days after purchase",
@@ -121,11 +126,12 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "When I went to an orthopedic surgeon for imaging and to confirm I had PF, but no tears, he said it takes 2 years for PF to \"burn itself out\" for most women in their 50s, and if it didn't. heal on it's own I had a couple of surgical options. At that time, I was about 1.5 years in (after a cortisone shot, many orthotics, some PT, etc.) and thought I would try PT *one more time.* Your Instagram account popping up in my feed was a timely answer to this. PT via a responsive app really helped me stick to the program and can't believe how far I've come in 11 weeks! I feel like I may have been pushed too far too soon in past PT rounds which was discouraging. The cost of in-person PT would have probably kept me from sticking with it this long. The app was very affordable in comparison. It's also a great solution for people like me who live over 1 hour from a medical center. I'm in it for the long haul to maintain healthy feet.",
   },
-  // src/pages/ColdStart.tsx — TESTIMONIALS
+  // ARCHIVED — was src/pages/ColdStart.tsx TESTIMONIALS (carousel) until 2026-11-19 (b79a019); now shown in that carousel from this entry
   {
     id: "karen-stone",
     name: "Karen Stone",
     source: "app_member",
+    origin: "archived",
     quote:
       "I just finished a spin class and during the class I realized I had no pain.\n\nI have been taking a HIIT class, doing my regular workouts, climbing stairs, biking, walking...all pain free.\n\nFor some reason it hit me this morning.\n\nThank you so much for this program!",
     meta: "Feedback shared September 26, 2026 · Nearly 3 months after joining",
