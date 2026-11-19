@@ -5,6 +5,7 @@ import MemberStoriesPreview, { PREVIEW_TESTIMONIAL_IDS } from "@/components/Memb
 import { installUrlWithTracking } from "@/lib/installTracking";
 import { variantFor, withExperimentMeta } from "@/experiments/exp";
 import { CS_HERO_EXPERIMENT, coldStartHero } from "@/experiments/heroCopy";
+import { PRICING_FAQ_A, PRICING_FAQ_Q, PricingFaqLink, usePricingModal } from "@/components/pricing/PricingFaq";
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
@@ -217,6 +218,8 @@ const FAQS = [
     q: "Do I need a credit card to start?",
     a: "No. Your first 7 check-ins are free, with no credit card required. After that, you can choose a paid plan if you’d like to continue. There’s no automatic charge.",
   },
+  // 2026-11-19 (Charles): pricing FAQ; its link opens the lazy pricing modal (PricingFaq.tsx).
+  { q: PRICING_FAQ_Q, a: PRICING_FAQ_A, pricing: true },
 ];
 
 // ─── Shared type + spacing tokens (v3 §2) — one style per role across the page ───
@@ -285,6 +288,7 @@ export default function ColdStart() {
   const [activeForm, setActiveForm] = useState<FormPosition | null>(null);
 
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
+  const pricing = usePricingModal("lp_cold_start");
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   // Video loads only on tap (lazy; never autoplays with sound on page load).
   const [videoStarted, setVideoStarted] = useState(false);
@@ -997,7 +1001,15 @@ export default function ColdStart() {
                       className={`grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                     >
                       <div className="overflow-hidden">
-                        <p className={`${T.body} px-5 pb-5`}>{faq.a}</p>
+                        <p className={`${T.body} px-5 pb-5`}>
+                          {faq.a}
+                          {"pricing" in faq && faq.pricing && (
+                            <>
+                              {" "}
+                              <PricingFaqLink onClick={pricing.show} tabIndex={open ? 0 : -1} />
+                            </>
+                          )}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -1042,6 +1054,7 @@ export default function ColdStart() {
           <a href="/contact" className="hover:underline">Contact</a>
         </p>
       </footer>
+      {pricing.modal}
     </div>
   );
 }

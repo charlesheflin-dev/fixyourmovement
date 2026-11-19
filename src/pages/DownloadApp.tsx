@@ -5,6 +5,7 @@ import MemberStoriesPreview, { PREVIEW_TESTIMONIAL_IDS } from "@/components/Memb
 import { installUrlWithTracking } from "@/lib/installTracking";
 import { variantFor, withExperimentMeta } from "@/experiments/exp";
 import { DL_HERO_EXPERIMENT, downloadHero } from "@/experiments/heroCopy";
+import { PRICING_FAQ_A, PRICING_FAQ_Q, PricingFaqLink, usePricingModal } from "@/components/pricing/PricingFaq";
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 const CREATE_TRIAL_PROFILE_URL = "https://zsdmnapwxlimktqrnmii.supabase.co/functions/v1/create-trial-profile";
@@ -322,7 +323,10 @@ export default function DownloadApp() {
       q: "How is 15 minutes a day going to do anything?",
       a: "Consistency with the right protocol beats occasional long sessions every time. Your daily check-in tells the app where you are, which determines what you do next. That feedback loop is what makes the difference — not the length of the session.",
     },
+    // 2026-11-19 (Charles): pricing FAQ; its link opens the lazy pricing modal (PricingFaq.tsx).
+    { q: PRICING_FAQ_Q, a: PRICING_FAQ_A, pricing: true },
   ];
+  const pricing = usePricingModal("lp_download");
 
   // ── STEP 1: OPT-IN PAGE ─────────────────────────────────────────────────────
   if (!submitted) {
@@ -698,7 +702,15 @@ export default function DownloadApp() {
                   </button>
                   {objectionOpen === i && (
                     <div className="px-5 pb-4">
-                      <p className="text-slate-600 text-sm leading-relaxed">{obj.a}</p>
+                      <p className="text-slate-600 text-sm leading-relaxed">
+                        {obj.a}
+                        {"pricing" in obj && obj.pricing && (
+                          <>
+                            {" "}
+                            <PricingFaqLink onClick={pricing.show} />
+                          </>
+                        )}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -803,6 +815,7 @@ export default function DownloadApp() {
             <a href="/terms-of-service" className="hover:underline">Terms</a>
           </p>
         </div>
+        {pricing.modal}
       </div>
     );
   }
