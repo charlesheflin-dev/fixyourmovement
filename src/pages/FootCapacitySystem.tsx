@@ -7,13 +7,14 @@ import { RED_FLAG_INTRO } from "@/lib/redFlags";
 // Public explainer + plans page. 2026-11-19 rewrite to Matt's approved spec "Don't Buy It Yet. Try It
 // First." (Downloads/pricing-page-try-it-first.md): the page shows prices but NEVER a buy link — the
 // only purchase path is the in-app pay gate after 7 check-ins. Non-members never see /checkout
-// (Charles 5), so this page never links to it. Every CTA is a plain anchor to /lp/download with no
-// ?source= (SourceCapture's write-once first-source cookie must not be muddied) — unchanged.
+// (Charles 5), so this page never links to it. Every CTA is a plain anchor to /lp/cold-start (Matt's
+// addendum B, 2026-11-19: cold-start is the free-trial landing; /lp/download stays live for other pages)
+// with no ?source= (it would overwrite the visitor's real traffic source).
 // Prices/terms match the /checkout wizard ($47, $97 x 6 = $582, $297, $497; messaging on $97/$497).
 // Safety text is RED_FLAG_INTRO, word for word. No equipment line (pending Dr. Schutza).
 // Head is set at the edge: functions/foot-capacity-system.js (title unchanged).
 
-const CTA_HREF = "/lp/download";
+const CTA_HREF = "/lp/cold-start";
 const CTA_CLASS =
   "flex w-full min-h-[54px] items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-center text-white text-base sm:text-lg font-bold leading-snug transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300 focus-visible:ring-offset-2";
 const LINK_CLASS = "text-blue-600 font-semibold hover:underline";
