@@ -17,10 +17,10 @@ const CTA_HREF = "/lp/download";
 const CTA_CLASS =
   "flex w-full min-h-[54px] items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-center text-white text-base sm:text-lg font-bold leading-snug transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300 focus-visible:ring-offset-2";
 const LINK_CLASS = "text-blue-600 font-semibold hover:underline";
-// Returning-user line (Matt's addendum A, 2026-11-19). Same app URL the /results "Open My App" button
-// uses: the web app routes a signed-out visitor to sign-in and a signed-in one to Today, where the pay
-// gate offers the plans. NOT a buy link — never /checkout or Whop.
-const APP_URL = "https://app.fixyourmovement.com/";
+// Returning-user line (Matt's addendum A, 2026-11-19, revised): links to the app's own "Get Your
+// Sign-In Link" page (/get-access), which emails a fresh sign-in link and offers "Open the App"; once
+// signed in, the pay gate offers the plans. NOT a buy link — never /checkout or Whop.
+const APP_URL = "https://app.fixyourmovement.com/get-access";
 
 const HERO_POINTS: [string, string][] = [
   ["Start free.", "Your first 7 check-ins are on us."],
