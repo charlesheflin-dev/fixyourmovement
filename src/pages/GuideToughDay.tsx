@@ -183,9 +183,9 @@ export default function GuideToughDay() {
               <div className="ask-photo"><img src="/images/guide/headshot2.png" alt="Dr. Jonathan Schutza" /></div>
               <div className="ask-copy">
                 <h2>Not sure how to adjust on a tough day?</h2>
-                <p>If your foot isn't responding the way you expected, Ask Dr. Jonathan can help you think through what you're experiencing.</p>
+                <p>If your foot isn't responding the way you expected, the Coach can help you think through what you're experiencing.</p>
               </div>
-              <Link className="button" to="/ask">Ask Dr. Jonathan</Link>
+              <Link className="button" to="/ask">Ask the Coach</Link>
             </div>
           </div>
         </section>

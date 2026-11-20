@@ -20,7 +20,7 @@ const YOURS = "Yours to come back to, anytime your feet need it.";
 const PLANS = [
   {
     title: "Recovery Plan",
-    support: "The full program with Ask Dr. Jonathan AI.",
+    support: "The full program with the AI Coach.",
     price: "$47",
     period: "per month",
     lead: null,
@@ -44,7 +44,7 @@ const PLANS = [
     price: "$297",
     period: "one time",
     lead: YOURS,
-    lines: ["One payment. No recurring fees.", "Includes Ask Dr. Jonathan AI, not direct messaging with Dr. Jonathan."],
+    lines: ["One payment. No recurring fees.", "Includes the AI Coach, not direct messaging with Dr. Jonathan."],
   },
   {
     title: "Premium Lifetime",
@@ -55,7 +55,7 @@ const PLANS = [
     lines: [
       "Lifetime program access and future updates.",
       "6 months of direct messaging with Dr. Jonathan.",
-      "Ask Dr. Jonathan AI and your saved recovery history.",
+      "The AI Coach and your saved recovery history.",
     ],
   },
 ];

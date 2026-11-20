@@ -179,7 +179,7 @@ export default function Checkout() {
               "Daily guided exercises and video instruction",
               "Built-in guidance for flare-ups and tougher days",
               "Pain tracking and progress history",
-              "Ask Dr. Jonathan AI for help with your program",
+              "The AI Coach for help with your program",
               "A plan that progresses with you",
             ]}
             ctaLabel={cold ? "Start My Recovery for $47/month" : "Continue My Recovery for $47/month"}
@@ -192,7 +192,7 @@ export default function Checkout() {
           <HsaFsaStrip />
           <GuaranteeCard />
           <PlanDisclosure>
-            Includes the full FCS program and Ask Dr. Jonathan AI. Direct personal messaging with Dr. Jonathan is available through an upgraded plan.
+            Includes the full FCS program and the AI Coach. Direct personal messaging with Dr. Jonathan is available through an upgraded plan.
           </PlanDisclosure>
         </FunnelShell>
       </div>
@@ -273,7 +273,7 @@ export default function Checkout() {
               items={[
                 "Complete FCS plantar fasciitis recovery program",
                 "Exercises for recovery, strength, and ongoing maintenance",
-                "Pain tracking, progress history, and Ask Dr. Jonathan AI",
+                "Pain tracking, progress history, and the AI Coach",
                 "Lifetime access with no recurring payments",
               ]}
             />
@@ -292,7 +292,7 @@ export default function Checkout() {
               lock={false}
               lines={[
                 "One payment. Secure checkout. No recurring fees.",
-                "Includes Ask Dr. Jonathan AI, not direct personal communication with Dr. Jonathan.",
+                "Includes the AI Coach, not direct personal communication with Dr. Jonathan.",
               ]}
             />
             <DeclineLink label="No thanks, I'll keep my $47/month plan." onClick={() => chooseLifetime(false)} />

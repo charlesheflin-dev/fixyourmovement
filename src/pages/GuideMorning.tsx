@@ -179,9 +179,9 @@ export default function GuideMorning() {
               <div className="ask-photo"><img src="/images/guide/headshot2.png" alt="Dr. Jonathan Schutza" /></div>
               <div className="ask-copy">
                 <h2>Still have a question about your foot?</h2>
-                <p>If something here doesn't quite fit what you're experiencing, Ask Dr. Jonathan can help you think through your next question.</p>
+                <p>If something here doesn't quite fit what you're experiencing, the Coach can help you think through your next question.</p>
               </div>
-              <Link className="button" to="/ask">Ask Dr. Jonathan</Link>
+              <Link className="button" to="/ask">Ask the Coach</Link>
             </div>
           </div>
         </section>
