@@ -135,4 +135,4 @@ The system is not a replacement for a clinical evaluation when one is needed. Me
 
 "I only have about 15 minutes a day — is that enough?" The program is designed to fit into a realistic daily routine. Consistency over time matters more than any individual session length.
 
-"What if my diagnosis is different from plantar fasciitis?" The progressive loading principles apply to a broad range of foot and ankle overuse conditions. If the member has a specific concern about their diagnosis, they should bring it to the Ask Dr. Jonathan feature or consult with their care provider directly.
+"What if my diagnosis is different from plantar fasciitis?" The progressive loading principles apply to a broad range of foot and ankle overuse conditions. If the member has a specific concern about their diagnosis, they should bring it to the Coach or consult with their care provider directly.

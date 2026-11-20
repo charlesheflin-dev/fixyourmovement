@@ -35,7 +35,7 @@ const OPTIONS: Option[] = [
       ["Price", "Free for your first 7 check-ins. Then $47/month, $97/month for 6 months (then lifetime access), or $297 or $497 one time."],
       ["Length and time", "Three phases over about 12 weeks. About 15 minutes a day."],
       ["Format", "App with daily guided exercises, video instruction, pain tracking and progress history."],
-      ["Clinician contact", "Direct messaging with Dr. Jonathan for the first 6 months on the $97 and $497 plans. Every plan includes Ask Dr. Jonathan AI."],
+      ["Clinician contact", "Direct messaging with Dr. Jonathan for the first 6 months on the $97 and $497 plans. Every plan includes the AI Coach."],
       ["When pain flares", "Built-in Calm Mode reduces load temporarily without losing your progress."],
       ["Refunds", "30-day money-back guarantee on every plan."],
     ],

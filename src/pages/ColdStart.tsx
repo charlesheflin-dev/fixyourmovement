@@ -207,7 +207,7 @@ const FAQS = [
   },
   {
     q: "What if my foot flares up or I have a question?",
-    a: "Keep your pain check-ins accurate. FCS uses your responses to adjust your guidance, including easing back when your foot needs it. For questions, start with Ask Dr. Jonathan AI inside the app. You can also message Dr. Jonathan when you need his input on your situation.",
+    a: "Keep your pain check-ins accurate. FCS uses your responses to adjust your guidance, including easing back when your foot needs it. For questions, start with the AI Coach inside the app. You can also message Dr. Jonathan when you need his input on your situation.",
   },
   {
     q: "Do I need a credit card to start?",

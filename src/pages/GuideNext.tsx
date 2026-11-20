@@ -250,9 +250,9 @@ export default function GuideNext() {
               <div className="ask-photo"><img src="/images/guide/headshot2.png" alt="Dr. Jonathan Schutza" /></div>
               <div className="ask-copy">
                 <h2>Not sure what “ready for more” means for your foot?</h2>
-                <p>If you're unsure whether to progress, hold steady, or temporarily make something easier, Ask Dr. Jonathan can help you think through what you're experiencing.</p>
+                <p>If you're unsure whether to progress, hold steady, or temporarily make something easier, the Coach can help you think through what you're experiencing.</p>
               </div>
-              <Link className="button" to="/ask">Ask Dr. Jonathan</Link>
+              <Link className="button" to="/ask">Ask the Coach</Link>
             </div>
           </div>
         </section>

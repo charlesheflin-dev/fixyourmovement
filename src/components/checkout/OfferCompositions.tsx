@@ -71,7 +71,7 @@ export function Ownership97Offer({
           items={[
             "Lifetime FCS access after 6 payments",
             "Pain-responsive exercises whenever you need them",
-            "Ask Dr. Jonathan AI stays with you",
+            "The AI Coach stays with you",
             "Future FCS program updates included",
           ]}
         />
@@ -124,7 +124,7 @@ export function Premium497Offer({ onChoose, onDecline }: { onChoose: () => void;
           items={[
             "Lifetime FCS program access and future updates",
             "6 months of direct communication with Dr. Jonathan",
-            "Ask Dr. Jonathan AI and your saved recovery history",
+            "The AI Coach and your saved recovery history",
           ]}
         />
         <CardDivider />
@@ -156,7 +156,7 @@ export function Premium497Offer({ onChoose, onDecline }: { onChoose: () => void;
       <HsaFsaStrip />
       <GuaranteeCard />
       <PlanDisclosure>
-        Includes the full FCS program, Ask Dr. Jonathan AI, and 6 months of direct personal communication with Dr. Jonathan.
+        Includes the full FCS program, the AI Coach, and 6 months of direct personal communication with Dr. Jonathan.
       </PlanDisclosure>
     </>
   );

@@ -54,7 +54,7 @@ function WelcomeCard() {
           Capacity System is right for you, I'm here to help.
         </p>
         <p>
-          I'm Ask Dr. Jonathan, an AI assistant trained on Dr. Jonathan
+          I'm the Coach, an AI assistant trained on Dr. Jonathan
           Schutza's rehabilitation philosophy, educational content, and the
           Foot Capacity System.
         </p>
@@ -72,7 +72,7 @@ function WelcomeCard() {
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',
   content:
-    "Hi — I'm Ask Dr. Jonathan, an AI assistant trained on Dr. Jonathan Schutza's clinical knowledge and the Foot Capacity System program. I can answer questions about plantar fasciitis recovery, how the program works, what to expect from the app, and whether this approach might be right for your situation. What's on your mind?",
+    "Hi — I'm the Coach, an AI assistant trained on Dr. Jonathan Schutza's clinical knowledge and the Foot Capacity System program. I can answer questions about plantar fasciitis recovery, how the program works, what to expect from the app, and whether this approach might be right for your situation. What's on your mind?",
 };
 
 const API_URL = import.meta.env.VITE_ASK_DR_JONATHAN_URL as string;
@@ -154,7 +154,7 @@ export default function AskDrJonathanPage() {
         <header className="flex items-center gap-3 border-b border-gray-200 bg-white px-4 py-3 sm:px-6">
           <img src={logo} alt="Foot Capacity System" className="h-9 w-auto" />
           <div>
-            <h1 className="text-base font-semibold text-gray-900">Ask Dr. Jonathan</h1>
+            <h1 className="text-base font-semibold text-gray-900">Ask the Coach</h1>
             <p className="text-xs text-gray-500">Plantar fasciitis recovery Q&A</p>
           </div>
         </header>
@@ -164,7 +164,7 @@ export default function AskDrJonathanPage() {
             <img src={logo} alt="Foot Capacity System" className="h-14 w-auto flex-shrink-0" />
             <div>
               <h1 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">
-                Ask Dr. Jonathan
+                Ask the Coach
               </h1>
               <p className="text-base font-semibold text-blue-600 sm:text-lg">
                 Get Answers Before You Decide

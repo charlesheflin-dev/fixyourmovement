@@ -37,7 +37,7 @@ function MessageText({ content }: { content: string }) {
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',
   content:
-    "Hi — I'm Ask Dr. Jonathan, an AI assistant trained on Dr. Jonathan Schutza's clinical knowledge and the Foot Capacity System program. I can answer questions about plantar fasciitis recovery, how the program works, what to expect from the app, and whether this approach might be right for your situation. What's on your mind?",
+    "Hi — I'm the Coach, an AI assistant trained on Dr. Jonathan Schutza's clinical knowledge and the Foot Capacity System program. I can answer questions about plantar fasciitis recovery, how the program works, what to expect from the app, and whether this approach might be right for your situation. What's on your mind?",
 };
 
 const API_URL = import.meta.env.VITE_ASK_DR_JONATHAN_URL as string;
@@ -118,7 +118,7 @@ export default function AskDrJonathan() {
         <button
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-blue-600 px-4 py-3 text-white shadow-lg hover:bg-blue-700 transition-colors"
-          aria-label="Open Ask Dr. Jonathan chat"
+          aria-label="Open Ask the Coach chat"
         >
           {/* Speech bubble icon */}
           <svg
@@ -135,7 +135,7 @@ export default function AskDrJonathan() {
               d="M8 10h.01M12 10h.01M16 10h.01M21 16c0 1.1-.9 2-2 2H7l-4 4V6c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v10z"
             />
           </svg>
-          <span className="text-sm font-medium">Ask Dr. Jonathan</span>
+          <span className="text-sm font-medium">Ask the Coach</span>
         </button>
       )}
 
@@ -167,7 +167,7 @@ export default function AskDrJonathan() {
                   d="M8 10h.01M12 10h.01M16 10h.01M21 16c0 1.1-.9 2-2 2H7l-4 4V6c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v10z"
                 />
               </svg>
-              <span className="font-semibold text-white">Ask Dr. Jonathan</span>
+              <span className="font-semibold text-white">Ask the Coach</span>
             </div>
             <button
               onClick={() => setIsOpen(false)}

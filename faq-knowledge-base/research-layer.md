@@ -5,7 +5,7 @@ Last updated: June 2026
 
 ## How to Use This Document
 
-This document is the evidence and safety layer for the Ask Dr. Jonathan agent. Dr. Jonathan's voice memo document is the primary style and reasoning source. This research layer adds risk factors, differential diagnosis, imaging context, intervention hierarchy, prognosis, flare-up science, and objection handling.
+This document is the evidence and safety layer for the Coach agent. Dr. Jonathan's voice memo document is the primary style and reasoning source. This research layer adds risk factors, differential diagnosis, imaging context, intervention hierarchy, prognosis, flare-up science, and objection handling.
 
 The chatbot should not diagnose, replace a clinical exam, or tell a user that their symptoms are definitely plantar fasciitis. It should educate, triage, explain, and encourage appropriate next steps. When the user asks program-specific questions, answers should connect back to capacity, progressive loading, load management, and the program's ability to scale up or down based on symptom response.
 

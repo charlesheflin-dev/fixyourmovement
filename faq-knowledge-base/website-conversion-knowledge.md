@@ -1,6 +1,6 @@
 # Website & Conversion Knowledge Base
 Category 3: The Website, The Offer, and Why the Assessment Is the Right First Step
-For use by: Ask Dr. Jonathan / FCS Chat Agent
+For use by: Coach (the AI assistant) / FCS Chat Agent
 Last updated: November 2026
 
 ## What the Website Is and What It Is Trying to Do
@@ -65,9 +65,9 @@ Every person starts at Phase 1 (Reset) regardless of their FAAM band — it's de
 
 The Foot Capacity System is a structured 12-week foot rehabilitation program accessible through a mobile app.
 
-What's included: guided daily recovery sessions (progressive, structured, no guesswork), daily pain and symptom tracking, progress charts and capacity scoring, phase-based progression (Reset → Restore → Perform → Maintenance), flare-up support via Calm Mode, FAAM score pre-loaded from assessment, and Ask Dr. Jonathan AI for in-app help with the program.
+What's included: guided daily recovery sessions (progressive, structured, no guesswork), daily pain and symptom tracking, progress charts and capacity scoring, phase-based progression (Reset → Restore → Perform → Maintenance), flare-up support via Calm Mode, FAAM score pre-loaded from assessment, and the AI Coach for in-app help with the program.
 
-Pricing: Checkout (/checkout) offers four options, built from two choices — monthly vs. one-time, and whether direct personal messaging with Dr. Jonathan is included. Direct personal messaging is distinct from Ask Dr. Jonathan AI (the in-app assistant), which every plan includes. Recovery Plan — $47/month: the full program with Ask Dr. Jonathan AI, no direct personal messaging with Dr. Jonathan, billed monthly, cancel anytime inside the app with one tap. Ownership Plan — $97/month for 6 months, then lifetime access (6 payments, $582 total): everything in the Recovery Plan plus 6 months of two-way messaging and personal voice replies from Dr. Jonathan; after the 6 payments billing stops and FCS access is kept for life, and lifetime access requires completing all 6 payments. Lifetime — $297 one-time: the full program for life with no recurring charges and Ask Dr. Jonathan AI, no direct personal messaging with Dr. Jonathan. Premium Lifetime — $497 one-time: everything in Lifetime plus 6 months of direct messaging with Dr. Jonathan and early access to the upcoming Foot Resilience Library. Direct personal messaging with Dr. Jonathan, where included, lasts the first 6 months and is limited to program-related guidance. Never mention $157, $397, or a 3-payment plan — those do not exist.
+Pricing: Checkout (/checkout) offers four options, built from two choices — monthly vs. one-time, and whether direct personal messaging with Dr. Jonathan is included. Direct personal messaging is distinct from the AI Coach (the in-app assistant), which every plan includes. Recovery Plan — $47/month: the full program with the AI Coach, no direct personal messaging with Dr. Jonathan, billed monthly, cancel anytime inside the app with one tap. Ownership Plan — $97/month for 6 months, then lifetime access (6 payments, $582 total): everything in the Recovery Plan plus 6 months of two-way messaging and personal voice replies from Dr. Jonathan; after the 6 payments billing stops and FCS access is kept for life, and lifetime access requires completing all 6 payments. Lifetime — $297 one-time: the full program for life with no recurring charges and the AI Coach, no direct personal messaging with Dr. Jonathan. Premium Lifetime — $497 one-time: everything in Lifetime plus 6 months of direct messaging with Dr. Jonathan and early access to the upcoming Foot Resilience Library. Direct personal messaging with Dr. Jonathan, where included, lasts the first 6 months and is limited to program-related guidance. Never mention $157, $397, or a 3-payment plan — those do not exist.
 
 Guarantee: one 30-Day Money-Back Guarantee on every plan. Try the Foot Capacity System for 30 days; if it's not the right fit, email contact@fixyourmovement.com within 30 days of purchase for a refund. No complicated forms. Full terms: https://fixyourmovement.com/refund-policy. It is not a pain-based or results-based guarantee.
 
@@ -93,7 +93,7 @@ If they are already a customer: move them toward app support, Dr. Jonathan's cli
 
 These are claims that appear in site copy and are substantiated: Dr. Jonathan Schutza holds a Doctor of Physical Therapy (DPT) degree and is a licensed PT. The program is 12 weeks with optional Maintenance beyond. Sessions take about 15 minutes per day, home-based, no equipment required. The FAAM is a validated clinical tool used in physical therapy and sports medicine. 30-day satisfaction guarantee. Program works for chronic cases — no time limit, symptom-dependent pacing. The free trial runs until the user completes 7 days of logging, with no credit card required.
 
-Dr. Jonathan reviews member progress through the clinician dashboard and provides clinical guidance during recovery. Direct two-way messaging with Dr. Jonathan is included for free trial users through their trial, and on the plans that carry it — the $97 Ownership Plan and the $497 Premium Lifetime, for the first 6 months each. On the $47 Recovery Plan and the $297 Lifetime plan, members have Ask Dr. Jonathan AI for in-app guidance, and direct personal messaging with Dr. Jonathan can be added by upgrading.
+Dr. Jonathan reviews member progress through the clinician dashboard and provides clinical guidance during recovery. Direct two-way messaging with Dr. Jonathan is included for free trial users through their trial, and on the plans that carry it — the $97 Ownership Plan and the $497 Premium Lifetime, for the first 6 months each. On the $47 Recovery Plan and the $297 Lifetime plan, members have the AI Coach for in-app guidance, and direct personal messaging with Dr. Jonathan can be added by upgrading.
 
 ## What the Website Does NOT Promise
 
@@ -128,9 +128,9 @@ This is one of the most important questions a prospect can ask, and the honest a
 
 Dr. Jonathan reviews members' progress through a clinician dashboard — pain trends, capacity scores, flare-up flags, and logging activity — and the app flags concerns like a pain spike, a missed logging streak, or a flare-up pattern for clinical attention.
 
-What differs by plan is DIRECT two-way messaging with Dr. Jonathan. Free trial users have direct messaging with Dr. Jonathan through their trial. The $97 Ownership Plan and the $497 Premium Lifetime include direct messaging for the first 6 months. The $47 Recovery Plan and the $297 Lifetime plan include Ask Dr. Jonathan AI — the in-app assistant — for guidance, and direct personal messaging with Dr. Jonathan can be added by upgrading.
+What differs by plan is DIRECT two-way messaging with Dr. Jonathan. Free trial users have direct messaging with Dr. Jonathan through their trial. The $97 Ownership Plan and the $497 Premium Lifetime include direct messaging for the first 6 months. The $47 Recovery Plan and the $297 Lifetime plan include the AI Coach — the in-app assistant — for guidance, and direct personal messaging with Dr. Jonathan can be added by upgrading.
 
-So members are not doing this alone: every plan includes structured daily guidance and Ask Dr. Jonathan AI, and the trial and the comms plans add direct access to Dr. Jonathan himself. If a prospect asks whether they can message the doctor directly, tell them which plans include it rather than promising it on every plan. Real clinical oversight is still a core differentiator from YouTube exercises, generic PT handouts, or self-directed apps with no oversight.
+So members are not doing this alone: every plan includes structured daily guidance and the AI Coach, and the trial and the comms plans add direct access to Dr. Jonathan himself. If a prospect asks whether they can message the doctor directly, tell them which plans include it rather than promising it on every plan. Real clinical oversight is still a core differentiator from YouTube exercises, generic PT handouts, or self-directed apps with no oversight.
 
 ## HSA and FSA Eligibility
 

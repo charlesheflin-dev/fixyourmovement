@@ -46,7 +46,7 @@ const TRY_FREE = [
   "Daily guided exercises with video instruction",
   "Built-in guidance for flare-ups and tougher days",
   "Pain tracking and your full progress history",
-  "Ask Dr. Jonathan AI for help with your program",
+  "The AI Coach for help with your program",
   "A plan that progresses as your foot gets stronger",
 ];
 
