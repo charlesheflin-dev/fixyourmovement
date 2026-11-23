@@ -689,8 +689,8 @@ export default function ColdStart() {
       <main className="flex-1 w-full">
 
         {/* ════════════ SECTION 1 — HERO ════════════ */}
-        {/* Matt's hero spec 2026-11-23. Phone: headline → subhead → form → note → trust strip → Jana card →
-            portrait. Desktop: copy + form left; portrait with 195K badge, caption, then Jana card right. */}
+        {/* Matt's hero spec 2026-11-23. Phone: headline → subhead → form → note → Jana card →
+            portrait (phone trust strip removed 2026-11-23, Matt addendum). Desktop: copy + form left; portrait with 195K badge, caption, then Jana card right. */}
         <section className={`${GUTTER} pt-3 pb-6 md:pt-12 md:pb-9`}>
           <div className="max-w-[1120px] mx-auto md:grid md:grid-cols-[1.1fr_0.9fr] md:gap-12 md:items-start">
             <div className="min-w-0">
@@ -706,26 +706,9 @@ export default function ColdStart() {
                 {optInForm("form_top", { compact: true })}
               </div>
 
-              {/* Phone trust strip */}
-              <div className="md:hidden mt-2.5 pt-2.5 border-t border-slate-200 flex items-center gap-3">
-                <img
-                  src={DJ_HEADSHOT_SRC}
-                  alt="Dr. Jonathan Schutza"
-                  width={44}
-                  height={44}
-                  className="w-11 h-11 rounded-full object-cover object-top shrink-0"
-                />
-                <div className="text-[14px] leading-[1.35] min-w-0">
-                  <p className="font-bold text-slate-900">Dr. Jonathan Schutza, <span className="whitespace-nowrap">PT, DPT</span></p>
-                  <p className="text-slate-700 flex items-center gap-1.5">
-                    <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" className="shrink-0"><defs><radialGradient id="igMini" cx="30%" cy="107%" r="150%"><stop offset=".05" stopColor="#fdf497" /><stop offset=".45" stopColor="#fd5949" /><stop offset=".6" stopColor="#d6249f" /><stop offset=".9" stopColor="#285AEB" /></radialGradient></defs><rect x="1" y="1" width="22" height="22" rx="6" fill="url(#igMini)" /><rect x="6" y="6" width="12" height="12" rx="3.6" fill="none" stroke="#fff" strokeWidth="1.8" /><circle cx="12" cy="12" r="2.9" fill="none" stroke="#fff" strokeWidth="1.8" /><circle cx="16" cy="8" r="1" fill="#fff" /></svg>
-                    <span><span className="font-bold text-slate-900">195K followers</span> on Instagram</span>
-                  </p>
-                </div>
-              </div>
             </div>
 
-            <div className="min-w-0 mt-4 md:mt-0 flex flex-col gap-6">
+            <div className="min-w-0 mt-3.5 md:mt-0 flex flex-col gap-6">
               {/* Jana D. — excerpt of her own review (src/data/testimonials.ts jana-d, July 28, 2026) */}
               <figure className="order-1 md:order-2 bg-white border border-slate-200 rounded-2xl shadow-sm px-4 py-4 md:px-[18px] md:py-[18px]">
                 <div className="flex items-start gap-3">
