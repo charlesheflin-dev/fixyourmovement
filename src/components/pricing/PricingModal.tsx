@@ -12,10 +12,10 @@ export default function PricingModal({ open, onOpenChange }: { open: boolean; on
         <div className="pr-6">
           <p className="text-blue-600 text-xs font-bold uppercase tracking-[0.12em] leading-snug">PLANS &amp; PRICING</p>
           <DialogTitle className="mt-1 text-slate-900 text-2xl font-extrabold tracking-tight leading-tight">
-            What it costs after your free check-ins
+            Don't buy it yet. Try it first.
           </DialogTitle>
           <DialogDescription className="sr-only">
-            The Foot Capacity System plans and prices. Your first 7 check-ins are free; you choose a plan inside the app afterward.
+            Try the Foot Capacity System before you buy it. Your first 7 check-ins are free; see every plan and price here.
           </DialogDescription>
         </div>
         <div className="flex flex-col gap-5">

@@ -2,11 +2,12 @@ import { describe, it, expect } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { downloadHero, coldStartHero, DL_HERO_EXPERIMENT, CS_HERO_EXPERIMENT } from "./heroCopy";
 
-// The literal hero JSX as it stood in the pages BEFORE B2 (staging @ 68c2a60):
-// DownloadApp.tsx:320-325 and ColdStart.tsx:615-621. The control copy rendered inside the
-// pages' unchanged wrappers must produce byte-identical markup.
+// Download: the literal hero JSX as it stood BEFORE B2 (staging @ 68c2a60, DownloadApp.tsx:320-325);
+// control must stay byte-identical. Cold-start: the expected hero since Matt's 2026-11-23 spec
+// (smaller line 2, new shared subhead); the headline WORDS of both arms are unchanged.
 const T_H1 = "text-[32px] min-[360px]:text-[34px] md:text-[52px] font-extrabold leading-[1.12] tracking-tight";
 const T_BODY = "text-[17px] md:text-[18px] leading-[1.55] text-slate-700";
+const CS_L2 = "block text-blue-600 text-[20px] leading-[1.22] mt-1 md:text-[30px] md:leading-[1.2] md:mt-2.5";
 
 const ORIGINAL_DOWNLOAD = (
   <>
@@ -23,10 +24,10 @@ const ORIGINAL_COLD_START = (
   <>
     <h1 className={T_H1}>
       <span className="block text-slate-900">Stop Guessing Your Way Through Plantar Fasciitis.</span>
-      <span className="block text-blue-600">Follow a Plan That Adjusts to Your Foot.</span>
+      <span className={CS_L2}>Follow a Plan That Adjusts to Your Foot.</span>
     </h1>
     <p className={`${T_BODY} mt-5`}>
-      Exercise videos show you what to do. Assigned sets and reps tell you how much. Your daily check-ins help guide what comes next.
+      <strong className="font-bold text-slate-900">15 minutes a day at home.</strong> Exercise videos show you what to do. Sets and reps tell you how much. Your daily check-ins guide what comes next.
     </p>
   </>
 );
@@ -69,11 +70,11 @@ describe("heroCopy — control is byte-identical to today's hero", () => {
     expect(dlOriginal).toContain('Just a daily recovery plan from Dr. Jonathan<br class="hidden sm:block"/> delivered directly to your phone.');
   });
 
-  it("cold-start control markup (both H1 spans + body <p>) matches the pre-B2 page", () => {
+  it("cold-start control markup (both H1 spans + body <p>) matches the 2026-11-23 hero", () => {
     expect(renderColdStart("control")).toBe(csOriginal);
     expect(csOriginal).toContain("Stop Guessing Your Way Through Plantar Fasciitis.");
     expect(csOriginal).toContain("Follow a Plan That Adjusts to Your Foot.");
-    expect(csOriginal).toContain("Your daily check-ins help guide what comes next.");
+    expect(csOriginal).toContain("Your daily check-ins guide what comes next.");
   });
 
   it.each([null, undefined, "", "unknown", "constructor", "__proto__"])(
@@ -111,10 +112,10 @@ describe("heroCopy — variant b renders the approved challenger copy", () => {
     expect(html).toBe(
       `<h1 class="${T_H1}">` +
         '<span class="block text-slate-900">Get Back to Walking Without Thinking About Your Heel.</span>' +
-        '<span class="block text-blue-600">Follow a Daily Plan That Adjusts to Your Foot.</span>' +
+        `<span class="${CS_L2}">Follow a Daily Plan That Adjusts to Your Foot.</span>` +
         "</h1>" +
         `<p class="${T_BODY} mt-5">` +
-        "Exercise videos show you what to do. Assigned sets and reps tell you how much. Your daily check-ins help guide what comes next." +
+        '<strong class="font-bold text-slate-900">15 minutes a day at home.</strong> Exercise videos show you what to do. Sets and reps tell you how much. Your daily check-ins guide what comes next.' +
         "</p>",
     );
     expect(coldStartHero("b").subhead).toBe(coldStartHero("control").subhead);

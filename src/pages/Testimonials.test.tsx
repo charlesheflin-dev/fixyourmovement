@@ -73,7 +73,7 @@ describe("/testimonials", () => {
 
   it("archived entries (verbatim from a retired page block, now the record) are exactly the expected set", () => {
     const archived = TESTIMONIALS.filter((t) => t.origin === "archived");
-    expect(archived.map((t) => t.id).sort()).toEqual(["brittany", "jocelyn-lavoie", "karen-stone"]);
+    expect(archived.map((t) => t.id).sort()).toEqual(["brittany", "jocelyn-lavoie", "karen-stone", "michelle-shabason"]);
     for (const t of archived) {
       for (const para of t.quote.split("\n\n")) expect(para, t.id).toBe(para.trim());
       expect(html, t.id).toContain(esc(t.quote.split("\n\n")[0]));

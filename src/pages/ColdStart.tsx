@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
 import MemberStories from "@/components/MemberStories";
-import MemberStoriesPreview, { PREVIEW_TESTIMONIAL_IDS } from "@/components/MemberStoriesPreview";
+import MemberStoriesPreview, { previewTestimonials } from "@/components/MemberStoriesPreview";
 import { TESTIMONIALS as MEMBER_STORIES } from "@/data/testimonials";
 import { installUrlWithTracking } from "@/lib/installTracking";
 import { variantFor, withExperimentMeta } from "@/experiments/exp";
@@ -23,6 +23,7 @@ const VIDEO_POSTER_SRC = `https://imagedelivery.net/ZUbdF1A6bMNaR2l0OC84jw/${VID
 const DJ_HEADSHOT_SRC = "/images/cold/dj-headshot.webp";
 const HEEL_MESSAGE_SRC = "/images/cold/heel-message.webp";
 const PHONES_SRC = "/images/cold/phones-ppc-sharpened.webp";
+const IG_BADGE_SRC = "/images/cold/ig-badge-195k.svg"; // 195K followers as of 2026-11-23
 
 // ─── Read cookie helper ──────────────────────────────────────────────────────────
 function getCookie(name: string): string | null {
@@ -156,7 +157,8 @@ const FORM_ANCHOR: Record<FormPosition, string> = {
 // ─── Navigation-click diagnostics (GA4, existing gtag only) ──────────────────────
 // Fixed location ids only — never user content. Diagnostics, not a conversion: no
 // key-event / Ads import intended. A missing or failing gtag must never block scrolling.
-type AnchorLocation = "header_free_plan" | "hero_free_plan" | "footer_free_plan" | "stories_free_plan";
+// hero_free_plan stopped firing 2026-11-23 (the hero now holds the form); kept for old reports.
+type AnchorLocation = "header_free_plan" | "hero_free_plan" | "footer_free_plan" | "stories_free_plan" | "sticky_free_plan";
 function trackAnchorClick(location: AnchorLocation) {
   try {
     const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
@@ -192,8 +194,13 @@ const TESTIMONIALS = CAROUSEL_IDS.map((id) => {
   if (!t) throw new Error(`ColdStart carousel: unknown testimonial id ${id}`);
   return { id: t.id, initials: initialsOf(t.name), name: t.name, meta: t.meta ?? "", body: t.quote };
 });
-const HERO_PROOF_ID = "michelle-shabason";
-const STORIES_EXCLUDE_IDS = [...PREVIEW_TESTIMONIAL_IDS, HERO_PROOF_ID, ...CAROUSEL_IDS];
+// 2026-11-23 (Matt's hero spec): Jana D. is the hero proof card. The mid-page preview skips her and the
+// carousel stories (so Michelle Shabason returns there), and the full list hides whatever this page's
+// preview actually shows, plus the hero and carousel stories.
+const HERO_PROOF_ID = "jana-d";
+const PREVIEW_EXCLUDE_IDS = [HERO_PROOF_ID, ...CAROUSEL_IDS];
+const COLD_PREVIEW_IDS = previewTestimonials(PREVIEW_EXCLUDE_IDS).map((t) => t.id);
+const STORIES_EXCLUDE_IDS = [...COLD_PREVIEW_IDS, HERO_PROOF_ID, ...CAROUSEL_IDS];
 
 // ─── FAQ (Section 9) — v3 copy ───────────────────────────────────────────────────
 const FAQS = [
@@ -211,7 +218,7 @@ const FAQS = [
   },
   {
     q: "Do I need a credit card to start?",
-    a: "No. Your first 7 check-ins are free, with no credit card required. After that, you can choose a paid plan if you’d like to continue. There’s no automatic charge.",
+    a: "No. We’d rather you try it before you buy it. Your first 7 check-ins are free, and we never ask for a card to start. If it’s helping your foot, pick a plan in the app. If not, you owe nothing.",
   },
   // 2026-11-19 (Charles): pricing FAQ; its link opens the lazy pricing modal (PricingFaq.tsx).
   { q: PRICING_FAQ_Q, a: PRICING_FAQ_A, pricing: true },
@@ -219,7 +226,8 @@ const FAQS = [
 
 // ─── Shared type + spacing tokens (v3 §2) — one style per role across the page ───
 const T = {
-  h1: "text-[32px] min-[360px]:text-[34px] md:text-[52px] font-extrabold leading-[1.12] tracking-tight",
+  // Hero H1 = headline line 1 (line 2 is smaller, see CS_LINE2 in heroCopy.tsx). Matt's spec 2026-11-23 §1b.
+  h1: "text-[26px] leading-[1.14] md:text-[44px] md:leading-[1.1] font-extrabold tracking-tight",
   h2: "text-[28px] md:text-[38px] font-extrabold leading-[1.18] tracking-tight text-center",
   step: "text-[18px] md:text-[20px] font-bold leading-[1.3] uppercase tracking-wide text-slate-900",
   statement: "text-[21px] md:text-[26px] font-bold leading-[1.35] text-slate-900",
@@ -251,9 +259,9 @@ function ShieldCheck({ size = 18, stroke = "#2563EB" }: { size?: number; stroke?
   );
 }
 
-function FiveStars({ size = 16 }: { size?: number }) {
+function FiveStars({ size = 16, label = "Five stars" }: { size?: number; label?: string }) {
   return (
-    <div className="flex gap-0.5 text-amber-400" role="img" aria-label="Five stars">
+    <div className="flex gap-0.5 text-amber-400" role="img" aria-label={label}>
       {[0, 1, 2, 3, 4].map((s) => (
         <svg key={s} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <polygon points="12 2 15 9 22 9.5 17 14.5 18.5 21.5 12 17.5 5.5 21.5 7 14.5 2 9.5 9 9" />
@@ -298,6 +306,11 @@ export default function ColdStart() {
   // the anon cookie is absent.
   const installHref = installUrlWithTracking(INSTALL_URL, { anon: getCookie("fcs_anon"), src: "session", otl: otlToken });
 
+  // Sticky phone button (Part 2): shown once the hero form has scrolled up out of view, hidden while
+  // the bottom form is on screen and after a successful submit.
+  const [heroFormOut, setHeroFormOut] = useState(false);
+  const [bottomFormVisible, setBottomFormVisible] = useState(false);
+
   const landingLogged = useRef(false);
   const emailFocusLogged = useRef(false);
   const touchStartX = useRef(0);
@@ -311,6 +324,22 @@ export default function ColdStart() {
     const source = landingSource();
     logFunnelEvent("landing_reached", source ? { meta: { source } } : undefined);
   }, []);
+
+  useEffect(() => {
+    if (submitted || typeof IntersectionObserver === "undefined") return;
+    const heroForm = document.getElementById(FORM_ANCHOR.form_top);
+    const bottomForm = document.getElementById(FORM_ANCHOR.form_bottom);
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === heroForm) setHeroFormOut(!entry.isIntersecting && entry.boundingClientRect.top < 0);
+        if (entry.target === bottomForm) setBottomFormVisible(entry.isIntersecting);
+      }
+    });
+    if (heroForm) observer.observe(heroForm);
+    if (bottomForm) observer.observe(bottomForm);
+    return () => observer.disconnect();
+  }, [submitted]);
+  const showSticky = heroFormOut && !bottomFormVisible;
 
   // When the install screen replaces the opt-in page, reset scroll to top —
   // React preserves the window scroll offset across the state swap, so without
@@ -410,17 +439,28 @@ export default function ColdStart() {
     }
   };
 
-  // ─── Sections 3 and 8 opt-in form — identical card, fields, button and wiring; only the
-  //     heading and introduction differ. Unique wrapper, heading and field IDs per instance. ──
-  const optInForm = (position: FormPosition) => {
+  // ─── Opt-in form — the hero (form_top, compact since 2026-11-23) and Section 8 (form_bottom).
+  //     Identical fields, button and wiring; only the presentation differs. Unique wrapper,
+  //     heading and field IDs per instance. ──
+  const optInForm = (position: FormPosition, opts: { compact?: boolean } = {}) => {
     const anchorId = FORM_ANCHOR[position];
     const isTop = position === "form_top";
     const isActive = activeForm === position;
+    const compact = !!opts.compact;
+    const labelClass = compact
+      ? "text-[13px] md:text-[15px] font-semibold leading-[1.4] text-slate-900 block mb-1 md:mb-1.5"
+      : `${T.label} block mb-2`;
+    const inputClass = `w-full ${compact ? "min-h-[44px] md:min-h-[48px]" : "min-h-[48px]"} px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 text-[16px] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`;
     return (
       <div
         id={anchorId}
-        className="max-w-[560px] mx-auto bg-blue-50 border border-blue-100 rounded-[20px] px-6 py-6 md:px-8 md:py-8 scroll-mt-6"
+        className={compact
+          ? "scroll-mt-6"
+          : "max-w-[560px] mx-auto bg-blue-50 border border-blue-100 rounded-[20px] px-6 py-6 md:px-8 md:py-8 scroll-mt-6"}
       >
+        {compact ? (
+          <h2 id={`${anchorId}-heading`} className="sr-only">Start your free recovery plan</h2>
+        ) : (
         <h2 id={`${anchorId}-heading`} className={T.h2}>
           {isTop ? (
             <>
@@ -434,11 +474,14 @@ export default function ColdStart() {
             </>
           )}
         </h2>
+        )}
+        {!compact && (
         <p className={`${T.body} text-center mt-5`}>
           {isTop
             ? "Enter your name and email, answer a few questions, and get your starting exercises with video guidance and assigned sets and reps."
             : "Start at home with guided exercises and a plan that responds to your check-ins."}
         </p>
+        )}
 
         <form
           method="post"
@@ -446,7 +489,9 @@ export default function ColdStart() {
           action="https://www.aweber.com/scripts/addlead.pl"
           onSubmit={(e) => handleDownloadSubmit(e, position)}
           aria-labelledby={`${anchorId}-heading`}
-          className="mt-6 space-y-5"
+          className={compact
+            ? "mt-3 md:mt-6 space-y-2 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-3 md:gap-y-3 md:items-end"
+            : "mt-6 space-y-5"}
         >
           <input type="hidden" name="meta_web_form_id" value="356574860" />
           <input type="hidden" name="meta_split_id" value="" />
@@ -459,18 +504,22 @@ export default function ColdStart() {
           <input type="hidden" name="meta_tooltip" value="" />
 
           <div>
-            <label htmlFor={`${anchorId}-name`} className={`${T.label} block mb-2`}>First name</label>
+            <label htmlFor={`${anchorId}-name`} className={labelClass}>First name</label>
             <input
               id={`${anchorId}-name`}
               type="text"
               name="name"
               autoComplete="given-name"
-              className="w-full min-h-[48px] px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 text-[16px] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label htmlFor={`${anchorId}-email`} className={`${T.label} block mb-2`}>Email address</label>
+            {/* Addendum 1 (Matt 2026-11-23): hint inside the label so screen readers read it with the field */}
+            <label htmlFor={`${anchorId}-email`} className={labelClass}>
+              Email address
+              <span className="font-normal text-slate-500"> · we'll send your sign-in code here</span>
+            </label>
             <input
               id={`${anchorId}-email`}
               type="email"
@@ -478,12 +527,12 @@ export default function ColdStart() {
               autoComplete="email"
               inputMode="email"
               onFocus={() => handleEmailFocus(position)}
-              className="w-full min-h-[48px] px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 text-[16px] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className={inputClass}
             />
           </div>
 
           {provisionError && isActive && (
-            <p className="text-red-600 text-[15px] text-center font-medium" role="alert">
+            <p className="text-red-600 text-[15px] text-center font-medium md:col-span-2" role="alert">
               Something went wrong creating your account. Please try again.
             </p>
           )}
@@ -491,13 +540,25 @@ export default function ColdStart() {
           <button
             type="submit"
             disabled={submitting}
-            className={`${PRIMARY_BUTTON} w-full disabled:opacity-60 disabled:cursor-not-allowed`}
+            className={`${PRIMARY_BUTTON} w-full disabled:opacity-60 disabled:cursor-not-allowed${compact ? " !min-h-[50px] md:col-span-2" : ""}`}
           >
             {submitting && isActive ? "Creating your account…" : "Start My Free Recovery Plan →"}
           </button>
         </form>
 
-        {/* Browser-first reassurance — conversion-critical, not fine print */}
+        {compact ? (
+          <>
+            <p className="text-[13px] md:text-[15px] leading-[1.45] text-slate-500 mt-1.5 md:mt-3">
+              <span className="md:hidden">No credit card. Nothing to install.</span>
+              <span className="hidden md:inline">No credit card. Start online. Nothing to install.</span>
+            </p>
+            <div className="hidden md:flex items-center gap-2 mt-2">
+              <ShieldCheck size={18} />
+              <p className="text-[15px] leading-[1.45] text-slate-700">Your first 7 check-ins are free.</p>
+            </div>
+          </>
+        ) : (
+        /* Browser-first reassurance — conversion-critical, not fine print */
         <div className="mt-3 md:mt-5 text-center">
           <p className="text-[14px] leading-[1.45] md:text-[15px] text-slate-500">
             <span className="block md:inline">Your first 7 check-ins are free.</span>{" "}
@@ -508,6 +569,7 @@ export default function ColdStart() {
             <span className="block md:inline">with nothing to download.</span>
           </p>
         </div>
+        )}
       </div>
     );
   };
@@ -607,19 +669,19 @@ export default function ColdStart() {
   return (
     <div className="min-h-screen bg-white flex flex-col" style={{ fontFamily: "Inter, sans-serif" }}>
 
-      {/* Header — logo left, FREE PLAN right, no navigation / hamburger */}
-      <header className={`w-full bg-white border-b border-slate-200 py-3 ${GUTTER}`}>
+      {/* Header — logo left, "Free Recovery Plan" right, no navigation / hamburger */}
+      <header className={`w-full bg-white border-b border-slate-200 py-2 md:py-3 px-4 md:px-5`}>
         <div className="max-w-[1120px] mx-auto flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5 min-w-0">
-            <img src={logo} alt="The Foot Capacity System" className="h-9 w-auto" />
+            <img src={logo} alt="The Foot Capacity System" className="h-8 md:h-9 w-auto" />
             <p className="font-bold text-slate-900 text-sm sm:text-base leading-tight">Foot Capacity System</p>
           </div>
           <button
             type="button"
             onClick={() => goToForm("form_top", "header_free_plan")}
-            className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-wide px-4 py-2 min-h-[40px] rounded-full shrink-0 transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+            className="bg-blue-600 hover:bg-blue-700 text-white text-[13px] font-bold px-3.5 py-2 min-h-[40px] rounded-full shrink-0 whitespace-nowrap transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
-            Free Plan
+            Free Recovery Plan
           </button>
         </div>
       </header>
@@ -627,60 +689,115 @@ export default function ColdStart() {
       <main className="flex-1 w-full">
 
         {/* ════════════ SECTION 1 — HERO ════════════ */}
-        {/* Mobile: copy → CTA → reassurance → Michelle proof → modest portrait.
-            Desktop: copy left; Michelle + smaller portrait right. No heel image here. */}
-        <section className={`${GUTTER} pt-8 pb-6 md:pt-12 md:pb-9`}>
-          <div className="max-w-[1120px] mx-auto md:grid md:grid-cols-[1.1fr_0.9fr] md:gap-12 md:items-center">
+        {/* Matt's hero spec 2026-11-23. Phone: headline → subhead → form → note → trust strip → Jana card →
+            portrait. Desktop: copy + form left; portrait with 195K badge, caption, then Jana card right. */}
+        <section className={`${GUTTER} pt-3 pb-6 md:pt-12 md:pb-9`}>
+          <div className="max-w-[1120px] mx-auto md:grid md:grid-cols-[1.1fr_0.9fr] md:gap-12 md:items-start">
             <div className="min-w-0">
-              <p className={`${T.eyebrow} mb-3`}>Plantar Fasciitis Recovery at Home</p>
-              <h1 className={T.h1}>
+              <p className={`${T.eyebrow} mb-3 hidden md:block`}>Plantar Fasciitis Recovery at Home</p>
+              <h1 className={`${T.h1} text-slate-900`}>
                 {hero.headline}
               </h1>
-              <p className={`${T.body} mt-5`}>
+              <p className="text-[16px] leading-[1.45] md:text-[18px] md:leading-[1.55] text-slate-700 mt-2 md:mt-5">
                 {hero.subhead}
               </p>
 
-              <div className="flex items-center gap-2 md:gap-2.5 mt-5">
-                <ShieldCheck size={22} />
-                <p className="text-[14px] leading-[1.4] md:text-[18px] md:leading-[1.55] text-slate-700">
-                  Built by <span className="font-bold text-slate-900">Dr. Jonathan Schutza, <span className="whitespace-nowrap">PT, DPT</span></span>
-                </p>
+              <div className="mt-3 md:mt-6">
+                {optInForm("form_top", { compact: true })}
               </div>
 
-              <button
-                type="button"
-                onClick={() => goToForm("form_top", "hero_free_plan")}
-                className={`${PRIMARY_BUTTON} w-full sm:w-auto mt-6 shadow-sm`}
-              >
-                Start My Free Recovery Plan →
-              </button>
-
-              <p className={`${T.note} mt-3`}>No credit card. Start online. Nothing to install.</p>
+              {/* Phone trust strip */}
+              <div className="md:hidden mt-2.5 pt-2.5 border-t border-slate-200 flex items-center gap-3">
+                <img
+                  src={DJ_HEADSHOT_SRC}
+                  alt="Dr. Jonathan Schutza"
+                  width={44}
+                  height={44}
+                  className="w-11 h-11 rounded-full object-cover object-top shrink-0"
+                />
+                <div className="text-[14px] leading-[1.35] min-w-0">
+                  <p className="font-bold text-slate-900">Dr. Jonathan Schutza, <span className="whitespace-nowrap">PT, DPT</span></p>
+                  <p className="text-slate-700 flex items-center gap-1.5">
+                    <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" className="shrink-0"><defs><radialGradient id="igMini" cx="30%" cy="107%" r="150%"><stop offset=".05" stopColor="#fdf497" /><stop offset=".45" stopColor="#fd5949" /><stop offset=".6" stopColor="#d6249f" /><stop offset=".9" stopColor="#285AEB" /></radialGradient></defs><rect x="1" y="1" width="22" height="22" rx="6" fill="url(#igMini)" /><rect x="6" y="6" width="12" height="12" rx="3.6" fill="none" stroke="#fff" strokeWidth="1.8" /><circle cx="12" cy="12" r="2.9" fill="none" stroke="#fff" strokeWidth="1.8" /><circle cx="16" cy="8" r="1" fill="#fff" /></svg>
+                    <span><span className="font-bold text-slate-900">195K followers</span> on Instagram</span>
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="min-w-0 mt-8 md:mt-0 space-y-6">
-              {/* Michelle — abbreviated five-star proof (live text, authentic wording) */}
-              <figure className="bg-white border border-slate-200 rounded-2xl shadow-sm px-5 py-5">
-                <div className="flex items-center justify-between gap-3 flex-wrap">
-                  <figcaption className="font-bold text-slate-900 text-[16px] leading-tight">Michelle Shabason</figcaption>
-                  <FiveStars />
+            <div className="min-w-0 mt-4 md:mt-0 flex flex-col gap-6">
+              {/* Jana D. — excerpt of her own review (src/data/testimonials.ts jana-d, July 28, 2026) */}
+              <figure className="order-1 md:order-2 bg-white border border-slate-200 rounded-2xl shadow-sm px-4 py-4 md:px-[18px] md:py-[18px]">
+                <div className="flex items-start gap-3">
+                  <div className="w-[42px] h-[42px] rounded-full bg-slate-700 text-white font-bold text-[15px] flex items-center justify-center shrink-0" aria-hidden="true">JD</div>
+                  <div className="min-w-0">
+                    <div className="flex items-center flex-wrap gap-x-2 gap-y-0.5">
+                      <figcaption className="font-bold text-slate-900 text-[16px] leading-tight">Jana D.</figcaption>
+                      <FiveStars size={15} label="5 out of 5 stars" />
+                      <span className="text-[13.5px] text-slate-500 leading-tight">Mom of three</span>
+                    </div>
+                    <p className="text-[13px] text-slate-500 leading-snug mt-0.5">Heel pain for almost 2 years</p>
+                  </div>
                 </div>
-                <blockquote className={`${T.body} mt-3`}>
-                  “Huge improvements: almost no morning pain, walking/standing much longer, including at work, and much more functional around the house.”
+
+                <div
+                  className="mt-3 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5"
+                  role="img"
+                  aria-label="Heel pain went from 5 out of 10 to 1 out of 10 in 7 weeks"
+                >
+                  <div className="flex items-baseline justify-between gap-2">
+                    <span className="text-[14px] font-bold text-slate-900">Heel pain</span>
+                    <span className="flex items-baseline gap-1.5 whitespace-nowrap">
+                      <span className="text-[14px] text-slate-500 line-through">5/10</span>
+                      <span className="text-[14px] text-slate-500">→</span>
+                      <span className="text-[17px] font-extrabold text-green-600">1/10</span>
+                      <span className="text-[13px] text-slate-500">in 7 weeks</span>
+                    </span>
+                  </div>
+                  <div className="relative mt-[26px] h-2 rounded-full" style={{ background: "linear-gradient(to right, #22c55e 0%, #facc15 45%, #f97316 70%, #ef4444 100%)" }}>
+                    <span className="absolute top-1/2 -translate-y-1/2 h-[3px] rounded-full" style={{ left: "10%", width: "40%", background: "rgba(15,23,42,0.55)" }} />
+                    <span className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-[3px] border-slate-500" style={{ left: "50%" }}>
+                      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 text-[11px] font-bold text-slate-500 whitespace-nowrap">Before</span>
+                    </span>
+                    <span className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-green-600 border-[3px] border-white" style={{ left: "10%", boxShadow: "0 0 0 1.5px #16a34a" }}>
+                      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 text-[11px] font-bold text-green-600 whitespace-nowrap">Week 7</span>
+                    </span>
+                  </div>
+                  <div className="flex justify-between mt-1.5 text-[11px] text-slate-500" aria-hidden="true">
+                    <span>0</span><span>5</span><span>10</span>
+                  </div>
+                </div>
+
+                <blockquote className="mt-3 text-[15px] md:text-[16px] leading-[1.5] text-slate-700">
+                  “I even went through other physical therapy programs, but it just didn’t get me where I wanted to be. … I can do the exercises at home while my kids are playing, and I don’t have to find childcare or drive to appointments.”
                 </blockquote>
-                <p className="text-[14px] leading-[1.4] md:text-[15px] md:leading-[1.45] text-slate-500 mt-3">
-                  <span className="block md:inline">September 8, 2026</span>
-                  <span className="hidden md:inline"> · </span>
-                  <span className="block md:inline mt-0.5 md:mt-0">10 weeks after purchase</span>
+                <p className="mt-3 text-[13px] leading-[1.45] text-slate-500">
+                  <span className="block">Review written July 28, 2026</span>
+                  <span className="block">7 weeks after purchase · Individual results vary.</span>
                 </p>
-                <p className="text-[14px] leading-[1.4] md:text-[15px] md:leading-[1.45] text-slate-500 mt-2 md:mt-1">Individual results vary.</p>
               </figure>
 
-              <img
-                src={DJ_HEADSHOT_SRC}
-                alt="Dr. Jonathan Schutza, PT, DPT"
-                className="w-full max-w-[360px] md:max-w-none mx-auto rounded-2xl object-cover object-top aspect-[3/2] shadow-sm"
-              />
+              {/* Dr. Jonathan portrait + 195K Instagram badge (bottom edge, centered, clear of his face) */}
+              <div className="order-2 md:order-1">
+                <div className="relative w-full max-w-[360px] md:max-w-none mx-auto">
+                  <img
+                    src={DJ_HEADSHOT_SRC}
+                    alt="Dr. Jonathan Schutza, PT, DPT"
+                    className="w-full rounded-2xl object-cover object-top aspect-[3/2.1] shadow-sm"
+                  />
+                  <img
+                    src={IG_BADGE_SRC}
+                    alt="195K followers on Instagram, @dr.schutza.pt"
+                    width={276}
+                    height={56}
+                    className="absolute bottom-[14px] left-1/2 -translate-x-1/2 w-[276px] max-w-[calc(100%-16px)] h-auto rounded-[28px]"
+                    style={{ boxShadow: "0 4px 14px rgba(15,23,42,.18)" }}
+                  />
+                </div>
+                <p className="mt-2.5 text-[16px] leading-[1.45] text-slate-700 text-center md:text-left">
+                  <span className="font-bold text-slate-900">Dr. Jonathan Schutza, PT, DPT</span> · Physical therapist behind FCS
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -725,7 +842,7 @@ export default function ColdStart() {
           </div>
         </section>
 
-        {/* ════════════ SECTION 3 — THREE STEPS + FIRST FORM ════════════ */}
+        {/* ════════════ SECTION 3 — THREE STEPS (the first form moved into the hero 2026-11-23) ════════════ */}
         {/* Continues Section 2's explanation: ~28px from the phone image, no heading. */}
         <section className={`${GUTTER} pt-7 pb-6 md:pt-8 md:pb-9`}>
           <div className={TEXT_WIDTH}>
@@ -748,11 +865,6 @@ export default function ColdStart() {
                 </li>
               ))}
             </ol>
-
-            {/* FIRST FORM — header FREE PLAN + hero CTA destination */}
-            <div className="mt-10 md:mt-12">
-              {optInForm("form_top")}
-            </div>
           </div>
         </section>
 
@@ -864,7 +976,7 @@ export default function ColdStart() {
           {/* Named member-story preview (2026-11-16) — replaces the aliased carousel; "Read more" scrolls to
               the full Member Stories section at the bottom of <main> */}
           <div className="max-w-[1120px] mx-auto mt-8">
-            <MemberStoriesPreview moreTargetId="member-stories" />
+            <MemberStoriesPreview moreTargetId="member-stories" excludeIds={PREVIEW_EXCLUDE_IDS} />
           </div>
         </section>
 
@@ -947,9 +1059,16 @@ export default function ColdStart() {
           </div>
         </section>
 
-        {/* ════════════ SECTION 8 — SECOND / FINAL FORM ════════════ */}
+        {/* ════════════ SECTION 8 — "TRY IT FIRST" BAND + SECOND / FINAL FORM ════════════ */}
         <section className={SECTION}>
           <div className={TEXT_WIDTH}>
+            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 mb-8 text-left">
+              <h2 className="text-[20px] font-bold leading-[1.3] text-slate-900">Don’t buy it yet. Try it first.</h2>
+              <p className={`${T.body} mt-2`}>
+                Your first 7 check-ins are free. No credit card, no countdown clock. See the prices now, and decide after you’ve tried it. Every plan has a 30-day money-back guarantee.
+              </p>
+              <PricingFaqLink onClick={pricing.show} className="mt-3 inline-block text-[17px]" />
+            </div>
             {optInForm("form_bottom")}
           </div>
         </section>
@@ -1038,8 +1157,24 @@ export default function ColdStart() {
         />
       </main>
 
-      {/* Quiet legal footer */}
-      <footer className={`border-t border-slate-200 bg-white py-6 ${GUTTER} text-center`}>
+      {/* Sticky phone button (Part 2) */}
+      {showSticky && (
+        <div
+          className="md:hidden fixed inset-x-0 bottom-0 z-40 bg-white/95 border-t border-slate-200 px-4 pt-2.5"
+          style={{ paddingBottom: "calc(14px + env(safe-area-inset-bottom))", boxShadow: "0 -4px 14px rgba(15,23,42,0.08)" }}
+        >
+          <button
+            type="button"
+            onClick={() => goToForm("form_top", "sticky_free_plan")}
+            className={`${PRIMARY_BUTTON} w-full !min-h-[48px]`}
+          >
+            Start My Free Recovery Plan →
+          </button>
+        </div>
+      )}
+
+      {/* Quiet legal footer (extra bottom room on phones so the sticky button never covers it) */}
+      <footer className={`border-t border-slate-200 bg-white pt-6 pb-28 md:pb-6 ${GUTTER} text-center`}>
         <p className={`${T.legal} text-slate-400`}>&copy; {new Date().getFullYear()} The Foot Capacity System</p>
         <p className={`${T.legal} text-slate-400 mt-1`}>
           <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>

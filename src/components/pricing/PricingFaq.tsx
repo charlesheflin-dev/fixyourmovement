@@ -8,7 +8,7 @@ const PricingModal = lazy(() => import("@/components/pricing/PricingModal"));
 
 export const PRICING_FAQ_Q = "How much does it cost after the free check-ins?";
 export const PRICING_FAQ_A =
-  "Nothing is charged automatically. After your 7 free check-ins, you can choose a plan inside the app: monthly from $47 a month, or lifetime access from $297 one time. Every plan has a 30-day money-back guarantee.";
+  "$47 a month, or $297 one time for lifetime access. There's also a 6-month plan and a premium lifetime option. Every plan has a 30-day money-back guarantee.";
 
 export function usePricingModal(label: string) {
   const [open, setOpen] = useState(false);
@@ -35,7 +35,7 @@ export function PricingFaqLink({ onClick, className, tabIndex }: { onClick: () =
       tabIndex={tabIndex}
       className={`text-blue-600 font-semibold underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded ${className ?? ""}`}
     >
-      See all plans and prices →
+      Compare all plans →
     </button>
   );
 }

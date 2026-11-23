@@ -67,19 +67,19 @@ export default function PricingSection() {
       <section className="mt-4 flex gap-3 rounded-2xl border border-blue-200 bg-blue-50 p-4 sm:p-5">
         <Info className="w-6 h-6 shrink-0 text-blue-600 mt-0.5" strokeWidth={2} aria-hidden="true" />
         <div className="min-w-0">
-          <h2 className="text-slate-900 text-lg font-bold leading-tight">Here Are Our Prices. But First, Give Us a Try.</h2>
+          <h2 className="text-slate-900 text-lg font-bold leading-tight">Your first 7 check-ins are free.</h2>
           <p className="mt-2 text-slate-700 text-[15px] leading-snug">
-            We believe you should experience the program before deciding whether it's worth your money. Start with your 7 free check-ins, explore the exercises, and track your progress at your own pace. After your seventh check-in, you'll choose a plan inside the app.
+            Do the exercises, log how your foot feels, and see whether it's working. After your seventh check-in, you can pick a plan inside the app, or walk away and owe nothing.
           </p>
           <p className="mt-2 text-slate-900 text-[15px] font-bold leading-snug">
-            See the prices now. Experience the program first. Decide afterward.
+            See the prices now. Decide after you've tried it.
           </p>
         </div>
       </section>
 
       {/* 4b. Lifetime line */}
       <p className="text-slate-700 text-[15px] leading-snug px-1">
-        <strong className="text-slate-900">Keep Dr. Jonathan's program in your pocket.</strong> This isn't a course you finish and lose. With an ownership or lifetime plan, it stays on your phone, ready whenever your feet need it: after a flare-up, before a new activity, or years from now.
+        <strong className="text-slate-900">Keep Dr. Jonathan's program in your pocket.</strong> This isn't a course you finish and lose. With an ownership or lifetime plan, it stays on your phone for whenever your feet need it: after a flare-up, before a new activity, or years from now.
       </p>
 
       {/* 4c. Price cards — no buttons */}
