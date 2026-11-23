@@ -11,7 +11,7 @@ const read = (f: string) => readFileSync(join(process.cwd(), f), "utf8");
 
 describe("PricingSection", () => {
   it.each(["$47", "$97", "$582", "$297", "$497", "Recovery Plan", "Ownership Plan", "Premium Lifetime",
-           "Here Are Our Prices. But First, Give Us a Try.", "HSA/FSA funds may be eligible"])(
+           "Your first 7 check-ins are free.", "HSA/FSA funds may be eligible"])(
     "contains %s", (s) => { expect(html).toContain(s); });
 
   it("has no buy links or buttons", () => {
@@ -26,7 +26,7 @@ describe("pricing FAQ on the landing pages", () => {
   it("answer quotes prices that exist in the price cards", () => {
     expect(PRICING_FAQ_A).toContain("$47");
     expect(PRICING_FAQ_A).toContain("$297");
-    expect(PRICING_FAQ_A).toContain("7 free check-ins");
+    expect(PRICING_FAQ_A).toContain("30-day money-back guarantee");
   });
 
   it.each(["src/pages/ColdStart.tsx", "src/pages/DownloadApp.tsx"])("%s carries the FAQ item and mounts the modal", (f) => {

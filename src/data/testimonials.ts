@@ -108,11 +108,14 @@ export const TESTIMONIALS: Testimonial[] = [
       "To those who are thinking about joining the programme: I have been on it for 7 weeks and after 2 years of plantar fasciitis the pain is gone. I just wish I had found this man earlier. ❤️ I had my doubts! Then I saw that it worked, so I really felt that I had to stay on. I wish I had gone for the lifetime membership from the beginning.\n\nI have nothing but words of praise and appreciation for him.\n\nKind of a hero of mine.",
     meta: "Report written August 30, 2026 · 7 weeks after purchase",
   },
-  // src/pages/ColdStart.tsx — hero proof card (published abbreviated)
+  // Was the src/pages/ColdStart.tsx hero proof card until 2026-11-23 (published abbreviated)
   {
     id: "michelle-shabason",
     name: "Michelle Shabason",
     source: "app_member",
+    // ARCHIVED — was the src/pages/ColdStart.tsx hero proof card until 2026-11-23 (Jana D. replaced it);
+    // this entry is now the record of that published text.
+    origin: "archived",
     quote:
       "Huge improvements: almost no morning pain, walking/standing much longer, including at work, and much more functional around the house.",
     meta: "September 8, 2026 · 10 weeks after purchase",

@@ -9,7 +9,12 @@ import { TestimonialCard } from "@/components/MemberStories";
 
 export const PREVIEW_COUNT = 3;
 
-export const PREVIEW_TESTIMONIALS = TESTIMONIALS.filter((t) => t.source === "app_member").slice(0, PREVIEW_COUNT);
+/** The stories a preview shows: the first 3 app_member entries, after leaving out `excludeIds`. */
+export function previewTestimonials(excludeIds: readonly string[] = []) {
+  return TESTIMONIALS.filter((t) => t.source === "app_member" && !excludeIds.includes(t.id)).slice(0, PREVIEW_COUNT);
+}
+
+export const PREVIEW_TESTIMONIALS = previewTestimonials();
 
 /** Pass to the same page's full <MemberStories excludeIds> so no story appears twice. */
 export const PREVIEW_TESTIMONIAL_IDS = PREVIEW_TESTIMONIALS.map((t) => t.id);
@@ -29,13 +34,16 @@ function scrollToTarget(id: string) {
 type Props = {
   /** Element id of the full Member Stories section; omit to hide the "Read more" button. */
   moreTargetId?: string;
+  /** Story ids already shown elsewhere on the page; left out BEFORE the first 3 are taken. Default: none. */
+  excludeIds?: readonly string[];
 };
 
-export default function MemberStoriesPreview({ moreTargetId }: Props) {
+export default function MemberStoriesPreview({ moreTargetId, excludeIds }: Props) {
+  const stories = excludeIds && excludeIds.length > 0 ? previewTestimonials(excludeIds) : PREVIEW_TESTIMONIALS;
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
-        {PREVIEW_TESTIMONIALS.map((t) => (
+        {stories.map((t) => (
           <TestimonialCard key={t.id} t={t} />
         ))}
       </div>
