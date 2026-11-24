@@ -67,6 +67,19 @@ export const PERMISSION_LINE = "Selected examples shared with permission; indivi
 
 export const TESTIMONIALS: Testimonial[] = [
   // ── App members (newest / strongest long stories first) ──
+  // SUBMITTED — in-app review screenshot supplied by Charles 2026-11-24 ("Sandee F.", 5 stars, written
+  // 2026-11-23). Verified live: paying member (is_trial false), Phase 3, 88 submitted log-days since 2026-08-09.
+  // First on purpose (Charles 2026-11-24): leads the preview on /results (under the offer CTA), /lp/download,
+  // /lp/cold-start and the /testimonials wall.
+  {
+    id: "sandee-f",
+    name: "Sandee F.",
+    source: "app_member",
+    origin: "submitted",
+    quote:
+      "I'm so grateful to have found you. I have no patience for foot pain and when I got PF I was so confused about what to do. For the past 3 months, I have been committed to doing the exercises daily and slowly increasing the load on my foot, and I'm pleased to say that I have started to have multiple days in a row with no pain. Recovery is faster when I do have a flare up. Can't recommend your program more and the advice you give is spot on – healing for me has come from commitment and consistency. Thank you Dr. Jonathan!",
+    meta: "Written November 23, 2026 · after 88 consistent check-ins",
+  },
   // SUBMITTED — a/Jana.png (same review in a/Jana Dunkley Testimonials.docx, which carries "Original trial member")
   {
     id: "jana-d",
