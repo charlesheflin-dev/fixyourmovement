@@ -47,21 +47,21 @@ describe("/testimonials", () => {
     for (const id of ["lory-tubbs", "wendy-peterman", "debbie-wisenor"]) expect(src(id), id).toBe("clinic_patient");
     for (const id of ["dee-bell", "lorenzo-luongo", "bogiegrl", "youngcarol", "vicbre415", "zaiden-peterson"])
       expect(src(id), id).toBe("content_follower");
-    for (const id of ["jana-d", "jocelyn-lavoie", "brittany", "sara-lozano-arcas", "michelle-shabason", "lisa-padgett",
+    for (const id of ["sandee-f", "jana-d", "jocelyn-lavoie", "brittany", "sara-lozano-arcas", "michelle-shabason", "lisa-padgett",
       "karen-stone", "carol-anne", "karen", "tucker-family-farms", "rae", "michelle-triepels", "meghan-goughan"])
       expect(src(id), id).toBe("app_member");
     // Wall order: every app member, then clinic patients, then content followers.
     const rank = { app_member: 0, clinic_patient: 1, content_follower: 2 } as const;
     const ranks = TESTIMONIALS.map((t) => rank[t.source]);
     expect(ranks).toEqual([...ranks].sort((a, b) => a - b));
-    expect(TESTIMONIALS[0].id).toBe("jana-d");
+    expect(TESTIMONIALS[0].id).toBe("sandee-f"); // first on purpose (Charles 2026-11-24)
     expect(new Set(TESTIMONIALS.map((t) => t.id)).size).toBe(TESTIMONIALS.length);
   });
 
   it("submitted entries (no live source page) are non-empty, trimmed and app members", () => {
     const submitted = TESTIMONIALS.filter((t) => t.origin === "submitted");
     expect(submitted.map((t) => t.id).sort()).toEqual(
-      ["jana-d", "lisa-padgett", "meghan-goughan", "michelle-triepels", "rae", "sara-lozano-arcas", "tucker-family-farms"],
+      ["jana-d", "lisa-padgett", "meghan-goughan", "michelle-triepels", "rae", "sandee-f", "sara-lozano-arcas", "tucker-family-farms"],
     );
     for (const t of submitted) {
       expect(t.name.trim(), t.id).not.toBe("");

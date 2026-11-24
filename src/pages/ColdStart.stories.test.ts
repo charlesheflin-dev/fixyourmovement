@@ -23,11 +23,11 @@ describe("/lp/cold-start testimonials are not repeated", () => {
     expect(coldPreviewIds).toHaveLength(3);
   });
 
-  it("the page's preview skips the hero and carousel stories, so Michelle Shabason is shown again", () => {
+  it("the page's preview skips the hero and carousel stories and is led by Sandee F. (2026-11-24)", () => {
     expect(heroId).toBe("jana-d");
     expect(src).toContain("const PREVIEW_EXCLUDE_IDS = [HERO_PROOF_ID, ...CAROUSEL_IDS];");
     expect(src).toContain('<MemberStoriesPreview moreTargetId="member-stories" excludeIds={PREVIEW_EXCLUDE_IDS} />');
-    expect(coldPreviewIds).toContain("michelle-shabason");
+    expect(coldPreviewIds[0]).toBe("sandee-f");
   });
 
   it("full Member Stories list hides the preview, carousel and hero stories", () => {
